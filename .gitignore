@@ -1,6 +1,6 @@
 # Gradle
 .gradle
-/build/
+build/
 
 # Netbeans
 nb-configuration.xml
