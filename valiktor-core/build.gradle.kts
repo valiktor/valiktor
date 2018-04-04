@@ -1,14 +1,15 @@
 import org.gradle.kotlin.dsl.kotlin
 
-plugins {
-    kotlin("jvm") version "1.2.31"
-}
+fun junit(module: String) = "org.junit.jupiter:junit-jupiter-$module:5.1.0"
 
-repositories {
-    mavenCentral()
+plugins {
+    kotlin("jvm")
 }
 
 dependencies {
     compile(kotlin("stdlib-jdk8"))
     compile(kotlin("reflect"))
+
+    testImplementation(junit("api"))
+    testRuntimeOnly(junit("engine"))
 }
