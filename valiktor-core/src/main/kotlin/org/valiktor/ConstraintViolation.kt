@@ -11,7 +11,7 @@ import java.util.ResourceBundle
  * @constructor creates a constraint violation
  *
  * @author Rodolpho S. Couto
- * @see org.valiktor.Constraint
+ * @see Constraint
  * @since 0.1.0
  */
 data class ConstraintViolation(val property: String,
@@ -45,7 +45,7 @@ data class ConstraintViolation(val property: String,
  * @constructor creates a exception with the violated constraints
  *
  * @author Rodolpho S. Couto
- * @see org.valiktor.ConstraintViolation
+ * @see ConstraintViolation
  * @since 0.1.0
  */
 class ConstraintViolationException(val constraintViolations: Set<ConstraintViolation>) : RuntimeException()
