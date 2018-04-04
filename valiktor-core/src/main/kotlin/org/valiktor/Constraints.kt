@@ -3,9 +3,12 @@ package org.valiktor
 /**
  * Represents a validation constraint
  *
+ * @property name specifies the name of the constraint
+ * @property messageKey specifies the message key in the properties files
+ * @property interpolator specifies the interpolation function
+ *
  * @author Rodolpho S. Couto
  * @since 0.1.0
- *
  */
 interface Constraint {
 
