@@ -52,8 +52,10 @@ open class ValidatorDsl<E>(private val obj: E) {
      */
     fun <T> KProperty1<E, T>.validate(block: ValidatorDsl<T>.() -> Unit): KProperty1<E, T> {
         constraints += ValidatorDsl(this.get(obj)).apply(block).constraints.map {
-            it.copy(property = "${this.name}.${it.property}",
-                    value = this.get(obj) as Any)
+            DefaultConstraintViolation(
+                    property = "${this.name}.${it.property}",
+                    value = this.get(obj) as Any,
+                    constraint = it.constraint)
         }
         return this
     }
@@ -68,8 +70,10 @@ open class ValidatorDsl<E>(private val obj: E) {
     fun <T> KProperty1<E, Collection<T>>.validateForEach(block: ValidatorDsl<T>.() -> Unit): KProperty1<E, Collection<T>> {
         this.get(obj).forEachIndexed { index, value ->
             constraints += ValidatorDsl(value).apply(block).constraints.map {
-                it.copy(property = "${this.name}[$index].${it.property}",
-                        value = value as Any)
+                DefaultConstraintViolation(
+                        property = "${this.name}[$index].${it.property}",
+                        value = value as Any,
+                        constraint = it.constraint)
             }
         }
         return this
