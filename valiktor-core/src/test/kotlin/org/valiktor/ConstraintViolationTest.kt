@@ -18,7 +18,7 @@ private object ConstraintViolationFixture {
                     value = "Valiktor",
                     constraint = TestConstraint(
                             name = "TestConstraint",
-                            messageKey = "org.valiktor.test.constraints.TestConstraint.message",
+                            messageKey = "org.valiktor.test.TestConstraint.message",
                             interpolator = { it.replace("{value}", "test") }))
 
     fun createSetOfDefaultConstraintViolation(): Set<ConstraintViolation> = setOf(
@@ -27,14 +27,14 @@ private object ConstraintViolationFixture {
                     value = "Valiktor",
                     constraint = TestConstraint(
                             name = "TestConstraint",
-                            messageKey = "org.valiktor.test.constraints.TestConstraint.message",
+                            messageKey = "org.valiktor.test.TestConstraint.message",
                             interpolator = { it.replace("{value}", "test") })),
             DefaultConstraintViolation(
                     property = "title",
                     value = "Valiktor Title",
                     constraint = TestConstraint(
                             name = "TestConstraint2",
-                            messageKey = "org.valiktor.test.constraints.TestConstraint2.message",
+                            messageKey = "org.valiktor.test.TestConstraint2.message",
                             interpolator = { it.replace("{value}", "test2") })))
 }
 
@@ -48,7 +48,7 @@ class ConstraintViolationTest {
                 Executable { assertEquals(constraintViolation.property, "name") },
                 Executable { assertEquals(constraintViolation.value, "Valiktor") },
                 Executable { assertEquals(constraintViolation.constraint.name, "TestConstraint") },
-                Executable { assertEquals(constraintViolation.constraint.messageKey, "org.valiktor.test.constraints.TestConstraint.message") },
+                Executable { assertEquals(constraintViolation.constraint.messageKey, "org.valiktor.test.TestConstraint.message") },
                 Executable { assertEquals(constraintViolation.constraint.interpolator("some message"), "some message") }
         )
     }

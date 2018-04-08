@@ -30,7 +30,7 @@ class ConstraintTest {
 
         assertAll(
                 Executable { assertEquals(constraint.name, "DefaultConstraint") },
-                Executable { assertEquals(constraint.messageKey, "org.valiktor.constraints.DefaultConstraint.message") },
+                Executable { assertEquals(constraint.messageKey, "org.valiktor.ConstraintsFixture\$DefaultConstraint.message") },
                 Executable { assertEquals(constraint.interpolator("some message"), "some message") }
         )
     }
