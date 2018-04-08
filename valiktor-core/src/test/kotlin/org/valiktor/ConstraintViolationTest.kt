@@ -1,55 +1,43 @@
 package org.valiktor
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.function.Executable
+import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertThrows
+import org.valiktor.ConstraintViolationFixture.TestConstraint
+import org.valiktor.ConstraintViolationFixture.TestConstraint2
 
 private object ConstraintViolationFixture {
 
-    private data class TestConstraint(override val name: String,
-                                      override val messageKey: String,
-                                      override val interpolator: (String) -> String) : Constraint
+    data class TestConstraint(val value: String) : Constraint {
+        override val interpolator: (String) -> String = { it.replace("{value}", value) }
+    }
 
-    fun createDefaultConstraintViolation(): ConstraintViolation =
-            DefaultConstraintViolation(
-                    property = "name",
-                    value = "Valiktor",
-                    constraint = TestConstraint(
-                            name = "TestConstraint",
-                            messageKey = "org.valiktor.test.TestConstraint.message",
-                            interpolator = { it.replace("{value}", "test") }))
+    data class TestConstraint2(val value1: String, val value2: String) : Constraint {
+        override val interpolator: (String) -> String = { it.replace("{value1}", value1).replace("{value2}", value2) }
+    }
 
-    fun createSetOfDefaultConstraintViolation(): Set<ConstraintViolation> = setOf(
-            DefaultConstraintViolation(
-                    property = "name",
-                    value = "Valiktor",
-                    constraint = TestConstraint(
-                            name = "TestConstraint",
-                            messageKey = "org.valiktor.test.TestConstraint.message",
-                            interpolator = { it.replace("{value}", "test") })),
-            DefaultConstraintViolation(
-                    property = "title",
-                    value = "Valiktor Title",
-                    constraint = TestConstraint(
-                            name = "TestConstraint2",
-                            messageKey = "org.valiktor.test.TestConstraint2.message",
-                            interpolator = { it.replace("{value}", "test2") })))
+    fun createConstraintViolation(): ConstraintViolation =
+            DefaultConstraintViolation(property = "name", value = "Test", constraint = TestConstraint("test value"))
+
+    fun createConstraintViolations(): Set<ConstraintViolation> = setOf(
+            DefaultConstraintViolation(property = "name", value = "Test", constraint = TestConstraint("test value")),
+            DefaultConstraintViolation(property = "name", value = "Test2", constraint = TestConstraint2("test value1", "test value2")))
 }
 
 class ConstraintViolationTest {
 
     @Test
-    fun `should create DefaultConstraintViolation`() {
-        val constraintViolation: ConstraintViolation = ConstraintViolationFixture.createDefaultConstraintViolation()
+    fun `should create ConstraintViolation`() {
+        val constraintViolation: ConstraintViolation = ConstraintViolationFixture.createConstraintViolation()
 
         assertAll(
-                Executable { assertEquals(constraintViolation.property, "name") },
-                Executable { assertEquals(constraintViolation.value, "Valiktor") },
-                Executable { assertEquals(constraintViolation.constraint.name, "TestConstraint") },
-                Executable { assertEquals(constraintViolation.constraint.messageKey, "org.valiktor.test.TestConstraint.message") },
-                Executable { assertEquals(constraintViolation.constraint.interpolator("some message"), "some message") }
+                { assertEquals(constraintViolation.property, "name") },
+                { assertEquals(constraintViolation.value, "Test") },
+                { assertEquals(constraintViolation.constraint.name, "TestConstraint") },
+                { assertEquals(constraintViolation.constraint.messageKey, "org.valiktor.ConstraintViolationFixture\$TestConstraint.message") },
+                { assertEquals(constraintViolation.constraint.interpolator("must be {value}"), "must be test value") }
         )
     }
 }
@@ -57,9 +45,14 @@ class ConstraintViolationTest {
 class ConstraintViolationExceptionTest {
 
     @Test
-    fun `should create ConstraintViolationException`() {
-        val constraintViolationException = ConstraintViolationException(ConstraintViolationFixture.createSetOfDefaultConstraintViolation())
-        assertThat(constraintViolationException.constraintViolations)
-                .containsExactlyElementsOf(ConstraintViolationFixture.createSetOfDefaultConstraintViolation())
+    fun `should throws ConstraintViolationException`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            throw ConstraintViolationException(ConstraintViolationFixture.createConstraintViolations())
+        }
+
+        assertThat(exception.constraintViolations)
+                .containsExactly(
+                        DefaultConstraintViolation(property = "name", value = "Test", constraint = TestConstraint("test value")),
+                        DefaultConstraintViolation(property = "name", value = "Test2", constraint = TestConstraint2("test value1", "test value2")))
     }
 }

@@ -1,17 +1,16 @@
 package org.valiktor
 
-import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.function.Executable
+import org.junit.jupiter.api.assertAll
 
 private object ConstraintsFixture {
 
-    private class DefaultConstraint : Constraint
+    class DefaultConstraint : Constraint
 
-    private data class TestConstraint(override val name: String,
-                                      override val messageKey: String,
-                                      override val interpolator: (String) -> String) : Constraint
+    data class TestConstraint(override val name: String,
+                              override val messageKey: String,
+                              override val interpolator: (String) -> String) : Constraint
 
     fun createDefaultConstraint(): Constraint = DefaultConstraint()
 
@@ -29,9 +28,9 @@ class ConstraintTest {
         val constraint = ConstraintsFixture.createDefaultConstraint()
 
         assertAll(
-                Executable { assertEquals(constraint.name, "DefaultConstraint") },
-                Executable { assertEquals(constraint.messageKey, "org.valiktor.ConstraintsFixture\$DefaultConstraint.message") },
-                Executable { assertEquals(constraint.interpolator("some message"), "some message") }
+                { assertEquals(constraint.name, "DefaultConstraint") },
+                { assertEquals(constraint.messageKey, "org.valiktor.ConstraintsFixture\$DefaultConstraint.message") },
+                { assertEquals(constraint.interpolator("some message"), "some message") }
         )
     }
 
@@ -40,9 +39,9 @@ class ConstraintTest {
         val constraint = ConstraintsFixture.createTestConstraint()
 
         assertAll(
-                Executable { assertEquals(constraint.name, "TestTestConstraint") },
-                Executable { assertEquals(constraint.messageKey, "org.valiktor.test.constraints.TestConstraint.message") },
-                Executable { assertEquals(constraint.interpolator("some {value} message"), "some test message") }
+                { assertEquals(constraint.name, "TestTestConstraint") },
+                { assertEquals(constraint.messageKey, "org.valiktor.test.constraints.TestConstraint.message") },
+                { assertEquals(constraint.interpolator("some {value} message"), "some test message") }
         )
     }
 }
