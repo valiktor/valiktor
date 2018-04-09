@@ -6,7 +6,7 @@ import org.junit.jupiter.api.assertAll
 
 private object ConstraintsFixture {
 
-    class DefaultConstraint : Constraint
+    class DefaultConstraint : AbstractConstraint()
 
     data class TestConstraint(override val name: String,
                               override val messageKey: String,

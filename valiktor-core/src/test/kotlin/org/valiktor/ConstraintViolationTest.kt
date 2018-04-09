@@ -10,11 +10,11 @@ import org.valiktor.ConstraintViolationFixture.TestConstraint2
 
 private object ConstraintViolationFixture {
 
-    data class TestConstraint(val value: String) : Constraint {
+    data class TestConstraint(val value: String) : AbstractConstraint() {
         override val interpolator: (String) -> String = { it.replace("{value}", value) }
     }
 
-    data class TestConstraint2(val value1: String, val value2: String) : Constraint {
+    data class TestConstraint2(val value1: String, val value2: String) : AbstractConstraint() {
         override val interpolator: (String) -> String = { it.replace("{value1}", value1).replace("{value2}", value2) }
     }
 

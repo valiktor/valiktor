@@ -5,32 +5,18 @@ import java.util.Objects
 /**
  * Represents a validation constraint
  *
- * @property name specifies the name of the constraint
- * @property messageKey specifies the message key in the properties files
- * @property interpolator specifies the interpolation function
+ * @property name specifies the name of the constraint, generally it will be the name of the class
+ * @property messageKey specifies the name of the key in the message properties file
+ * @property interpolator specifies the interpolation function to replace variables in the message
  *
  * @author Rodolpho S. Couto
  * @since 0.1.0
  */
 interface Constraint {
 
-    /**
-     * Specifies the name of the constraint, generally it will be the name of the class
-     */
     val name: String
-        get() = this.javaClass.simpleName
-
-    /**
-     * Specifies the name of the key in the message properties file
-     */
     val messageKey: String
-        get() = "${this.javaClass.name}.message"
-
-    /**
-     * Specifies the interpolation function to replace variables in the message
-     */
     val interpolator: (String) -> String
-        get() = { it }
 }
 
 /**
@@ -40,9 +26,13 @@ interface Constraint {
  * @since 0.1.0
  */
 abstract class AbstractConstraint : Constraint {
+    override val name: String = this.javaClass.simpleName
+    override val messageKey: String = "${this.javaClass.name}.message"
+    override val interpolator: (String) -> String = { it }
+
     override fun equals(other: Any?): Boolean = other != null && other::class == this::class
     override fun hashCode(): Int = Objects.hash()
-    override fun toString(): String = this::class.java.simpleName
+    override fun toString(): String = this.javaClass.simpleName
 }
 
 /**
