@@ -38,7 +38,9 @@ interface Constraint {
  * @see Constraint
  * @since 0.1.0
  */
-class Null : Constraint
+class Null : Constraint {
+    override fun equals(other: Any?): Boolean = other is Null
+}
 
 /**
  * Represents a constraint that validate if the value is not null
@@ -47,7 +49,9 @@ class Null : Constraint
  * @see Constraint
  * @since 0.1.0
  */
-class NotNull : Constraint
+class NotNull : Constraint {
+    override fun equals(other: Any?): Boolean = other is NotNull
+}
 
 /**
  * Represents a constraint that validate if the value is equal to another value
