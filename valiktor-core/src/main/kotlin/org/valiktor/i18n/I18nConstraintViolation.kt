@@ -3,7 +3,8 @@ package org.valiktor.i18n
 import org.valiktor.Constraint
 import org.valiktor.ConstraintViolation
 import org.valiktor.DefaultConstraintViolation
-import java.util.*
+import java.util.Locale
+import java.util.ResourceBundle
 
 private val defaultLocale = Locale.ENGLISH
 private const val defaultBaseName = "org/valiktor/messages"

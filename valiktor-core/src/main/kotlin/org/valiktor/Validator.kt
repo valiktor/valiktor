@@ -1,5 +1,6 @@
 package org.valiktor
 
+import org.valiktor.constraints.*
 import kotlin.reflect.KProperty1
 
 /**
