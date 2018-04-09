@@ -1,5 +1,7 @@
 package org.valiktor
 
+import java.util.Objects
+
 /**
  * Represents a validation constraint
  *
@@ -32,15 +34,25 @@ interface Constraint {
 }
 
 /**
+ * Represents a abstract implementation of [Constraint]
+ *
+ * @author Rodolpho S. Couto
+ * @since 0.1.0
+ */
+abstract class AbstractConstraint : Constraint {
+    override fun equals(other: Any?): Boolean = other != null && other::class == this::class
+    override fun hashCode(): Int = Objects.hash()
+    override fun toString(): String = this::class.java.simpleName
+}
+
+/**
  * Represents a constraint that validate if the value is null
  *
  * @author Rodolpho S. Couto
  * @see Constraint
  * @since 0.1.0
  */
-class Null : Constraint {
-    override fun equals(other: Any?): Boolean = other is Null
-}
+class Null : AbstractConstraint()
 
 /**
  * Represents a constraint that validate if the value is not null
@@ -49,9 +61,7 @@ class Null : Constraint {
  * @see Constraint
  * @since 0.1.0
  */
-class NotNull : Constraint {
-    override fun equals(other: Any?): Boolean = other is NotNull
-}
+class NotNull : AbstractConstraint()
 
 /**
  * Represents a constraint that validate if the value is equal to another value
@@ -62,7 +72,7 @@ class NotNull : Constraint {
  * @see Constraint
  * @since 0.1.0
  */
-data class Equals<out T>(val value: T) : Constraint
+data class Equals<out T>(val value: T) : AbstractConstraint()
 
 /**
  * Represents a constraint that validate if the value isn't equal to another value
@@ -73,7 +83,7 @@ data class Equals<out T>(val value: T) : Constraint
  * @see Constraint
  * @since 0.1.0
  */
-data class NotEquals<out T>(val value: T) : Constraint
+data class NotEquals<out T>(val value: T) : AbstractConstraint()
 
 /**
  * Represents a constraint that validate if the value is equal to one of the values
@@ -84,7 +94,7 @@ data class NotEquals<out T>(val value: T) : Constraint
  * @see Constraint
  * @since 0.1.0
  */
-data class In<out T>(val values: Iterable<T>) : Constraint
+data class In<out T>(val values: Iterable<T>) : AbstractConstraint()
 
 /**
  * Represents a constraint that validate if the value isn't equal to any value
@@ -95,7 +105,7 @@ data class In<out T>(val values: Iterable<T>) : Constraint
  * @see Constraint
  * @since 0.1.0
  */
-data class NotIn<out T>(val values: Iterable<T>) : Constraint
+data class NotIn<out T>(val values: Iterable<T>) : AbstractConstraint()
 
 /**
  * Represents a constraint that validate if the value is valid by passing a custom function
@@ -106,4 +116,4 @@ data class NotIn<out T>(val values: Iterable<T>) : Constraint
  * @see Constraint
  * @since 0.1.0
  */
-data class Valid<in T>(val validator: (T) -> Boolean) : Constraint
+data class Valid<in T>(val validator: (T) -> Boolean) : AbstractConstraint()
