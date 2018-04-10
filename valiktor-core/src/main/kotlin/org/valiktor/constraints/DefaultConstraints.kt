@@ -30,7 +30,9 @@ class NotNull : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-data class Equals<out T>(val value: T) : AbstractConstraint()
+data class Equals<out T>(val value: T) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
+}
 
 /**
  * Represents a constraint that validate if the value isn't equal to another value
@@ -41,7 +43,9 @@ data class Equals<out T>(val value: T) : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-data class NotEquals<out T>(val value: T) : AbstractConstraint()
+data class NotEquals<out T>(val value: T) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
+}
 
 /**
  * Represents a constraint that validate if the value is equal to one of the values
@@ -52,7 +56,9 @@ data class NotEquals<out T>(val value: T) : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-data class In<out T>(val values: Iterable<T>) : AbstractConstraint()
+data class In<out T>(val values: Iterable<T>) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
+}
 
 /**
  * Represents a constraint that validate if the value isn't equal to any value
@@ -63,7 +69,9 @@ data class In<out T>(val values: Iterable<T>) : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-data class NotIn<out T>(val values: Iterable<T>) : AbstractConstraint()
+data class NotIn<out T>(val values: Iterable<T>) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
+}
 
 /**
  * Represents a constraint that validate if the value is valid by passing a custom function
