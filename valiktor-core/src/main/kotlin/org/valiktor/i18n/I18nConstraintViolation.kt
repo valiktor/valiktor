@@ -5,8 +5,8 @@ import org.valiktor.ConstraintViolation
 import org.valiktor.DefaultConstraintViolation
 import java.util.Locale
 import java.util.ResourceBundle
+import java.util.ResourceBundle.getBundle
 
-private val defaultLocale = Locale.ENGLISH
 private const val defaultBaseName = "org/valiktor/messages"
 
 /**
@@ -38,14 +38,14 @@ internal data class DefaultI18nConstraintViolation(override val property: String
  * @param key specifies the message key in the message properties
  * @return a new [I18nConstraintViolation]
  */
-fun ConstraintViolation.toI18n(locale: Locale = defaultLocale,
+fun ConstraintViolation.toI18n(locale: Locale? = null,
                                baseName: String = defaultBaseName,
                                key: String = constraint.messageKey): I18nConstraintViolation =
         DefaultI18nConstraintViolation(
                 property = this.property,
                 value = this.value,
                 constraint = this.constraint,
-                message = this.constraint.interpolator(ResourceBundle.getBundle(baseName, locale).getString(key)))
+                message = this.constraint.interpolator(getBundle(baseName, locale ?: Locale("")).getString(key)))
 
 
 /**
@@ -77,7 +77,7 @@ fun ConstraintViolation.toI18n(resourceBundle: ResourceBundle,
  * @see I18nConstraintViolation
  * @since 0.1.0
  */
-fun Set<ConstraintViolation>.mapToI18n(locale: Locale = defaultLocale,
+fun Set<ConstraintViolation>.mapToI18n(locale: Locale? = null,
                                        baseName: String = defaultBaseName,
                                        key: (ConstraintViolation) -> String = { it.constraint.messageKey }) =
         this.map { it.toI18n(locale, baseName, key(it)) }.toSet()

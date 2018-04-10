@@ -30,7 +30,7 @@ class ConstraintViolationTest {
 
     @Test
     fun `should create ConstraintViolation`() {
-        val constraintViolation: ConstraintViolation = ConstraintViolationFixture.createConstraintViolation()
+        val constraintViolation = ConstraintViolationFixture.createConstraintViolation()
 
         assertAll(
                 { assertEquals(constraintViolation.property, "name") },
