@@ -7,7 +7,7 @@ import java.util.Locale
 import java.util.ResourceBundle
 import java.util.ResourceBundle.getBundle
 
-private const val defaultBaseName = "org/valiktor/messages"
+private const val DEFAULT_BASE_NAME = "org/valiktor/messages"
 
 /**
  * Represents a constraint violation with internationalized message
@@ -39,7 +39,7 @@ internal data class DefaultI18nConstraintViolation(override val property: String
  * @return a new [I18nConstraintViolation]
  */
 fun ConstraintViolation.toI18n(locale: Locale? = null,
-                               baseName: String = defaultBaseName,
+                               baseName: String = DEFAULT_BASE_NAME,
                                key: String = constraint.messageKey): I18nConstraintViolation =
         DefaultI18nConstraintViolation(
                 property = this.property,
@@ -78,7 +78,7 @@ fun ConstraintViolation.toI18n(resourceBundle: ResourceBundle,
  * @since 0.1.0
  */
 fun Set<ConstraintViolation>.mapToI18n(locale: Locale? = null,
-                                       baseName: String = defaultBaseName,
+                                       baseName: String = DEFAULT_BASE_NAME,
                                        key: (ConstraintViolation) -> String = { it.constraint.messageKey }) =
         this.map { it.toI18n(locale, baseName, key(it)) }.toSet()
 
