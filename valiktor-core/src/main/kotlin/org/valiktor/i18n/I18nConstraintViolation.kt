@@ -41,7 +41,7 @@ interface I18nConstraintViolation : ConstraintViolation {
 }
 
 internal data class DefaultI18nConstraintViolation(override val property: String,
-                                                   override val value: Any?,
+                                                   override val value: Any? = null,
                                                    override val constraint: Constraint,
                                                    override val message: String) :
         ConstraintViolation by DefaultConstraintViolation(property, value, constraint), I18nConstraintViolation

@@ -36,7 +36,7 @@ interface ConstraintViolation {
 }
 
 internal data class DefaultConstraintViolation(override val property: String,
-                                               override val value: Any?,
+                                               override val value: Any? = null,
                                                override val constraint: Constraint) : ConstraintViolation
 
 /**

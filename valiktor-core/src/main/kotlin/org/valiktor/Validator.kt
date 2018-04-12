@@ -68,12 +68,15 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @return the same receiver property
      */
     @JvmName("validate")
-    fun <T> KProperty1<E, T>.validate(block: ValidatorDsl<T>.() -> Unit): KProperty1<E, T> {
-        constraints += ValidatorDsl(this.get(obj)).apply(block).constraints.map {
-            DefaultConstraintViolation(
-                    property = "${this.name}.${it.property}",
-                    value = this.get(obj) as Any,
-                    constraint = it.constraint)
+    fun <T> KProperty1<E, T?>.validate(block: ValidatorDsl<T>.() -> Unit): KProperty1<E, T?> {
+        val value = this.get(obj)
+        if (value != null) {
+            constraints += ValidatorDsl(value).apply(block).constraints.map {
+                DefaultConstraintViolation(
+                        property = "${this.name}.${it.property}",
+                        value = it.value,
+                        constraint = it.constraint)
+            }
         }
         return this
     }
@@ -91,7 +94,7 @@ open class ValidatorDsl<E>(private val obj: E) {
             constraints += ValidatorDsl(value).apply(block).constraints.map {
                 DefaultConstraintViolation(
                         property = "${this.name}[$index].${it.property}",
-                        value = value as Any,
+                        value = value as? Any,
                         constraint = it.constraint)
             }
         }
@@ -111,7 +114,7 @@ open class ValidatorDsl<E>(private val obj: E) {
             constraints += ValidatorDsl(value).apply(block).constraints.map {
                 DefaultConstraintViolation(
                         property = "${this.name}[$index].${it.property}",
-                        value = value as Any,
+                        value = value as? Any,
                         constraint = it.constraint)
             }
         }
@@ -143,7 +146,7 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @receiver the property to be validated
      * @return the same receiver property
      */
-    fun <T> KProperty1<E, T>.isNull(): KProperty1<E, T> =
+    fun <T> KProperty1<E, T?>.isNull(): KProperty1<E, T?> =
             this.validate(Null(), { it == null })
 
     /**
@@ -152,7 +155,7 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @receiver the property to be validated
      * @return the same receiver property
      */
-    fun <T> KProperty1<E, T>.isNotNull(): KProperty1<E, T> =
+    fun <T> KProperty1<E, T?>.isNotNull(): KProperty1<E, T?> =
             this.validate(NotNull(), { it != null })
 
     /**
@@ -163,7 +166,7 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @return the same receiver property
      */
     fun <T> KProperty1<E, T>.isEqualTo(value: T): KProperty1<E, T> =
-            this.validate(Equals(value), { it == value })
+            this.validate(Equals(value), { it == null || it == value })
 
     /**
      * Validates if the property value isn't equal to another value
@@ -173,7 +176,7 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @return the same receiver property
      */
     fun <T> KProperty1<E, T>.isNotEqualTo(value: T): KProperty1<E, T> =
-            this.validate(NotEquals(value), { it != value })
+            this.validate(NotEquals(value), { it == null || it != value })
 
     /**
      * Validates if the property value is equal to one of the values
@@ -183,7 +186,7 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @return the same receiver property
      */
     fun <T> KProperty1<E, T>.isIn(vararg values: T): KProperty1<E, T> =
-            this.validate(In(values.toSet()), { values.contains(it) })
+            this.validate(In(values.toSet()), { it == null || values.contains(it) })
 
     /**
      * Validates if the property value is equal to one of the values
@@ -193,7 +196,7 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @return the same receiver property
      */
     fun <T> KProperty1<E, T>.isIn(values: Iterable<T>): KProperty1<E, T> =
-            this.validate(In(values), { values.contains(it) })
+            this.validate(In(values), { it == null || values.contains(it) })
 
     /**
      * Validates if the property value isn't equal to any value
@@ -203,7 +206,7 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @return the same receiver property
      */
     fun <T> KProperty1<E, T>.isNotIn(vararg values: T): KProperty1<E, T> =
-            this.validate(NotIn(values.toSet()), { !values.contains(it) })
+            this.validate(NotIn(values.toSet()), { it == null || !values.contains(it) })
 
     /**
      * Validates if the property value isn't equal to any value
@@ -213,7 +216,7 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @return the same receiver property
      */
     fun <T> KProperty1<E, T>.isNotIn(values: Iterable<T>): KProperty1<E, T> =
-            this.validate(NotIn(values), { !values.contains(it) })
+            this.validate(NotIn(values), { it == null || !values.contains(it) })
 
     /**
      * Validates if the property is valid by passing a custom function
@@ -223,5 +226,5 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @return the same receiver property
      */
     fun <T> KProperty1<E, T>.isValid(validator: (T) -> Boolean): KProperty1<E, T> =
-            this.validate(Valid(validator), validator)
+            this.validate(Valid(validator), { it == null || validator(it) })
 }
