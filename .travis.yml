@@ -1,6 +1,9 @@
 language: java
 jdk:
   - oraclejdk8
-script: ./gradlew clean build
+install:
+  - ./gradlew -v
+script:
+  - ./gradlew clean build
 after_success:
   - bash <(curl -s https://codecov.io/bash)
