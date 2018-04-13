@@ -8,6 +8,7 @@ import org.valiktor.ValidatorFixture.Address
 import org.valiktor.ValidatorFixture.City
 import org.valiktor.ValidatorFixture.Company
 import org.valiktor.ValidatorFixture.Country
+import org.valiktor.ValidatorFixture.Dependent
 import org.valiktor.ValidatorFixture.Employee
 import org.valiktor.ValidatorFixture.State
 import org.valiktor.constraints.*
@@ -30,7 +31,8 @@ private object ValidatorFixture {
             Locales.EN,
             Locales.PT_BR)
 
-    data class Employee(val id: Int? = null, val name: String? = null, val company: Company? = null, val address: Address? = null)
+    data class Employee(val id: Int? = null, val name: String? = null, val company: Company? = null, val address: Address? = null, val dependents: Array<Dependent>? = null)
+    data class Dependent(val id: Int? = null, val name: String? = null)
     data class Company(val id: Int? = null, val name: String? = null, val addresses: List<Address>? = null)
     data class Address(val id: Int? = null, val street: String? = null, val number: Int? = null, val city: City? = null)
     data class City(val id: Int? = null, val name: String? = null, val state: State? = null)
@@ -455,6 +457,151 @@ class ValidatorTest {
                         DefaultI18nConstraintViolation(property = "address.city.id", constraint = NotNull(), message = "Não deve ser nulo"),
                         DefaultI18nConstraintViolation(property = "address.city.state.id", constraint = NotNull(), message = "Não deve ser nulo"),
                         DefaultI18nConstraintViolation(property = "address.city.state.country.id", constraint = NotNull(), message = "Não deve ser nulo"))))
+    }
+
+    @Test
+    fun `inner null iterable properties should be valid`() {
+        Employee(company = Company()).validate {
+            Employee::company.validate {
+                Company::addresses.validateForEach {
+                    Address::id.isNotNull()
+                    Address::city.validate {
+                        City::id.isNotNull()
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `inner iterable properties should be valid`() {
+        Employee(company = Company(addresses = listOf(
+                Address(id = 1, city = City(id = 1)),
+                Address(id = 1, city = City(id = 1)),
+                Address(id = 1, city = City(id = 1)))))
+                .validate {
+                    Employee::company.validate {
+                        Company::addresses.validateForEach {
+                            Address::id.isNotNull()
+                            Address::city.validate {
+                                City::id.isNotNull()
+                            }
+                        }
+                    }
+                }
+    }
+
+    @Test
+    fun `inner iterable properties should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(company = Company(addresses = listOf(
+                    Address(city = City()),
+                    Address(city = City()),
+                    Address(city = City()))))
+                    .validate {
+                        Employee::company.validate {
+                            Company::addresses.validateForEach {
+                                Address::id.isNotNull()
+                                Address::city.validate {
+                                    City::id.isNotNull()
+                                }
+                            }
+                        }
+                    }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "company.addresses[0].id", constraint = NotNull()),
+                DefaultConstraintViolation(property = "company.addresses[0].city.id", constraint = NotNull()),
+                DefaultConstraintViolation(property = "company.addresses[1].id", constraint = NotNull()),
+                DefaultConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull()),
+                DefaultConstraintViolation(property = "company.addresses[2].id", constraint = NotNull()),
+                DefaultConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull()))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "company.addresses[0].id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[0].city.id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[1].id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[2].id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull(), message = "Must not be null"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "company.addresses[0].id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[0].city.id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[1].id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[2].id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull(), message = "Must not be null"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "company.addresses[0].id", constraint = NotNull(), message = "Não deve ser nulo"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[0].city.id", constraint = NotNull(), message = "Não deve ser nulo"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[1].id", constraint = NotNull(), message = "Não deve ser nulo"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull(), message = "Não deve ser nulo"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[2].id", constraint = NotNull(), message = "Não deve ser nulo"),
+                        DefaultI18nConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull(), message = "Não deve ser nulo"))))
+    }
+
+    @Test
+    fun `inner null array properties should be valid`() {
+        Employee().validate {
+            Employee::dependents.validateForEach {
+                Dependent::id.isNotNull()
+            }
+        }
+    }
+
+    @Test
+    fun `inner array properties should be valid`() {
+        Employee(dependents = arrayOf(
+                Dependent(id = 1),
+                Dependent(id = 1),
+                Dependent(id = 1)))
+                .validate {
+                    Employee::dependents.validateForEach {
+                        Dependent::id.isNotNull()
+                    }
+                }
+    }
+
+    @Test
+    fun `inner array properties should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(dependents = arrayOf(
+                    Dependent(),
+                    Dependent(),
+                    Dependent()))
+                    .validate {
+                        Employee::dependents.validateForEach {
+                            Dependent::id.isNotNull()
+                        }
+                    }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "dependents[0].id", constraint = NotNull()),
+                DefaultConstraintViolation(property = "dependents[1].id", constraint = NotNull()),
+                DefaultConstraintViolation(property = "dependents[2].id", constraint = NotNull()))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "dependents[0].id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "dependents[1].id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "dependents[2].id", constraint = NotNull(), message = "Must not be null"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "dependents[0].id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "dependents[1].id", constraint = NotNull(), message = "Must not be null"),
+                        DefaultI18nConstraintViolation(property = "dependents[2].id", constraint = NotNull(), message = "Must not be null"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "dependents[0].id", constraint = NotNull(), message = "Não deve ser nulo"),
+                        DefaultI18nConstraintViolation(property = "dependents[1].id", constraint = NotNull(), message = "Não deve ser nulo"),
+                        DefaultI18nConstraintViolation(property = "dependents[2].id", constraint = NotNull(), message = "Não deve ser nulo"))))
     }
 
     @Test

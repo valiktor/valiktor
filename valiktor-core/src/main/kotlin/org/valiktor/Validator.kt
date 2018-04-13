@@ -88,13 +88,13 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @receiver the property to be validated
      * @return the same receiver property
      */
-    @JvmName("validateIterable")
-    fun <T> KProperty1<E, Iterable<T>>.validate(block: ValidatorDsl<T>.() -> Unit): KProperty1<E, Iterable<T>> {
-        this.get(obj).forEachIndexed { index, value ->
+    @JvmName("validateForEachIterable")
+    fun <T> KProperty1<E, Iterable<T>?>.validateForEach(block: ValidatorDsl<T>.() -> Unit): KProperty1<E, Iterable<T>?> {
+        this.get(obj)?.forEachIndexed { index, value ->
             constraints += ValidatorDsl(value).apply(block).constraints.map {
                 DefaultConstraintViolation(
                         property = "${this.name}[$index].${it.property}",
-                        value = value as? Any,
+                        value = it.value,
                         constraint = it.constraint)
             }
         }
@@ -108,13 +108,13 @@ open class ValidatorDsl<E>(private val obj: E) {
      * @receiver the property to be validated
      * @return the same receiver property
      */
-    @JvmName("validateArray")
-    fun <T> KProperty1<E, Array<T>>.validate(block: ValidatorDsl<T>.() -> Unit): KProperty1<E, Array<T>> {
-        this.get(obj).forEachIndexed { index, value ->
+    @JvmName("validateForEachArray")
+    fun <T> KProperty1<E, Array<T>?>.validateForEach(block: ValidatorDsl<T>.() -> Unit): KProperty1<E, Array<T>?> {
+        this.get(obj)?.forEachIndexed { index, value ->
             constraints += ValidatorDsl(value).apply(block).constraints.map {
                 DefaultConstraintViolation(
                         property = "${this.name}[$index].${it.property}",
-                        value = value as? Any,
+                        value = it.value,
                         constraint = it.constraint)
             }
         }
