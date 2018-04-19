@@ -227,4 +227,40 @@ open class ValidatorDsl<E>(private val obj: E) {
      */
     fun <T> KProperty1<E, T?>.isValid(validator: (T) -> Boolean): KProperty1<E, T?> =
             this.validate(Valid(validator), { it == null || validator(it) })
+
+    /**
+     * Validates if the [String] property is empty
+     *
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.isEmpty(): KProperty1<E, String?> =
+            this.validate(Empty(), { it == null || it.isEmpty() })
+
+    /**
+     * Validates if the [String] property is not empty
+     *
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.isNotEmpty(): KProperty1<E, String?> =
+            this.validate(NotEmpty(), { it != null && it.isNotEmpty() })
+
+    /**
+     * Validates if the [String] property is blank
+     *
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.isBlank(): KProperty1<E, String?> =
+            this.validate(Blank(), { it == null || it.isBlank() })
+
+    /**
+     * Validates if the [String] property is not blank
+     *
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.isNotBlank(): KProperty1<E, String?> =
+            this.validate(NotBlank(), { it != null && it.isNotBlank() })
 }

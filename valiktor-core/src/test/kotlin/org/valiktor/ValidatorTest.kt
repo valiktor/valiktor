@@ -31,16 +31,39 @@ private object ValidatorFixture {
             Locales.EN,
             Locales.PT_BR)
 
-    data class Employee(val id: Int? = null, val name: String? = null, val company: Company? = null, val address: Address? = null, val dependents: Array<Dependent>? = null)
-    data class Dependent(val id: Int? = null, val name: String? = null)
-    data class Company(val id: Int? = null, val name: String? = null, val addresses: List<Address>? = null)
-    data class Address(val id: Int? = null, val street: String? = null, val number: Int? = null, val city: City? = null)
-    data class City(val id: Int? = null, val name: String? = null, val state: State? = null)
-    data class State(val id: Int? = null, val name: String? = null, val country: Country? = null)
-    data class Country(val id: Int? = null, val name: String? = null)
+    data class Employee(val id: Int? = null,
+                        val name: String? = null,
+                        val email: String? = null,
+                        val username: String? = null,
+                        val company: Company? = null,
+                        val address: Address? = null,
+                        val dependents: Array<Dependent>? = null)
+
+    data class Dependent(val id: Int? = null,
+                         val name: String? = null)
+
+    data class Company(val id: Int? = null,
+                       val name: String? = null,
+                       val addresses: List<Address>? = null)
+
+    data class Address(val id: Int? = null,
+                       val street: String? = null,
+                       val number: Int? = null,
+                       val city: City? = null)
+
+    data class City(val id: Int? = null,
+                    val name: String? = null,
+                    val state: State? = null)
+
+    data class State(val id: Int? = null,
+                     val name: String? = null,
+                     val country: Country? = null)
+
+    data class Country(val id: Int? = null,
+                       val name: String? = null)
 }
 
-class ValidatorTest {
+class DefaultConstraintsValidatorTest {
 
     @Test
     fun `isNull with null property should be valid`() {
@@ -630,5 +653,164 @@ class ValidatorTest {
                 entry(Locales.PT_BR, setOf(
                         DefaultI18nConstraintViolation(property = "id", constraint = NotNull(), message = "Não deve ser nulo"),
                         DefaultI18nConstraintViolation(property = "name", constraint = NotNull(), message = "Não deve ser nulo"))))
+    }
+}
+
+class TextConstraintsValidatorTest {
+
+    @Test
+    fun `isEmpty with null property should be valid`() {
+        Employee().validate {
+            Employee::name.isEmpty()
+        }
+    }
+
+    @Test
+    fun `isEmpty with empty property should be valid`() {
+        Employee(name = "").validate {
+            Employee::name.isEmpty()
+        }
+    }
+
+    @Test
+    fun `isEmpty with blank property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(name = " ").validate {
+                Employee::name.isEmpty()
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = " ", constraint = Empty()))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = " ", constraint = Empty(), message = "Must be empty"))),
+                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = " ", constraint = Empty(), message = "Must be empty"))),
+                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = " ", constraint = Empty(), message = "Deve ser vazio"))))
+    }
+
+    @Test
+    fun `isNotEmpty with blank property should be valid`() {
+        Employee(name = " ").validate {
+            Employee::name.isNotEmpty()
+        }
+    }
+
+    @Test
+    fun `isNotEmpty with null or empty property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(email = "").validate {
+                Employee::name.isNotEmpty()
+                Employee::email.isNotEmpty()
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", constraint = NotEmpty()),
+                DefaultConstraintViolation(property = "email", value = "", constraint = NotEmpty()))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", constraint = NotEmpty(), message = "Must not be empty"),
+                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotEmpty(), message = "Must not be empty"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", constraint = NotEmpty(), message = "Must not be empty"),
+                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotEmpty(), message = "Must not be empty"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", constraint = NotEmpty(), message = "Não deve ser vazio"),
+                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotEmpty(), message = "Não deve ser vazio"))))
+    }
+
+    @Test
+    fun `isBlank with null property should be valid`() {
+        Employee().validate {
+            Employee::name.isBlank()
+        }
+    }
+
+    @Test
+    fun `isBlank with empty property should be valid`() {
+        Employee(name = "").validate {
+            Employee::name.isBlank()
+        }
+    }
+
+    @Test
+    fun `isBlank with blank property should be valid`() {
+        Employee(name = " ").validate {
+            Employee::name.isBlank()
+        }
+    }
+
+    @Test
+    fun `isBlank with not blank property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(name = "a").validate {
+                Employee::name.isBlank()
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "a", constraint = Blank()))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = Blank(), message = "Must be blank"))),
+                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = Blank(), message = "Must be blank"))),
+                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = Blank(), message = "Deve estar em branco"))))
+    }
+
+    @Test
+    fun `isNotBlank with not blank property should be valid`() {
+        Employee(name = "a").validate {
+            Employee::name.isNotEmpty()
+        }
+    }
+
+    @Test
+    fun `isNotBlank with null or empty or blank property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(email = "", username = " ").validate {
+                Employee::name.isNotBlank()
+                Employee::email.isNotBlank()
+                Employee::username.isNotBlank()
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", constraint = NotBlank()),
+                DefaultConstraintViolation(property = "email", value = "", constraint = NotBlank()),
+                DefaultConstraintViolation(property = "username", value = " ", constraint = NotBlank()))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", constraint = NotBlank(), message = "Must not be blank"),
+                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotBlank(), message = "Must not be blank"),
+                        DefaultI18nConstraintViolation(property = "username", value = " ", constraint = NotBlank(), message = "Must not be blank"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", constraint = NotBlank(), message = "Must not be blank"),
+                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotBlank(), message = "Must not be blank"),
+                        DefaultI18nConstraintViolation(property = "username", value = " ", constraint = NotBlank(), message = "Must not be blank"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", constraint = NotBlank(), message = "Não deve estar em branco"),
+                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotBlank(), message = "Não deve estar em branco"),
+                        DefaultI18nConstraintViolation(property = "username", value = " ", constraint = NotBlank(), message = "Não deve estar em branco"))))
     }
 }
