@@ -6,3 +6,23 @@
 [![Apache License](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](LICENSE)
 
 Valiktor is a type-safe, simple and flexible fluent DSL to validate objects written in Kotlin.
+
+Example:
+
+```kotlin
+import org.valiktor.*
+
+data class Employee(val id: Int, val name: String, val email: String)
+
+fun main(args: Array<String>) {
+    val employee = Employee(id = 1, name = "John", email = "john@company.com")
+    
+    employee.validate {
+        Employee::id.isNotNull()
+        Employee::name.isNotBlank().hasSize(min = 1, max = 100)
+        Employee::email.isNotBlank().hasSize(min = 1, max = 50).isEmail()
+    }
+}
+```
+
+* Validates the properties and throws a exception with constraint violations
