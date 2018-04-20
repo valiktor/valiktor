@@ -75,3 +75,42 @@ data class Size(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VALUE) : Ab
     override val interpolator: (String) -> String =
             { it.replace("{min}", min.toString()).replace("{max}", max.toString()) }
 }
+
+/**
+ * Represents a constraint that validate if the value contains another value
+ *
+ * @property value specifies the value that should contain
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class Contains(val value: String) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{value}", value) }
+}
+
+/**
+ * Represents a constraint that validate if the value contains all values
+ *
+ * @property values specifies the all values that should contain
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class ContainsAll(val values: Iterable<String>) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
+}
+
+/**
+ * Represents a constraint that validate if the value contains any value
+ *
+ * @property values specifies the values that one should contain
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class ContainsAny(val values: Iterable<String>) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
+}

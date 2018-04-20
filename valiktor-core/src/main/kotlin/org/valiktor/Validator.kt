@@ -274,4 +274,104 @@ open class ValidatorDsl<E>(private val obj: E) {
      */
     fun KProperty1<E, String?>.hasSize(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): KProperty1<E, String?> =
             this.validate(Size(min, max), { it == null || IntRange(min, max).contains(it.length) })
+
+    /**
+     * Validates if the [String] property contains the value
+     *
+     * @param value specifies the value that should contain
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.contains(value: String): KProperty1<E, String?> =
+            this.validate(Contains(value), { it == null || it.contains(value) })
+
+    /**
+     * Validates if the [String] property contains the value ignoring case sensitive
+     *
+     * @param value specifies the value that should contain
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.containsIgnoringCase(value: String): KProperty1<E, String?> =
+            this.validate(Contains(value), { it == null || it.contains(other = value, ignoreCase = true) })
+
+    /**
+     * Validates if the [String] property contains all values
+     *
+     * @param values specifies the all values that should contain
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.containsAll(vararg values: String): KProperty1<E, String?> =
+            this.validate(ContainsAll(values.toSet()), { it == null || values.toSet().all { e -> it.contains(e) } })
+
+    /**
+     * Validates if the [String] property contains all values
+     *
+     * @param values specifies the all values that should contain
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.containsAll(values: Iterable<String>): KProperty1<E, String?> =
+            this.validate(ContainsAll(values), { it == null || values.all { e -> it.contains(e) } })
+
+    /**
+     * Validates if the [String] property contains all values ignoring case sensitive
+     *
+     * @param values specifies the all values that should contain
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.containsAllIgnoringCase(vararg values: String): KProperty1<E, String?> =
+            this.validate(ContainsAll(values.toSet()), { it == null || values.toSet().all { e -> it.contains(other = e, ignoreCase = true) } })
+
+    /**
+     * Validates if the [String] property contains all values ignoring case sensitive
+     *
+     * @param values specifies the all values that should contain
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.containsAllIgnoringCase(values: Iterable<String>): KProperty1<E, String?> =
+            this.validate(ContainsAll(values), { it == null || values.all { e -> it.contains(other = e, ignoreCase = true) } })
+
+    /**
+     * Validates if the [String] property contains any value
+     *
+     * @param values specifies the values that one should contain
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.containsAny(vararg values: String): KProperty1<E, String?> =
+            this.validate(ContainsAny(values.toSet()), { it == null || values.toSet().any { e -> it.contains(e) } })
+
+    /**
+     * Validates if the [String] property contains any value
+     *
+     * @param values specifies the values that one should contain
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.containsAny(values: Iterable<String>): KProperty1<E, String?> =
+            this.validate(ContainsAny(values), { it == null || values.any { e -> it.contains(e) } })
+
+    /**
+     * Validates if the [String] property contains any value ignoring case sensitive
+     *
+     * @param values specifies the values that one should contain
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.containsAnyIgnoringCase(vararg values: String): KProperty1<E, String?> =
+            this.validate(ContainsAny(values.toSet()), { it == null || values.toSet().any { e -> it.contains(other = e, ignoreCase = true) } })
+
+    /**
+     * Validates if the [String] property contains any value ignoring case sensitive
+     *
+     * @param values specifies the values that one should contain
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.containsAnyIgnoringCase(values: Iterable<String>): KProperty1<E, String?> =
+            this.validate(ContainsAny(values), { it == null || values.any { e -> it.contains(other = e, ignoreCase = true) } })
 }
