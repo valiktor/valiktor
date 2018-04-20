@@ -265,6 +265,66 @@ open class ValidatorDsl<E>(private val obj: E) {
             this.validate(NotBlank(), { it != null && it.isNotBlank() })
 
     /**
+     * Validates if the property value is equal to another value ignoring case sensitive
+     *
+     * @param value specifies the value that should be equal
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.isEqualToIgnoringCase(value: String): KProperty1<E, String?> =
+            this.validate(Equals(value), { it == null || it.equals(other = value, ignoreCase = true) })
+
+    /**
+     * Validates if the property value isn't equal to another value ignoring case sensitive
+     *
+     * @param value specifies the value that should not be equal
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.isNotEqualToIgnoringCase(value: String): KProperty1<E, String?> =
+            this.validate(NotEquals(value), { it == null || !it.equals(other = value, ignoreCase = true) })
+
+    /**
+     * Validates if the property value is equal to one of the values ignoring case sensitive
+     *
+     * @param values specifies the array of values to be compared
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.isInIgnoringCase(vararg values: String): KProperty1<E, String?> =
+            this.validate(In(values.toSet()), { it == null || values.toSet().any { e -> it.equals(other = e, ignoreCase = true) } })
+
+    /**
+     * Validates if the property value is equal to one of the values ignoring case sensitive
+     *
+     * @param values specifies the iterable of values to be compared
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.isInIgnoringCase(values: Iterable<String>): KProperty1<E, String?> =
+            this.validate(In(values), { it == null || values.any { e -> it.equals(other = e, ignoreCase = true) } })
+
+    /**
+     * Validates if the property value isn't equal to any value ignoring case sensitive
+     *
+     * @param values specifies the array of values to be compared
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.isNotInIgnoringCase(vararg values: String): KProperty1<E, String?> =
+            this.validate(NotIn(values.toSet()), { it == null || values.toSet().none { e -> it.equals(other = e, ignoreCase = true) } })
+
+    /**
+     * Validates if the property value isn't equal to any value ignoring case sensitive
+     *
+     * @param values specifies the iterable of values to be compared
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.isNotInIgnoringCase(values: Iterable<String>): KProperty1<E, String?> =
+            this.validate(NotIn(values), { it == null || values.none { e -> it.equals(other = e, ignoreCase = true) } })
+
+    /**
      * Validates if the [String] property length is within the limits (min and max)
      *
      * @param min specifies the minimum size

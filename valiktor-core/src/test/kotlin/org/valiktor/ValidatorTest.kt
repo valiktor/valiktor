@@ -815,6 +815,222 @@ class TextConstraintsValidatorTest {
     }
 
     @Test
+    fun `isEqualToIgnoringCase with null property should be valid`() {
+        Employee().validate {
+            Employee::name.isEqualToIgnoringCase("a")
+        }
+    }
+
+    @Test
+    fun `isEqualToIgnoringCase with same value should be valid`() {
+        Employee(name = "A").validate {
+            Employee::name.isEqualToIgnoringCase("a")
+        }
+    }
+
+    @Test
+    fun `isEqualToIgnoringCase with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(name = "a").validate {
+                Employee::name.isEqualToIgnoringCase("b")
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "a", constraint = Equals("b")))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = Equals("b"), message = "Must be equal to b"))),
+                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = Equals("b"), message = "Must be equal to b"))),
+                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = Equals("b"), message = "Deve ser igual a b"))))
+    }
+
+    @Test
+    fun `isNotEqualToIgnoringCase with null property should be valid`() {
+        Employee().validate {
+            Employee::name.isNotEqualToIgnoringCase("a")
+        }
+    }
+
+    @Test
+    fun `isNotEqualToIgnoringCase with different value should be valid`() {
+        Employee(name = "a").validate {
+            Employee::name.isNotEqualToIgnoringCase("b")
+        }
+    }
+
+    @Test
+    fun `isNotEqualToIgnoringCase with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(name = "a").validate {
+                Employee::name.isNotEqualToIgnoringCase("A")
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "a", constraint = NotEquals("A")))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = NotEquals("A"), message = "Must not be equal to A"))),
+                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = NotEquals("A"), message = "Must not be equal to A"))),
+                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = NotEquals("A"), message = "Não deve ser igual a A"))))
+    }
+
+    @Test
+    fun `isInIgnoringCase vararg with null property should be valid`() {
+        Employee().validate {
+            Employee::name.isInIgnoringCase("a", "b", "c")
+        }
+    }
+
+    @Test
+    fun `isInIgnoringCase vararg with same value should be valid`() {
+        Employee(name = "A").validate {
+            Employee::name.isInIgnoringCase("a", "b", "c")
+        }
+    }
+
+    @Test
+    fun `isInIgnoringCase vararg with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(name = "a").validate {
+                Employee::name.isInIgnoringCase("b", "c")
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "a", constraint = In(setOf("b", "c"))))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = In(setOf("b", "c")), message = "Must be in b, c"))),
+                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = In(setOf("b", "c")), message = "Must be in b, c"))),
+                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = In(setOf("b", "c")), message = "Deve ser um desses: b, c"))))
+    }
+
+    @Test
+    fun `isInIgnoringCase iterable with null property should be valid`() {
+        Employee().validate {
+            Employee::name.isInIgnoringCase(listOf("a", "b", "c"))
+        }
+    }
+
+    @Test
+    fun `isInIgnoringCase iterable with same value should be valid`() {
+        Employee(name = "A").validate {
+            Employee::name.isInIgnoringCase(listOf("a", "b", "c"))
+        }
+    }
+
+    @Test
+    fun `isInIgnoringCase iterable with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(name = "a").validate {
+                Employee::name.isInIgnoringCase(listOf("b", "c"))
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "a", constraint = In(listOf("b", "c"))))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = In(listOf("b", "c")), message = "Must be in b, c"))),
+                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = In(listOf("b", "c")), message = "Must be in b, c"))),
+                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "a", constraint = In(listOf("b", "c")), message = "Deve ser um desses: b, c"))))
+    }
+
+    @Test
+    fun `isNotInIgnoringCase vararg with null property should be valid`() {
+        Employee().validate {
+            Employee::name.isNotInIgnoringCase("a", "b", "c")
+        }
+    }
+
+    @Test
+    fun `isNotInIgnoringCase vararg with different value should be valid`() {
+        Employee(name = "a").validate {
+            Employee::name.isNotInIgnoringCase("b", "c")
+        }
+    }
+
+    @Test
+    fun `isNotInIgnoringCase vararg with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(name = "A").validate {
+                Employee::name.isNotInIgnoringCase("a", "b", "c")
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c"))))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c")), message = "Must not be in a, b, c"))),
+                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c")), message = "Must not be in a, b, c"))),
+                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c")), message = "Não deve ser um desses: a, b, c"))))
+    }
+
+    @Test
+    fun `isNotInIgnoringCase iterable with null property should be valid`() {
+        Employee().validate {
+            Employee::name.isNotInIgnoringCase(listOf("a", "b", "c"))
+        }
+    }
+
+    @Test
+    fun `isNotInIgnoringCase iterable with different value should be valid`() {
+        Employee(name = "a").validate {
+            Employee::name.isNotInIgnoringCase(listOf("b", "c"))
+        }
+    }
+
+    @Test
+    fun `isNotInIgnoringCase iterable with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(name = "A").validate {
+                Employee::name.isNotInIgnoringCase(listOf("a", "b", "c"))
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c"))))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c")), message = "Must not be in a, b, c"))),
+                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c")), message = "Must not be in a, b, c"))),
+                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
+                        property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c")), message = "Não deve ser um desses: a, b, c"))))
+    }
+
+    @Test
     fun `size with null property should be valid`() {
         Employee().validate {
             Employee::name.hasSize(min = 1, max = 10)
