@@ -114,3 +114,42 @@ data class ContainsAll(val values: Iterable<String>) : AbstractConstraint() {
 data class ContainsAny(val values: Iterable<String>) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
 }
+
+/**
+ * Represents a constraint that validate if the value doesn't contain another value
+ *
+ * @property value specifies the value that shouldn't contain
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class NotContain(val value: String) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
+}
+
+/**
+ * Represents a constraint that validate if the value doesn't contain all values
+ *
+ * @property values specifies the all values that shouldn't contain
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class NotContainAll(val values: Iterable<String>) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
+}
+
+/**
+ * Represents a constraint that validate if the value doesn't contain any value
+ *
+ * @property values specifies the values that one shouldn't contain
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class NotContainAny(val values: Iterable<String>) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
+}
