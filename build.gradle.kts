@@ -6,12 +6,14 @@ fun DependencyHandler.assertj(module: String) = "org.assertj:assertj-$module:3.9
 
 plugins {
     kotlin("jvm") version "1.2.31"
+    id("com.adarshr.test-logger") version "1.2.0"
 }
 
 subprojects {
     apply {
         plugin("kotlin")
         plugin("jacoco")
+        plugin("com.adarshr.test-logger")
     }
 
     group = "org.valiktor"
@@ -28,6 +30,10 @@ subprojects {
         testImplementation(assertj("core"))
         testImplementation(junit("api"))
         testRuntimeOnly(junit("engine"))
+    }
+
+    testlogger {
+        setTheme("mocha")
     }
 
     tasks {
