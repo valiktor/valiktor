@@ -777,7 +777,7 @@ class TextConstraintsValidatorTest {
     @Test
     fun `isNotBlank with not blank property should be valid`() {
         Employee(name = "a").validate {
-            Employee::name.isNotEmpty()
+            Employee::name.isNotBlank()
         }
     }
 
@@ -832,6 +832,20 @@ class TextConstraintsValidatorTest {
     fun `size with valid max length property should be valid`() {
         Employee(name = "John").validate {
             Employee::name.hasSize(max = 4)
+        }
+    }
+
+    @Test
+    fun `size with valid min and max length property should be valid`() {
+        Employee(name = "John").validate {
+            Employee::name.hasSize(min = 4, max = 4)
+        }
+    }
+
+    @Test
+    fun `size without min and max should be valid`() {
+        Employee(name = "John").validate {
+            Employee::name.hasSize()
         }
     }
 
