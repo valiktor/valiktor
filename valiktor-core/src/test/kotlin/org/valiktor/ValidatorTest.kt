@@ -813,4 +813,58 @@ class TextConstraintsValidatorTest {
                         DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotBlank(), message = "Não deve estar em branco"),
                         DefaultI18nConstraintViolation(property = "username", value = " ", constraint = NotBlank(), message = "Não deve estar em branco"))))
     }
+
+    @Test
+    fun `size with null property should be valid`() {
+        Employee().validate {
+            Employee::name.hasSize(min = 1, max = 10)
+        }
+    }
+
+    @Test
+    fun `size with valid min length property should be valid`() {
+        Employee(name = "John").validate {
+            Employee::name.hasSize(min = 4)
+        }
+    }
+
+    @Test
+    fun `size with valid max length property should be valid`() {
+        Employee(name = "John").validate {
+            Employee::name.hasSize(max = 4)
+        }
+    }
+
+    @Test
+    fun `size with invalid min and max length property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            Employee(name = "John", email = "john@company.com", username = "john").validate {
+                Employee::name.hasSize(min = 5)
+                Employee::email.hasSize(max = 15)
+                Employee::username.hasSize(min = 5, max = 3)
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "John", constraint = Size(min = 5)),
+                DefaultConstraintViolation(property = "email", value = "john@company.com", constraint = Size(max = 15)),
+                DefaultConstraintViolation(property = "username", value = "john", constraint = Size(min = 5, max = 3)))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = ValidatorFixture.supportedLocales
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Size(min = 5), message = "Size must be greater than or equal to 5"),
+                        DefaultI18nConstraintViolation(property = "email", value = "john@company.com", constraint = Size(max = 15), message = "Size must be less than or equal to 15"),
+                        DefaultI18nConstraintViolation(property = "username", value = "john", constraint = Size(min = 5, max = 3), message = "Size must be between 5 and 3"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Size(min = 5), message = "Size must be greater than or equal to 5"),
+                        DefaultI18nConstraintViolation(property = "email", value = "john@company.com", constraint = Size(max = 15), message = "Size must be less than or equal to 15"),
+                        DefaultI18nConstraintViolation(property = "username", value = "john", constraint = Size(min = 5, max = 3), message = "Size must be between 5 and 3"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Size(min = 5), message = "O tamanho deve ser maior ou igual a 5"),
+                        DefaultI18nConstraintViolation(property = "email", value = "john@company.com", constraint = Size(max = 15), message = "O tamanho deve ser menor ou igual a 15"),
+                        DefaultI18nConstraintViolation(property = "username", value = "john", constraint = Size(min = 5, max = 3), message = "O tamanho deve estar entre 5 e 3"))))
+    }
 }

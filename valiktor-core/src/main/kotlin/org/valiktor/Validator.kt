@@ -263,4 +263,15 @@ open class ValidatorDsl<E>(private val obj: E) {
      */
     fun KProperty1<E, String?>.isNotBlank(): KProperty1<E, String?> =
             this.validate(NotBlank(), { it != null && it.isNotBlank() })
+
+    /**
+     * Validates if the [String] property length is within the limits (min and max)
+     *
+     * @param min specifies the minimum size
+     * @param max specifies the maximum size
+     * @receiver the property to be validated
+     * @return the same receiver property
+     */
+    fun KProperty1<E, String?>.hasSize(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): KProperty1<E, String?> =
+            this.validate(Size(min, max), { it == null || IntRange(min, max).contains(it.length) })
 }

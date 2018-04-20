@@ -54,3 +54,24 @@ class Blank : AbstractConstraint()
  * @since 0.1.0
  */
 class NotBlank : AbstractConstraint()
+
+/**
+ * Represents a constraint that validate if the value size is within the limits (min and max)
+ *
+ * @property min specifies the minimum size
+ * @property max specifies the maximum size
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class Size(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VALUE) : AbstractConstraint() {
+    override val messageKey: String =
+            if (min != Int.MIN_VALUE && max != Int.MAX_VALUE) super.messageKey
+            else if (min != Int.MIN_VALUE) "${this.javaClass.name}.min.message"
+            else if (max != Int.MAX_VALUE) "${this.javaClass.name}.max.message"
+            else super.messageKey
+
+    override val interpolator: (String) -> String =
+            { it.replace("{min}", min.toString()).replace("{max}", max.toString()) }
+}
