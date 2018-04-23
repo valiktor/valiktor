@@ -125,7 +125,7 @@ data class ContainsAny(val values: Iterable<String>) : AbstractConstraint() {
  * @since 0.1.0
  */
 data class NotContain(val value: String) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
+    override val interpolator: (String) -> String = { it.replace("{value}", value) }
 }
 
 /**

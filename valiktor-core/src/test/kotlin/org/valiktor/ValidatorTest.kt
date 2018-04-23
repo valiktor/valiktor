@@ -12,6 +12,7 @@ import org.valiktor.ValidatorFixture.Dependent
 import org.valiktor.ValidatorFixture.Employee
 import org.valiktor.ValidatorFixture.State
 import org.valiktor.constraints.*
+import org.valiktor.functions.*
 import org.valiktor.i18n.DefaultI18nConstraintViolation
 import org.valiktor.i18n.I18nConstraintViolation
 import org.valiktor.i18n.mapToI18n
@@ -67,17 +68,17 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `isNull with null property should be valid`() {
-        Employee().validate {
-            Employee::id.isNull()
-        }
+        validate(Employee(), {
+            validate(Employee::id).isNull()
+        })
     }
 
     @Test
     fun `isNull with not null property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(id = 1).validate {
-                Employee::id.isNull()
-            }
+            validate(Employee(id = 1), {
+                validate(Employee::id).isNull()
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = Null()))
@@ -96,17 +97,17 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `isNotNull with not null property should be valid`() {
-        Employee(id = 1).validate {
-            Employee::id.isNotNull()
-        }
+        validate(Employee(id = 1), {
+            validate(Employee::id).isNotNull()
+        })
     }
 
     @Test
     fun `isNotNull with null property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee().validate {
-                Employee::id.isNotNull()
-            }
+            validate(Employee(), {
+                validate(Employee::id).isNotNull()
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", constraint = NotNull()))
@@ -125,24 +126,24 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `isEqualTo with null property should be valid`() {
-        Employee().validate {
-            Employee::id.isEqualTo(1)
-        }
+        validate(Employee(), {
+            validate(Employee::id).isEqualTo(1)
+        })
     }
 
     @Test
     fun `isEqualTo with same value should be valid`() {
-        Employee(id = 1).validate {
-            Employee::id.isEqualTo(1)
-        }
+        validate(Employee(id = 1), {
+            validate(Employee::id).isEqualTo(1)
+        })
     }
 
     @Test
     fun `isEqualTo with different value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(id = 2).validate {
-                Employee::id.isEqualTo(1)
-            }
+            validate(Employee(id = 2), {
+                validate(Employee::id).isEqualTo(1)
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 2, constraint = Equals(1)))
@@ -161,24 +162,24 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `isNotEqualTo with null property should be valid`() {
-        Employee().validate {
-            Employee::id.isNotEqualTo(1)
-        }
+        validate(Employee(), {
+            validate(Employee::id).isNotEqualTo(1)
+        })
     }
 
     @Test
     fun `isNotEqualTo with different value should be valid`() {
-        Employee(id = 2).validate {
-            Employee::id.isNotEqualTo(1)
-        }
+        validate(Employee(id = 2), {
+            validate(Employee::id).isNotEqualTo(1)
+        })
     }
 
     @Test
     fun `isNotEqualTo with same value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(id = 1).validate {
-                Employee::id.isNotEqualTo(1)
-            }
+            validate(Employee(id = 1), {
+                validate(Employee::id).isNotEqualTo(1)
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = NotEquals(1)))
@@ -197,24 +198,24 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `isIn vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::id.isIn(1, 2, 3)
-        }
+        validate(Employee(), {
+            validate(Employee::id).isIn(1, 2, 3)
+        })
     }
 
     @Test
     fun `isIn vararg with same value should be valid`() {
-        Employee(id = 2).validate {
-            Employee::id.isIn(1, 2, 3)
-        }
+        validate(Employee(id = 2), {
+            validate(Employee::id).isIn(1, 2, 3)
+        })
     }
 
     @Test
     fun `isIn vararg with different value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(id = 1).validate {
-                Employee::id.isIn(0, 2, 3)
-            }
+            validate(Employee(id = 1), {
+                validate(Employee::id).isIn(0, 2, 3)
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = In(setOf(0, 2, 3))))
@@ -233,24 +234,24 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `isIn iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::id.isIn(listOf(1, 2, 3))
-        }
+        validate(Employee(), {
+            validate(Employee::id).isIn(listOf(1, 2, 3))
+        })
     }
 
     @Test
     fun `isIn iterable with same value should be valid`() {
-        Employee(id = 2).validate {
-            Employee::id.isIn(listOf(1, 2, 3))
-        }
+        validate(Employee(id = 2), {
+            validate(Employee::id).isIn(listOf(1, 2, 3))
+        })
     }
 
     @Test
     fun `isIn iterable with different value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(id = 1).validate {
-                Employee::id.isIn(listOf(0, 2, 3))
-            }
+            validate(Employee(id = 1), {
+                validate(Employee::id).isIn(listOf(0, 2, 3))
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = In(listOf(0, 2, 3))))
@@ -269,24 +270,24 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `isNotIn vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::id.isNotIn(0, 2, 3)
-        }
+        validate(Employee(), {
+            validate(Employee::id).isNotIn(0, 2, 3)
+        })
     }
 
     @Test
     fun `isNotIn vararg with different value should be valid`() {
-        Employee(id = 1).validate {
-            Employee::id.isNotIn(0, 2, 3)
-        }
+        validate(Employee(id = 1), {
+            validate(Employee::id).isNotIn(0, 2, 3)
+        })
     }
 
     @Test
     fun `isNotIn vararg with same value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(id = 1).validate {
-                Employee::id.isNotIn(1, 2, 3)
-            }
+            validate(Employee(id = 1), {
+                validate(Employee::id).isNotIn(1, 2, 3)
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = NotIn(setOf(1, 2, 3))))
@@ -305,24 +306,24 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `isNotIn iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::id.isNotIn(listOf(0, 2, 3))
-        }
+        validate(Employee(), {
+            validate(Employee::id).isNotIn(listOf(0, 2, 3))
+        })
     }
 
     @Test
     fun `isNotIn iterable with different value should be valid`() {
-        Employee(id = 1).validate {
-            Employee::id.isNotIn(listOf(0, 2, 3))
-        }
+        validate(Employee(id = 1), {
+            validate(Employee::id).isNotIn(listOf(0, 2, 3))
+        })
     }
 
     @Test
     fun `isNotIn iterable with same value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(id = 1).validate {
-                Employee::id.isNotIn(listOf(1, 2, 3))
-            }
+            validate(Employee(id = 1), {
+                validate(Employee::id).isNotIn(listOf(1, 2, 3))
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = NotIn(listOf(1, 2, 3))))
@@ -341,24 +342,24 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `isValid with null property should be valid`() {
-        Employee().validate {
-            Employee::id.isValid { it == 1 }
-        }
+        validate(Employee(), {
+            validate(Employee::id).isValid { it == 1 }
+        })
     }
 
     @Test
     fun `isValid with same value should be valid`() {
-        Employee(id = 1).validate {
-            Employee::id.isValid { it == 1 }
-        }
+        validate(Employee(id = 1), {
+            validate(Employee::id).isValid { it == 1 }
+        })
     }
 
     @Test
     fun `isValid with different value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(id = 2).validate {
-                Employee::id.isValid { it == 1 }
-            }
+            validate(Employee(id = 2), {
+                validate(Employee::id).isValid { it == 1 }
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 2, constraint = Valid<Int?>({ it == 1 })))
@@ -377,74 +378,72 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `inner null properties should be valid`() {
-        Employee().validate {
-            Employee::company.validate {
-                Company::id.isNotNull()
+        validate(Employee(), {
+            validate(Employee::company).validate {
+                validate(Company::id).isNotNull()
             }
-            Employee::address.validate {
-                Address::id.isNotNull()
-                Address::city.validate {
-                    City::id.isNotNull()
-                    City::state.validate {
-                        State::id.isNotNull()
-                        State::country.validate {
-                            Country::id.isNotNull()
+            validate(Employee::address).validate {
+                validate(Address::id).isNotNull()
+                validate(Address::city).validate {
+                    validate(City::id).isNotNull()
+                    validate(City::state).validate {
+                        validate(State::id).isNotNull()
+                        validate(State::country).validate {
+                            validate(Country::id).isNotNull()
                         }
                     }
                 }
             }
-        }
+        })
     }
 
     @Test
     fun `inner not null properties should be valid`() {
-        Employee(id = 1, company = Company(id = 1), address =
+        validate(Employee(id = 1, company = Company(id = 1), address =
         Address(id = 1, city = City(id = 1, state =
-        State(id = 1, country = Country(id = 1)))))
-                .validate {
-                    Employee::id.isNotNull()
-                    Employee::company.validate {
-                        Company::id.isNotNull()
-                    }
-                    Employee::address.validate {
-                        Address::id.isNotNull()
-                        Address::city.validate {
-                            City::id.isNotNull()
-                            City::state.validate {
-                                State::id.isNotNull()
-                                State::country.validate {
-                                    Country::id.isNotNull()
-                                }
-                            }
+        State(id = 1, country = Country(id = 1))))), {
+            validate(Employee::id).isNotNull()
+            validate(Employee::company).validate {
+                validate(Company::id).isNotNull()
+            }
+            validate(Employee::address).validate {
+                validate(Address::id).isNotNull()
+                validate(Address::city).validate {
+                    validate(City::id).isNotNull()
+                    validate(City::state).validate {
+                        validate(State::id).isNotNull()
+                        validate(State::country).validate {
+                            validate(Country::id).isNotNull()
                         }
                     }
                 }
+            }
+        })
     }
 
     @Test
     fun `inner null properties should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(company = Company(), address =
+            validate(Employee(company = Company(), address =
             Address(city = City(state =
-            State(country = Country()))))
-                    .validate {
-                        Employee::id.isNotNull()
-                        Employee::company.validate {
-                            Company::id.isNotNull()
-                        }
-                        Employee::address.validate {
-                            Address::id.isNotNull()
-                            Address::city.validate {
-                                City::id.isNotNull()
-                                City::state.validate {
-                                    State::id.isNotNull()
-                                    State::country.validate {
-                                        Country::id.isNotNull()
-                                    }
-                                }
+            State(country = Country())))), {
+                validate(Employee::id).isNotNull()
+                validate(Employee::company).validate {
+                    validate(Company::id).isNotNull()
+                }
+                validate(Employee::address).validate {
+                    validate(Address::id).isNotNull()
+                    validate(Address::city).validate {
+                        validate(City::id).isNotNull()
+                        validate(City::state).validate {
+                            validate(State::id).isNotNull()
+                            validate(State::country).validate {
+                                validate(Country::id).isNotNull()
                             }
                         }
                     }
+                }
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -484,53 +483,51 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `inner null iterable properties should be valid`() {
-        Employee(company = Company()).validate {
-            Employee::company.validate {
-                Company::addresses.validateForEach {
-                    Address::id.isNotNull()
-                    Address::city.validate {
-                        City::id.isNotNull()
+        validate(Employee(company = Company()), {
+            validate(Employee::company).validate {
+                validate(Company::addresses).validateForEach {
+                    validate(Address::id).isNotNull()
+                    validate(Address::city).validate {
+                        validate(City::id).isNotNull()
                     }
                 }
             }
-        }
+        })
     }
 
     @Test
     fun `inner iterable properties should be valid`() {
-        Employee(company = Company(addresses = listOf(
+        validate(Employee(company = Company(addresses = listOf(
                 Address(id = 1, city = City(id = 1)),
                 Address(id = 1, city = City(id = 1)),
-                Address(id = 1, city = City(id = 1)))))
-                .validate {
-                    Employee::company.validate {
-                        Company::addresses.validateForEach {
-                            Address::id.isNotNull()
-                            Address::city.validate {
-                                City::id.isNotNull()
-                            }
-                        }
+                Address(id = 1, city = City(id = 1))))), {
+            validate(Employee::company).validate {
+                validate(Company::addresses).validateForEach {
+                    validate(Address::id).isNotNull()
+                    validate(Address::city).validate {
+                        validate(City::id).isNotNull()
                     }
                 }
+            }
+        })
     }
 
     @Test
     fun `inner iterable properties should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(company = Company(addresses = listOf(
+            validate(Employee(company = Company(addresses = listOf(
                     Address(city = City()),
                     Address(city = City()),
-                    Address(city = City()))))
-                    .validate {
-                        Employee::company.validate {
-                            Company::addresses.validateForEach {
-                                Address::id.isNotNull()
-                                Address::city.validate {
-                                    City::id.isNotNull()
-                                }
-                            }
+                    Address(city = City())))), {
+                validate(Employee::company).validate {
+                    validate(Company::addresses).validateForEach {
+                        validate(Address::id).isNotNull()
+                        validate(Address::city).validate {
+                            validate(City::id).isNotNull()
                         }
                     }
+                }
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -570,38 +567,36 @@ class DefaultConstraintsValidatorTest {
 
     @Test
     fun `inner null array properties should be valid`() {
-        Employee().validate {
-            Employee::dependents.validateForEach {
-                Dependent::id.isNotNull()
+        validate(Employee(), {
+            validate(Employee::dependents).validateForEach {
+                validate(Dependent::id).isNotNull()
             }
-        }
+        })
     }
 
     @Test
     fun `inner array properties should be valid`() {
-        Employee(dependents = arrayOf(
+        validate(Employee(dependents = arrayOf(
                 Dependent(id = 1),
                 Dependent(id = 1),
-                Dependent(id = 1)))
-                .validate {
-                    Employee::dependents.validateForEach {
-                        Dependent::id.isNotNull()
-                    }
-                }
+                Dependent(id = 1))), {
+            validate(Employee::dependents).validateForEach {
+                validate(Dependent::id).isNotNull()
+            }
+        })
     }
 
     @Test
     fun `inner array properties should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(dependents = arrayOf(
+            validate(Employee(dependents = arrayOf(
                     Dependent(),
                     Dependent(),
-                    Dependent()))
-                    .validate {
-                        Employee::dependents.validateForEach {
-                            Dependent::id.isNotNull()
-                        }
-                    }
+                    Dependent())), {
+                validate(Employee::dependents).validateForEach {
+                    validate(Dependent::id).isNotNull()
+                }
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -630,10 +625,10 @@ class DefaultConstraintsValidatorTest {
     @Test
     fun `should not repeat the property`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee().validate {
-                Employee::id.isNotNull().isEqualTo(1).isIn(1, 2, 3)
-                Employee::name.isNotNull().isEqualTo("test").isIn("test1", "test2", "test3")
-            }
+            validate(Employee(), {
+                validate(Employee::id).isNotNull().isEqualTo(1).isIn(1, 2, 3)
+                validate(Employee::name).isNotNull().isEqualTo("test").isIn("test1", "test2", "test3")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -660,24 +655,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `isEmpty with null property should be valid`() {
-        Employee().validate {
-            Employee::name.isEmpty()
-        }
+        validate(Employee(), {
+            validate(Employee::name).isEmpty()
+        })
     }
 
     @Test
     fun `isEmpty with empty property should be valid`() {
-        Employee(name = "").validate {
-            Employee::name.isEmpty()
-        }
+        validate(Employee(name = ""), {
+            validate(Employee::name).isEmpty()
+        })
     }
 
     @Test
     fun `isEmpty with blank property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = " ").validate {
-                Employee::name.isEmpty()
-            }
+            validate(Employee(name = " "), {
+                validate(Employee::name).isEmpty()
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -697,18 +692,18 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `isNotEmpty with blank property should be valid`() {
-        Employee(name = " ").validate {
-            Employee::name.isNotEmpty()
-        }
+        validate(Employee(name = " "), {
+            validate(Employee::name).isNotEmpty()
+        })
     }
 
     @Test
     fun `isNotEmpty with null or empty property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(email = "").validate {
-                Employee::name.isNotEmpty()
-                Employee::email.isNotEmpty()
-            }
+            validate(Employee(email = ""), {
+                validate(Employee::name).isNotEmpty()
+                validate(Employee::email).isNotEmpty()
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -732,31 +727,31 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `isBlank with null property should be valid`() {
-        Employee().validate {
-            Employee::name.isBlank()
-        }
+        validate(Employee(), {
+            validate(Employee::name).isBlank()
+        })
     }
 
     @Test
     fun `isBlank with empty property should be valid`() {
-        Employee(name = "").validate {
-            Employee::name.isBlank()
-        }
+        validate(Employee(name = ""), {
+            validate(Employee::name).isBlank()
+        })
     }
 
     @Test
     fun `isBlank with blank property should be valid`() {
-        Employee(name = " ").validate {
-            Employee::name.isBlank()
-        }
+        validate(Employee(name = " "), {
+            validate(Employee::name).isBlank()
+        })
     }
 
     @Test
     fun `isBlank with not blank property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "a").validate {
-                Employee::name.isBlank()
-            }
+            validate(Employee(name = "a"), {
+                validate(Employee::name).isBlank()
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -776,19 +771,19 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `isNotBlank with not blank property should be valid`() {
-        Employee(name = "a").validate {
-            Employee::name.isNotBlank()
-        }
+        validate(Employee(name = "a"), {
+            validate(Employee::name).isNotBlank()
+        })
     }
 
     @Test
     fun `isNotBlank with null or empty or blank property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(email = "", username = " ").validate {
-                Employee::name.isNotBlank()
-                Employee::email.isNotBlank()
-                Employee::username.isNotBlank()
-            }
+            validate(Employee(email = "", username = " "), {
+                validate(Employee::name).isNotBlank()
+                validate(Employee::email).isNotBlank()
+                validate(Employee::username).isNotBlank()
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -816,24 +811,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `isEqualToIgnoringCase with null property should be valid`() {
-        Employee().validate {
-            Employee::name.isEqualToIgnoringCase("a")
-        }
+        validate(Employee(), {
+            validate(Employee::name).isEqualToIgnoringCase("a")
+        })
     }
 
     @Test
     fun `isEqualToIgnoringCase with same value should be valid`() {
-        Employee(name = "A").validate {
-            Employee::name.isEqualToIgnoringCase("a")
-        }
+        validate(Employee(name = "A"), {
+            validate(Employee::name).isEqualToIgnoringCase("a")
+        })
     }
 
     @Test
     fun `isEqualToIgnoringCase with different value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "a").validate {
-                Employee::name.isEqualToIgnoringCase("b")
-            }
+            validate(Employee(name = "a"), {
+                validate(Employee::name).isEqualToIgnoringCase("b")
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "a", constraint = Equals("b")))
@@ -852,24 +847,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `isNotEqualToIgnoringCase with null property should be valid`() {
-        Employee().validate {
-            Employee::name.isNotEqualToIgnoringCase("a")
-        }
+        validate(Employee(), {
+            validate(Employee::name).isNotEqualToIgnoringCase("a")
+        })
     }
 
     @Test
     fun `isNotEqualToIgnoringCase with different value should be valid`() {
-        Employee(name = "a").validate {
-            Employee::name.isNotEqualToIgnoringCase("b")
-        }
+        validate(Employee(name = "a"), {
+            validate(Employee::name).isNotEqualToIgnoringCase("b")
+        })
     }
 
     @Test
     fun `isNotEqualToIgnoringCase with same value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "a").validate {
-                Employee::name.isNotEqualToIgnoringCase("A")
-            }
+            validate(Employee(name = "a"), {
+                validate(Employee::name).isNotEqualToIgnoringCase("A")
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "a", constraint = NotEquals("A")))
@@ -888,24 +883,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `isInIgnoringCase vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::name.isInIgnoringCase("a", "b", "c")
-        }
+        validate(Employee(), {
+            validate(Employee::name).isInIgnoringCase("a", "b", "c")
+        })
     }
 
     @Test
     fun `isInIgnoringCase vararg with same value should be valid`() {
-        Employee(name = "A").validate {
-            Employee::name.isInIgnoringCase("a", "b", "c")
-        }
+        validate(Employee(name = "A"), {
+            validate(Employee::name).isInIgnoringCase("a", "b", "c")
+        })
     }
 
     @Test
     fun `isInIgnoringCase vararg with different value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "a").validate {
-                Employee::name.isInIgnoringCase("b", "c")
-            }
+            validate(Employee(name = "a"), {
+                validate(Employee::name).isInIgnoringCase("b", "c")
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "a", constraint = In(setOf("b", "c"))))
@@ -924,24 +919,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `isInIgnoringCase iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::name.isInIgnoringCase(listOf("a", "b", "c"))
-        }
+        validate(Employee(), {
+            validate(Employee::name).isInIgnoringCase(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `isInIgnoringCase iterable with same value should be valid`() {
-        Employee(name = "A").validate {
-            Employee::name.isInIgnoringCase(listOf("a", "b", "c"))
-        }
+        validate(Employee(name = "A"), {
+            validate(Employee::name).isInIgnoringCase(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `isInIgnoringCase iterable with different value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "a").validate {
-                Employee::name.isInIgnoringCase(listOf("b", "c"))
-            }
+            validate(Employee(name = "a"), {
+                validate(Employee::name).isInIgnoringCase(listOf("b", "c"))
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "a", constraint = In(listOf("b", "c"))))
@@ -960,24 +955,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `isNotInIgnoringCase vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::name.isNotInIgnoringCase("a", "b", "c")
-        }
+        validate(Employee(), {
+            validate(Employee::name).isNotInIgnoringCase("a", "b", "c")
+        })
     }
 
     @Test
     fun `isNotInIgnoringCase vararg with different value should be valid`() {
-        Employee(name = "a").validate {
-            Employee::name.isNotInIgnoringCase("b", "c")
-        }
+        validate(Employee(name = "a"), {
+            validate(Employee::name).isNotInIgnoringCase("b", "c")
+        })
     }
 
     @Test
     fun `isNotInIgnoringCase vararg with same value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "A").validate {
-                Employee::name.isNotInIgnoringCase("a", "b", "c")
-            }
+            validate(Employee(name = "A"), {
+                validate(Employee::name).isNotInIgnoringCase("a", "b", "c")
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c"))))
@@ -996,24 +991,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `isNotInIgnoringCase iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::name.isNotInIgnoringCase(listOf("a", "b", "c"))
-        }
+        validate(Employee(), {
+            validate(Employee::name).isNotInIgnoringCase(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `isNotInIgnoringCase iterable with different value should be valid`() {
-        Employee(name = "a").validate {
-            Employee::name.isNotInIgnoringCase(listOf("b", "c"))
-        }
+        validate(Employee(name = "a"), {
+            validate(Employee::name).isNotInIgnoringCase(listOf("b", "c"))
+        })
     }
 
     @Test
     fun `isNotInIgnoringCase iterable with same value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "A").validate {
-                Employee::name.isNotInIgnoringCase(listOf("a", "b", "c"))
-            }
+            validate(Employee(name = "A"), {
+                validate(Employee::name).isNotInIgnoringCase(listOf("a", "b", "c"))
+            })
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c"))))
@@ -1032,47 +1027,47 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `size with null property should be valid`() {
-        Employee().validate {
-            Employee::name.hasSize(min = 1, max = 10)
-        }
+        validate(Employee(), {
+            validate(Employee::name).hasSize(min = 1, max = 10)
+        })
     }
 
     @Test
     fun `size with valid min length property should be valid`() {
-        Employee(name = "John").validate {
-            Employee::name.hasSize(min = 4)
-        }
+        validate(Employee(name = "John"), {
+            validate(Employee::name).hasSize(min = 4)
+        })
     }
 
     @Test
     fun `size with valid max length property should be valid`() {
-        Employee(name = "John").validate {
-            Employee::name.hasSize(max = 4)
-        }
+        validate(Employee(name = "John"), {
+            validate(Employee::name).hasSize(max = 4)
+        })
     }
 
     @Test
     fun `size with valid min and max length property should be valid`() {
-        Employee(name = "John").validate {
-            Employee::name.hasSize(min = 4, max = 4)
-        }
+        validate(Employee(name = "John"), {
+            validate(Employee::name).hasSize(min = 4, max = 4)
+        })
     }
 
     @Test
     fun `size without min and max should be valid`() {
-        Employee(name = "John").validate {
-            Employee::name.hasSize()
-        }
+        validate(Employee(name = "John"), {
+            validate(Employee::name).hasSize()
+        })
     }
 
     @Test
     fun `size with invalid min and max length property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John", email = "john@company.com", username = "john").validate {
-                Employee::name.hasSize(min = 5)
-                Employee::email.hasSize(max = 15)
-                Employee::username.hasSize(min = 5, max = 3)
-            }
+            validate(Employee(name = "John", email = "john@company.com", username = "john"), {
+                validate(Employee::name).hasSize(min = 5)
+                validate(Employee::email).hasSize(max = 15)
+                validate(Employee::username).hasSize(min = 5, max = 3)
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1100,24 +1095,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `contains with null property should be valid`() {
-        Employee().validate {
-            Employee::name.contains("a")
-        }
+        validate(Employee(), {
+            validate(Employee::name).contains("a")
+        })
     }
 
     @Test
     fun `contains with valid property should be valid`() {
-        Employee(name = "abc").validate {
-            Employee::name.contains("a")
-        }
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).contains("a")
+        })
     }
 
     @Test
     fun `contains with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.contains("j")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).contains("j")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1137,24 +1132,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `containsIgnoringCase with null property should be valid`() {
-        Employee().validate {
-            Employee::name.containsIgnoringCase("a")
-        }
+        validate(Employee(), {
+            validate(Employee::name).containsIgnoringCase("a")
+        })
     }
 
     @Test
     fun `containsIgnoringCase with valid property should be valid`() {
-        Employee(name = "ABC").validate {
-            Employee::name.containsIgnoringCase("a")
-        }
+        validate(Employee(name = "ABC"), {
+            validate(Employee::name).containsIgnoringCase("a")
+        })
     }
 
     @Test
     fun `containsIgnoringCase with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.containsIgnoringCase("g")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).containsIgnoringCase("g")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1174,24 +1169,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `containsAll vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::name.containsAll("a", "b", "c")
-        }
+        validate(Employee(), {
+            validate(Employee::name).containsAll("a", "b", "c")
+        })
     }
 
     @Test
     fun `containsAll vararg with valid property should be valid`() {
-        Employee(name = "abc").validate {
-            Employee::name.containsAll("a", "b", "c")
-        }
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).containsAll("a", "b", "c")
+        })
     }
 
     @Test
     fun `containsAll vararg with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.containsAll("j", "o", "h", "n")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).containsAll("j", "o", "h", "n")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1211,24 +1206,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `containsAll iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::name.containsAll(listOf("a", "b", "c"))
-        }
+        validate(Employee(), {
+            validate(Employee::name).containsAll(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `containsAll iterable with valid property should be valid`() {
-        Employee(name = "abc").validate {
-            Employee::name.containsAll(listOf("a", "b", "c"))
-        }
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).containsAll(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `containsAll iterable with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.containsAll(listOf("j", "o", "h", "n"))
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).containsAll(listOf("j", "o", "h", "n"))
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1248,24 +1243,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `containsAllIgnoringCase vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::name.containsAllIgnoringCase("a", "b", "c")
-        }
+        validate(Employee(), {
+            validate(Employee::name).containsAllIgnoringCase("a", "b", "c")
+        })
     }
 
     @Test
     fun `containsAllIgnoringCase vararg with valid property should be valid`() {
-        Employee(name = "ABC").validate {
-            Employee::name.containsAllIgnoringCase("a", "b", "c")
-        }
+        validate(Employee(name = "ABC"), {
+            validate(Employee::name).containsAllIgnoringCase("a", "b", "c")
+        })
     }
 
     @Test
     fun `containsAllIgnoringCase vararg with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.containsAllIgnoringCase("j", "o", "h", "n", "k")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).containsAllIgnoringCase("j", "o", "h", "n", "k")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1285,24 +1280,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `containsAllIgnoringCase iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::name.containsAllIgnoringCase(listOf("a", "b", "c"))
-        }
+        validate(Employee(), {
+            validate(Employee::name).containsAllIgnoringCase(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `containsAllIgnoringCase iterable with valid property should be valid`() {
-        Employee(name = "ABC").validate {
-            Employee::name.containsAllIgnoringCase(listOf("a", "b", "c"))
-        }
+        validate(Employee(name = "ABC"), {
+            validate(Employee::name).containsAllIgnoringCase(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `containsAllIgnoringCase iterable with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.containsAllIgnoringCase(listOf("j", "o", "h", "n", "k"))
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).containsAllIgnoringCase(listOf("j", "o", "h", "n", "k"))
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1322,24 +1317,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `containsAny vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::name.containsAny("a", "b", "c")
-        }
+        validate(Employee(), {
+            validate(Employee::name).containsAny("a", "b", "c")
+        })
     }
 
     @Test
     fun `containsAny vararg with valid property should be valid`() {
-        Employee(name = "abc").validate {
-            Employee::name.containsAny("a", "e", "f")
-        }
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).containsAny("a", "e", "f")
+        })
     }
 
     @Test
     fun `containsAny vararg with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.containsAny("j", "w", "x", "e")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).containsAny("j", "w", "x", "e")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1359,24 +1354,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `containsAny iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::name.containsAny(listOf("a", "b", "c"))
-        }
+        validate(Employee(), {
+            validate(Employee::name).containsAny(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `containsAny iterable with valid property should be valid`() {
-        Employee(name = "abc").validate {
-            Employee::name.containsAny(listOf("a", "e", "f"))
-        }
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).containsAny(listOf("a", "e", "f"))
+        })
     }
 
     @Test
     fun `containsAny iterable with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.containsAny(listOf("j", "w", "x", "e"))
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).containsAny(listOf("j", "w", "x", "e"))
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1396,24 +1391,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `containsAnyIgnoringCase vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::name.containsAnyIgnoringCase("a", "b", "c")
-        }
+        validate(Employee(), {
+            validate(Employee::name).containsAnyIgnoringCase("a", "b", "c")
+        })
     }
 
     @Test
     fun `containsAnyIgnoringCase vararg with valid property should be valid`() {
-        Employee(name = "ABC").validate {
-            Employee::name.containsAnyIgnoringCase("a", "e", "f")
-        }
+        validate(Employee(name = "ABC"), {
+            validate(Employee::name).containsAnyIgnoringCase("a", "e", "f")
+        })
     }
 
     @Test
     fun `containsAnyIgnoringCase vararg with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.containsAnyIgnoringCase("w", "x", "e")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).containsAnyIgnoringCase("w", "x", "e")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1433,24 +1428,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `containsAnyIgnoringCase iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::name.containsAnyIgnoringCase(listOf("a", "b", "c"))
-        }
+        validate(Employee(), {
+            validate(Employee::name).containsAnyIgnoringCase(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `containsAnyIgnoringCase iterable with valid property should be valid`() {
-        Employee(name = "ABC").validate {
-            Employee::name.containsAnyIgnoringCase(listOf("a", "e", "f"))
-        }
+        validate(Employee(name = "ABC"), {
+            validate(Employee::name).containsAnyIgnoringCase(listOf("a", "e", "f"))
+        })
     }
 
     @Test
     fun `containsAnyIgnoringCase iterable with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.containsAnyIgnoringCase(listOf("w", "x", "e"))
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).containsAnyIgnoringCase(listOf("w", "x", "e"))
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1470,24 +1465,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `doesNotContain with null property should be valid`() {
-        Employee().validate {
-            Employee::name.doesNotContain("a")
-        }
+        validate(Employee(), {
+            validate(Employee::name).doesNotContain("a")
+        })
     }
 
     @Test
     fun `doesNotContain with valid property should be valid`() {
-        Employee(name = "abc").validate {
-            Employee::name.doesNotContain("d")
-        }
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).doesNotContain("d")
+        })
     }
 
     @Test
     fun `doesNotContain with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.doesNotContain("J")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotContain("J")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1507,24 +1502,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `doesNotContainIgnoringCase with null property should be valid`() {
-        Employee().validate {
-            Employee::name.doesNotContainIgnoringCase("a")
-        }
+        validate(Employee(), {
+            validate(Employee::name).doesNotContainIgnoringCase("a")
+        })
     }
 
     @Test
     fun `doesNotContainIgnoringCase with valid property should be valid`() {
-        Employee(name = "abc").validate {
-            Employee::name.doesNotContainIgnoringCase("d")
-        }
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).doesNotContainIgnoringCase("d")
+        })
     }
 
     @Test
     fun `doesNotContainIgnoringCase with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.doesNotContainIgnoringCase("j")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotContainIgnoringCase("j")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1544,24 +1539,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `doesNotContainAll vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::name.doesNotContainAll("a", "b", "c")
-        }
+        validate(Employee(), {
+            validate(Employee::name).doesNotContainAll("a", "b", "c")
+        })
     }
 
     @Test
     fun `doesNotContainAll vararg with valid property should be valid`() {
-        Employee(name = "abc").validate {
-            Employee::name.doesNotContainAll("a", "b", "c", "d")
-        }
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).doesNotContainAll("a", "b", "c", "d")
+        })
     }
 
     @Test
     fun `doesNotContainAll vararg with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.doesNotContainAll("J", "o", "h", "n")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotContainAll("J", "o", "h", "n")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1581,24 +1576,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `doesNotContainAll iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::name.doesNotContainAll(listOf("a", "b", "c"))
-        }
+        validate(Employee(), {
+            validate(Employee::name).doesNotContainAll(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `doesNotContainAll iterable with valid property should be valid`() {
-        Employee(name = "abc").validate {
-            Employee::name.doesNotContainAll(listOf("a", "b", "c", "d"))
-        }
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).doesNotContainAll(listOf("a", "b", "c", "d"))
+        })
     }
 
     @Test
     fun `doesNotContainAll iterable with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.doesNotContainAll(listOf("J", "o", "h", "n"))
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotContainAll(listOf("J", "o", "h", "n"))
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1618,24 +1613,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `doesNotContainAllIgnoringCase vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::name.doesNotContainAllIgnoringCase("a", "b", "c")
-        }
+        validate(Employee(), {
+            validate(Employee::name).doesNotContainAllIgnoringCase("a", "b", "c")
+        })
     }
 
     @Test
     fun `doesNotContainAllIgnoringCase vararg with valid property should be valid`() {
-        Employee(name = "ABC").validate {
-            Employee::name.doesNotContainAllIgnoringCase("a", "b", "c", "d")
-        }
+        validate(Employee(name = "ABC"), {
+            validate(Employee::name).doesNotContainAllIgnoringCase("a", "b", "c", "d")
+        })
     }
 
     @Test
     fun `doesNotContainAllIgnoringCase vararg with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.doesNotContainAllIgnoringCase("J", "O", "H", "N")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotContainAllIgnoringCase("J", "O", "H", "N")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1655,24 +1650,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `doesNotContainAllIgnoringCase iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::name.doesNotContainAllIgnoringCase(listOf("a", "b", "c"))
-        }
+        validate(Employee(), {
+            validate(Employee::name).doesNotContainAllIgnoringCase(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `doesNotContainAllIgnoringCase iterable with valid property should be valid`() {
-        Employee(name = "ABC").validate {
-            Employee::name.doesNotContainAllIgnoringCase(listOf("a", "b", "c", "d"))
-        }
+        validate(Employee(name = "ABC"), {
+            validate(Employee::name).doesNotContainAllIgnoringCase(listOf("a", "b", "c", "d"))
+        })
     }
 
     @Test
     fun `doesNotContainAllIgnoringCase iterable with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.doesNotContainAllIgnoringCase(listOf("J", "O", "H", "N"))
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotContainAllIgnoringCase(listOf("J", "O", "H", "N"))
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1692,24 +1687,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `doesNotContainAny vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::name.doesNotContainAny("a", "b", "c")
-        }
+        validate(Employee(), {
+            validate(Employee::name).doesNotContainAny("a", "b", "c")
+        })
     }
 
     @Test
     fun `doesNotContainAny vararg with valid property should be valid`() {
-        Employee(name = "abc").validate {
-            Employee::name.doesNotContainAny("e", "f")
-        }
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).doesNotContainAny("e", "f")
+        })
     }
 
     @Test
     fun `doesNotContainAny vararg with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.doesNotContainAny("J", "w", "x", "e")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotContainAny("J", "w", "x", "e")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1729,24 +1724,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `doesNotContainAny iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::name.doesNotContainAny(listOf("a", "b", "c"))
-        }
+        validate(Employee(), {
+            validate(Employee::name).doesNotContainAny(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `doesNotContainAny iterable with valid property should be valid`() {
-        Employee(name = "abc").validate {
-            Employee::name.doesNotContainAny(listOf("e", "f"))
-        }
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).doesNotContainAny(listOf("e", "f"))
+        })
     }
 
     @Test
     fun `doesNotContainAny iterable with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.doesNotContainAny(listOf("J", "w", "x", "e"))
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotContainAny(listOf("J", "w", "x", "e"))
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1766,24 +1761,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `doesNotContainAnyIgnoringCase vararg with null property should be valid`() {
-        Employee().validate {
-            Employee::name.doesNotContainAnyIgnoringCase("a", "b", "c")
-        }
+        validate(Employee(), {
+            validate(Employee::name).doesNotContainAnyIgnoringCase("a", "b", "c")
+        })
     }
 
     @Test
     fun `doesNotContainAnyIgnoringCase vararg with valid property should be valid`() {
-        Employee(name = "ABC").validate {
-            Employee::name.doesNotContainAnyIgnoringCase("e", "f")
-        }
+        validate(Employee(name = "ABC"), {
+            validate(Employee::name).doesNotContainAnyIgnoringCase("e", "f")
+        })
     }
 
     @Test
     fun `doesNotContainAnyIgnoringCase vararg with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.doesNotContainAnyIgnoringCase("j", "w", "x", "e")
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotContainAnyIgnoringCase("j", "w", "x", "e")
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -1803,24 +1798,24 @@ class TextConstraintsValidatorTest {
 
     @Test
     fun `doesNotContainAnyIgnoringCase iterable with null property should be valid`() {
-        Employee().validate {
-            Employee::name.doesNotContainAnyIgnoringCase(listOf("a", "b", "c"))
-        }
+        validate(Employee(), {
+            validate(Employee::name).doesNotContainAnyIgnoringCase(listOf("a", "b", "c"))
+        })
     }
 
     @Test
     fun `doesNotContainAnyIgnoringCase iterable with valid property should be valid`() {
-        Employee(name = "ABC").validate {
-            Employee::name.doesNotContainAnyIgnoringCase(listOf("e", "f"))
-        }
+        validate(Employee(name = "ABC"), {
+            validate(Employee::name).doesNotContainAnyIgnoringCase(listOf("e", "f"))
+        })
     }
 
     @Test
     fun `doesNotContainAnyIgnoringCase iterable with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            Employee(name = "John").validate {
-                Employee::name.doesNotContainAnyIgnoringCase(listOf("j", "w", "x", "e"))
-            }
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotContainAnyIgnoringCase(listOf("j", "w", "x", "e"))
+            })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
