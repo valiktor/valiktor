@@ -51,6 +51,13 @@ class StringFunctionsTest {
     }
 
     @Test
+    fun `isNotEmpty with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).isNotEmpty()
+        })
+    }
+
+    @Test
     fun `isNotEmpty with blank property should be valid`() {
         validate(Employee(name = " "), {
             validate(Employee::name).isNotEmpty()
@@ -58,31 +65,26 @@ class StringFunctionsTest {
     }
 
     @Test
-    fun `isNotEmpty with null or empty property should be invalid`() {
+    fun `isNotEmpty with mpty property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(email = ""), {
+            validate(Employee(name = ""), {
                 validate(Employee::name).isNotEmpty()
-                validate(Employee::email).isNotEmpty()
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", constraint = NotEmpty()),
-                DefaultConstraintViolation(property = "email", value = "", constraint = NotEmpty()))
+                DefaultConstraintViolation(property = "name", value = "", constraint = NotEmpty()))
 
         val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
                 .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
 
         assertThat(i18nMap).containsExactly(
                 entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", constraint = NotEmpty(), message = "Must not be empty"),
-                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotEmpty(), message = "Must not be empty"))),
+                        DefaultI18nConstraintViolation(property = "name", value = "", constraint = NotEmpty(), message = "Must not be empty"))),
                 entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", constraint = NotEmpty(), message = "Must not be empty"),
-                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotEmpty(), message = "Must not be empty"))),
+                        DefaultI18nConstraintViolation(property = "name", value = "", constraint = NotEmpty(), message = "Must not be empty"))),
                 entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", constraint = NotEmpty(), message = "Não deve ser vazio"),
-                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotEmpty(), message = "Não deve ser vazio"))))
+                        DefaultI18nConstraintViolation(property = "name", value = "", constraint = NotEmpty(), message = "Não deve ser vazio"))))
     }
 
     @Test
@@ -130,6 +132,13 @@ class StringFunctionsTest {
     }
 
     @Test
+    fun `isNotBlank with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).isNotBlank()
+        })
+    }
+
+    @Test
     fun `isNotBlank with not blank property should be valid`() {
         validate(Employee(name = "a"), {
             validate(Employee::name).isNotBlank()
@@ -137,17 +146,15 @@ class StringFunctionsTest {
     }
 
     @Test
-    fun `isNotBlank with null or empty or blank property should be invalid`() {
+    fun `isNotBlank with empty or blank property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(email = "", username = " "), {
-                validate(Employee::name).isNotBlank()
                 validate(Employee::email).isNotBlank()
                 validate(Employee::username).isNotBlank()
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", constraint = NotBlank()),
                 DefaultConstraintViolation(property = "email", value = "", constraint = NotBlank()),
                 DefaultConstraintViolation(property = "username", value = " ", constraint = NotBlank()))
 
@@ -156,15 +163,12 @@ class StringFunctionsTest {
 
         assertThat(i18nMap).containsExactly(
                 entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", constraint = NotBlank(), message = "Must not be blank"),
                         DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotBlank(), message = "Must not be blank"),
                         DefaultI18nConstraintViolation(property = "username", value = " ", constraint = NotBlank(), message = "Must not be blank"))),
                 entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", constraint = NotBlank(), message = "Must not be blank"),
                         DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotBlank(), message = "Must not be blank"),
                         DefaultI18nConstraintViolation(property = "username", value = " ", constraint = NotBlank(), message = "Must not be blank"))),
                 entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", constraint = NotBlank(), message = "Não deve estar em branco"),
                         DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotBlank(), message = "Não deve estar em branco"),
                         DefaultI18nConstraintViolation(property = "username", value = " ", constraint = NotBlank(), message = "Não deve estar em branco"))))
     }
