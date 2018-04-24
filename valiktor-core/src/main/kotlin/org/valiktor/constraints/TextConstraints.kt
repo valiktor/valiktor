@@ -265,3 +265,12 @@ data class EndsWith(val suffix: String) : AbstractConstraint() {
 data class NotEndWith(val suffix: String) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{suffix}", suffix) }
 }
+
+/**
+ * Represents a constraint that validate if the value is a valid e-mail
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+class Email : AbstractConstraint()

@@ -445,3 +445,15 @@ fun <E> Validator<E>.Property<String?>.doesNotEndWith(suffix: String): Validator
  */
 fun <E> Validator<E>.Property<String?>.doesNotEndWithIgnoringCase(suffix: String): Validator<E>.Property<String?> =
         this.validate(NotEndWith(suffix), { it == null || !it.endsWith(suffix = suffix, ignoreCase = true) })
+
+/**
+ * Validates if the [String] property value is a valid email
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.isEmail(): Validator<E>.Property<String?> =
+        this.validate(Email(), {
+            it == null || it.matches(Regex(
+                    "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
+        })

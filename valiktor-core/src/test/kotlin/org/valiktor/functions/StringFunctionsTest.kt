@@ -1636,4 +1636,47 @@ class StringFunctionsTest {
                 entry(Locales.PT_BR, setOf(
                         DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N"), message = "Não deve terminar com N"))))
     }
+
+    @Test
+    fun `isEmail with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::email).isEmail()
+        })
+    }
+
+    @Test
+    fun `isEmail with valid property should be valid`() {
+        setOf("test.test@test.com",
+                "test_test@test.com",
+                "test-test@test.com",
+                "test@test.com",
+                "test@test.test").forEach {
+            validate(Employee(email = it), {
+                validate(Employee::email).isEmail()
+            })
+        }
+    }
+
+    @Test
+    fun `isEmail with blank property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(email = "test.test"), {
+                validate(Employee::email).isEmail()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "email", value = "test.test", constraint = Email()))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
+                        property = "email", value = "test.test", constraint = Email(), message = "Must be a valid email address"))),
+                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
+                        property = "email", value = "test.test", constraint = Email(), message = "Must be a valid email address"))),
+                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
+                        property = "email", value = "test.test", constraint = Email(), message = "Deve ser um endereço de e-mail válido"))))
+    }
 }
