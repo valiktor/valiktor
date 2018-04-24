@@ -20,24 +20,6 @@ import org.valiktor.AbstractConstraint
 import org.valiktor.Constraint
 
 /**
- * Represents a constraint that validate if the value is empty
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-class Empty : AbstractConstraint()
-
-/**
- * Represents a constraint that validate if the value is not empty
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-class NotEmpty : AbstractConstraint()
-
-/**
  * Represents a constraint that validate if the value is blank
  *
  * @author Rodolpho S. Couto
@@ -54,105 +36,6 @@ class Blank : AbstractConstraint()
  * @since 0.1.0
  */
 class NotBlank : AbstractConstraint()
-
-/**
- * Represents a constraint that validate if the value size is within the limits (min and max)
- *
- * @property min specifies the minimum size
- * @property max specifies the maximum size
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class Size(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VALUE) : AbstractConstraint() {
-    override val messageKey: String =
-            if (min != Int.MIN_VALUE && max != Int.MAX_VALUE) super.messageKey
-            else if (min != Int.MIN_VALUE) "${this.javaClass.name}.min.message"
-            else if (max != Int.MAX_VALUE) "${this.javaClass.name}.max.message"
-            else super.messageKey
-
-    override val interpolator: (String) -> String =
-            { it.replace("{min}", min.toString()).replace("{max}", max.toString()) }
-}
-
-/**
- * Represents a constraint that validate if the value contains another value
- *
- * @property value specifies the value that should contain
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class Contains(val value: String) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{value}", value) }
-}
-
-/**
- * Represents a constraint that validate if the value contains all values
- *
- * @property values specifies the all values that should contain
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class ContainsAll(val values: Iterable<String>) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
-}
-
-/**
- * Represents a constraint that validate if the value contains any value
- *
- * @property values specifies the values that one should contain
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class ContainsAny(val values: Iterable<String>) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
-}
-
-/**
- * Represents a constraint that validate if the value doesn't contain another value
- *
- * @property value specifies the value that shouldn't contain
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class NotContain(val value: String) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{value}", value) }
-}
-
-/**
- * Represents a constraint that validate if the value doesn't contain all values
- *
- * @property values specifies the all values that shouldn't contain
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class NotContainAll(val values: Iterable<String>) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
-}
-
-/**
- * Represents a constraint that validate if the value doesn't contain any value
- *
- * @property values specifies the values that one shouldn't contain
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class NotContainAny(val values: Iterable<String>) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
-}
 
 /**
  * Represents a constraint that validate if the value matches with a pattern
