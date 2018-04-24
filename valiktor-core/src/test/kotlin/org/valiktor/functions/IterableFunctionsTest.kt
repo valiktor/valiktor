@@ -679,7 +679,7 @@ class IterableFunctionsTest {
     @Test
     fun `doesNotContainAll vararg with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(3))), {
+            validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(id = 3))), {
                 validate(Company::addresses).doesNotContainAll(Address(id = 1), Address(id = 2))
             })
         }
@@ -687,7 +687,7 @@ class IterableFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "addresses",
-                        value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                        value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                         constraint = NotContainAll(setOf(Address(id = 1), Address(id = 2)))))
 
         val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
@@ -697,19 +697,19 @@ class IterableFunctionsTest {
                 entry(Locales.DEFAULT, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAll(setOf(Address(id = 1), Address(id = 2))),
                                 message = "Must not contain ${Address(id = 1)}, ${Address(id = 2)}"))),
                 entry(Locales.EN, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAll(setOf(Address(id = 1), Address(id = 2))),
                                 message = "Must not contain ${Address(id = 1)}, ${Address(id = 2)}"))),
                 entry(Locales.PT_BR, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAll(setOf(Address(id = 1), Address(id = 2))),
                                 message = "Não deve conter ${Address(id = 1)}, ${Address(id = 2)}"))))
     }
@@ -731,7 +731,7 @@ class IterableFunctionsTest {
     @Test
     fun `doesNotContainAll iterable with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(3))), {
+            validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(id = 3))), {
                 validate(Company::addresses).doesNotContainAll(listOf(Address(id = 1), Address(id = 2)))
             })
         }
@@ -739,7 +739,7 @@ class IterableFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "addresses",
-                        value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                        value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                         constraint = NotContainAll(listOf(Address(id = 1), Address(id = 2)))))
 
         val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
@@ -749,19 +749,19 @@ class IterableFunctionsTest {
                 entry(Locales.DEFAULT, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAll(listOf(Address(id = 1), Address(id = 2))),
                                 message = "Must not contain ${Address(id = 1)}, ${Address(id = 2)}"))),
                 entry(Locales.EN, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAll(listOf(Address(id = 1), Address(id = 2))),
                                 message = "Must not contain ${Address(id = 1)}, ${Address(id = 2)}"))),
                 entry(Locales.PT_BR, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAll(listOf(Address(id = 1), Address(id = 2))),
                                 message = "Não deve conter ${Address(id = 1)}, ${Address(id = 2)}"))))
     }
@@ -783,7 +783,7 @@ class IterableFunctionsTest {
     @Test
     fun `doesNotContainAny vararg with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(3))), {
+            validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(id = 3))), {
                 validate(Company::addresses).doesNotContainAny(Address(id = 1), Address(id = 5))
             })
         }
@@ -791,7 +791,7 @@ class IterableFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "addresses",
-                        value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                        value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                         constraint = NotContainAny(setOf(Address(id = 1), Address(id = 5)))))
 
         val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
@@ -801,19 +801,19 @@ class IterableFunctionsTest {
                 entry(Locales.DEFAULT, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAny(setOf(Address(id = 1), Address(id = 5))),
                                 message = "Must not contain ${Address(id = 1)}, ${Address(id = 5)}"))),
                 entry(Locales.EN, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAny(setOf(Address(id = 1), Address(id = 5))),
                                 message = "Must not contain ${Address(id = 1)}, ${Address(id = 5)}"))),
                 entry(Locales.PT_BR, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAny(setOf(Address(id = 1), Address(id = 5))),
                                 message = "Não deve conter ${Address(id = 1)}, ${Address(id = 5)}"))))
     }
@@ -835,7 +835,7 @@ class IterableFunctionsTest {
     @Test
     fun `doesNotContainAny iterable with invalid property should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(3))), {
+            validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(id = 3))), {
                 validate(Company::addresses).doesNotContainAny(listOf(Address(id = 1), Address(id = 5)))
             })
         }
@@ -843,7 +843,7 @@ class IterableFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "addresses",
-                        value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                        value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                         constraint = NotContainAny(listOf(Address(id = 1), Address(id = 5)))))
 
         val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
@@ -853,19 +853,19 @@ class IterableFunctionsTest {
                 entry(Locales.DEFAULT, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAny(listOf(Address(id = 1), Address(id = 5))),
                                 message = "Must not contain ${Address(id = 1)}, ${Address(id = 5)}"))),
                 entry(Locales.EN, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAny(listOf(Address(id = 1), Address(id = 5))),
                                 message = "Must not contain ${Address(id = 1)}, ${Address(id = 5)}"))),
                 entry(Locales.PT_BR, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(3)),
+                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                                 constraint = NotContainAny(listOf(Address(id = 1), Address(id = 5))),
                                 message = "Não deve conter ${Address(id = 1)}, ${Address(id = 5)}"))))
     }

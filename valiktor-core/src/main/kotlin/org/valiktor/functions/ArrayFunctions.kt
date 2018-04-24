@@ -18,6 +18,7 @@ package org.valiktor.functions
 
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.Validator
+import org.valiktor.constraints.*
 
 /**
  * Validates the array property initializing another DSL function recursively
@@ -38,3 +39,132 @@ fun <E, T> Validator<E>.Property<Array<T>?>.validateForEach(block: Validator<T>.
     }
     return this
 }
+
+/**
+ * Validates if the array property is empty
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.isEmpty(): Validator<E>.Property<Array<T>?> =
+        this.validate(Empty(), { it == null || it.count() == 0 })
+
+/**
+ * Validates if the array property is not empty
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.isNotEmpty(): Validator<E>.Property<Array<T>?> =
+        this.validate(NotEmpty(), { it == null || it.count() > 0 })
+
+/**
+ * Validates if the array property size is within the limits (min and max)
+ *
+ * @param min specifies the minimum size
+ * @param max specifies the maximum size
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.hasSize(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Array<T>?> =
+        this.validate(Size(min, max), { it == null || IntRange(min, max).contains(it.count()) })
+
+/**
+ * Validates if the array property contains the value
+ *
+ * @param value specifies the value that should contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.contains(value: T): Validator<E>.Property<Array<T>?> =
+        this.validate(Contains(value), { it == null || it.contains(value) })
+
+/**
+ * Validates if the array property contains all values
+ *
+ * @param values specifies the all values that should contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.containsAll(vararg values: T): Validator<E>.Property<Array<T>?> =
+        this.validate(ContainsAll(values.toSet()), { it == null || values.toSet().all { e -> it.contains(e) } })
+
+/**
+ * Validates if the array property contains all values
+ *
+ * @param values specifies the all values that should contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.containsAll(values: Iterable<T>): Validator<E>.Property<Array<T>?> =
+        this.validate(ContainsAll(values), { it == null || values.all { e -> it.contains(e) } })
+
+/**
+ * Validates if the array property contains any value
+ *
+ * @param values specifies the values that one should contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.containsAny(vararg values: T): Validator<E>.Property<Array<T>?> =
+        this.validate(ContainsAny(values.toSet()), { it == null || values.toSet().any { e -> it.contains(e) } })
+
+/**
+ * Validates if the array property contains any value
+ *
+ * @param values specifies the values that one should contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.containsAny(values: Iterable<T>): Validator<E>.Property<Array<T>?> =
+        this.validate(ContainsAny(values), { it == null || values.any { e -> it.contains(e) } })
+
+/**
+ * Validates if the array property doesn't contain the value
+ *
+ * @param value specifies the value that shouldn't contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.doesNotContain(value: T): Validator<E>.Property<Array<T>?> =
+        this.validate(NotContain(value), { it == null || !it.contains(value) })
+
+/**
+ * Validates if the array property doesn't contain all values
+ *
+ * @param values specifies the all values that shouldn't contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.doesNotContainAll(vararg values: T): Validator<E>.Property<Array<T>?> =
+        this.validate(NotContainAll(values.toSet()), { it == null || !values.toSet().all { e -> it.contains(e) } })
+
+/**
+ * Validates if the array property doesn't contain all values
+ *
+ * @param values specifies the all values that shouldn't contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.doesNotContainAll(values: Iterable<T>): Validator<E>.Property<Array<T>?> =
+        this.validate(NotContainAll(values), { it == null || !values.all { e -> it.contains(e) } })
+
+/**
+ * Validates if the array property doesn't contain any value
+ *
+ * @param values specifies the values that one shouldn't contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.doesNotContainAny(vararg values: T): Validator<E>.Property<Array<T>?> =
+        this.validate(NotContainAny(values.toSet()), { it == null || !values.toSet().any { e -> it.contains(e) } })
+
+/**
+ * Validates if the array property doesn't contain any value
+ *
+ * @param values specifies the values that one shouldn't contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.doesNotContainAny(values: Iterable<T>): Validator<E>.Property<Array<T>?> =
+        this.validate(NotContainAny(values), { it == null || !values.any { e -> it.contains(e) } })
