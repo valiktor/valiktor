@@ -153,3 +153,63 @@ data class NotContainAll(val values: Iterable<String>) : AbstractConstraint() {
 data class NotContainAny(val values: Iterable<String>) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
 }
+
+/**
+ * Represents a constraint that validate if the value matches with a pattern
+ *
+ * @property regex specifies the pattern value that should match
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class Matches(val regex: String) : AbstractConstraint() {
+    constructor(regex: Regex) : this(regex.pattern)
+
+    override val interpolator: (String) -> String = { it.replace("{pattern}", regex) }
+}
+
+/**
+ * Represents a constraint that validate if the value doesn't match with a pattern
+ *
+ * @property regex specifies the pattern value that shouldn't match
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class NotMatch(val regex: String) : AbstractConstraint() {
+    constructor(regex: Regex) : this(regex.pattern)
+
+    override val interpolator: (String) -> String = { it.replace("{pattern}", regex) }
+}
+
+/**
+ * Represents a constraint that validate if the value contains a pattern
+ *
+ * @property regex specifies the pattern value that should contain
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class ContainsRegex(val regex: String) : AbstractConstraint() {
+    constructor(regex: Regex) : this(regex.pattern)
+
+    override val interpolator: (String) -> String = { it.replace("{pattern}", regex) }
+}
+
+/**
+ * Represents a constraint that validate if the value doesn't contain a pattern
+ *
+ * @property regex specifies the value pattern that shouldn't contain
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class NotContainRegex(val regex: String) : AbstractConstraint() {
+    constructor(regex: Regex) : this(regex.pattern)
+
+    override val interpolator: (String) -> String = { it.replace("{pattern}", regex) }
+}

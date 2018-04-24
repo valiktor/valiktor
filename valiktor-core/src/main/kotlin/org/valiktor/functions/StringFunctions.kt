@@ -325,3 +325,43 @@ fun <E> Validator<E>.Property<String?>.doesNotContainAnyIgnoringCase(vararg valu
  */
 fun <E> Validator<E>.Property<String?>.doesNotContainAnyIgnoringCase(values: Iterable<String>): Validator<E>.Property<String?> =
         this.validate(NotContainAny(values), { it == null || !values.any { e -> it.contains(other = e, ignoreCase = true) } })
+
+/**
+ * Validates if the [String] property matches the value
+ *
+ * @param regex specifies the pattern value that should match
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.matches(regex: Regex): Validator<E>.Property<String?> =
+        this.validate(Matches(regex), { it == null || it.matches(regex) })
+
+/**
+ * Validates if the [String] property doesn't match the value
+ *
+ * @param regex specifies the pattern value that shouldn't match
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.doesNotMatch(regex: Regex): Validator<E>.Property<String?> =
+        this.validate(NotMatch(regex), { it == null || !it.matches(regex) })
+
+/**
+ * Validates if the [String] property contains a pattern
+ *
+ * @param regex specifies the pattern value that should contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.contains(regex: Regex): Validator<E>.Property<String?> =
+        this.validate(ContainsRegex(regex), { it == null || it.contains(regex) })
+
+/**
+ * Validates if the [String] property doesn't contain the pattern
+ *
+ * @param regex specifies the pattern value that shouldn't contain
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.doesNotContain(regex: Regex): Validator<E>.Property<String?> =
+        this.validate(NotContainRegex(regex), { it == null || !it.contains(regex) })

@@ -1192,4 +1192,152 @@ class StringFunctionsTest {
                 entry(Locales.PT_BR, setOf(
                         DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("j", "w", "x", "e")), message = "Não deve conter j, w, x, e"))))
     }
+
+    @Test
+    fun `matches with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).matches(Regex("^[0-9]*\$"))
+        })
+    }
+
+    @Test
+    fun `matches with valid property should be valid`() {
+        validate(Employee(name = "0123456789"), {
+            validate(Employee::name).matches(Regex("^[0-9]*\$"))
+        })
+    }
+
+    @Test
+    fun `matches with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "John"), {
+                validate(Employee::name).matches(Regex("^[0-9]*\$"))
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "John", constraint = Matches(Regex("^[0-9]*\$"))))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Matches(Regex("^[0-9]*\$")), message = "Must match ^[0-9]*\$"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Matches(Regex("^[0-9]*\$")), message = "Must match ^[0-9]*\$"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Matches(Regex("^[0-9]*\$")), message = "Deve corresponder ao padrão ^[0-9]*\$"))))
+    }
+
+    @Test
+    fun `doesNotMatch with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).doesNotMatch(Regex("^[0-9]*\$"))
+        })
+    }
+
+    @Test
+    fun `doesNotMatch with valid property should be valid`() {
+        validate(Employee(name = "test"), {
+            validate(Employee::name).doesNotMatch(Regex("^[0-9]*\$"))
+        })
+    }
+
+    @Test
+    fun `doesNotMatch with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "0123456789"), {
+                validate(Employee::name).doesNotMatch(Regex("^[0-9]*\$"))
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "0123456789", constraint = NotMatch(Regex("^[0-9]*\$"))))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "0123456789", constraint = NotMatch(Regex("^[0-9]*\$")), message = "Must not match ^[0-9]*\$"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "0123456789", constraint = NotMatch(Regex("^[0-9]*\$")), message = "Must not match ^[0-9]*\$"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "0123456789", constraint = NotMatch(Regex("^[0-9]*\$")), message = "Não deve corresponder ao padrão ^[0-9]*\$"))))
+    }
+
+    @Test
+    fun `containsRegex with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).contains(Regex("a([bc]+)d?"))
+        })
+    }
+
+    @Test
+    fun `containsRegex with valid property should be valid`() {
+        validate(Employee(name = "xabcdy"), {
+            validate(Employee::name).contains(Regex("a([bc]+)d?"))
+        })
+    }
+
+    @Test
+    fun `containsRegex with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "John"), {
+                validate(Employee::name).contains(Regex("a([bc]+)d?"))
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsRegex(Regex("a([bc]+)d?"))))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsRegex(Regex("a([bc]+)d?")), message = "Must contain the pattern a([bc]+)d?"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsRegex(Regex("a([bc]+)d?")), message = "Must contain the pattern a([bc]+)d?"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsRegex(Regex("a([bc]+)d?")), message = "Deve conter o padrão a([bc]+)d?"))))
+    }
+
+    @Test
+    fun `doesNotContainRegex with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).doesNotContain(Regex("a([bc]+)d?"))
+        })
+    }
+
+    @Test
+    fun `doesNotContainRegex with valid property should be valid`() {
+        validate(Employee(name = "xyz"), {
+            validate(Employee::name).doesNotContain(Regex("a([bc]+)d?"))
+        })
+    }
+
+    @Test
+    fun `doesNotContainRegex with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "xJohny"), {
+                validate(Employee::name).doesNotContain(Regex("J([oh]+)n?"))
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?"))))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?")), message = "Must not contain the pattern J([oh]+)n?"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?")), message = "Must not contain the pattern J([oh]+)n?"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?")), message = "Não deve conter o padrão J([oh]+)n?"))))
+    }
 }
