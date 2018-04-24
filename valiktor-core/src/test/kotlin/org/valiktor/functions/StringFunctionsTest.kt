@@ -1340,4 +1340,300 @@ class StringFunctionsTest {
                 entry(Locales.PT_BR, setOf(
                         DefaultI18nConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?")), message = "Não deve conter o padrão J([oh]+)n?"))))
     }
+
+    @Test
+    fun `startsWith with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).startsWith("a")
+        })
+    }
+
+    @Test
+    fun `startsWith with valid property should be valid`() {
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).startsWith("a")
+        })
+    }
+
+    @Test
+    fun `startsWith with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "John"), {
+                validate(Employee::name).startsWith("j")
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "John", constraint = StartsWith("j")))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("j"), message = "Must start with j"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("j"), message = "Must start with j"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("j"), message = "Deve começar com j"))))
+    }
+
+    @Test
+    fun `startsWithIgnoringCase with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).startsWithIgnoringCase("a")
+        })
+    }
+
+    @Test
+    fun `startsWithIgnoringCase with valid property should be valid`() {
+        validate(Employee(name = "ABC"), {
+            validate(Employee::name).startsWithIgnoringCase("a")
+        })
+    }
+
+    @Test
+    fun `startsWithIgnoringCase with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "John"), {
+                validate(Employee::name).startsWithIgnoringCase("g")
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "John", constraint = StartsWith("g")))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("g"), message = "Must start with g"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("g"), message = "Must start with g"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("g"), message = "Deve começar com g"))))
+    }
+
+    @Test
+    fun `doesNotStartWith with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).doesNotStartWith("a")
+        })
+    }
+
+    @Test
+    fun `doesNotStartWith with valid property should be valid`() {
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).doesNotStartWith("d")
+        })
+    }
+
+    @Test
+    fun `doesNotStartWith with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotStartWith("J")
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "John", constraint = NotStartWith("J")))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("J"), message = "Must not start with J"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("J"), message = "Must not start with J"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("J"), message = "Não deve começar com J"))))
+    }
+
+    @Test
+    fun `doesNotStartWithIgnoringCase with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).doesNotStartWithIgnoringCase("a")
+        })
+    }
+
+    @Test
+    fun `doesNotStartWithIgnoringCase with valid property should be valid`() {
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).doesNotStartWithIgnoringCase("d")
+        })
+    }
+
+    @Test
+    fun `doesNotStartWithIgnoringCase with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotStartWithIgnoringCase("j")
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "John", constraint = NotStartWith("j")))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("j"), message = "Must not start with j"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("j"), message = "Must not start with j"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("j"), message = "Não deve começar com j"))))
+    }
+
+    @Test
+    fun `endsWith with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).endsWith("a")
+        })
+    }
+
+    @Test
+    fun `endsWith with valid property should be valid`() {
+        validate(Employee(name = "cba"), {
+            validate(Employee::name).endsWith("a")
+        })
+    }
+
+    @Test
+    fun `endsWith with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "John"), {
+                validate(Employee::name).endsWith("N")
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "John", constraint = EndsWith("N")))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("N"), message = "Must end with N"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("N"), message = "Must end with N"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("N"), message = "Deve terminar com N"))))
+    }
+
+    @Test
+    fun `endsWithIgnoringCase with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).endsWithIgnoringCase("a")
+        })
+    }
+
+    @Test
+    fun `endsWithIgnoringCase with valid property should be valid`() {
+        validate(Employee(name = "CBA"), {
+            validate(Employee::name).endsWithIgnoringCase("a")
+        })
+    }
+
+    @Test
+    fun `endsWithIgnoringCase with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "John"), {
+                validate(Employee::name).endsWithIgnoringCase("o")
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "John", constraint = EndsWith("o")))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("o"), message = "Must end with o"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("o"), message = "Must end with o"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("o"), message = "Deve terminar com o"))))
+    }
+
+    @Test
+    fun `doesNotEndWith with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).doesNotEndWith("a")
+        })
+    }
+
+    @Test
+    fun `doesNotEndWith with valid property should be valid`() {
+        validate(Employee(name = "abc"), {
+            validate(Employee::name).doesNotEndWith("d")
+        })
+    }
+
+    @Test
+    fun `doesNotEndWith with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotEndWith("n")
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "John", constraint = NotEndWith("n")))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("n"), message = "Must not end with n"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("n"), message = "Must not end with n"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("n"), message = "Não deve terminar com n"))))
+    }
+
+    @Test
+    fun `doesNotEndWithIgnoringCase with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).doesNotEndWithIgnoringCase("a")
+        })
+    }
+
+    @Test
+    fun `doesNotEndWithIgnoringCase with valid property should be valid`() {
+        validate(Employee(name = "ABC"), {
+            validate(Employee::name).doesNotEndWithIgnoringCase("d")
+        })
+    }
+
+    @Test
+    fun `doesNotEndWithIgnoringCase with invalid property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "John"), {
+                validate(Employee::name).doesNotEndWithIgnoringCase("N")
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N")))
+
+        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
+                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+
+        assertThat(i18nMap).containsExactly(
+                entry(Locales.DEFAULT, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N"), message = "Must not end with N"))),
+                entry(Locales.EN, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N"), message = "Must not end with N"))),
+                entry(Locales.PT_BR, setOf(
+                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N"), message = "Não deve terminar com N"))))
+    }
 }

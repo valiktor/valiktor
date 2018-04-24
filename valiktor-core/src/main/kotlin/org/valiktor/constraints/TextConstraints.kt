@@ -213,3 +213,55 @@ data class NotContainRegex(val regex: String) : AbstractConstraint() {
 
     override val interpolator: (String) -> String = { it.replace("{pattern}", regex) }
 }
+
+/**
+ * Represents a constraint that validate if the value starts with another value
+ *
+ * @property prefix specifies the value that should start
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class StartsWith(val prefix: String) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{prefix}", prefix) }
+}
+
+/**
+ * Represents a constraint that validate if the value doesn't start with another value
+ *
+ * @property prefix specifies the value that shouldn't start
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class NotStartWith(val prefix: String) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{prefix}", prefix) }
+}
+
+/**
+ * Represents a constraint that validate if the value ends with another value
+ *
+ * @property suffix specifies the value that should end
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class EndsWith(val suffix: String) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{suffix}", suffix) }
+}
+
+/**
+ * Represents a constraint that validate if the value doesn't end with another value
+ *
+ * @property suffix specifies the value that not shouldn't end
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+data class NotEndWith(val suffix: String) : AbstractConstraint() {
+    override val interpolator: (String) -> String = { it.replace("{suffix}", suffix) }
+}

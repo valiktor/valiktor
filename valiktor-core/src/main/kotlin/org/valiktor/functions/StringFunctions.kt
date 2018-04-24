@@ -365,3 +365,83 @@ fun <E> Validator<E>.Property<String?>.contains(regex: Regex): Validator<E>.Prop
  */
 fun <E> Validator<E>.Property<String?>.doesNotContain(regex: Regex): Validator<E>.Property<String?> =
         this.validate(NotContainRegex(regex), { it == null || !it.contains(regex) })
+
+/**
+ * Validates if the [String] property value starts with another value
+ *
+ * @param prefix specifies the value that should start
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.startsWith(prefix: String): Validator<E>.Property<String?> =
+        this.validate(StartsWith(prefix), { it == null || it.startsWith(prefix) })
+
+/**
+ * Validates if the [String] property value starts with another value ignoring case sensitive
+ *
+ * @param prefix specifies the value that should start
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.startsWithIgnoringCase(prefix: String): Validator<E>.Property<String?> =
+        this.validate(StartsWith(prefix), { it == null || it.startsWith(prefix = prefix, ignoreCase = true) })
+
+/**
+ * Validates if the [String] property value doesn't start with another value
+ *
+ * @param prefix specifies the value that shouldn't start
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.doesNotStartWith(prefix: String): Validator<E>.Property<String?> =
+        this.validate(NotStartWith(prefix), { it == null || !it.startsWith(prefix) })
+
+/**
+ * Validates if the [String] property value doesn't start with another value ignoring case sensitive
+ *
+ * @param prefix specifies the value that shouldn't start
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.doesNotStartWithIgnoringCase(prefix: String): Validator<E>.Property<String?> =
+        this.validate(NotStartWith(prefix), { it == null || !it.startsWith(prefix = prefix, ignoreCase = true) })
+
+/**
+ * Validates if the [String] property value ends with another value
+ *
+ * @param suffix specifies the value that should end
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.endsWith(suffix: String): Validator<E>.Property<String?> =
+        this.validate(EndsWith(suffix), { it == null || it.endsWith(suffix) })
+
+/**
+ * Validates if the [String] property value ends with another value ignoring case sensitive
+ *
+ * @param suffix specifies the value that should end
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.endsWithIgnoringCase(suffix: String): Validator<E>.Property<String?> =
+        this.validate(EndsWith(suffix), { it == null || it.endsWith(suffix = suffix, ignoreCase = true) })
+
+/**
+ * Validates if the [String] property value doesn't end with another value
+ *
+ * @param suffix specifies the value that shouldn't end
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.doesNotEndWith(suffix: String): Validator<E>.Property<String?> =
+        this.validate(NotEndWith(suffix), { it == null || !it.endsWith(suffix) })
+
+/**
+ * Validates if the [String] property value doesn't end with another value ignoring case sensitive
+ *
+ * @param suffix specifies the value that shouldn't end
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.doesNotEndWithIgnoringCase(suffix: String): Validator<E>.Property<String?> =
+        this.validate(NotEndWith(suffix), { it == null || !it.endsWith(suffix = suffix, ignoreCase = true) })
