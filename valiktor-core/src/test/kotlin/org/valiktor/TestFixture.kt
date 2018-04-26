@@ -30,6 +30,7 @@ data class Employee(val id: Int? = null,
                     val name: String? = null,
                     val email: String? = null,
                     val age: Short? = null,
+                    val ssn: Long? = null,
                     val username: String? = null,
                     val company: Company? = null,
                     val address: Address? = null,
@@ -41,11 +42,12 @@ data class Dependent(val id: Int? = null,
 data class Company(val id: Int? = null,
                    val name: String? = null,
                    val age: Short? = null,
+                   val code: Long? = null,
                    val addresses: List<Address>? = null)
 
 data class Address(val id: Int? = null,
                    val street: String? = null,
-                   val number: Int? = null,
+                   val number: Long? = null,
                    val apartment: Short? = null,
                    val city: City? = null)
 
