@@ -124,7 +124,7 @@ fun <E> Validator<E>.Property<String?>.isNotInIgnoringCase(values: Iterable<Stri
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<String?>.hasSize(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<String?> =
-        this.validate(Size(min, max), { it == null || IntRange(min, max).contains(it.length) })
+        this.validate(Size(min, max), { it == null || it.length in IntRange(min, max) })
 
 /**
  * Validates if the [String] property contains the value

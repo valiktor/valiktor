@@ -67,7 +67,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotEmpty(): Validator<E>.Proper
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<Iterable<T>?>.hasSize(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Iterable<T>?> =
-        this.validate(Size(min, max), { it == null || IntRange(min, max).contains(it.count()) })
+        this.validate(Size(min, max), { it == null || it.count() in IntRange(min, max) })
 
 /**
  * Validates if the [Iterable] property contains the value
