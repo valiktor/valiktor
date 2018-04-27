@@ -5,6 +5,20 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
+import org.valiktor.ConstraintViolationFixture.EmptyConstraint
+import org.valiktor.ConstraintViolationFixture.TestConstraint
+
+private object ConstraintViolationFixture {
+
+    class EmptyConstraint : AbstractConstraint()
+
+    data class TestConstraint(val value1: String,
+                              val value2: String) : AbstractConstraint() {
+
+        override val interpolator: (String) -> String =
+                { it.replace("{value1}", value1).replace("{value2}", value2) }
+    }
+}
 
 class ConstraintViolationTest {
 
@@ -20,7 +34,7 @@ class ConstraintViolationTest {
                 { assertEquals(constraintViolation.property, "name") },
                 { assertEquals(constraintViolation.value, "Test") },
                 { assertEquals(constraintViolation.constraint.name, "EmptyConstraint") },
-                { assertEquals(constraintViolation.constraint.messageKey, "org.valiktor.EmptyConstraint.message") },
+                { assertEquals(constraintViolation.constraint.messageKey, "org.valiktor.ConstraintViolationFixture\$EmptyConstraint.message") },
                 { assertEquals(constraintViolation.constraint.interpolator("some message"), "some message") }
         )
     }

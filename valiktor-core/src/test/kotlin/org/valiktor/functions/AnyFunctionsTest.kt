@@ -1,15 +1,28 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.valiktor.*
+import org.valiktor.ConstraintViolationException
+import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.*
-import org.valiktor.i18n.DefaultI18nConstraintViolation
-import org.valiktor.i18n.I18nConstraintViolation
-import org.valiktor.i18n.mapToI18n
-import java.util.*
+import org.valiktor.functions.AnyFunctionsFixture.Address
+import org.valiktor.functions.AnyFunctionsFixture.City
+import org.valiktor.functions.AnyFunctionsFixture.Company
+import org.valiktor.functions.AnyFunctionsFixture.Country
+import org.valiktor.functions.AnyFunctionsFixture.Employee
+import org.valiktor.functions.AnyFunctionsFixture.State
+import org.valiktor.validate
+
+private object AnyFunctionsFixture {
+
+    data class Employee(val id: Int? = null, val name: String? = null, val company: Company? = null, val address: Address? = null)
+    data class Company(val id: Int? = null)
+    data class Address(val id: Int? = null, val city: City? = null)
+    data class City(val id: Int? = null, val state: State? = null)
+    data class State(val id: Int? = null, val country: Country? = null)
+    data class Country(val id: Int? = null)
+}
 
 class AnyFunctionsTest {
 
@@ -29,17 +42,6 @@ class AnyFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = Null()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = Null(), message = "Must be null"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = Null(), message = "Must be null"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = Null(), message = "Deve ser nulo"))))
     }
 
     @Test
@@ -58,17 +60,6 @@ class AnyFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", constraint = NotNull()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "id", constraint = NotNull(), message = "Must not be null"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "id", constraint = NotNull(), message = "Must not be null"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "id", constraint = NotNull(), message = "Não deve ser nulo"))))
     }
 
     @Test
@@ -94,17 +85,6 @@ class AnyFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 2, constraint = Equals(1)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 2, constraint = Equals(1), message = "Must be equal to 1"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 2, constraint = Equals(1), message = "Must be equal to 1"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 2, constraint = Equals(1), message = "Deve ser igual a 1"))))
     }
 
     @Test
@@ -130,17 +110,6 @@ class AnyFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = NotEquals(1)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = NotEquals(1), message = "Must not be equal to 1"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = NotEquals(1), message = "Must not be equal to 1"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = NotEquals(1), message = "Não deve ser igual a 1"))))
     }
 
     @Test
@@ -166,17 +135,6 @@ class AnyFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = In(setOf(0, 2, 3))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = In(setOf(0, 2, 3)), message = "Must be in 0, 2, 3"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = In(setOf(0, 2, 3)), message = "Must be in 0, 2, 3"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = In(setOf(0, 2, 3)), message = "Deve ser um desses: 0, 2, 3"))))
     }
 
     @Test
@@ -202,17 +160,6 @@ class AnyFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = In(listOf(0, 2, 3))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = In(listOf(0, 2, 3)), message = "Must be in 0, 2, 3"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = In(listOf(0, 2, 3)), message = "Must be in 0, 2, 3"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = In(listOf(0, 2, 3)), message = "Deve ser um desses: 0, 2, 3"))))
     }
 
     @Test
@@ -238,17 +185,6 @@ class AnyFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = NotIn(setOf(1, 2, 3))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = NotIn(setOf(1, 2, 3)), message = "Must not be in 1, 2, 3"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = NotIn(setOf(1, 2, 3)), message = "Must not be in 1, 2, 3"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = NotIn(setOf(1, 2, 3)), message = "Não deve ser um desses: 1, 2, 3"))))
     }
 
     @Test
@@ -274,17 +210,6 @@ class AnyFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 1, constraint = NotIn(listOf(1, 2, 3))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = NotIn(listOf(1, 2, 3)), message = "Must not be in 1, 2, 3"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = NotIn(listOf(1, 2, 3)), message = "Must not be in 1, 2, 3"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 1, constraint = NotIn(listOf(1, 2, 3)), message = "Não deve ser um desses: 1, 2, 3"))))
     }
 
     @Test
@@ -310,17 +235,6 @@ class AnyFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", value = 2, constraint = Valid<Int?>({ it == 1 })))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 2, constraint = Valid<Int?>({ it == 1 }), message = "Must be valid"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 2, constraint = Valid<Int?>({ it == 1 }), message = "Must be valid"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "id", value = 2, constraint = Valid<Int?>({ it == 1 }), message = "Deve ser válido"))))
     }
 
     @Test
@@ -400,32 +314,6 @@ class AnyFunctionsTest {
                 DefaultConstraintViolation(property = "address.city.id", constraint = NotNull()),
                 DefaultConstraintViolation(property = "address.city.state.id", constraint = NotNull()),
                 DefaultConstraintViolation(property = "address.city.state.country.id", constraint = NotNull()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "address.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "address.city.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "address.city.state.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "address.city.state.country.id", constraint = NotNull(), message = "Must not be null"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "address.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "address.city.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "address.city.state.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "address.city.state.country.id", constraint = NotNull(), message = "Must not be null"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "id", constraint = NotNull(), message = "Não deve ser nulo"),
-                        DefaultI18nConstraintViolation(property = "company.id", constraint = NotNull(), message = "Não deve ser nulo"),
-                        DefaultI18nConstraintViolation(property = "address.id", constraint = NotNull(), message = "Não deve ser nulo"),
-                        DefaultI18nConstraintViolation(property = "address.city.id", constraint = NotNull(), message = "Não deve ser nulo"),
-                        DefaultI18nConstraintViolation(property = "address.city.state.id", constraint = NotNull(), message = "Não deve ser nulo"),
-                        DefaultI18nConstraintViolation(property = "address.city.state.country.id", constraint = NotNull(), message = "Não deve ser nulo"))))
     }
 
     @Test
@@ -440,19 +328,5 @@ class AnyFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "id", constraint = NotNull()),
                 DefaultConstraintViolation(property = "name", constraint = NotNull()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "name", constraint = NotNull(), message = "Must not be null"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "name", constraint = NotNull(), message = "Must not be null"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "id", constraint = NotNull(), message = "Não deve ser nulo"),
-                        DefaultI18nConstraintViolation(property = "name", constraint = NotNull(), message = "Não deve ser nulo"))))
     }
 }

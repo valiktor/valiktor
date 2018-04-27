@@ -3,7 +3,13 @@ package org.valiktor.i18n
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.valiktor.EmptyConstraint
+import org.valiktor.AbstractConstraint
+import org.valiktor.i18n.I18nConstraintViolationFixture.EmptyConstraint
+
+private object I18nConstraintViolationFixture {
+
+    class EmptyConstraint : AbstractConstraint()
+}
 
 class I18nConstraintViolationTest {
 
@@ -20,7 +26,7 @@ class I18nConstraintViolationTest {
                 { assertEquals(i18nConstraintViolation.property, "name") },
                 { assertEquals(i18nConstraintViolation.value, "Test") },
                 { assertEquals(i18nConstraintViolation.constraint.name, "EmptyConstraint") },
-                { assertEquals(i18nConstraintViolation.constraint.messageKey, "org.valiktor.EmptyConstraint.message") },
+                { assertEquals(i18nConstraintViolation.constraint.messageKey, "org.valiktor.i18n.I18nConstraintViolationFixture\$EmptyConstraint.message") },
                 { assertEquals(i18nConstraintViolation.constraint.interpolator("some message"), "some message") },
                 { assertEquals(i18nConstraintViolation.message, "some message") }
         )

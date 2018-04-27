@@ -4,6 +4,17 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.valiktor.ConstraintFixture.CustomConstraint
+import org.valiktor.ConstraintFixture.EmptyConstraint
+
+private object ConstraintFixture {
+
+    class EmptyConstraint : AbstractConstraint()
+
+    data class CustomConstraint(override val name: String,
+                                override val messageKey: String,
+                                override val interpolator: (String) -> String) : AbstractConstraint()
+}
 
 class ConstraintTest {
 
@@ -13,7 +24,7 @@ class ConstraintTest {
 
         assertAll(
                 { assertEquals(constraint.name, "EmptyConstraint") },
-                { assertEquals(constraint.messageKey, "org.valiktor.EmptyConstraint.message") },
+                { assertEquals(constraint.messageKey, "org.valiktor.ConstraintFixture\$EmptyConstraint.message") },
                 { assertEquals(constraint.interpolator("some message"), "some message") }
         )
     }

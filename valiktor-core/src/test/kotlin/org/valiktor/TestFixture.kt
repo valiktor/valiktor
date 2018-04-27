@@ -1,6 +1,7 @@
 package org.valiktor
 
 import java.util.*
+import java.util.ResourceBundle.getBundle
 
 object Locales {
 
@@ -14,17 +15,10 @@ val SUPPORTED_LOCALES = setOf(
         Locales.EN,
         Locales.PT_BR)
 
-class EmptyConstraint : AbstractConstraint()
-
-data class CustomConstraint(override val name: String,
-                            override val messageKey: String,
-                            override val interpolator: (String) -> String) : AbstractConstraint()
-
-data class TestConstraint(val value1: String,
-                          val value2: String) : AbstractConstraint() {
-
-    override val interpolator: (String) -> String = { it.replace("{value1}", value1).replace("{value2}", value2) }
-}
+fun Constraint.interpolatedMessages(): Map<Locale, String> =
+        SUPPORTED_LOCALES
+                .map { it to this.interpolator(getBundle("org/valiktor/messages", it).getString(this.messageKey)) }
+                .toMap()
 
 data class Employee(val id: Int? = null,
                     val name: String? = null,
