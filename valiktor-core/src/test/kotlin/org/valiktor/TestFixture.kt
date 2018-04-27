@@ -27,11 +27,7 @@ data class Employee(val id: Int? = null,
                     val ssn: Long? = null,
                     val username: String? = null,
                     val company: Company? = null,
-                    val address: Address? = null,
-                    val dependents: Array<Dependent>? = null)
-
-data class Dependent(val id: Int? = null,
-                     val name: String? = null)
+                    val address: Address? = null)
 
 data class Company(val id: Int? = null,
                    val name: String? = null,
