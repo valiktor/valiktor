@@ -11,7 +11,10 @@ class ConstraintViolationTest {
     @Test
     fun `should create ConstraintViolation`() {
         val constraintViolation: ConstraintViolation =
-                DefaultConstraintViolation(property = "name", value = "Test", constraint = EmptyConstraint())
+                DefaultConstraintViolation(
+                        property = "name",
+                        value = "Test",
+                        constraint = EmptyConstraint())
 
         assertAll(
                 { assertEquals(constraintViolation.property, "name") },
@@ -29,13 +32,25 @@ class ConstraintViolationExceptionTest {
     fun `should throws ConstraintViolationException`() {
         val exception = assertThrows<ConstraintViolationException> {
             throw ConstraintViolationException(setOf(
-                    DefaultConstraintViolation(property = "name", value = "Test", constraint = EmptyConstraint()),
-                    DefaultConstraintViolation(property = "name", value = "Test2", constraint = TestConstraint("test value 1", "test value 2"))))
+                    DefaultConstraintViolation(
+                            property = "name",
+                            value = "Test",
+                            constraint = EmptyConstraint()),
+                    DefaultConstraintViolation(
+                            property = "name",
+                            value = "Test2",
+                            constraint = TestConstraint("test value 1", "test value 2"))))
         }
 
         assertThat(exception.constraintViolations)
                 .containsExactly(
-                        DefaultConstraintViolation(property = "name", value = "Test", constraint = EmptyConstraint()),
-                        DefaultConstraintViolation(property = "name", value = "Test2", constraint = TestConstraint("test value 1", "test value 2")))
+                        DefaultConstraintViolation(
+                                property = "name",
+                                value = "Test",
+                                constraint = EmptyConstraint()),
+                        DefaultConstraintViolation(
+                                property = "name",
+                                value = "Test2",
+                                constraint = TestConstraint("test value 1", "test value 2")))
     }
 }
