@@ -864,7 +864,7 @@ class ShortFunctionsTest {
             validate(Employee(age = 9, company = Company(age = -11)), {
                 validate(Employee::age).isBetween(start = 10, end = 11)
                 validate(Employee::company).validate {
-                    validate(Company::age).isBetween(start = -10, end = -9)
+                    validate(Company::age).isBetween(start = -13, end = -12)
                 }
             })
         }
@@ -877,7 +877,7 @@ class ShortFunctionsTest {
                 DefaultConstraintViolation(
                         property = "company.age",
                         value = 11.unaryMinus().toShort(),
-                        constraint = Between(start = 10.unaryMinus().toShort(), end = 9.unaryMinus().toShort())))
+                        constraint = Between(start = 13.unaryMinus().toShort(), end = 12.unaryMinus().toShort())))
 
         val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
                 .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
@@ -892,8 +892,8 @@ class ShortFunctionsTest {
                         DefaultI18nConstraintViolation(
                                 property = "company.age",
                                 value = 11.unaryMinus().toShort(),
-                                constraint = Between(start = 10.unaryMinus().toShort(), end = 9.unaryMinus().toShort()),
-                                message = "Must be between -10 and -9"))),
+                                constraint = Between(start = 13.unaryMinus().toShort(), end = 12.unaryMinus().toShort()),
+                                message = "Must be between -13 and -12"))),
                 entry(Locales.EN, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "age",
@@ -903,8 +903,8 @@ class ShortFunctionsTest {
                         DefaultI18nConstraintViolation(
                                 property = "company.age",
                                 value = 11.unaryMinus().toShort(),
-                                constraint = Between(start = 10.unaryMinus().toShort(), end = 9.unaryMinus().toShort()),
-                                message = "Must be between -10 and -9"))),
+                                constraint = Between(start = 13.unaryMinus().toShort(), end = 12.unaryMinus().toShort()),
+                                message = "Must be between -13 and -12"))),
                 entry(Locales.PT_BR, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "age",
@@ -914,8 +914,8 @@ class ShortFunctionsTest {
                         DefaultI18nConstraintViolation(
                                 property = "company.age",
                                 value = 11.unaryMinus().toShort(),
-                                constraint = Between(start = 10.unaryMinus().toShort(), end = 9.unaryMinus().toShort()),
-                                message = "Deve estar entre -10 e -9"))))
+                                constraint = Between(start = 13.unaryMinus().toShort(), end = 12.unaryMinus().toShort()),
+                                message = "Deve estar entre -13 e -12"))))
     }
 
     @Test
@@ -930,7 +930,7 @@ class ShortFunctionsTest {
         validate(Employee(age = 11, company = Company(age = -8)), {
             validate(Employee::age).isNotBetween(start = 8, end = 10)
             validate(Employee::company).validate {
-                validate(Company::age).isNotBetween(start = -10, end = -9)
+                validate(Company::age).isNotBetween(start = -6, end = -7)
             }
         })
     }

@@ -934,7 +934,7 @@ class DoubleFunctionsTest {
     fun `isNotBetween with valid property should be valid`() {
         validate(Address(latitude = 17.1939768, longitude = -2.2695575), {
             validate(Address::latitude).isNotBetween(start = 18.0, end = 19.0)
-            validate(Address::longitude).isNotBetween(start = -1.0, end = -2.0)
+            validate(Address::longitude).isNotBetween(start = -3.0, end = -2.3)
         })
     }
 

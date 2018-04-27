@@ -864,7 +864,7 @@ class IntFunctionsTest {
             validate(Employee(id = 9, company = Company(id = -11)), {
                 validate(Employee::id).isBetween(start = 10, end = 11)
                 validate(Employee::company).validate {
-                    validate(Company::id).isBetween(start = -10, end = -9)
+                    validate(Company::id).isBetween(start = -13, end = -12)
                 }
             })
         }
@@ -877,7 +877,7 @@ class IntFunctionsTest {
                 DefaultConstraintViolation(
                         property = "company.id",
                         value = -11,
-                        constraint = Between(start = -10, end = -9)))
+                        constraint = Between(start = -13, end = -12)))
 
         val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
                 .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
@@ -892,8 +892,8 @@ class IntFunctionsTest {
                         DefaultI18nConstraintViolation(
                                 property = "company.id",
                                 value = -11,
-                                constraint = Between(start = -10, end = -9),
-                                message = "Must be between -10 and -9"))),
+                                constraint = Between(start = -13, end = -12),
+                                message = "Must be between -13 and -12"))),
                 entry(Locales.EN, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "id",
@@ -903,8 +903,8 @@ class IntFunctionsTest {
                         DefaultI18nConstraintViolation(
                                 property = "company.id",
                                 value = -11,
-                                constraint = Between(start = -10, end = -9),
-                                message = "Must be between -10 and -9"))),
+                                constraint = Between(start = -13, end = -12),
+                                message = "Must be between -13 and -12"))),
                 entry(Locales.PT_BR, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "id",
@@ -914,8 +914,8 @@ class IntFunctionsTest {
                         DefaultI18nConstraintViolation(
                                 property = "company.id",
                                 value = -11,
-                                constraint = Between(start = -10, end = -9),
-                                message = "Deve estar entre -10 e -9"))))
+                                constraint = Between(start = -13, end = -12),
+                                message = "Deve estar entre -13 e -12"))))
     }
 
     @Test
@@ -930,7 +930,7 @@ class IntFunctionsTest {
         validate(Employee(id = 11, company = Company(id = -8)), {
             validate(Employee::id).isNotBetween(start = 8, end = 10)
             validate(Employee::company).validate {
-                validate(Company::id).isNotBetween(start = -10, end = -9)
+                validate(Company::id).isNotBetween(start = -6, end = -7)
             }
         })
     }

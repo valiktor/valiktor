@@ -864,7 +864,7 @@ class LongFunctionsTest {
             validate(Employee(ssn = 9, company = Company(code = -11)), {
                 validate(Employee::ssn).isBetween(start = 10, end = 11)
                 validate(Employee::company).validate {
-                    validate(Company::code).isBetween(start = -10, end = -9)
+                    validate(Company::code).isBetween(start = -13, end = -12)
                 }
             })
         }
@@ -877,7 +877,7 @@ class LongFunctionsTest {
                 DefaultConstraintViolation(
                         property = "company.code",
                         value = 11.unaryMinus().toLong(),
-                        constraint = Between(start = 10.unaryMinus().toLong(), end = 9.unaryMinus().toLong())))
+                        constraint = Between(start = 13.unaryMinus().toLong(), end = 12.unaryMinus().toLong())))
 
         val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
                 .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
@@ -892,8 +892,8 @@ class LongFunctionsTest {
                         DefaultI18nConstraintViolation(
                                 property = "company.code",
                                 value = 11.unaryMinus().toLong(),
-                                constraint = Between(start = 10.unaryMinus().toLong(), end = 9.unaryMinus().toLong()),
-                                message = "Must be between -10 and -9"))),
+                                constraint = Between(start = 13.unaryMinus().toLong(), end = 12.unaryMinus().toLong()),
+                                message = "Must be between -13 and -12"))),
                 entry(Locales.EN, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "ssn",
@@ -903,8 +903,8 @@ class LongFunctionsTest {
                         DefaultI18nConstraintViolation(
                                 property = "company.code",
                                 value = 11.unaryMinus().toLong(),
-                                constraint = Between(start = 10.unaryMinus().toLong(), end = 9.unaryMinus().toLong()),
-                                message = "Must be between -10 and -9"))),
+                                constraint = Between(start = 13.unaryMinus().toLong(), end = 12.unaryMinus().toLong()),
+                                message = "Must be between -13 and -12"))),
                 entry(Locales.PT_BR, setOf(
                         DefaultI18nConstraintViolation(
                                 property = "ssn",
@@ -914,8 +914,8 @@ class LongFunctionsTest {
                         DefaultI18nConstraintViolation(
                                 property = "company.code",
                                 value = 11.unaryMinus().toLong(),
-                                constraint = Between(start = 10.unaryMinus().toLong(), end = 9.unaryMinus().toLong()),
-                                message = "Deve estar entre -10 e -9"))))
+                                constraint = Between(start = 13.unaryMinus().toLong(), end = 12.unaryMinus().toLong()),
+                                message = "Deve estar entre -13 e -12"))))
     }
 
     @Test
@@ -930,7 +930,7 @@ class LongFunctionsTest {
         validate(Employee(ssn = 11, company = Company(code = -8)), {
             validate(Employee::ssn).isNotBetween(start = 8, end = 10)
             validate(Employee::company).validate {
-                validate(Company::code).isNotBetween(start = -10, end = -9)
+                validate(Company::code).isNotBetween(start = -6, end = -7)
             }
         })
     }
