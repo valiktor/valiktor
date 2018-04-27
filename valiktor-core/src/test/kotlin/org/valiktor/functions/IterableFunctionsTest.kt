@@ -1,15 +1,24 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.valiktor.*
+import org.valiktor.ConstraintViolationException
+import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.*
-import org.valiktor.i18n.DefaultI18nConstraintViolation
-import org.valiktor.i18n.I18nConstraintViolation
-import org.valiktor.i18n.mapToI18n
-import java.util.*
+import org.valiktor.functions.IterableFunctionsFixture.Address
+import org.valiktor.functions.IterableFunctionsFixture.City
+import org.valiktor.functions.IterableFunctionsFixture.Company
+import org.valiktor.functions.IterableFunctionsFixture.Employee
+import org.valiktor.validate
+
+private object IterableFunctionsFixture {
+
+    data class Employee(val company: Company? = null)
+    data class Company(val addresses: List<Address>? = null)
+    data class Address(val id: Int? = null, val city: City? = null)
+    data class City(val id: Int? = null)
+}
 
 class IterableFunctionsTest {
 
@@ -69,32 +78,6 @@ class IterableFunctionsTest {
                 DefaultConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull()),
                 DefaultConstraintViolation(property = "company.addresses[2].id", constraint = NotNull()),
                 DefaultConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "company.addresses[0].id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[0].city.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[1].id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[2].id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull(), message = "Must not be null"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "company.addresses[0].id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[0].city.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[1].id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[2].id", constraint = NotNull(), message = "Must not be null"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull(), message = "Must not be null"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "company.addresses[0].id", constraint = NotNull(), message = "Não deve ser nulo"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[0].city.id", constraint = NotNull(), message = "Não deve ser nulo"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[1].id", constraint = NotNull(), message = "Não deve ser nulo"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull(), message = "Não deve ser nulo"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[2].id", constraint = NotNull(), message = "Não deve ser nulo"),
-                        DefaultI18nConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull(), message = "Não deve ser nulo"))))
     }
 
     @Test
@@ -124,29 +107,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = listOf(Address()),
                         constraint = Empty()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address()),
-                                constraint = Empty(),
-                                message = "Must be empty"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address()),
-                                constraint = Empty(),
-                                message = "Must be empty"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address()),
-                                constraint = Empty(),
-                                message = "Deve ser vazio"))))
     }
 
     @Test
@@ -176,29 +136,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = emptyList<Address>(),
                         constraint = NotEmpty()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = NotEmpty(),
-                                message = "Must not be empty"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = NotEmpty(),
-                                message = "Must not be empty"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = NotEmpty(),
-                                message = "Não deve ser vazio"))))
     }
 
     @Test
@@ -249,29 +186,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = listOf(Address(), Address()),
                         constraint = Size(min = 5)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(), Address()),
-                                constraint = Size(min = 5),
-                                message = "Size must be greater than or equal to 5"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(), Address()),
-                                constraint = Size(min = 5),
-                                message = "Size must be greater than or equal to 5"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(), Address()),
-                                constraint = Size(min = 5),
-                                message = "O tamanho deve ser maior ou igual a 5"))))
     }
 
     @Test
@@ -287,29 +201,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = listOf(Address(), Address()),
                         constraint = Size(max = 1)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(), Address()),
-                                constraint = Size(max = 1),
-                                message = "Size must be less than or equal to 1"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(), Address()),
-                                constraint = Size(max = 1),
-                                message = "Size must be less than or equal to 1"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(), Address()),
-                                constraint = Size(max = 1),
-                                message = "O tamanho deve ser menor ou igual a 1"))))
     }
 
     @Test
@@ -325,29 +216,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = listOf(Address(), Address()),
                         constraint = Size(min = 3, max = 1)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(), Address()),
-                                constraint = Size(min = 3, max = 1),
-                                message = "Size must be between 3 and 1"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(), Address()),
-                                constraint = Size(min = 3, max = 1),
-                                message = "Size must be between 3 and 1"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(), Address()),
-                                constraint = Size(min = 3, max = 1),
-                                message = "O tamanho deve estar entre 3 e 1"))))
     }
 
     @Test
@@ -377,29 +245,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = emptyList<Address>(),
                         constraint = Contains(Address(id = 1))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = Contains(Address(id = 1)),
-                                message = "Must contain ${Address(id = 1)}"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = Contains(Address(id = 1)),
-                                message = "Must contain ${Address(id = 1)}"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = Contains(Address(id = 1)),
-                                message = "Deve conter ${Address(id = 1)}"))))
     }
 
     @Test
@@ -429,29 +274,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = emptyList<Address>(),
                         constraint = ContainsAll(setOf(Address(id = 1), Address(id = 2)))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = ContainsAll(setOf(Address(id = 1), Address(id = 2))),
-                                message = "Must contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = ContainsAll(setOf(Address(id = 1), Address(id = 2))),
-                                message = "Must contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = ContainsAll(setOf(Address(id = 1), Address(id = 2))),
-                                message = "Deve conter ${Address(id = 1)}, ${Address(id = 2)}"))))
     }
 
     @Test
@@ -481,29 +303,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = listOf(Address(id = 1)),
                         constraint = ContainsAll(listOf(Address(id = 1), Address(id = 2)))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1)),
-                                constraint = ContainsAll(listOf(Address(id = 1), Address(id = 2))),
-                                message = "Must contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1)),
-                                constraint = ContainsAll(listOf(Address(id = 1), Address(id = 2))),
-                                message = "Must contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1)),
-                                constraint = ContainsAll(listOf(Address(id = 1), Address(id = 2))),
-                                message = "Deve conter ${Address(id = 1)}, ${Address(id = 2)}"))))
     }
 
     @Test
@@ -533,29 +332,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = emptyList<Address>(),
                         constraint = ContainsAny(setOf(Address(id = 1), Address(id = 2)))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = ContainsAny(setOf(Address(id = 1), Address(id = 2))),
-                                message = "Must contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = ContainsAny(setOf(Address(id = 1), Address(id = 2))),
-                                message = "Must contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = ContainsAny(setOf(Address(id = 1), Address(id = 2))),
-                                message = "Deve conter ${Address(id = 1)}, ${Address(id = 2)}"))))
     }
 
     @Test
@@ -585,29 +361,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = emptyList<Address>(),
                         constraint = ContainsAny(listOf(Address(id = 1), Address(id = 2)))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = ContainsAny(listOf(Address(id = 1), Address(id = 2))),
-                                message = "Must contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = ContainsAny(listOf(Address(id = 1), Address(id = 2))),
-                                message = "Must contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = emptyList<Address>(),
-                                constraint = ContainsAny(listOf(Address(id = 1), Address(id = 2))),
-                                message = "Deve conter ${Address(id = 1)}, ${Address(id = 2)}"))))
     }
 
     @Test
@@ -637,29 +390,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = listOf(Address(id = 1)),
                         constraint = NotContain(Address(id = 1))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1)),
-                                constraint = NotContain(Address(id = 1)),
-                                message = "Must not contain ${Address(id = 1)}"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1)),
-                                constraint = NotContain(Address(id = 1)),
-                                message = "Must not contain ${Address(id = 1)}"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1)),
-                                constraint = NotContain(Address(id = 1)),
-                                message = "Não deve conter ${Address(id = 1)}"))))
     }
 
     @Test
@@ -689,29 +419,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                         constraint = NotContainAll(setOf(Address(id = 1), Address(id = 2)))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAll(setOf(Address(id = 1), Address(id = 2))),
-                                message = "Must not contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAll(setOf(Address(id = 1), Address(id = 2))),
-                                message = "Must not contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAll(setOf(Address(id = 1), Address(id = 2))),
-                                message = "Não deve conter ${Address(id = 1)}, ${Address(id = 2)}"))))
     }
 
     @Test
@@ -741,29 +448,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                         constraint = NotContainAll(listOf(Address(id = 1), Address(id = 2)))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAll(listOf(Address(id = 1), Address(id = 2))),
-                                message = "Must not contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAll(listOf(Address(id = 1), Address(id = 2))),
-                                message = "Must not contain ${Address(id = 1)}, ${Address(id = 2)}"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAll(listOf(Address(id = 1), Address(id = 2))),
-                                message = "Não deve conter ${Address(id = 1)}, ${Address(id = 2)}"))))
     }
 
     @Test
@@ -793,29 +477,6 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                         constraint = NotContainAny(setOf(Address(id = 1), Address(id = 5)))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAny(setOf(Address(id = 1), Address(id = 5))),
-                                message = "Must not contain ${Address(id = 1)}, ${Address(id = 5)}"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAny(setOf(Address(id = 1), Address(id = 5))),
-                                message = "Must not contain ${Address(id = 1)}, ${Address(id = 5)}"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAny(setOf(Address(id = 1), Address(id = 5))),
-                                message = "Não deve conter ${Address(id = 1)}, ${Address(id = 5)}"))))
     }
 
     @Test
@@ -845,28 +506,5 @@ class IterableFunctionsTest {
                         property = "addresses",
                         value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
                         constraint = NotContainAny(listOf(Address(id = 1), Address(id = 5)))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAny(listOf(Address(id = 1), Address(id = 5))),
-                                message = "Must not contain ${Address(id = 1)}, ${Address(id = 5)}"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAny(listOf(Address(id = 1), Address(id = 5))),
-                                message = "Must not contain ${Address(id = 1)}, ${Address(id = 5)}"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "addresses",
-                                value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                                constraint = NotContainAny(listOf(Address(id = 1), Address(id = 5))),
-                                message = "Não deve conter ${Address(id = 1)}, ${Address(id = 5)}"))))
     }
 }
