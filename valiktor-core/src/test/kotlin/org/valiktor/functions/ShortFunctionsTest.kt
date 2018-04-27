@@ -1046,6 +1046,27 @@ class ShortFunctionsTest {
     }
 
     @Test
+    fun `hasDigits with negative valid min length property should be valid`() {
+        validate(Employee(age = -1000), {
+            validate(Employee::age).hasDigits(min = 4)
+        })
+    }
+
+    @Test
+    fun `hasDigits with negative valid max length property should be valid`() {
+        validate(Employee(age = -1000), {
+            validate(Employee::age).hasDigits(max = 4)
+        })
+    }
+
+    @Test
+    fun `hasDigits with negative valid min and max length property should be valid`() {
+        validate(Employee(age = -1000), {
+            validate(Employee::age).hasDigits(min = 4, max = 4)
+        })
+    }
+
+    @Test
     fun `hasDigits without min and max should be valid`() {
         validate(Employee(age = 1000), {
             validate(Employee::age).hasDigits()

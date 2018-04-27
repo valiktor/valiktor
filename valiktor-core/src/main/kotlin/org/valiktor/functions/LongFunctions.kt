@@ -170,4 +170,4 @@ fun <E> Validator<E>.Property<Long?>.isNotBetween(start: Long, end: Long): Valid
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Long?> =
-        this.validate(IntegerDigits(min, max), { it == null || it.toString().length in min.rangeTo(max) })
+        this.validate(IntegerDigits(min, max), { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) })

@@ -1046,6 +1046,27 @@ class LongFunctionsTest {
     }
 
     @Test
+    fun `hasDigits with negative valid min length property should be valid`() {
+        validate(Employee(ssn = -1000), {
+            validate(Employee::ssn).hasDigits(min = 4)
+        })
+    }
+
+    @Test
+    fun `hasDigits with negative valid max length property should be valid`() {
+        validate(Employee(ssn = -1000), {
+            validate(Employee::ssn).hasDigits(max = 4)
+        })
+    }
+
+    @Test
+    fun `hasDigits with negative valid min and max length property should be valid`() {
+        validate(Employee(ssn = -1000), {
+            validate(Employee::ssn).hasDigits(min = 4, max = 4)
+        })
+    }
+
+    @Test
     fun `hasDigits without min and max should be valid`() {
         validate(Employee(ssn = 1000), {
             validate(Employee::ssn).hasDigits()

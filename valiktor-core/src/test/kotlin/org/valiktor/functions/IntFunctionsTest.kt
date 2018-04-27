@@ -1046,6 +1046,27 @@ class IntFunctionsTest {
     }
 
     @Test
+    fun `hasDigits with negative valid min length property should be valid`() {
+        validate(Employee(id = -1000), {
+            validate(Employee::id).hasDigits(min = 4)
+        })
+    }
+
+    @Test
+    fun `hasDigits with negative valid max length property should be valid`() {
+        validate(Employee(id = -1000), {
+            validate(Employee::id).hasDigits(max = 4)
+        })
+    }
+
+    @Test
+    fun `hasDigits with negative valid min and max length property should be valid`() {
+        validate(Employee(id = -1000), {
+            validate(Employee::id).hasDigits(min = 4, max = 4)
+        })
+    }
+
+    @Test
     fun `hasDigits without min and max should be valid`() {
         validate(Employee(id = 1000), {
             validate(Employee::id).hasDigits()
