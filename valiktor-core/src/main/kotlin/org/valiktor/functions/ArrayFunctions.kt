@@ -67,7 +67,7 @@ fun <E, T> Validator<E>.Property<Array<T>?>.isNotEmpty(): Validator<E>.Property<
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<Array<T>?>.hasSize(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Array<T>?> =
-        this.validate(Size(min, max), { it == null || it.count() in IntRange(min, max) })
+        this.validate(Size(min, max), { it == null || it.count() in min.rangeTo(max) })
 
 /**
  * Validates if the array property contains the value

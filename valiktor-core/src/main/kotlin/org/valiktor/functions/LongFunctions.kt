@@ -146,7 +146,7 @@ fun <E> Validator<E>.Property<Long?>.isGreaterThanOrEqualTo(value: Long): Valida
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.isBetween(start: Long, end: Long): Validator<E>.Property<Long?> =
-        this.validate(Between(start, end), { it == null || it in LongRange(start, end) })
+        this.validate(Between(start, end), { it == null || it in start.rangeTo(end) })
 
 /**
  * Validates if the [Long] property isn't between two values
@@ -158,7 +158,7 @@ fun <E> Validator<E>.Property<Long?>.isBetween(start: Long, end: Long): Validato
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.isNotBetween(start: Long, end: Long): Validator<E>.Property<Long?> =
-        this.validate(NotBetween(start, end), { it == null || it !in LongRange(start, end) })
+        this.validate(NotBetween(start, end), { it == null || it !in start.rangeTo(end) })
 
 /**
  * Validates if the [Long] property digits is within the limits (min and max)
@@ -170,4 +170,4 @@ fun <E> Validator<E>.Property<Long?>.isNotBetween(start: Long, end: Long): Valid
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Long?> =
-        this.validate(IntegerDigits(min, max), { it == null || it.toString().length in IntRange(min, max) })
+        this.validate(IntegerDigits(min, max), { it == null || it.toString().length in min.rangeTo(max) })
