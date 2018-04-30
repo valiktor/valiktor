@@ -27,7 +27,7 @@ import java.math.BigInteger
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigInteger?>.isZero(): Validator<E>.Property<BigInteger?> =
-        this.validate(Equals(0.toBigInteger()), { it == null || it == 0.toBigInteger() })
+        this.validate(Equals(BigInteger.ZERO), { it == null || it == BigInteger.ZERO })
 
 /**
  * Validates if the [BigInteger] property is not equal to zero
@@ -36,7 +36,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isZero(): Validator<E>.Property<BigIn
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigInteger?>.isNotZero(): Validator<E>.Property<BigInteger?> =
-        this.validate(NotEquals(0.toBigInteger()), { it == null || it != 0.toBigInteger() })
+        this.validate(NotEquals(BigInteger.ZERO), { it == null || it != BigInteger.ZERO })
 
 /**
  * Validates if the [BigInteger] property is equal to one
@@ -45,7 +45,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isNotZero(): Validator<E>.Property<Bi
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigInteger?>.isOne(): Validator<E>.Property<BigInteger?> =
-        this.validate(Equals(1.toBigInteger()), { it == null || it == 1.toBigInteger() })
+        this.validate(Equals(BigInteger.ONE), { it == null || it == BigInteger.ONE })
 
 /**
  * Validates if the [BigInteger] property is not equal to one
@@ -54,7 +54,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isOne(): Validator<E>.Property<BigInt
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigInteger?>.isNotOne(): Validator<E>.Property<BigInteger?> =
-        this.validate(NotEquals(1.toBigInteger()), { it == null || it != 1.toBigInteger() })
+        this.validate(NotEquals(BigInteger.ONE), { it == null || it != BigInteger.ONE })
 
 /**
  * Validates if the [BigInteger] property is positive
@@ -63,7 +63,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isNotOne(): Validator<E>.Property<Big
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigInteger?>.isPositive(): Validator<E>.Property<BigInteger?> =
-        this.validate(Greater(0.toBigInteger()), { it == null || it > 0.toBigInteger() })
+        this.validate(Greater(BigInteger.ZERO), { it == null || it > BigInteger.ZERO })
 
 /**
  * Validates if the [BigInteger] property isn't positive
@@ -72,7 +72,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isPositive(): Validator<E>.Property<B
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigInteger?>.isNotPositive(): Validator<E>.Property<BigInteger?> =
-        this.validate(LessOrEqual(0.toBigInteger()), { it == null || it <= 0.toBigInteger() })
+        this.validate(LessOrEqual(BigInteger.ZERO), { it == null || it <= BigInteger.ZERO })
 
 /**
  * Validates if the [BigInteger] property is negative
@@ -81,7 +81,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isNotPositive(): Validator<E>.Propert
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigInteger?>.isNegative(): Validator<E>.Property<BigInteger?> =
-        this.validate(Less(0.toBigInteger()), { it == null || it < 0.toBigInteger() })
+        this.validate(Less(BigInteger.ZERO), { it == null || it < BigInteger.ZERO })
 
 /**
  * Validates if the [BigInteger] property isn't negative
@@ -90,7 +90,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isNegative(): Validator<E>.Property<B
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigInteger?>.isNotNegative(): Validator<E>.Property<BigInteger?> =
-        this.validate(GreaterOrEqual(0.toBigInteger()), { it == null || it >= 0.toBigInteger() })
+        this.validate(GreaterOrEqual(BigInteger.ZERO), { it == null || it >= BigInteger.ZERO })
 
 /**
  * Validates if the [BigInteger] property is less than another value
