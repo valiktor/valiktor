@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.valiktor.ConstraintViolation
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.Locales
 import org.valiktor.constraints.NotEquals
 import java.util.*
 

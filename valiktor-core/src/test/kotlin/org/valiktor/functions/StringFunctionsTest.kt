@@ -1,34 +1,37 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.valiktor.*
+import org.valiktor.ConstraintViolationException
+import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.*
-import org.valiktor.i18n.DefaultI18nConstraintViolation
-import org.valiktor.i18n.I18nConstraintViolation
-import org.valiktor.i18n.mapToI18n
-import java.util.*
+import org.valiktor.functions.StringFunctionsFixture.Employee
+import org.valiktor.validate
+
+private object StringFunctionsFixture {
+
+    data class Employee(val name: String? = null, val email: String? = null, val username: String? = null)
+}
 
 class StringFunctionsTest {
 
     @Test
-    fun `isEmpty with null property should be valid`() {
+    fun `isEmpty with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).isEmpty()
         })
     }
 
     @Test
-    fun `isEmpty with empty property should be valid`() {
+    fun `isEmpty with empty value should be valid`() {
         validate(Employee(name = ""), {
             validate(Employee::name).isEmpty()
         })
     }
 
     @Test
-    fun `isEmpty with blank property should be invalid`() {
+    fun `isEmpty with blank value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = " "), {
                 validate(Employee::name).isEmpty()
@@ -37,35 +40,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = " ", constraint = Empty()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = " ", constraint = Empty(), message = "Must be empty"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = " ", constraint = Empty(), message = "Must be empty"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = " ", constraint = Empty(), message = "Deve ser vazio"))))
     }
 
     @Test
-    fun `isNotEmpty with null property should be valid`() {
+    fun `isNotEmpty with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).isNotEmpty()
         })
     }
 
     @Test
-    fun `isNotEmpty with blank property should be valid`() {
+    fun `isNotEmpty with blank value should be valid`() {
         validate(Employee(name = " "), {
             validate(Employee::name).isNotEmpty()
         })
     }
 
     @Test
-    fun `isNotEmpty with mpty property should be invalid`() {
+    fun `isNotEmpty with empty value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = ""), {
                 validate(Employee::name).isNotEmpty()
@@ -74,42 +66,31 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "", constraint = NotEmpty()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "", constraint = NotEmpty(), message = "Must not be empty"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "", constraint = NotEmpty(), message = "Must not be empty"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "", constraint = NotEmpty(), message = "Não deve ser vazio"))))
     }
 
     @Test
-    fun `isBlank with null property should be valid`() {
+    fun `isBlank with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).isBlank()
         })
     }
 
     @Test
-    fun `isBlank with empty property should be valid`() {
+    fun `isBlank with empty value should be valid`() {
         validate(Employee(name = ""), {
             validate(Employee::name).isBlank()
         })
     }
 
     @Test
-    fun `isBlank with blank property should be valid`() {
+    fun `isBlank with blank value should be valid`() {
         validate(Employee(name = " "), {
             validate(Employee::name).isBlank()
         })
     }
 
     @Test
-    fun `isBlank with not blank property should be invalid`() {
+    fun `isBlank with not blank value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "a"), {
                 validate(Employee::name).isBlank()
@@ -118,35 +99,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "a", constraint = Blank()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = Blank(), message = "Must be blank"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = Blank(), message = "Must be blank"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = Blank(), message = "Deve estar em branco"))))
     }
 
     @Test
-    fun `isNotBlank with null property should be valid`() {
+    fun `isNotBlank with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).isNotBlank()
         })
     }
 
     @Test
-    fun `isNotBlank with not blank property should be valid`() {
+    fun `isNotBlank with not blank value should be valid`() {
         validate(Employee(name = "a"), {
             validate(Employee::name).isNotBlank()
         })
     }
 
     @Test
-    fun `isNotBlank with empty or blank property should be invalid`() {
+    fun `isNotBlank with empty or blank value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(email = "", username = " "), {
                 validate(Employee::email).isNotBlank()
@@ -157,24 +127,10 @@ class StringFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "email", value = "", constraint = NotBlank()),
                 DefaultConstraintViolation(property = "username", value = " ", constraint = NotBlank()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotBlank(), message = "Must not be blank"),
-                        DefaultI18nConstraintViolation(property = "username", value = " ", constraint = NotBlank(), message = "Must not be blank"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotBlank(), message = "Must not be blank"),
-                        DefaultI18nConstraintViolation(property = "username", value = " ", constraint = NotBlank(), message = "Must not be blank"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "email", value = "", constraint = NotBlank(), message = "Não deve estar em branco"),
-                        DefaultI18nConstraintViolation(property = "username", value = " ", constraint = NotBlank(), message = "Não deve estar em branco"))))
     }
 
     @Test
-    fun `isEqualToIgnoringCase with null property should be valid`() {
+    fun `isEqualToIgnoringCase with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).isEqualToIgnoringCase("a")
         })
@@ -196,21 +152,10 @@ class StringFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "a", constraint = Equals("b")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = Equals("b"), message = "Must be equal to b"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = Equals("b"), message = "Must be equal to b"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = Equals("b"), message = "Deve ser igual a b"))))
     }
 
     @Test
-    fun `isNotEqualToIgnoringCase with null property should be valid`() {
+    fun `isNotEqualToIgnoringCase with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).isNotEqualToIgnoringCase("a")
         })
@@ -232,21 +177,10 @@ class StringFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "a", constraint = NotEquals("A")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = NotEquals("A"), message = "Must not be equal to A"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = NotEquals("A"), message = "Must not be equal to A"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = NotEquals("A"), message = "Não deve ser igual a A"))))
     }
 
     @Test
-    fun `isInIgnoringCase vararg with null property should be valid`() {
+    fun `isInIgnoringCase vararg with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).isInIgnoringCase("a", "b", "c")
         })
@@ -268,21 +202,10 @@ class StringFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "a", constraint = In(setOf("b", "c"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = In(setOf("b", "c")), message = "Must be in b, c"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = In(setOf("b", "c")), message = "Must be in b, c"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = In(setOf("b", "c")), message = "Deve ser um desses: b, c"))))
     }
 
     @Test
-    fun `isInIgnoringCase iterable with null property should be valid`() {
+    fun `isInIgnoringCase iterable with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).isInIgnoringCase(listOf("a", "b", "c"))
         })
@@ -304,21 +227,10 @@ class StringFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "a", constraint = In(listOf("b", "c"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = In(listOf("b", "c")), message = "Must be in b, c"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = In(listOf("b", "c")), message = "Must be in b, c"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "a", constraint = In(listOf("b", "c")), message = "Deve ser um desses: b, c"))))
     }
 
     @Test
-    fun `isNotInIgnoringCase vararg with null property should be valid`() {
+    fun `isNotInIgnoringCase vararg with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).isNotInIgnoringCase("a", "b", "c")
         })
@@ -340,21 +252,10 @@ class StringFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c")), message = "Must not be in a, b, c"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c")), message = "Must not be in a, b, c"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c")), message = "Não deve ser um desses: a, b, c"))))
     }
 
     @Test
-    fun `isNotInIgnoringCase iterable with null property should be valid`() {
+    fun `isNotInIgnoringCase iterable with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).isNotInIgnoringCase(listOf("a", "b", "c"))
         })
@@ -376,42 +277,31 @@ class StringFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c")), message = "Must not be in a, b, c"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c")), message = "Must not be in a, b, c"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c")), message = "Não deve ser um desses: a, b, c"))))
     }
 
     @Test
-    fun `size with null property should be valid`() {
+    fun `size with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).hasSize(min = 1, max = 10)
         })
     }
 
     @Test
-    fun `size with valid min length property should be valid`() {
+    fun `size with valid min value should be valid`() {
         validate(Employee(name = "John"), {
             validate(Employee::name).hasSize(min = 4)
         })
     }
 
     @Test
-    fun `size with valid max length property should be valid`() {
+    fun `size with valid max value should be valid`() {
         validate(Employee(name = "John"), {
             validate(Employee::name).hasSize(max = 4)
         })
     }
 
     @Test
-    fun `size with valid min and max length property should be valid`() {
+    fun `size with valid min and max value should be valid`() {
         validate(Employee(name = "John"), {
             validate(Employee::name).hasSize(min = 4, max = 4)
         })
@@ -425,7 +315,7 @@ class StringFunctionsTest {
     }
 
     @Test
-    fun `size with invalid min and max length property should be invalid`() {
+    fun `size with invalid min and max value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John", email = "john@company.com", username = "john"), {
                 validate(Employee::name).hasSize(min = 5)
@@ -438,41 +328,24 @@ class StringFunctionsTest {
                 DefaultConstraintViolation(property = "name", value = "John", constraint = Size(min = 5)),
                 DefaultConstraintViolation(property = "email", value = "john@company.com", constraint = Size(max = 15)),
                 DefaultConstraintViolation(property = "username", value = "john", constraint = Size(min = 5, max = 3)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Size(min = 5), message = "Size must be greater than or equal to 5"),
-                        DefaultI18nConstraintViolation(property = "email", value = "john@company.com", constraint = Size(max = 15), message = "Size must be less than or equal to 15"),
-                        DefaultI18nConstraintViolation(property = "username", value = "john", constraint = Size(min = 5, max = 3), message = "Size must be between 5 and 3"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Size(min = 5), message = "Size must be greater than or equal to 5"),
-                        DefaultI18nConstraintViolation(property = "email", value = "john@company.com", constraint = Size(max = 15), message = "Size must be less than or equal to 15"),
-                        DefaultI18nConstraintViolation(property = "username", value = "john", constraint = Size(min = 5, max = 3), message = "Size must be between 5 and 3"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Size(min = 5), message = "O tamanho deve ser maior ou igual a 5"),
-                        DefaultI18nConstraintViolation(property = "email", value = "john@company.com", constraint = Size(max = 15), message = "O tamanho deve ser menor ou igual a 15"),
-                        DefaultI18nConstraintViolation(property = "username", value = "john", constraint = Size(min = 5, max = 3), message = "O tamanho deve estar entre 5 e 3"))))
     }
 
     @Test
-    fun `contains with null property should be valid`() {
+    fun `contains with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).contains("a")
         })
     }
 
     @Test
-    fun `contains with valid property should be valid`() {
+    fun `contains with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).contains("a")
         })
     }
 
     @Test
-    fun `contains with invalid property should be invalid`() {
+    fun `contains with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).contains("j")
@@ -481,35 +354,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = Contains("j")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Contains("j"), message = "Must contain j"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Contains("j"), message = "Must contain j"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Contains("j"), message = "Deve conter j"))))
     }
 
     @Test
-    fun `containsIgnoringCase with null property should be valid`() {
+    fun `containsIgnoringCase with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).containsIgnoringCase("a")
         })
     }
 
     @Test
-    fun `containsIgnoringCase with valid property should be valid`() {
+    fun `containsIgnoringCase with valid value should be valid`() {
         validate(Employee(name = "ABC"), {
             validate(Employee::name).containsIgnoringCase("a")
         })
     }
 
     @Test
-    fun `containsIgnoringCase with invalid property should be invalid`() {
+    fun `containsIgnoringCase with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsIgnoringCase("g")
@@ -518,35 +380,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = Contains("g")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Contains("g"), message = "Must contain g"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Contains("g"), message = "Must contain g"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Contains("g"), message = "Deve conter g"))))
     }
 
     @Test
-    fun `containsAll vararg with null property should be valid`() {
+    fun `containsAll vararg with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).containsAll("a", "b", "c")
         })
     }
 
     @Test
-    fun `containsAll vararg with valid property should be valid`() {
+    fun `containsAll vararg with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).containsAll("a", "b", "c")
         })
     }
 
     @Test
-    fun `containsAll vararg with invalid property should be invalid`() {
+    fun `containsAll vararg with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAll("j", "o", "h", "n")
@@ -555,35 +406,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n")), message = "Must contain j, o, h, n"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n")), message = "Must contain j, o, h, n"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n")), message = "Deve conter j, o, h, n"))))
     }
 
     @Test
-    fun `containsAll iterable with null property should be valid`() {
+    fun `containsAll iterable with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).containsAll(listOf("a", "b", "c"))
         })
     }
 
     @Test
-    fun `containsAll iterable with valid property should be valid`() {
+    fun `containsAll iterable with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).containsAll(listOf("a", "b", "c"))
         })
     }
 
     @Test
-    fun `containsAll iterable with invalid property should be invalid`() {
+    fun `containsAll iterable with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAll(listOf("j", "o", "h", "n"))
@@ -592,35 +432,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n")), message = "Must contain j, o, h, n"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n")), message = "Must contain j, o, h, n"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n")), message = "Deve conter j, o, h, n"))))
     }
 
     @Test
-    fun `containsAllIgnoringCase vararg with null property should be valid`() {
+    fun `containsAllIgnoringCase vararg with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).containsAllIgnoringCase("a", "b", "c")
         })
     }
 
     @Test
-    fun `containsAllIgnoringCase vararg with valid property should be valid`() {
+    fun `containsAllIgnoringCase vararg with valid value should be valid`() {
         validate(Employee(name = "ABC"), {
             validate(Employee::name).containsAllIgnoringCase("a", "b", "c")
         })
     }
 
     @Test
-    fun `containsAllIgnoringCase vararg with invalid property should be invalid`() {
+    fun `containsAllIgnoringCase vararg with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAllIgnoringCase("j", "o", "h", "n", "k")
@@ -629,35 +458,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n", "k"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n", "k")), message = "Must contain j, o, h, n, k"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n", "k")), message = "Must contain j, o, h, n, k"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n", "k")), message = "Deve conter j, o, h, n, k"))))
     }
 
     @Test
-    fun `containsAllIgnoringCase iterable with null property should be valid`() {
+    fun `containsAllIgnoringCase iterable with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).containsAllIgnoringCase(listOf("a", "b", "c"))
         })
     }
 
     @Test
-    fun `containsAllIgnoringCase iterable with valid property should be valid`() {
+    fun `containsAllIgnoringCase iterable with valid value should be valid`() {
         validate(Employee(name = "ABC"), {
             validate(Employee::name).containsAllIgnoringCase(listOf("a", "b", "c"))
         })
     }
 
     @Test
-    fun `containsAllIgnoringCase iterable with invalid property should be invalid`() {
+    fun `containsAllIgnoringCase iterable with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAllIgnoringCase(listOf("j", "o", "h", "n", "k"))
@@ -666,35 +484,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n", "k"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n", "k")), message = "Must contain j, o, h, n, k"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n", "k")), message = "Must contain j, o, h, n, k"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n", "k")), message = "Deve conter j, o, h, n, k"))))
     }
 
     @Test
-    fun `containsAny vararg with null property should be valid`() {
+    fun `containsAny vararg with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).containsAny("a", "b", "c")
         })
     }
 
     @Test
-    fun `containsAny vararg with valid property should be valid`() {
+    fun `containsAny vararg with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).containsAny("a", "e", "f")
         })
     }
 
     @Test
-    fun `containsAny vararg with invalid property should be invalid`() {
+    fun `containsAny vararg with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAny("j", "w", "x", "e")
@@ -703,35 +510,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("j", "w", "x", "e"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("j", "w", "x", "e")), message = "Must contain j, w, x, e"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("j", "w", "x", "e")), message = "Must contain j, w, x, e"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("j", "w", "x", "e")), message = "Deve conter j, w, x, e"))))
     }
 
     @Test
-    fun `containsAny iterable with null property should be valid`() {
+    fun `containsAny iterable with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).containsAny(listOf("a", "b", "c"))
         })
     }
 
     @Test
-    fun `containsAny iterable with valid property should be valid`() {
+    fun `containsAny iterable with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).containsAny(listOf("a", "e", "f"))
         })
     }
 
     @Test
-    fun `containsAny iterable with invalid property should be invalid`() {
+    fun `containsAny iterable with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAny(listOf("j", "w", "x", "e"))
@@ -740,35 +536,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("j", "w", "x", "e"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("j", "w", "x", "e")), message = "Must contain j, w, x, e"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("j", "w", "x", "e")), message = "Must contain j, w, x, e"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("j", "w", "x", "e")), message = "Deve conter j, w, x, e"))))
     }
 
     @Test
-    fun `containsAnyIgnoringCase vararg with null property should be valid`() {
+    fun `containsAnyIgnoringCase vararg with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).containsAnyIgnoringCase("a", "b", "c")
         })
     }
 
     @Test
-    fun `containsAnyIgnoringCase vararg with valid property should be valid`() {
+    fun `containsAnyIgnoringCase vararg with valid value should be valid`() {
         validate(Employee(name = "ABC"), {
             validate(Employee::name).containsAnyIgnoringCase("a", "e", "f")
         })
     }
 
     @Test
-    fun `containsAnyIgnoringCase vararg with invalid property should be invalid`() {
+    fun `containsAnyIgnoringCase vararg with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAnyIgnoringCase("w", "x", "e")
@@ -777,35 +562,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("w", "x", "e"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("w", "x", "e")), message = "Must contain w, x, e"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("w", "x", "e")), message = "Must contain w, x, e"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("w", "x", "e")), message = "Deve conter w, x, e"))))
     }
 
     @Test
-    fun `containsAnyIgnoringCase iterable with null property should be valid`() {
+    fun `containsAnyIgnoringCase iterable with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).containsAnyIgnoringCase(listOf("a", "b", "c"))
         })
     }
 
     @Test
-    fun `containsAnyIgnoringCase iterable with valid property should be valid`() {
+    fun `containsAnyIgnoringCase iterable with valid value should be valid`() {
         validate(Employee(name = "ABC"), {
             validate(Employee::name).containsAnyIgnoringCase(listOf("a", "e", "f"))
         })
     }
 
     @Test
-    fun `containsAnyIgnoringCase iterable with invalid property should be invalid`() {
+    fun `containsAnyIgnoringCase iterable with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAnyIgnoringCase(listOf("w", "x", "e"))
@@ -814,35 +588,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("w", "x", "e"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("w", "x", "e")), message = "Must contain w, x, e"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("w", "x", "e")), message = "Must contain w, x, e"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("w", "x", "e")), message = "Deve conter w, x, e"))))
     }
 
     @Test
-    fun `doesNotContain with null property should be valid`() {
+    fun `doesNotContain with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotContain("a")
         })
     }
 
     @Test
-    fun `doesNotContain with valid property should be valid`() {
+    fun `doesNotContain with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).doesNotContain("d")
         })
     }
 
     @Test
-    fun `doesNotContain with invalid property should be invalid`() {
+    fun `doesNotContain with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContain("J")
@@ -851,35 +614,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotContain("J")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContain("J"), message = "Must not contain J"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContain("J"), message = "Must not contain J"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContain("J"), message = "Não deve conter J"))))
     }
 
     @Test
-    fun `doesNotContainIgnoringCase with null property should be valid`() {
+    fun `doesNotContainIgnoringCase with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotContainIgnoringCase("a")
         })
     }
 
     @Test
-    fun `doesNotContainIgnoringCase with valid property should be valid`() {
+    fun `doesNotContainIgnoringCase with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).doesNotContainIgnoringCase("d")
         })
     }
 
     @Test
-    fun `doesNotContainIgnoringCase with invalid property should be invalid`() {
+    fun `doesNotContainIgnoringCase with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainIgnoringCase("j")
@@ -888,35 +640,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotContain("j")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContain("j"), message = "Must not contain j"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContain("j"), message = "Must not contain j"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContain("j"), message = "Não deve conter j"))))
     }
 
     @Test
-    fun `doesNotContainAll vararg with null property should be valid`() {
+    fun `doesNotContainAll vararg with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotContainAll("a", "b", "c")
         })
     }
 
     @Test
-    fun `doesNotContainAll vararg with valid property should be valid`() {
+    fun `doesNotContainAll vararg with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).doesNotContainAll("a", "b", "c", "d")
         })
     }
 
     @Test
-    fun `doesNotContainAll vararg with invalid property should be invalid`() {
+    fun `doesNotContainAll vararg with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAll("J", "o", "h", "n")
@@ -925,35 +666,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "o", "h", "n"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "o", "h", "n")), message = "Must not contain J, o, h, n"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "o", "h", "n")), message = "Must not contain J, o, h, n"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "o", "h", "n")), message = "Não deve conter J, o, h, n"))))
     }
 
     @Test
-    fun `doesNotContainAll iterable with null property should be valid`() {
+    fun `doesNotContainAll iterable with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotContainAll(listOf("a", "b", "c"))
         })
     }
 
     @Test
-    fun `doesNotContainAll iterable with valid property should be valid`() {
+    fun `doesNotContainAll iterable with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).doesNotContainAll(listOf("a", "b", "c", "d"))
         })
     }
 
     @Test
-    fun `doesNotContainAll iterable with invalid property should be invalid`() {
+    fun `doesNotContainAll iterable with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAll(listOf("J", "o", "h", "n"))
@@ -962,35 +692,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "o", "h", "n"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "o", "h", "n")), message = "Must not contain J, o, h, n"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "o", "h", "n")), message = "Must not contain J, o, h, n"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "o", "h", "n")), message = "Não deve conter J, o, h, n"))))
     }
 
     @Test
-    fun `doesNotContainAllIgnoringCase vararg with null property should be valid`() {
+    fun `doesNotContainAllIgnoringCase vararg with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotContainAllIgnoringCase("a", "b", "c")
         })
     }
 
     @Test
-    fun `doesNotContainAllIgnoringCase vararg with valid property should be valid`() {
+    fun `doesNotContainAllIgnoringCase vararg with valid value should be valid`() {
         validate(Employee(name = "ABC"), {
             validate(Employee::name).doesNotContainAllIgnoringCase("a", "b", "c", "d")
         })
     }
 
     @Test
-    fun `doesNotContainAllIgnoringCase vararg with invalid property should be invalid`() {
+    fun `doesNotContainAllIgnoringCase vararg with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAllIgnoringCase("J", "O", "H", "N")
@@ -999,35 +718,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "O", "H", "N"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "O", "H", "N")), message = "Must not contain J, O, H, N"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "O", "H", "N")), message = "Must not contain J, O, H, N"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "O", "H", "N")), message = "Não deve conter J, O, H, N"))))
     }
 
     @Test
-    fun `doesNotContainAllIgnoringCase iterable with null property should be valid`() {
+    fun `doesNotContainAllIgnoringCase iterable with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotContainAllIgnoringCase(listOf("a", "b", "c"))
         })
     }
 
     @Test
-    fun `doesNotContainAllIgnoringCase iterable with valid property should be valid`() {
+    fun `doesNotContainAllIgnoringCase iterable with valid value should be valid`() {
         validate(Employee(name = "ABC"), {
             validate(Employee::name).doesNotContainAllIgnoringCase(listOf("a", "b", "c", "d"))
         })
     }
 
     @Test
-    fun `doesNotContainAllIgnoringCase iterable with invalid property should be invalid`() {
+    fun `doesNotContainAllIgnoringCase iterable with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAllIgnoringCase(listOf("J", "O", "H", "N"))
@@ -1036,35 +744,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "O", "H", "N"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "O", "H", "N")), message = "Must not contain J, O, H, N"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "O", "H", "N")), message = "Must not contain J, O, H, N"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "O", "H", "N")), message = "Não deve conter J, O, H, N"))))
     }
 
     @Test
-    fun `doesNotContainAny vararg with null property should be valid`() {
+    fun `doesNotContainAny vararg with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotContainAny("a", "b", "c")
         })
     }
 
     @Test
-    fun `doesNotContainAny vararg with valid property should be valid`() {
+    fun `doesNotContainAny vararg with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).doesNotContainAny("e", "f")
         })
     }
 
     @Test
-    fun `doesNotContainAny vararg with invalid property should be invalid`() {
+    fun `doesNotContainAny vararg with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAny("J", "w", "x", "e")
@@ -1073,35 +770,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("J", "w", "x", "e"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("J", "w", "x", "e")), message = "Must not contain J, w, x, e"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("J", "w", "x", "e")), message = "Must not contain J, w, x, e"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("J", "w", "x", "e")), message = "Não deve conter J, w, x, e"))))
     }
 
     @Test
-    fun `doesNotContainAny iterable with null property should be valid`() {
+    fun `doesNotContainAny iterable with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotContainAny(listOf("a", "b", "c"))
         })
     }
 
     @Test
-    fun `doesNotContainAny iterable with valid property should be valid`() {
+    fun `doesNotContainAny iterable with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).doesNotContainAny(listOf("e", "f"))
         })
     }
 
     @Test
-    fun `doesNotContainAny iterable with invalid property should be invalid`() {
+    fun `doesNotContainAny iterable with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAny(listOf("J", "w", "x", "e"))
@@ -1110,35 +796,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("J", "w", "x", "e"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("J", "w", "x", "e")), message = "Must not contain J, w, x, e"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("J", "w", "x", "e")), message = "Must not contain J, w, x, e"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("J", "w", "x", "e")), message = "Não deve conter J, w, x, e"))))
     }
 
     @Test
-    fun `doesNotContainAnyIgnoringCase vararg with null property should be valid`() {
+    fun `doesNotContainAnyIgnoringCase vararg with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotContainAnyIgnoringCase("a", "b", "c")
         })
     }
 
     @Test
-    fun `doesNotContainAnyIgnoringCase vararg with valid property should be valid`() {
+    fun `doesNotContainAnyIgnoringCase vararg with valid value should be valid`() {
         validate(Employee(name = "ABC"), {
             validate(Employee::name).doesNotContainAnyIgnoringCase("e", "f")
         })
     }
 
     @Test
-    fun `doesNotContainAnyIgnoringCase vararg with invalid property should be invalid`() {
+    fun `doesNotContainAnyIgnoringCase vararg with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAnyIgnoringCase("j", "w", "x", "e")
@@ -1147,35 +822,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("j", "w", "x", "e"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("j", "w", "x", "e")), message = "Must not contain j, w, x, e"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("j", "w", "x", "e")), message = "Must not contain j, w, x, e"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("j", "w", "x", "e")), message = "Não deve conter j, w, x, e"))))
     }
 
     @Test
-    fun `doesNotContainAnyIgnoringCase iterable with null property should be valid`() {
+    fun `doesNotContainAnyIgnoringCase iterable with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotContainAnyIgnoringCase(listOf("a", "b", "c"))
         })
     }
 
     @Test
-    fun `doesNotContainAnyIgnoringCase iterable with valid property should be valid`() {
+    fun `doesNotContainAnyIgnoringCase iterable with valid value should be valid`() {
         validate(Employee(name = "ABC"), {
             validate(Employee::name).doesNotContainAnyIgnoringCase(listOf("e", "f"))
         })
     }
 
     @Test
-    fun `doesNotContainAnyIgnoringCase iterable with invalid property should be invalid`() {
+    fun `doesNotContainAnyIgnoringCase iterable with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAnyIgnoringCase(listOf("j", "w", "x", "e"))
@@ -1184,35 +848,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("j", "w", "x", "e"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("j", "w", "x", "e")), message = "Must not contain j, w, x, e"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("j", "w", "x", "e")), message = "Must not contain j, w, x, e"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("j", "w", "x", "e")), message = "Não deve conter j, w, x, e"))))
     }
 
     @Test
-    fun `matches with null property should be valid`() {
+    fun `matches with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).matches(Regex("^[0-9]*\$"))
         })
     }
 
     @Test
-    fun `matches with valid property should be valid`() {
+    fun `matches with valid value should be valid`() {
         validate(Employee(name = "0123456789"), {
             validate(Employee::name).matches(Regex("^[0-9]*\$"))
         })
     }
 
     @Test
-    fun `matches with invalid property should be invalid`() {
+    fun `matches with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).matches(Regex("^[0-9]*\$"))
@@ -1221,35 +874,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = Matches(Regex("^[0-9]*\$"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Matches(Regex("^[0-9]*\$")), message = "Must match ^[0-9]*\$"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Matches(Regex("^[0-9]*\$")), message = "Must match ^[0-9]*\$"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = Matches(Regex("^[0-9]*\$")), message = "Deve corresponder ao padrão ^[0-9]*\$"))))
     }
 
     @Test
-    fun `doesNotMatch with null property should be valid`() {
+    fun `doesNotMatch with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotMatch(Regex("^[0-9]*\$"))
         })
     }
 
     @Test
-    fun `doesNotMatch with valid property should be valid`() {
+    fun `doesNotMatch with valid value should be valid`() {
         validate(Employee(name = "test"), {
             validate(Employee::name).doesNotMatch(Regex("^[0-9]*\$"))
         })
     }
 
     @Test
-    fun `doesNotMatch with invalid property should be invalid`() {
+    fun `doesNotMatch with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "0123456789"), {
                 validate(Employee::name).doesNotMatch(Regex("^[0-9]*\$"))
@@ -1258,35 +900,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "0123456789", constraint = NotMatch(Regex("^[0-9]*\$"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "0123456789", constraint = NotMatch(Regex("^[0-9]*\$")), message = "Must not match ^[0-9]*\$"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "0123456789", constraint = NotMatch(Regex("^[0-9]*\$")), message = "Must not match ^[0-9]*\$"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "0123456789", constraint = NotMatch(Regex("^[0-9]*\$")), message = "Não deve corresponder ao padrão ^[0-9]*\$"))))
     }
 
     @Test
-    fun `containsRegex with null property should be valid`() {
+    fun `containsRegex with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).contains(Regex("a([bc]+)d?"))
         })
     }
 
     @Test
-    fun `containsRegex with valid property should be valid`() {
+    fun `containsRegex with valid value should be valid`() {
         validate(Employee(name = "xabcdy"), {
             validate(Employee::name).contains(Regex("a([bc]+)d?"))
         })
     }
 
     @Test
-    fun `containsRegex with invalid property should be invalid`() {
+    fun `containsRegex with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).contains(Regex("a([bc]+)d?"))
@@ -1295,35 +926,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsRegex(Regex("a([bc]+)d?"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsRegex(Regex("a([bc]+)d?")), message = "Must contain the pattern a([bc]+)d?"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsRegex(Regex("a([bc]+)d?")), message = "Must contain the pattern a([bc]+)d?"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = ContainsRegex(Regex("a([bc]+)d?")), message = "Deve conter o padrão a([bc]+)d?"))))
     }
 
     @Test
-    fun `doesNotContainRegex with null property should be valid`() {
+    fun `doesNotContainRegex with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotContain(Regex("a([bc]+)d?"))
         })
     }
 
     @Test
-    fun `doesNotContainRegex with valid property should be valid`() {
+    fun `doesNotContainRegex with valid value should be valid`() {
         validate(Employee(name = "xyz"), {
             validate(Employee::name).doesNotContain(Regex("a([bc]+)d?"))
         })
     }
 
     @Test
-    fun `doesNotContainRegex with invalid property should be invalid`() {
+    fun `doesNotContainRegex with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "xJohny"), {
                 validate(Employee::name).doesNotContain(Regex("J([oh]+)n?"))
@@ -1332,35 +952,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?"))))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?")), message = "Must not contain the pattern J([oh]+)n?"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?")), message = "Must not contain the pattern J([oh]+)n?"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?")), message = "Não deve conter o padrão J([oh]+)n?"))))
     }
 
     @Test
-    fun `startsWith with null property should be valid`() {
+    fun `startsWith with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).startsWith("a")
         })
     }
 
     @Test
-    fun `startsWith with valid property should be valid`() {
+    fun `startsWith with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).startsWith("a")
         })
     }
 
     @Test
-    fun `startsWith with invalid property should be invalid`() {
+    fun `startsWith with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).startsWith("j")
@@ -1369,35 +978,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = StartsWith("j")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("j"), message = "Must start with j"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("j"), message = "Must start with j"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("j"), message = "Deve começar com j"))))
     }
 
     @Test
-    fun `startsWithIgnoringCase with null property should be valid`() {
+    fun `startsWithIgnoringCase with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).startsWithIgnoringCase("a")
         })
     }
 
     @Test
-    fun `startsWithIgnoringCase with valid property should be valid`() {
+    fun `startsWithIgnoringCase with valid value should be valid`() {
         validate(Employee(name = "ABC"), {
             validate(Employee::name).startsWithIgnoringCase("a")
         })
     }
 
     @Test
-    fun `startsWithIgnoringCase with invalid property should be invalid`() {
+    fun `startsWithIgnoringCase with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).startsWithIgnoringCase("g")
@@ -1406,35 +1004,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = StartsWith("g")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("g"), message = "Must start with g"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("g"), message = "Must start with g"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = StartsWith("g"), message = "Deve começar com g"))))
     }
 
     @Test
-    fun `doesNotStartWith with null property should be valid`() {
+    fun `doesNotStartWith with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotStartWith("a")
         })
     }
 
     @Test
-    fun `doesNotStartWith with valid property should be valid`() {
+    fun `doesNotStartWith with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).doesNotStartWith("d")
         })
     }
 
     @Test
-    fun `doesNotStartWith with invalid property should be invalid`() {
+    fun `doesNotStartWith with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotStartWith("J")
@@ -1443,35 +1030,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotStartWith("J")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("J"), message = "Must not start with J"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("J"), message = "Must not start with J"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("J"), message = "Não deve começar com J"))))
     }
 
     @Test
-    fun `doesNotStartWithIgnoringCase with null property should be valid`() {
+    fun `doesNotStartWithIgnoringCase with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotStartWithIgnoringCase("a")
         })
     }
 
     @Test
-    fun `doesNotStartWithIgnoringCase with valid property should be valid`() {
+    fun `doesNotStartWithIgnoringCase with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).doesNotStartWithIgnoringCase("d")
         })
     }
 
     @Test
-    fun `doesNotStartWithIgnoringCase with invalid property should be invalid`() {
+    fun `doesNotStartWithIgnoringCase with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotStartWithIgnoringCase("j")
@@ -1480,35 +1056,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotStartWith("j")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("j"), message = "Must not start with j"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("j"), message = "Must not start with j"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotStartWith("j"), message = "Não deve começar com j"))))
     }
 
     @Test
-    fun `endsWith with null property should be valid`() {
+    fun `endsWith with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).endsWith("a")
         })
     }
 
     @Test
-    fun `endsWith with valid property should be valid`() {
+    fun `endsWith with valid value should be valid`() {
         validate(Employee(name = "cba"), {
             validate(Employee::name).endsWith("a")
         })
     }
 
     @Test
-    fun `endsWith with invalid property should be invalid`() {
+    fun `endsWith with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).endsWith("N")
@@ -1517,35 +1082,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = EndsWith("N")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("N"), message = "Must end with N"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("N"), message = "Must end with N"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("N"), message = "Deve terminar com N"))))
     }
 
     @Test
-    fun `endsWithIgnoringCase with null property should be valid`() {
+    fun `endsWithIgnoringCase with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).endsWithIgnoringCase("a")
         })
     }
 
     @Test
-    fun `endsWithIgnoringCase with valid property should be valid`() {
+    fun `endsWithIgnoringCase with valid value should be valid`() {
         validate(Employee(name = "CBA"), {
             validate(Employee::name).endsWithIgnoringCase("a")
         })
     }
 
     @Test
-    fun `endsWithIgnoringCase with invalid property should be invalid`() {
+    fun `endsWithIgnoringCase with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).endsWithIgnoringCase("o")
@@ -1554,35 +1108,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = EndsWith("o")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("o"), message = "Must end with o"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("o"), message = "Must end with o"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = EndsWith("o"), message = "Deve terminar com o"))))
     }
 
     @Test
-    fun `doesNotEndWith with null property should be valid`() {
+    fun `doesNotEndWith with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotEndWith("a")
         })
     }
 
     @Test
-    fun `doesNotEndWith with valid property should be valid`() {
+    fun `doesNotEndWith with valid value should be valid`() {
         validate(Employee(name = "abc"), {
             validate(Employee::name).doesNotEndWith("d")
         })
     }
 
     @Test
-    fun `doesNotEndWith with invalid property should be invalid`() {
+    fun `doesNotEndWith with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotEndWith("n")
@@ -1591,35 +1134,24 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotEndWith("n")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("n"), message = "Must not end with n"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("n"), message = "Must not end with n"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("n"), message = "Não deve terminar com n"))))
     }
 
     @Test
-    fun `doesNotEndWithIgnoringCase with null property should be valid`() {
+    fun `doesNotEndWithIgnoringCase with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).doesNotEndWithIgnoringCase("a")
         })
     }
 
     @Test
-    fun `doesNotEndWithIgnoringCase with valid property should be valid`() {
+    fun `doesNotEndWithIgnoringCase with valid value should be valid`() {
         validate(Employee(name = "ABC"), {
             validate(Employee::name).doesNotEndWithIgnoringCase("d")
         })
     }
 
     @Test
-    fun `doesNotEndWithIgnoringCase with invalid property should be invalid`() {
+    fun `doesNotEndWithIgnoringCase with invalid value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotEndWithIgnoringCase("N")
@@ -1628,28 +1160,17 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N")))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N"), message = "Must not end with N"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N"), message = "Must not end with N"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N"), message = "Não deve terminar com N"))))
     }
 
     @Test
-    fun `isEmail with null property should be valid`() {
+    fun `isEmail with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::email).isEmail()
         })
     }
 
     @Test
-    fun `isEmail with valid property should be valid`() {
+    fun `isEmail with valid value should be valid`() {
         setOf("test.test@test.com",
                 "test_test@test.com",
                 "test-test@test.com",
@@ -1662,7 +1183,7 @@ class StringFunctionsTest {
     }
 
     @Test
-    fun `isEmail with blank property should be invalid`() {
+    fun `isEmail with blank value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(email = "test.test"), {
                 validate(Employee::email).isEmail()
@@ -1671,16 +1192,5 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "email", value = "test.test", constraint = Email()))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(DefaultI18nConstraintViolation(
-                        property = "email", value = "test.test", constraint = Email(), message = "Must be a valid email address"))),
-                entry(Locales.EN, setOf(DefaultI18nConstraintViolation(
-                        property = "email", value = "test.test", constraint = Email(), message = "Must be a valid email address"))),
-                entry(Locales.PT_BR, setOf(DefaultI18nConstraintViolation(
-                        property = "email", value = "test.test", constraint = Email(), message = "Deve ser um endereço de e-mail válido"))))
     }
 }
