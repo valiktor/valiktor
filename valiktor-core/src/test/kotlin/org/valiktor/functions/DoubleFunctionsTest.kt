@@ -1,1298 +1,1068 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.valiktor.*
+import org.valiktor.ConstraintViolationException
+import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.*
-import org.valiktor.i18n.DefaultI18nConstraintViolation
-import org.valiktor.i18n.I18nConstraintViolation
-import org.valiktor.i18n.mapToI18n
-import java.util.*
+import org.valiktor.functions.DoubleFunctionsFixture.Employee
+import org.valiktor.validate
+
+private object DoubleFunctionsFixture {
+
+    data class Employee(val salary: Double? = null)
+}
 
 class DoubleFunctionsTest {
 
     @Test
-    fun `isZero with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isZero()
+    fun `isZero with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isZero()
         })
     }
 
     @Test
-    fun `isZero with valid property should be valid`() {
-        validate(Company(valuation = 0.0), {
-            validate(Company::valuation).isZero()
+    fun `isZero with zero should be valid`() {
+        validate(Employee(salary = 0.0), {
+            validate(Employee::salary).isZero()
         })
     }
 
     @Test
-    fun `isZero with invalid property should be invalid`() {
+    fun `isZero with one should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Company(valuation = 1.0), {
-                validate(Company::valuation).isZero()
+            validate(Employee(salary = 1.0), {
+                validate(Employee::salary).isZero()
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "valuation",
+                        property = "salary",
                         value = 1.0,
                         constraint = Equals(0.0)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 1.0,
-                                constraint = Equals(0.0),
-                                message = "Must be equal to 0.0"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 1.0,
-                                constraint = Equals(0.0),
-                                message = "Must be equal to 0.0"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 1.0,
-                                constraint = Equals(0.0),
-                                message = "Deve ser igual a 0.0"))))
     }
 
     @Test
-    fun `isNotZero with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isNotZero()
+    fun `isNotZero with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNotZero()
         })
     }
 
     @Test
-    fun `isNotZero with valid property should be valid`() {
-        validate(Company(valuation = 1.0), {
-            validate(Company::valuation).isNotZero()
+    fun `isNotZero with one should be valid`() {
+        validate(Employee(salary = 1.0), {
+            validate(Employee::salary).isNotZero()
         })
     }
 
     @Test
-    fun `isNotZero with invalid property should be invalid`() {
+    fun `isNotZero with zero should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Company(valuation = 0.0), {
-                validate(Company::valuation).isNotZero()
+            validate(Employee(salary = 0.0), {
+                validate(Employee::salary).isNotZero()
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "valuation",
+                        property = "salary",
                         value = 0.0,
                         constraint = NotEquals(0.0)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 0.0,
-                                constraint = NotEquals(0.0),
-                                message = "Must not be equal to 0.0"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 0.0,
-                                constraint = NotEquals(0.0),
-                                message = "Must not be equal to 0.0"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 0.0,
-                                constraint = NotEquals(0.0),
-                                message = "Não deve ser igual a 0.0"))))
     }
 
     @Test
-    fun `isOne with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isOne()
+    fun `isOne with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isOne()
         })
     }
 
     @Test
-    fun `isOne with valid property should be valid`() {
-        validate(Company(valuation = 1.0), {
-            validate(Company::valuation).isOne()
+    fun `isOne with one should be valid`() {
+        validate(Employee(salary = 1.0), {
+            validate(Employee::salary).isOne()
         })
     }
 
     @Test
-    fun `isOne with invalid property should be invalid`() {
+    fun `isOne with zero should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Company(valuation = 0.0), {
-                validate(Company::valuation).isOne()
+            validate(Employee(salary = 0.0), {
+                validate(Employee::salary).isOne()
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "valuation",
+                        property = "salary",
                         value = 0.0,
                         constraint = Equals(1.0)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 0.0,
-                                constraint = Equals(1.0),
-                                message = "Must be equal to 1.0"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 0.0,
-                                constraint = Equals(1.0),
-                                message = "Must be equal to 1.0"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 0.0,
-                                constraint = Equals(1.0),
-                                message = "Deve ser igual a 1.0"))))
     }
 
     @Test
-    fun `isNotOne with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isNotOne()
+    fun `isNotOne with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNotOne()
         })
     }
 
     @Test
-    fun `isNotOne with valid property should be valid`() {
-        validate(Company(valuation = 0.0), {
-            validate(Company::valuation).isNotOne()
+    fun `isNotOne with zero should be valid`() {
+        validate(Employee(salary = 0.0), {
+            validate(Employee::salary).isNotOne()
         })
     }
 
     @Test
-    fun `isNotOne with invalid property should be invalid`() {
+    fun `isNotOne with one should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Company(valuation = 1.0), {
-                validate(Company::valuation).isNotOne()
+            validate(Employee(salary = 1.0), {
+                validate(Employee::salary).isNotOne()
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "valuation",
+                        property = "salary",
                         value = 1.0,
                         constraint = NotEquals(1.0)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 1.0,
-                                constraint = NotEquals(1.0),
-                                message = "Must not be equal to 1.0"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 1.0,
-                                constraint = NotEquals(1.0),
-                                message = "Must not be equal to 1.0"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 1.0,
-                                constraint = NotEquals(1.0),
-                                message = "Não deve ser igual a 1.0"))))
     }
 
     @Test
-    fun `isPositive with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isPositive()
+    fun `isPositive with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isPositive()
         })
     }
 
     @Test
-    fun `isPositive with valid property should be valid`() {
-        validate(Company(valuation = 1.0), {
-            validate(Company::valuation).isPositive()
+    fun `isPositive with positive value should be valid`() {
+        validate(Employee(salary = 1.0), {
+            validate(Employee::salary).isPositive()
         })
     }
 
     @Test
-    fun `isPositive with invalid property should be invalid`() {
+    fun `isPositive with zero should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(company = Company(valuation = 0.0), address = Address(latitude = -47.7375833)), {
-                validate(Employee::company).validate {
-                    validate(Company::valuation).isPositive()
-                }
-                validate(Employee::address).validate {
-                    validate(Address::latitude).isPositive()
-                }
+            validate(Employee(salary = 0.0), {
+                validate(Employee::salary).isPositive()
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "company.valuation",
+                        property = "salary",
                         value = 0.0,
-                        constraint = Greater(0.0)),
-                DefaultConstraintViolation(
-                        property = "address.latitude",
-                        value = 47.7375833.unaryMinus(),
                         constraint = Greater(0.0)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Greater(0.0),
-                                message = "Must be greater than 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 47.7375833.unaryMinus(),
-                                constraint = Greater(0.0),
-                                message = "Must be greater than 0.0"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Greater(0.0),
-                                message = "Must be greater than 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 47.7375833.unaryMinus(),
-                                constraint = Greater(0.0),
-                                message = "Must be greater than 0.0"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Greater(0.0),
-                                message = "Deve ser maior que 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 47.7375833.unaryMinus(),
-                                constraint = Greater(0.0),
-                                message = "Deve ser maior que 0.0"))))
     }
 
     @Test
-    fun `isNotPositive with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isNotPositive()
-        })
-    }
-
-    @Test
-    fun `isNotPositive with valid property should be valid`() {
-        validate(Employee(company = Company(valuation = 0.0), address = Address(latitude = -47.7375833)), {
-            validate(Employee::company).validate {
-                validate(Company::valuation).isNotPositive()
-            }
-            validate(Employee::address).validate {
-                validate(Address::latitude).isNotPositive()
-            }
-        })
-    }
-
-    @Test
-    fun `isNotPositive with invalid property should be invalid`() {
+    fun `isPositive with negative value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Company(valuation = 1.0), {
-                validate(Company::valuation).isNotPositive()
+            validate(Employee(salary = -98765.432), {
+                validate(Employee::salary).isPositive()
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "valuation",
+                        property = "salary",
+                        value = -98765.432,
+                        constraint = Greater(0.0)))
+    }
+
+    @Test
+    fun `isNotPositive with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNotPositive()
+        })
+    }
+
+    @Test
+    fun `isNotPositive with zero should be valid`() {
+        validate(Employee(salary = 0.0), {
+            validate(Employee::salary).isNotPositive()
+        })
+    }
+
+    @Test
+    fun `isNotPositive with negative value should be valid`() {
+        validate(Employee(salary = -98765.432), {
+            validate(Employee::salary).isNotPositive()
+        })
+    }
+
+    @Test
+    fun `isNotPositive with positive value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 1.0), {
+                validate(Employee::salary).isNotPositive()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
                         value = 1.0,
                         constraint = LessOrEqual(0.0)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 1.0,
-                                constraint = LessOrEqual(0.0),
-                                message = "Must be less than or equal to 0.0"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 1.0,
-                                constraint = LessOrEqual(0.0),
-                                message = "Must be less than or equal to 0.0"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 1.0,
-                                constraint = LessOrEqual(0.0),
-                                message = "Deve ser menor ou igual a 0.0"))))
     }
 
     @Test
-    fun `isNegative with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isNegative()
+    fun `isNegative with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNegative()
         })
     }
 
     @Test
-    fun `isNegative with valid property should be valid`() {
-        validate(Company(valuation = -1.0), {
-            validate(Company::valuation).isNegative()
+    fun `isNegative with negative value should be valid`() {
+        validate(Employee(salary = -1.0), {
+            validate(Employee::salary).isNegative()
         })
     }
 
     @Test
-    fun `isNegative with invalid property should be invalid`() {
+    fun `isNegative with zero should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(company = Company(valuation = 0.0), address = Address(latitude = 30.20856)), {
-                validate(Employee::company).validate {
-                    validate(Company::valuation).isNegative()
-                }
-                validate(Employee::address).validate {
-                    validate(Address::latitude).isNegative()
-                }
+            validate(Employee(salary = 0.0), {
+                validate(Employee::salary).isNegative()
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "company.valuation",
+                        property = "salary",
                         value = 0.0,
-                        constraint = Less(0.0)),
-                DefaultConstraintViolation(
-                        property = "address.latitude",
-                        value = 30.20856,
                         constraint = Less(0.0)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Less(0.0),
-                                message = "Must be less than 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 30.20856,
-                                constraint = Less(0.0),
-                                message = "Must be less than 0.0"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Less(0.0),
-                                message = "Must be less than 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 30.20856,
-                                constraint = Less(0.0),
-                                message = "Must be less than 0.0"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Less(0.0),
-                                message = "Deve ser menor que 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 30.20856,
-                                constraint = Less(0.0),
-                                message = "Deve ser menor que 0.0"))))
     }
 
     @Test
-    fun `isNotNegative with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isNotNegative()
-        })
-    }
-
-    @Test
-    fun `isNotNegative with valid property should be valid`() {
-        validate(Employee(company = Company(valuation = 0.0), address = Address(latitude = 30.20856)), {
-            validate(Employee::company).validate {
-                validate(Company::valuation).isNotNegative()
-            }
-            validate(Employee::address).validate {
-                validate(Address::latitude).isNotNegative()
-            }
-        })
-    }
-
-    @Test
-    fun `isNotNegative with invalid property should be invalid`() {
+    fun `isNegative with positive value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Company(valuation = -20.4413004), {
-                validate(Company::valuation).isNotNegative()
+            validate(Employee(salary = 1.0), {
+                validate(Employee::salary).isNegative()
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "valuation",
-                        value = 20.4413004.unaryMinus(),
+                        property = "salary",
+                        value = 1.0,
+                        constraint = Less(0.0)))
+    }
+
+    @Test
+    fun `isNotNegative with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNotNegative()
+        })
+    }
+
+    @Test
+    fun `isNotNegative with zero should be valid`() {
+        validate(Employee(salary = 0.0), {
+            validate(Employee::salary).isNotNegative()
+        })
+    }
+
+    @Test
+    fun `isNotNegative with positive value should be valid`() {
+        validate(Employee(salary = 1.0), {
+            validate(Employee::salary).isNotNegative()
+        })
+    }
+
+    @Test
+    fun `isNotNegative with negative value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -98765.432), {
+                validate(Employee::salary).isNotNegative()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -98765.432,
                         constraint = GreaterOrEqual(0.0)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 20.4413004.unaryMinus(),
-                                constraint = GreaterOrEqual(0.0),
-                                message = "Must be greater than or equal to 0.0"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 20.4413004.unaryMinus(),
-                                constraint = GreaterOrEqual(0.0),
-                                message = "Must be greater than or equal to 0.0"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "valuation",
-                                value = 20.4413004.unaryMinus(),
-                                constraint = GreaterOrEqual(0.0),
-                                message = "Deve ser maior ou igual a 0.0"))))
     }
 
     @Test
-    fun `isLessThan with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isLessThan(10.0)
+    fun `isLessThan with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isLessThan(10.0)
         })
     }
 
     @Test
-    fun `isLessThan with valid property should be valid`() {
-        validate(Employee(company = Company(valuation = 9.99), address = Address(latitude = -10.99)), {
-            validate(Employee::company).validate {
-                validate(Company::valuation).isLessThan(10.0)
-            }
-            validate(Employee::address).validate {
-                validate(Address::latitude).isLessThan(-10.98)
-            }
+    fun `isLessThan with less value should be valid`() {
+        validate(Employee(salary = 9999.99), {
+            validate(Employee::salary).isLessThan(10000.00)
         })
     }
 
     @Test
-    fun `isLessThan with invalid property should be invalid`() {
+    fun `isLessThan with negative less value should be valid`() {
+        validate(Employee(salary = -0.38576), {
+            validate(Employee::salary).isLessThan(-0.3)
+        })
+    }
+
+    @Test
+    fun `isLessThan with greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(company = Company(valuation = 0.0), address = Address(latitude = -0.385783, longitude = 50.764362)), {
-                validate(Employee::company).validate {
-                    validate(Company::valuation).isLessThan(0.0)
-                }
-                validate(Employee::address).validate {
-                    validate(Address::latitude).isLessThan(0.4.unaryMinus())
-                    validate(Address::longitude).isLessThan(50.0)
-                }
+            validate(Employee(salary = 50.0), {
+                validate(Employee::salary).isLessThan(49.9)
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "company.valuation",
+                        property = "salary",
+                        value = 50.0,
+                        constraint = Less(49.9)))
+    }
+
+    @Test
+    fun `isLessThan with negative greater value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -50.9), {
+                validate(Employee::salary).isLessThan(-51.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -50.9,
+                        constraint = Less(-51.0)))
+    }
+
+    @Test
+    fun `isLessThan with equal value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 0.0), {
+                validate(Employee::salary).isLessThan(0.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
                         value = 0.0,
-                        constraint = Less(0.0)),
-                DefaultConstraintViolation(
-                        property = "address.latitude",
-                        value = 0.385783.unaryMinus(),
-                        constraint = Less(0.4.unaryMinus())),
-                DefaultConstraintViolation(
-                        property = "address.longitude",
-                        value = 50.764362,
-                        constraint = Less(50.0)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Less(0.0),
-                                message = "Must be less than 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 0.385783.unaryMinus(),
-                                constraint = Less(0.4.unaryMinus()),
-                                message = "Must be less than -0.4"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 50.764362,
-                                constraint = Less(50.0),
-                                message = "Must be less than 50.0"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Less(0.0),
-                                message = "Must be less than 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 0.385783.unaryMinus(),
-                                constraint = Less(0.4.unaryMinus()),
-                                message = "Must be less than -0.4"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 50.764362,
-                                constraint = Less(50.0),
-                                message = "Must be less than 50.0"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Less(0.0),
-                                message = "Deve ser menor que 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 0.385783.unaryMinus(),
-                                constraint = Less(0.4.unaryMinus()),
-                                message = "Deve ser menor que -0.4"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 50.764362,
-                                constraint = Less(50.0),
-                                message = "Deve ser menor que 50.0"))))
+                        constraint = Less(0.0)))
     }
 
     @Test
-    fun `isLessThanOrEqualTo with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isLessThanOrEqualTo(10.0)
+    fun `isLessThanOrEqualTo with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isLessThanOrEqualTo(10.0)
         })
     }
 
     @Test
-    fun `isLessThanOrEqualTo with valid property should be valid`() {
-        validate(Employee(company = Company(valuation = 0.0), address = Address(latitude = -0.385783, longitude = 50.764362)), {
-            validate(Employee::company).validate {
-                validate(Company::valuation).isLessThanOrEqualTo(0.0)
-            }
-            validate(Employee::address).validate {
-                validate(Address::latitude).isLessThanOrEqualTo(0.38.unaryMinus())
-                validate(Address::longitude).isLessThanOrEqualTo(50.8)
-            }
+    fun `isLessThanOrEqualTo with less value should be valid`() {
+        validate(Employee(salary = 9999.99), {
+            validate(Employee::salary).isLessThanOrEqualTo(10000.00)
         })
     }
 
     @Test
-    fun `isLessThanOrEqualTo with invalid property should be invalid`() {
+    fun `isLessThanOrEqualTo with negative less value should be valid`() {
+        validate(Employee(salary = -0.38576), {
+            validate(Employee::salary).isLessThanOrEqualTo(-0.3)
+        })
+    }
+
+    @Test
+    fun `isLessThanOrEqualTo with equal value should be valid`() {
+        validate(Employee(salary = 0.0), {
+            validate(Employee::salary).isLessThanOrEqualTo(0.0)
+        })
+    }
+
+    @Test
+    fun `isLessThanOrEqualTo with greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Address(latitude = 5.3673999, longitude = -8.8014766), {
-                validate(Address::latitude).isLessThanOrEqualTo(5.35)
-                validate(Address::longitude).isLessThanOrEqualTo(-8.9)
+            validate(Employee(salary = 56789.19), {
+                validate(Employee::salary).isLessThanOrEqualTo(57.0)
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "latitude",
-                        value = 5.3673999,
-                        constraint = LessOrEqual(5.35)),
-                DefaultConstraintViolation(
-                        property = "longitude",
-                        value = 8.8014766.unaryMinus(),
-                        constraint = LessOrEqual(8.9.unaryMinus())))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "latitude",
-                                value = 5.3673999,
-                                constraint = LessOrEqual(5.35),
-                                message = "Must be less than or equal to 5.35"),
-                        DefaultI18nConstraintViolation(
-                                property = "longitude",
-                                value = 8.8014766.unaryMinus(),
-                                constraint = LessOrEqual(8.9.unaryMinus()),
-                                message = "Must be less than or equal to -8.9"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "latitude",
-                                value = 5.3673999,
-                                constraint = LessOrEqual(5.35),
-                                message = "Must be less than or equal to 5.35"),
-                        DefaultI18nConstraintViolation(
-                                property = "longitude",
-                                value = 8.8014766.unaryMinus(),
-                                constraint = LessOrEqual(8.9.unaryMinus()),
-                                message = "Must be less than or equal to -8.9"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "latitude",
-                                value = 5.3673999,
-                                constraint = LessOrEqual(5.35),
-                                message = "Deve ser menor ou igual a 5.35"),
-                        DefaultI18nConstraintViolation(
-                                property = "longitude",
-                                value = 8.8014766.unaryMinus(),
-                                constraint = LessOrEqual(8.9.unaryMinus()),
-                                message = "Deve ser menor ou igual a -8.9"))))
+                        property = "salary",
+                        value = 56789.19,
+                        constraint = LessOrEqual(57.0)))
     }
 
     @Test
-    fun `isGreaterThan with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isGreaterThan(10.0)
-        })
-    }
-
-    @Test
-    fun `isGreaterThan with valid property should be valid`() {
-        validate(Employee(company = Company(valuation = 9.99), address = Address(latitude = -10.99)), {
-            validate(Employee::company).validate {
-                validate(Company::valuation).isGreaterThan(9.0)
-            }
-            validate(Employee::address).validate {
-                validate(Address::latitude).isGreaterThan(-11.0)
-            }
-        })
-    }
-
-    @Test
-    fun `isGreaterThan with invalid property should be invalid`() {
+    fun `isLessThanOrEqualTo with negative greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(company = Company(valuation = 0.0), address = Address(latitude = -0.385783, longitude = 50.764362)), {
-                validate(Employee::company).validate {
-                    validate(Company::valuation).isGreaterThan(0.0)
-                }
-                validate(Employee::address).validate {
-                    validate(Address::latitude).isGreaterThan(0.3.unaryMinus())
-                    validate(Address::longitude).isGreaterThan(51.0)
-                }
+            validate(Employee(salary = -96.0), {
+                validate(Employee::salary).isLessThanOrEqualTo(-97.0)
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "company.valuation",
+                        property = "salary",
+                        value = -96.0,
+                        constraint = LessOrEqual(-97.0)))
+    }
+
+    @Test
+    fun `isGreaterThan with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isGreaterThan(10.0)
+        })
+    }
+
+    @Test
+    fun `isGreaterThan with greater value should be valid`() {
+        validate(Employee(salary = 10.1), {
+            validate(Employee::salary).isGreaterThan(10.0)
+        })
+    }
+
+    @Test
+    fun `isGreaterThan with negative greater value should be valid`() {
+        validate(Employee(salary = -88.88), {
+            validate(Employee::salary).isGreaterThan(-89.0)
+        })
+    }
+
+    @Test
+    fun `isGreaterThan with less value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 10.0), {
+                validate(Employee::salary).isGreaterThan(11.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = 10.0,
+                        constraint = Greater(11.0)))
+    }
+
+    @Test
+    fun `isGreaterThan with negative less value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -189.20), {
+                validate(Employee::salary).isGreaterThan(-180.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -189.20,
+                        constraint = Greater(-180.0)))
+    }
+
+    @Test
+    fun `isGreaterThan with equal value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 0.0), {
+                validate(Employee::salary).isGreaterThan(0.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
                         value = 0.0,
-                        constraint = Greater(0.0)),
-                DefaultConstraintViolation(
-                        property = "address.latitude",
-                        value = 0.385783.unaryMinus(),
-                        constraint = Greater(0.3.unaryMinus())),
-                DefaultConstraintViolation(
-                        property = "address.longitude",
-                        value = 50.764362,
-                        constraint = Greater(51.0)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Greater(0.0),
-                                message = "Must be greater than 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 0.385783.unaryMinus(),
-                                constraint = Greater(0.3.unaryMinus()),
-                                message = "Must be greater than -0.3"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 50.764362,
-                                constraint = Greater(51.0),
-                                message = "Must be greater than 51.0"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Greater(0.0),
-                                message = "Must be greater than 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 0.385783.unaryMinus(),
-                                constraint = Greater(0.3.unaryMinus()),
-                                message = "Must be greater than -0.3"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 50.764362,
-                                constraint = Greater(51.0),
-                                message = "Must be greater than 51.0"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = Greater(0.0),
-                                message = "Deve ser maior que 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 0.385783.unaryMinus(),
-                                constraint = Greater(0.3.unaryMinus()),
-                                message = "Deve ser maior que -0.3"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 50.764362,
-                                constraint = Greater(51.0),
-                                message = "Deve ser maior que 51.0"))))
+                        constraint = Greater(0.0)))
     }
 
     @Test
-    fun `isGreaterThanOrEqualTo with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isGreaterThanOrEqualTo(10.0)
+    fun `isGreaterThanOrEqualTo with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isGreaterThanOrEqualTo(10.0)
         })
     }
 
     @Test
-    fun `isGreaterThanOrEqualTo with valid property should be valid`() {
-        validate(Employee(company = Company(valuation = 0.0), address = Address(latitude = -0.385783, longitude = 50.764362)), {
-            validate(Employee::company).validate {
-                validate(Company::valuation).isGreaterThanOrEqualTo(0.0)
-            }
-            validate(Employee::address).validate {
-                validate(Address::latitude).isGreaterThanOrEqualTo(0.39.unaryMinus())
-                validate(Address::longitude).isGreaterThanOrEqualTo(50.75)
-            }
+    fun `isGreaterThanOrEqualTo with greater value should be valid`() {
+        validate(Employee(salary = 10000.0), {
+            validate(Employee::salary).isGreaterThanOrEqualTo(9999.99)
         })
     }
 
     @Test
-    fun `isGreaterThanOrEqualTo with invalid property should be invalid`() {
+    fun `isGreaterThanOrEqualTo with negative greater value should be valid`() {
+        validate(Employee(salary = -0.3), {
+            validate(Employee::salary).isGreaterThanOrEqualTo(-0.38576)
+        })
+    }
+
+    @Test
+    fun `isGreaterThanOrEqualTo with equal value should be valid`() {
+        validate(Employee(salary = 0.0), {
+            validate(Employee::salary).isGreaterThanOrEqualTo(0.0)
+        })
+    }
+
+    @Test
+    fun `isGreaterThanOrEqualTo with less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Address(latitude = 5.3673999, longitude = -8.8014766), {
-                validate(Address::latitude).isGreaterThanOrEqualTo(5.38)
-                validate(Address::longitude).isGreaterThanOrEqualTo(-8.7)
+            validate(Employee(salary = 57.0), {
+                validate(Employee::salary).isGreaterThanOrEqualTo(56789.19)
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "latitude",
-                        value = 5.3673999,
-                        constraint = GreaterOrEqual(5.38)),
-                DefaultConstraintViolation(
-                        property = "longitude",
-                        value = 8.8014766.unaryMinus(),
-                        constraint = GreaterOrEqual(8.7.unaryMinus())))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "latitude",
-                                value = 5.3673999,
-                                constraint = GreaterOrEqual(5.38),
-                                message = "Must be greater than or equal to 5.38"),
-                        DefaultI18nConstraintViolation(
-                                property = "longitude",
-                                value = 8.8014766.unaryMinus(),
-                                constraint = GreaterOrEqual(8.7.unaryMinus()),
-                                message = "Must be greater than or equal to -8.7"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "latitude",
-                                value = 5.3673999,
-                                constraint = GreaterOrEqual(5.38),
-                                message = "Must be greater than or equal to 5.38"),
-                        DefaultI18nConstraintViolation(
-                                property = "longitude",
-                                value = 8.8014766.unaryMinus(),
-                                constraint = GreaterOrEqual(8.7.unaryMinus()),
-                                message = "Must be greater than or equal to -8.7"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "latitude",
-                                value = 5.3673999,
-                                constraint = GreaterOrEqual(5.38),
-                                message = "Deve ser maior ou igual a 5.38"),
-                        DefaultI18nConstraintViolation(
-                                property = "longitude",
-                                value = 8.8014766.unaryMinus(),
-                                constraint = GreaterOrEqual(8.7.unaryMinus()),
-                                message = "Deve ser maior ou igual a -8.7"))))
+                        property = "salary",
+                        value = 57.0,
+                        constraint = GreaterOrEqual(56789.19)))
     }
 
     @Test
-    fun `isBetween with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isBetween(start = 0.99, end = 9.99)
-        })
-    }
-
-    @Test
-    fun `isBetween with valid property should be valid`() {
-        validate(Employee(company = Company(valuation = 0.0), address = Address(latitude = 31.2348663, longitude = -6.9277361)), {
-            validate(Employee::company).validate {
-                validate(Company::valuation).isBetween(start = 0.0, end = 0.0)
-            }
-            validate(Employee::address).validate {
-                validate(Address::latitude).isBetween(start = 31.2, end = 31.3)
-                validate(Address::longitude).isBetween(start = -7.0, end = -6.9)
-            }
-        })
-    }
-
-    @Test
-    fun `isBetween with invalid property should be invalid`() {
+    fun `isGreaterThanOrEqualTo with negative less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Address(latitude = 58.8144355, longitude = -2.2695575), {
-                validate(Address::latitude).isBetween(start = 58.9, end = 59.0)
-                validate(Address::longitude).isBetween(start = -2.3, end = -2.4)
+            validate(Employee(salary = -97.0), {
+                validate(Employee::salary).isGreaterThanOrEqualTo(-96.0)
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "latitude",
-                        value = 58.8144355,
-                        constraint = Between(start = 58.9, end = 59.0)),
-                DefaultConstraintViolation(
-                        property = "longitude",
-                        value = 2.2695575.unaryMinus(),
-                        constraint = Between(start = 2.3.unaryMinus(), end = 2.4.unaryMinus())))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "latitude",
-                                value = 58.8144355,
-                                constraint = Between(start = 58.9, end = 59.0),
-                                message = "Must be between 58.9 and 59.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "longitude",
-                                value = 2.2695575.unaryMinus(),
-                                constraint = Between(start = 2.3.unaryMinus(), end = 2.4.unaryMinus()),
-                                message = "Must be between -2.3 and -2.4"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "latitude",
-                                value = 58.8144355,
-                                constraint = Between(start = 58.9, end = 59.0),
-                                message = "Must be between 58.9 and 59.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "longitude",
-                                value = 2.2695575.unaryMinus(),
-                                constraint = Between(start = 2.3.unaryMinus(), end = 2.4.unaryMinus()),
-                                message = "Must be between -2.3 and -2.4"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "latitude",
-                                value = 58.8144355,
-                                constraint = Between(start = 58.9, end = 59.0),
-                                message = "Deve estar entre 58.9 e 59.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "longitude",
-                                value = 2.2695575.unaryMinus(),
-                                constraint = Between(start = 2.3.unaryMinus(), end = 2.4.unaryMinus()),
-                                message = "Deve estar entre -2.3 e -2.4"))))
+                        property = "salary",
+                        value = -97.0,
+                        constraint = GreaterOrEqual(-96.0)))
     }
 
     @Test
-    fun `isNotBetween with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).isNotBetween(start = 1.0, end = 2.0)
+    fun `isBetween with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isBetween(start = 0.99, end = 9.99)
         })
     }
 
     @Test
-    fun `isNotBetween with valid property should be valid`() {
-        validate(Address(latitude = 17.1939768, longitude = -2.2695575), {
-            validate(Address::latitude).isNotBetween(start = 18.0, end = 19.0)
-            validate(Address::longitude).isNotBetween(start = -3.0, end = -2.3)
+    fun `isBetween with equal start value should be valid`() {
+        validate(Employee(salary = 0.0), {
+            validate(Employee::salary).isBetween(start = 0.0, end = 1.0)
         })
     }
 
     @Test
-    fun `isNotBetween with invalid property should be invalid`() {
+    fun `isBetween with equal end value should be valid`() {
+        validate(Employee(salary = 1.0), {
+            validate(Employee::salary).isBetween(start = 0.0, end = 1.0)
+        })
+    }
+
+    @Test
+    fun `isBetween with within value should be valid`() {
+        validate(Employee(salary = 0.5), {
+            validate(Employee::salary).isBetween(start = 0.0, end = 1.0)
+        })
+    }
+
+    @Test
+    fun `isBetween with equal negative start value should be valid`() {
+        validate(Employee(salary = -2.0), {
+            validate(Employee::salary).isBetween(start = -2.0, end = -1.0)
+        })
+    }
+
+    @Test
+    fun `isBetween with equal negative end value should be valid`() {
+        validate(Employee(salary = -1.0), {
+            validate(Employee::salary).isBetween(start = -2.0, end = -1.0)
+        })
+    }
+
+    @Test
+    fun `isBetween with within negative value should be valid`() {
+        validate(Employee(salary = -1.5), {
+            validate(Employee::salary).isBetween(start = -2.0, end = -1.0)
+        })
+    }
+
+    @Test
+    fun `isBetween with less start value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(company = Company(valuation = 0.0), address = Address(latitude = -8.2464, longitude = 48.977664)), {
-                validate(Employee::company).validate {
-                    validate(Company::valuation).isNotBetween(start = 0.0, end = 0.0)
-                }
-                validate(Employee::address).validate {
-                    validate(Address::latitude).isNotBetween(start = -9.0, end = -8.0)
-                    validate(Address::longitude).isNotBetween(start = 47.0, end = 50.0)
-                }
+            validate(Employee(salary = 10.0), {
+                validate(Employee::salary).isBetween(start = 10.1, end = 11.0)
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "company.valuation",
+                        property = "salary",
+                        value = 10.0,
+                        constraint = Between(start = 10.1, end = 11.0)))
+    }
+
+    @Test
+    fun `isBetween with greater end value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 12.0), {
+                validate(Employee::salary).isBetween(start = 10.1, end = 11.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = 12.0,
+                        constraint = Between(start = 10.1, end = 11.0)))
+    }
+
+    @Test
+    fun `isBetween with less negative start value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -10.0), {
+                validate(Employee::salary).isBetween(start = -9.9, end = -8.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -10.0,
+                        constraint = Between(start = -9.9, end = -8.0)))
+    }
+
+    @Test
+    fun `isBetween with greater negative end value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -12.0), {
+                validate(Employee::salary).isBetween(start = -13.0, end = -12.9)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -12.0,
+                        constraint = Between(start = -13.0, end = -12.9)))
+    }
+
+    @Test
+    fun `isNotBetween with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNotBetween(start = 0.99, end = 9.99)
+        })
+    }
+
+    @Test
+    fun `isNotBetween with less start value should be valid`() {
+        validate(Employee(salary = 10.0), {
+            validate(Employee::salary).isNotBetween(start = 10.1, end = 11.0)
+        })
+    }
+
+    @Test
+    fun `isNotBetween with greater end value should be valid`() {
+        validate(Employee(salary = 12.0), {
+            validate(Employee::salary).isNotBetween(start = 10.1, end = 11.0)
+        })
+    }
+
+    @Test
+    fun `isNotBetween with less negative start value should be valid`() {
+        validate(Employee(salary = -10.0), {
+            validate(Employee::salary).isNotBetween(start = -9.9, end = -8.0)
+        })
+    }
+
+    @Test
+    fun `isNotBetween with greater negative end value should be valid`() {
+        validate(Employee(salary = -12.0), {
+            validate(Employee::salary).isNotBetween(start = -13.0, end = -12.9)
+        })
+    }
+
+    @Test
+    fun `isNotBetween with equal start value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 0.0), {
+                validate(Employee::salary).isNotBetween(start = 0.0, end = 1.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
                         value = 0.0,
-                        constraint = NotBetween(start = 0.0, end = 0.0)),
+                        constraint = NotBetween(start = 0.0, end = 1.0)))
+    }
+
+    @Test
+    fun `isNotBetween with equal end value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 1.0), {
+                validate(Employee::salary).isNotBetween(start = 0.0, end = 1.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "address.latitude",
-                        value = 8.2464.unaryMinus(),
-                        constraint = NotBetween(start = 9.0.unaryMinus(), end = 8.0.unaryMinus())),
+                        property = "salary",
+                        value = 1.0,
+                        constraint = NotBetween(start = 0.0, end = 1.0)))
+    }
+
+    @Test
+    fun `isNotBetween with equal negative start value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -2.0), {
+                validate(Employee::salary).isNotBetween(start = -2.0, end = -1.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "address.longitude",
-                        value = 48.977664,
-                        constraint = NotBetween(start = 47.0, end = 50.0)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = NotBetween(start = 0.0, end = 0.0),
-                                message = "Must not be between 0.0 and 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 8.2464.unaryMinus(),
-                                constraint = NotBetween(start = 9.0.unaryMinus(), end = 8.0.unaryMinus()),
-                                message = "Must not be between -9.0 and -8.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 48.977664,
-                                constraint = NotBetween(start = 47.0, end = 50.0),
-                                message = "Must not be between 47.0 and 50.0"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = NotBetween(start = 0.0, end = 0.0),
-                                message = "Must not be between 0.0 and 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 8.2464.unaryMinus(),
-                                constraint = NotBetween(start = 9.0.unaryMinus(), end = 8.0.unaryMinus()),
-                                message = "Must not be between -9.0 and -8.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 48.977664,
-                                constraint = NotBetween(start = 47.0, end = 50.0),
-                                message = "Must not be between 47.0 and 50.0"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 0.0,
-                                constraint = NotBetween(start = 0.0, end = 0.0),
-                                message = "Não deve estar entre 0.0 e 0.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 8.2464.unaryMinus(),
-                                constraint = NotBetween(start = 9.0.unaryMinus(), end = 8.0.unaryMinus()),
-                                message = "Não deve estar entre -9.0 e -8.0"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 48.977664,
-                                constraint = NotBetween(start = 47.0, end = 50.0),
-                                message = "Não deve estar entre 47.0 e 50.0"))))
+                        property = "salary",
+                        value = -2.0,
+                        constraint = NotBetween(start = -2.0, end = -1.0)))
     }
 
     @Test
-    fun `hasIntegerDigits with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).hasIntegerDigits(min = 1, max = 10)
+    fun `isNotBetween with equal negative end value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -1.0), {
+                validate(Employee::salary).isNotBetween(start = -2.0, end = -1.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -1.0,
+                        constraint = NotBetween(start = -2.0, end = -1.0)))
+    }
+
+    @Test
+    fun `isNotBetween with within value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 0.5), {
+                validate(Employee::salary).isNotBetween(start = 0.0, end = 1.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = 0.5,
+                        constraint = NotBetween(start = 0.0, end = 1.0)))
+    }
+
+    @Test
+    fun `isNotBetween with within negative value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -1.5), {
+                validate(Employee::salary).isNotBetween(start = -2.0, end = -1.0)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -1.5,
+                        constraint = NotBetween(start = -2.0, end = -1.0)))
+    }
+
+    @Test
+    fun `hasIntegerDigits with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).hasIntegerDigits(min = 1, max = 10)
         })
     }
 
     @Test
-    fun `hasIntegerDigits with valid min length property should be valid`() {
-        validate(Company(valuation = 9999.99), {
-            validate(Company::valuation).hasIntegerDigits(min = 4)
+    fun `hasIntegerDigits with valid min value should be valid`() {
+        validate(Employee(salary = 9999.99), {
+            validate(Employee::salary).hasIntegerDigits(min = 4)
         })
     }
 
     @Test
-    fun `hasIntegerDigits with valid max length property should be valid`() {
-        validate(Company(valuation = 9999.99), {
-            validate(Company::valuation).hasIntegerDigits(max = 4)
+    fun `hasIntegerDigits with valid max value should be valid`() {
+        validate(Employee(salary = 9999.99), {
+            validate(Employee::salary).hasIntegerDigits(max = 4)
         })
     }
 
     @Test
-    fun `hasIntegerDigits with valid min and max length property should be valid`() {
-        validate(Company(valuation = 9999.99), {
-            validate(Company::valuation).hasIntegerDigits(min = 4, max = 4)
+    fun `hasIntegerDigits with valid min and max value should be valid`() {
+        validate(Employee(salary = 9999.99), {
+            validate(Employee::salary).hasIntegerDigits(min = 4, max = 4)
         })
     }
 
     @Test
-    fun `hasIntegerDigits with negative valid min length property should be valid`() {
-        validate(Company(valuation = -999999.99), {
-            validate(Company::valuation).hasIntegerDigits(min = 6)
+    fun `hasIntegerDigits with negative valid min value should be valid`() {
+        validate(Employee(salary = -999999.99), {
+            validate(Employee::salary).hasIntegerDigits(min = 6)
         })
     }
 
     @Test
-    fun `hasIntegerDigits with negative valid max length property should be valid`() {
-        validate(Company(valuation = -999999.99), {
-            validate(Company::valuation).hasIntegerDigits(max = 6)
+    fun `hasIntegerDigits with negative valid max value should be valid`() {
+        validate(Employee(salary = -999999.99), {
+            validate(Employee::salary).hasIntegerDigits(max = 6)
         })
     }
 
     @Test
-    fun `hasIntegerDigits with negative valid min and max length property should be valid`() {
-        validate(Company(valuation = -999999.99), {
-            validate(Company::valuation).hasIntegerDigits(min = 6, max = 6)
+    fun `hasIntegerDigits with negative valid min and max value should be valid`() {
+        validate(Employee(salary = -999999.99), {
+            validate(Employee::salary).hasIntegerDigits(min = 6, max = 6)
         })
     }
 
     @Test
     fun `hasIntegerDigits without min and max should be valid`() {
-        validate(Company(valuation = 9999.99), {
-            validate(Company::valuation).hasIntegerDigits()
+        validate(Employee(salary = 9999.99), {
+            validate(Employee::salary).hasIntegerDigits()
         })
     }
 
     @Test
-    fun `hasIntegerDigits with invalid min and max length property should be invalid`() {
+    fun `hasIntegerDigits with less min value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(company = Company(valuation = 748536.78), address = Address(latitude = -62.9042641, longitude = 41.1572852)), {
-                validate(Employee::company).validate {
-                    validate(Company::valuation).hasIntegerDigits(min = 7)
-                }
-                validate(Employee::address).validate {
-                    validate(Address::latitude).hasIntegerDigits(max = 1)
-                    validate(Address::longitude).hasIntegerDigits(min = 3, max = 1)
-                }
+            validate(Employee(salary = 748536.78), {
+                validate(Employee::salary).hasIntegerDigits(min = 7)
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "company.valuation",
+                        property = "salary",
                         value = 748536.78,
-                        constraint = IntegerDigits(min = 7)),
+                        constraint = IntegerDigits(min = 7)))
+    }
+
+    @Test
+    fun `hasIntegerDigits with greater max value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 748536.78), {
+                validate(Employee::salary).hasIntegerDigits(max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "address.latitude",
-                        value = 62.9042641.unaryMinus(),
-                        constraint = IntegerDigits(max = 1)),
+                        property = "salary",
+                        value = 748536.78,
+                        constraint = IntegerDigits(max = 5)))
+    }
+
+    @Test
+    fun `hasIntegerDigits with less value and greater value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 748536.78), {
+                validate(Employee::salary).hasIntegerDigits(min = 7, max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "address.longitude",
-                        value = 41.1572852,
-                        constraint = IntegerDigits(min = 3, max = 1)))
-
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
-
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 748536.78,
-                                constraint = IntegerDigits(min = 7),
-                                message = "Integer digits must be greater than or equal to 7"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 62.9042641.unaryMinus(),
-                                constraint = IntegerDigits(max = 1),
-                                message = "Integer digits must be less than or equal to 1"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 41.1572852,
-                                constraint = IntegerDigits(min = 3, max = 1),
-                                message = "Integer digits must be between 3 and 1"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 748536.78,
-                                constraint = IntegerDigits(min = 7),
-                                message = "Integer digits must be greater than or equal to 7"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 62.9042641.unaryMinus(),
-                                constraint = IntegerDigits(max = 1),
-                                message = "Integer digits must be less than or equal to 1"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 41.1572852,
-                                constraint = IntegerDigits(min = 3, max = 1),
-                                message = "Integer digits must be between 3 and 1"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 748536.78,
-                                constraint = IntegerDigits(min = 7),
-                                message = "A quantidade de dígitos inteiros deve ser maior ou igual a 7"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 62.9042641.unaryMinus(),
-                                constraint = IntegerDigits(max = 1),
-                                message = "A quantidade de dígitos inteiros deve ser menor ou igual a 1"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 41.1572852,
-                                constraint = IntegerDigits(min = 3, max = 1),
-                                message = "A quantidade de dígitos inteiros deve estar entre 3 e 1"))))
+                        property = "salary",
+                        value = 748536.78,
+                        constraint = IntegerDigits(min = 7, max = 5)))
     }
 
     @Test
-    fun `hasDecimalDigits with null property should be valid`() {
-        validate(Company(), {
-            validate(Company::valuation).hasDecimalDigits(min = 1, max = 10)
+    fun `hasIntegerDigits with negative less min value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -748536.78), {
+                validate(Employee::salary).hasIntegerDigits(min = 7)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -748536.78,
+                        constraint = IntegerDigits(min = 7)))
+    }
+
+    @Test
+    fun `hasIntegerDigits with negative greater max value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -748536.78), {
+                validate(Employee::salary).hasIntegerDigits(max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -748536.78,
+                        constraint = IntegerDigits(max = 5)))
+    }
+
+    @Test
+    fun `hasIntegerDigits with negative less value and negative greater value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -748536.78), {
+                validate(Employee::salary).hasIntegerDigits(min = 7, max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -748536.78,
+                        constraint = IntegerDigits(min = 7, max = 5)))
+    }
+
+    @Test
+    fun `hasDecimalDigits with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).hasDecimalDigits(min = 1, max = 10)
         })
     }
 
     @Test
-    fun `hasDecimalDigits with valid min length property should be valid`() {
-        validate(Company(valuation = 99.9999), {
-            validate(Company::valuation).hasDecimalDigits(min = 4)
+    fun `hasDecimalDigits with valid min value should be valid`() {
+        validate(Employee(salary = 99.9999), {
+            validate(Employee::salary).hasDecimalDigits(min = 4)
         })
     }
 
     @Test
-    fun `hasDecimalDigits with valid max length property should be valid`() {
-        validate(Company(valuation = 99.9999), {
-            validate(Company::valuation).hasDecimalDigits(max = 4)
+    fun `hasDecimalDigits with valid max value should be valid`() {
+        validate(Employee(salary = 99.9999), {
+            validate(Employee::salary).hasDecimalDigits(max = 4)
         })
     }
 
     @Test
-    fun `hasDecimalDigits with valid min and max length property should be valid`() {
-        validate(Company(valuation = 99.9999), {
-            validate(Company::valuation).hasDecimalDigits(min = 4, max = 4)
+    fun `hasDecimalDigits with valid min and max value should be valid`() {
+        validate(Employee(salary = 99.9999), {
+            validate(Employee::salary).hasDecimalDigits(min = 4, max = 4)
         })
     }
 
     @Test
-    fun `hasDecimalDigits with negative valid min length property should be valid`() {
-        validate(Company(valuation = -99.999999), {
-            validate(Company::valuation).hasDecimalDigits(min = 6)
+    fun `hasDecimalDigits with negative valid min value should be valid`() {
+        validate(Employee(salary = -99.999999), {
+            validate(Employee::salary).hasDecimalDigits(min = 6)
         })
     }
 
     @Test
-    fun `hasDecimalDigits with negative valid max length property should be valid`() {
-        validate(Company(valuation = -99.999999), {
-            validate(Company::valuation).hasDecimalDigits(max = 6)
+    fun `hasDecimalDigits with negative valid max value should be valid`() {
+        validate(Employee(salary = -99.999999), {
+            validate(Employee::salary).hasDecimalDigits(max = 6)
         })
     }
 
     @Test
-    fun `hasDecimalDigits with negative valid min and max length property should be valid`() {
-        validate(Company(valuation = -99.999999), {
-            validate(Company::valuation).hasDecimalDigits(min = 6, max = 6)
+    fun `hasDecimalDigits with negative valid min and max value should be valid`() {
+        validate(Employee(salary = -99.999999), {
+            validate(Employee::salary).hasDecimalDigits(min = 6, max = 6)
         })
     }
 
     @Test
     fun `hasDecimalDigits without min and max should be valid`() {
-        validate(Company(valuation = 99.9999), {
-            validate(Company::valuation).hasDecimalDigits()
+        validate(Employee(salary = 99.9999), {
+            validate(Employee::salary).hasDecimalDigits()
         })
     }
 
     @Test
-    fun `hasDecimalDigits with invalid min and max length property should be invalid`() {
+    fun `hasDecimalDigits with less min value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(company = Company(valuation = 78.748536), address = Address(latitude = -9042641.62, longitude = 1572852.41)), {
-                validate(Employee::company).validate {
-                    validate(Company::valuation).hasDecimalDigits(min = 7)
-                }
-                validate(Employee::address).validate {
-                    validate(Address::latitude).hasDecimalDigits(max = 1)
-                    validate(Address::longitude).hasDecimalDigits(min = 3, max = 1)
-                }
+            validate(Employee(salary = 78.748536), {
+                validate(Employee::salary).hasDecimalDigits(min = 7)
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
-                        property = "company.valuation",
+                        property = "salary",
                         value = 78.748536,
-                        constraint = DecimalDigits(min = 7)),
-                DefaultConstraintViolation(
-                        property = "address.latitude",
-                        value = 9042641.62.unaryMinus(),
-                        constraint = DecimalDigits(max = 1)),
-                DefaultConstraintViolation(
-                        property = "address.longitude",
-                        value = 1572852.41,
-                        constraint = DecimalDigits(min = 3, max = 1)))
+                        constraint = DecimalDigits(min = 7)))
+    }
 
-        val i18nMap: Map<Locale, Set<I18nConstraintViolation>> = SUPPORTED_LOCALES
-                .map { it to exception.constraintViolations.mapToI18n(it) }.toMap()
+    @Test
+    fun `hasDecimalDigits with greater max value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 78.748536), {
+                validate(Employee::salary).hasDecimalDigits(max = 5)
+            })
+        }
 
-        assertThat(i18nMap).containsExactly(
-                entry(Locales.DEFAULT, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 78.748536,
-                                constraint = DecimalDigits(min = 7),
-                                message = "Decimal digits must be greater than or equal to 7"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 9042641.62.unaryMinus(),
-                                constraint = DecimalDigits(max = 1),
-                                message = "Decimal digits must be less than or equal to 1"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 1572852.41,
-                                constraint = DecimalDigits(min = 3, max = 1),
-                                message = "Decimal digits must be between 3 and 1"))),
-                entry(Locales.EN, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 78.748536,
-                                constraint = DecimalDigits(min = 7),
-                                message = "Decimal digits must be greater than or equal to 7"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 9042641.62.unaryMinus(),
-                                constraint = DecimalDigits(max = 1),
-                                message = "Decimal digits must be less than or equal to 1"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 1572852.41,
-                                constraint = DecimalDigits(min = 3, max = 1),
-                                message = "Decimal digits must be between 3 and 1"))),
-                entry(Locales.PT_BR, setOf(
-                        DefaultI18nConstraintViolation(
-                                property = "company.valuation",
-                                value = 78.748536,
-                                constraint = DecimalDigits(min = 7),
-                                message = "A quantidade de casas decimais deve ser maior ou igual a 7"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.latitude",
-                                value = 9042641.62.unaryMinus(),
-                                constraint = DecimalDigits(max = 1),
-                                message = "A quantidade de casas decimais deve ser menor ou igual a 1"),
-                        DefaultI18nConstraintViolation(
-                                property = "address.longitude",
-                                value = 1572852.41,
-                                constraint = DecimalDigits(min = 3, max = 1),
-                                message = "A quantidade de casas decimais deve estar entre 3 e 1"))))
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = 78.748536,
+                        constraint = DecimalDigits(max = 5)))
+    }
+
+    @Test
+    fun `hasDecimalDigits with less value and greater value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 78.748536), {
+                validate(Employee::salary).hasDecimalDigits(min = 7, max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = 78.748536,
+                        constraint = DecimalDigits(min = 7, max = 5)))
+    }
+
+    @Test
+    fun `hasDecimalDigits with negative less min value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -78.748536), {
+                validate(Employee::salary).hasDecimalDigits(min = 7)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -78.748536,
+                        constraint = DecimalDigits(min = 7)))
+    }
+
+    @Test
+    fun `hasDecimalDigits with negative greater max value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -78.748536), {
+                validate(Employee::salary).hasDecimalDigits(max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -78.748536,
+                        constraint = DecimalDigits(max = 5)))
+    }
+
+    @Test
+    fun `hasDecimalDigits with negative less value and negative greater value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = -78.748536), {
+                validate(Employee::salary).hasDecimalDigits(min = 7, max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = -78.748536,
+                        constraint = DecimalDigits(min = 7, max = 5)))
     }
 }
