@@ -164,7 +164,7 @@ class LongFunctionsTest {
     @Test
     fun `isPositive with negative value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 98765.toLong().unaryMinus()), {
+            validate(Employee(id = 98765.unaryMinus().toLong()), {
                 validate(Employee::id).isPositive()
             })
         }
@@ -172,7 +172,7 @@ class LongFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 98765.toLong().unaryMinus(),
+                        value = 98765.unaryMinus().toLong(),
                         constraint = Greater(0.toLong())))
     }
 
@@ -192,7 +192,7 @@ class LongFunctionsTest {
 
     @Test
     fun `isNotPositive with negative value should be valid`() {
-        validate(Employee(id = 98765.toLong().unaryMinus()), {
+        validate(Employee(id = 98765.unaryMinus().toLong()), {
             validate(Employee::id).isNotPositive()
         })
     }
@@ -221,7 +221,7 @@ class LongFunctionsTest {
 
     @Test
     fun `isNegative with negative value should be valid`() {
-        validate(Employee(id = 1.toLong().unaryMinus()), {
+        validate(Employee(id = 1.unaryMinus().toLong()), {
             validate(Employee::id).isNegative()
         })
     }
@@ -280,7 +280,7 @@ class LongFunctionsTest {
     @Test
     fun `isNotNegative with negative value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 98765.toLong().unaryMinus()), {
+            validate(Employee(id = 98765.unaryMinus().toLong()), {
                 validate(Employee::id).isNotNegative()
             })
         }
@@ -288,7 +288,7 @@ class LongFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 98765.toLong().unaryMinus(),
+                        value = 98765.unaryMinus().toLong(),
                         constraint = GreaterOrEqual(0.toLong())))
     }
 
@@ -308,8 +308,8 @@ class LongFunctionsTest {
 
     @Test
     fun `isLessThan with negative less value should be valid`() {
-        validate(Employee(id = 4.toLong().unaryMinus()), {
-            validate(Employee::id).isLessThan(3.toLong().unaryMinus())
+        validate(Employee(id = 4.unaryMinus().toLong()), {
+            validate(Employee::id).isLessThan(3.unaryMinus().toLong())
         })
     }
 
@@ -331,16 +331,16 @@ class LongFunctionsTest {
     @Test
     fun `isLessThan with negative greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 50.toLong().unaryMinus()), {
-                validate(Employee::id).isLessThan(51.toLong().unaryMinus())
+            validate(Employee(id = 50.unaryMinus().toLong()), {
+                validate(Employee::id).isLessThan(51.unaryMinus().toLong())
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 50.toLong().unaryMinus(),
-                        constraint = Less(51.toLong().unaryMinus())))
+                        value = 50.unaryMinus().toLong(),
+                        constraint = Less(51.unaryMinus().toLong())))
     }
 
     @Test
@@ -374,8 +374,8 @@ class LongFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo with negative less value should be valid`() {
-        validate(Employee(id = 4.toLong().unaryMinus()), {
-            validate(Employee::id).isLessThanOrEqualTo(3.toLong().unaryMinus())
+        validate(Employee(id = 4.unaryMinus().toLong()), {
+            validate(Employee::id).isLessThanOrEqualTo(3.unaryMinus().toLong())
         })
     }
 
@@ -404,16 +404,16 @@ class LongFunctionsTest {
     @Test
     fun `isLessThanOrEqualTo with negative greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 96.toLong().unaryMinus()), {
-                validate(Employee::id).isLessThanOrEqualTo(97.toLong().unaryMinus())
+            validate(Employee(id = 96.unaryMinus().toLong()), {
+                validate(Employee::id).isLessThanOrEqualTo(97.unaryMinus().toLong())
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 96.toLong().unaryMinus(),
-                        constraint = LessOrEqual(97.toLong().unaryMinus())))
+                        value = 96.unaryMinus().toLong(),
+                        constraint = LessOrEqual(97.unaryMinus().toLong())))
     }
 
     @Test
@@ -432,8 +432,8 @@ class LongFunctionsTest {
 
     @Test
     fun `isGreaterThan with negative greater value should be valid`() {
-        validate(Employee(id = 88.toLong().unaryMinus()), {
-            validate(Employee::id).isGreaterThan(89.toLong().unaryMinus())
+        validate(Employee(id = 88.unaryMinus().toLong()), {
+            validate(Employee::id).isGreaterThan(89.unaryMinus().toLong())
         })
     }
 
@@ -455,16 +455,16 @@ class LongFunctionsTest {
     @Test
     fun `isGreaterThan with negative less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 189.toLong().unaryMinus()), {
-                validate(Employee::id).isGreaterThan(180.toLong().unaryMinus())
+            validate(Employee(id = 189.unaryMinus().toLong()), {
+                validate(Employee::id).isGreaterThan(180.unaryMinus().toLong())
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 189.toLong().unaryMinus(),
-                        constraint = Greater(180.toLong().unaryMinus())))
+                        value = 189.unaryMinus().toLong(),
+                        constraint = Greater(180.unaryMinus().toLong())))
     }
 
     @Test
@@ -498,8 +498,8 @@ class LongFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo with negative greater value should be valid`() {
-        validate(Employee(id = 3.toLong().unaryMinus()), {
-            validate(Employee::id).isGreaterThanOrEqualTo(4.toLong().unaryMinus())
+        validate(Employee(id = 3.unaryMinus().toLong()), {
+            validate(Employee::id).isGreaterThanOrEqualTo(4.unaryMinus().toLong())
         })
     }
 
@@ -528,16 +528,16 @@ class LongFunctionsTest {
     @Test
     fun `isGreaterThanOrEqualTo with negative less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 97.toLong().unaryMinus()), {
-                validate(Employee::id).isGreaterThanOrEqualTo(96.toLong().unaryMinus())
+            validate(Employee(id = 97.unaryMinus().toLong()), {
+                validate(Employee::id).isGreaterThanOrEqualTo(96.unaryMinus().toLong())
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 97.toLong().unaryMinus(),
-                        constraint = GreaterOrEqual(96.toLong().unaryMinus())))
+                        value = 97.unaryMinus().toLong(),
+                        constraint = GreaterOrEqual(96.unaryMinus().toLong())))
     }
 
     @Test
@@ -570,22 +570,22 @@ class LongFunctionsTest {
 
     @Test
     fun `isBetween with equal negative start value should be valid`() {
-        validate(Employee(id = 2.toLong().unaryMinus()), {
-            validate(Employee::id).isBetween(start = 2.toLong().unaryMinus(), end = 1.toLong().unaryMinus())
+        validate(Employee(id = 2.unaryMinus().toLong()), {
+            validate(Employee::id).isBetween(start = 2.unaryMinus().toLong(), end = 1.unaryMinus().toLong())
         })
     }
 
     @Test
     fun `isBetween with equal negative end value should be valid`() {
-        validate(Employee(id = 1.toLong().unaryMinus()), {
-            validate(Employee::id).isBetween(start = 2.toLong().unaryMinus(), end = 1.toLong().unaryMinus())
+        validate(Employee(id = 1.unaryMinus().toLong()), {
+            validate(Employee::id).isBetween(start = 2.unaryMinus().toLong(), end = 1.unaryMinus().toLong())
         })
     }
 
     @Test
     fun `isBetween with within negative value should be valid`() {
-        validate(Employee(id = 15.toLong().unaryMinus()), {
-            validate(Employee::id).isBetween(start = 20.toLong().unaryMinus(), end = 10.toLong().unaryMinus())
+        validate(Employee(id = 15.unaryMinus().toLong()), {
+            validate(Employee::id).isBetween(start = 20.unaryMinus().toLong(), end = 10.unaryMinus().toLong())
         })
     }
 
@@ -622,31 +622,31 @@ class LongFunctionsTest {
     @Test
     fun `isBetween with less negative start value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 10.toLong().unaryMinus()), {
-                validate(Employee::id).isBetween(start = 9.toLong().unaryMinus(), end = 8.toLong().unaryMinus())
+            validate(Employee(id = 10.unaryMinus().toLong()), {
+                validate(Employee::id).isBetween(start = 9.unaryMinus().toLong(), end = 8.unaryMinus().toLong())
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 10.toLong().unaryMinus(),
-                        constraint = Between(start = 9.toLong().unaryMinus(), end = 8.toLong().unaryMinus())))
+                        value = 10.unaryMinus().toLong(),
+                        constraint = Between(start = 9.unaryMinus().toLong(), end = 8.unaryMinus().toLong())))
     }
 
     @Test
     fun `isBetween with greater negative end value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 12.toLong().unaryMinus()), {
-                validate(Employee::id).isBetween(start = 14.toLong().unaryMinus(), end = 13.toLong().unaryMinus())
+            validate(Employee(id = 12.unaryMinus().toLong()), {
+                validate(Employee::id).isBetween(start = 14.unaryMinus().toLong(), end = 13.unaryMinus().toLong())
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 12.toLong().unaryMinus(),
-                        constraint = Between(start = 14.toLong().unaryMinus(), end = 13.toLong().unaryMinus())))
+                        value = 12.unaryMinus().toLong(),
+                        constraint = Between(start = 14.unaryMinus().toLong(), end = 13.unaryMinus().toLong())))
     }
 
     @Test
@@ -672,15 +672,15 @@ class LongFunctionsTest {
 
     @Test
     fun `isNotBetween with less negative start value should be valid`() {
-        validate(Employee(id = 10.toLong().unaryMinus()), {
-            validate(Employee::id).isNotBetween(start = 9.toLong().unaryMinus(), end = 8.toLong().unaryMinus())
+        validate(Employee(id = 10.unaryMinus().toLong()), {
+            validate(Employee::id).isNotBetween(start = 9.unaryMinus().toLong(), end = 8.unaryMinus().toLong())
         })
     }
 
     @Test
     fun `isNotBetween with greater negative end value should be valid`() {
-        validate(Employee(id = 12.toLong().unaryMinus()), {
-            validate(Employee::id).isNotBetween(start = 14.toLong().unaryMinus(), end = 13.toLong().unaryMinus())
+        validate(Employee(id = 12.unaryMinus().toLong()), {
+            validate(Employee::id).isNotBetween(start = 14.unaryMinus().toLong(), end = 13.unaryMinus().toLong())
         })
     }
 
@@ -717,31 +717,31 @@ class LongFunctionsTest {
     @Test
     fun `isNotBetween with equal negative start value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 2.toLong().unaryMinus()), {
-                validate(Employee::id).isNotBetween(start = 2.toLong().unaryMinus(), end = 1.toLong().unaryMinus())
+            validate(Employee(id = 2.unaryMinus().toLong()), {
+                validate(Employee::id).isNotBetween(start = 2.unaryMinus().toLong(), end = 1.unaryMinus().toLong())
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 2.toLong().unaryMinus(),
-                        constraint = NotBetween(start = 2.toLong().unaryMinus(), end = 1.toLong().unaryMinus())))
+                        value = 2.unaryMinus().toLong(),
+                        constraint = NotBetween(start = 2.unaryMinus().toLong(), end = 1.unaryMinus().toLong())))
     }
 
     @Test
     fun `isNotBetween with equal negative end value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 1.toLong().unaryMinus()), {
-                validate(Employee::id).isNotBetween(start = 2.toLong().unaryMinus(), end = 1.toLong().unaryMinus())
+            validate(Employee(id = 1.unaryMinus().toLong()), {
+                validate(Employee::id).isNotBetween(start = 2.unaryMinus().toLong(), end = 1.unaryMinus().toLong())
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 1.toLong().unaryMinus(),
-                        constraint = NotBetween(start = 2.toLong().unaryMinus(), end = 1.toLong().unaryMinus())))
+                        value = 1.unaryMinus().toLong(),
+                        constraint = NotBetween(start = 2.unaryMinus().toLong(), end = 1.unaryMinus().toLong())))
     }
 
     @Test
@@ -762,16 +762,16 @@ class LongFunctionsTest {
     @Test
     fun `isNotBetween with within negative value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 15.toLong().unaryMinus()), {
-                validate(Employee::id).isNotBetween(start = 20.toLong().unaryMinus(), end = 10.toLong().unaryMinus())
+            validate(Employee(id = 15.unaryMinus().toLong()), {
+                validate(Employee::id).isNotBetween(start = 20.unaryMinus().toLong(), end = 10.unaryMinus().toLong())
             })
         }
 
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 15.toLong().unaryMinus(),
-                        constraint = NotBetween(start = 20.toLong().unaryMinus(), end = 10.toLong().unaryMinus())))
+                        value = 15.unaryMinus().toLong(),
+                        constraint = NotBetween(start = 20.unaryMinus().toLong(), end = 10.unaryMinus().toLong())))
     }
 
     @Test
@@ -804,21 +804,21 @@ class LongFunctionsTest {
 
     @Test
     fun `hasDigits with negative valid min value should be valid`() {
-        validate(Employee(id = 999999.toLong().unaryMinus()), {
+        validate(Employee(id = 999999.unaryMinus().toLong()), {
             validate(Employee::id).hasDigits(min = 6)
         })
     }
 
     @Test
     fun `hasDigits with negative valid max value should be valid`() {
-        validate(Employee(id = 999999.toLong().unaryMinus()), {
+        validate(Employee(id = 999999.unaryMinus().toLong()), {
             validate(Employee::id).hasDigits(max = 6)
         })
     }
 
     @Test
     fun `hasDigits with negative valid min and max value should be valid`() {
-        validate(Employee(id = 999999.toLong().unaryMinus()), {
+        validate(Employee(id = 999999.unaryMinus().toLong()), {
             validate(Employee::id).hasDigits(min = 6, max = 6)
         })
     }
@@ -878,7 +878,7 @@ class LongFunctionsTest {
     @Test
     fun `hasDigits with negative less min value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 748536.toLong().unaryMinus()), {
+            validate(Employee(id = 748536.unaryMinus().toLong()), {
                 validate(Employee::id).hasDigits(min = 7)
             })
         }
@@ -886,14 +886,14 @@ class LongFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 748536.toLong().unaryMinus(),
+                        value = 748536.unaryMinus().toLong(),
                         constraint = IntegerDigits(min = 7)))
     }
 
     @Test
     fun `hasDigits with negative greater max value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 748536.toLong().unaryMinus()), {
+            validate(Employee(id = 748536.unaryMinus().toLong()), {
                 validate(Employee::id).hasDigits(max = 5)
             })
         }
@@ -901,14 +901,14 @@ class LongFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 748536.toLong().unaryMinus(),
+                        value = 748536.unaryMinus().toLong(),
                         constraint = IntegerDigits(max = 5)))
     }
 
     @Test
     fun `hasDigits with negative less value and negative greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(id = 748536.toLong().unaryMinus()), {
+            validate(Employee(id = 748536.unaryMinus().toLong()), {
                 validate(Employee::id).hasDigits(min = 7, max = 5)
             })
         }
@@ -916,7 +916,7 @@ class LongFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "id",
-                        value = 748536.toLong().unaryMinus(),
+                        value = 748536.unaryMinus().toLong(),
                         constraint = IntegerDigits(min = 7, max = 5)))
     }
 }
