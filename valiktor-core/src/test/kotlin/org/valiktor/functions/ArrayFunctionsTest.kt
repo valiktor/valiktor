@@ -75,7 +75,10 @@ class ArrayFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = Null()))
+                DefaultConstraintViolation(
+                        property = "dependents",
+                        value = dependents,
+                        constraint = Null()))
     }
 
     @Test
@@ -93,7 +96,9 @@ class ArrayFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dependents", constraint = NotNull()))
+                DefaultConstraintViolation(
+                        property = "dependents",
+                        constraint = NotNull()))
     }
 
     @Test
@@ -121,7 +126,10 @@ class ArrayFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = Equals(constraintDependents)))
+                DefaultConstraintViolation(
+                        property = "dependents",
+                        value = dependents,
+                        constraint = Equals(constraintDependents)))
     }
 
     @Test
@@ -149,7 +157,10 @@ class ArrayFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = NotEquals(constraintDependents)))
+                DefaultConstraintViolation(
+                        property = "dependents",
+                        value = dependents,
+                        constraint = NotEquals(constraintDependents)))
     }
 
     @Test
@@ -177,7 +188,10 @@ class ArrayFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = In(setOf(constraintDependents))))
+                DefaultConstraintViolation(
+                        property = "dependents",
+                        value = dependents,
+                        constraint = In(setOf(constraintDependents))))
     }
 
     @Test
@@ -205,7 +219,10 @@ class ArrayFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = In(listOf(constraintDependents))))
+                DefaultConstraintViolation(
+                        property = "dependents",
+                        value = dependents,
+                        constraint = In(listOf(constraintDependents))))
     }
 
     @Test
@@ -233,7 +250,10 @@ class ArrayFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = NotIn(setOf(constraintDependents))))
+                DefaultConstraintViolation(
+                        property = "dependents",
+                        value = dependents,
+                        constraint = NotIn(setOf(constraintDependents))))
     }
 
     @Test
@@ -261,7 +281,10 @@ class ArrayFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = NotIn(listOf(constraintDependents))))
+                DefaultConstraintViolation(
+                        property = "dependents",
+                        value = dependents,
+                        constraint = NotIn(listOf(constraintDependents))))
     }
 
     @Test
