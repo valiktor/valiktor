@@ -81,6 +81,192 @@ class IterableFunctionsTest {
     }
 
     @Test
+    fun `isNull with null value should be valid`() {
+        validate(Company(), {
+            validate(Company::addresses).isNull()
+        })
+    }
+
+    @Test
+    fun `isNull with not null value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Company(addresses = emptyList()), {
+                validate(Company::addresses).isNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "addresses", value = emptyList<Address>(), constraint = Null()))
+    }
+
+    @Test
+    fun `isNotNull with not null value should be valid`() {
+        validate(Company(addresses = emptyList()), {
+            validate(Company::addresses).isNotNull()
+        })
+    }
+
+    @Test
+    fun `isNotNull with null value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Company(), {
+                validate(Company::addresses).isNotNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "addresses", constraint = NotNull()))
+    }
+
+    @Test
+    fun `isEqualTo with null value should be valid`() {
+        validate(Company(), {
+            validate(Company::addresses).isEqualTo(listOf(Address(id = 1)))
+        })
+    }
+
+    @Test
+    fun `isEqualTo with same value should be valid`() {
+        validate(Company(addresses = listOf(Address(id = 1), Address(id = 2))), {
+            validate(Company::addresses).isEqualTo(listOf(Address(id = 1), Address(id = 2)))
+        })
+    }
+
+    @Test
+    fun `isEqualTo with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Company(addresses = listOf(Address(id = 1), Address(id = 2))), {
+                validate(Company::addresses).isEqualTo(listOf(Address(id = 1)))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "addresses", value = listOf(Address(id = 1), Address(id = 2)), constraint = Equals(listOf(Address(id = 1)))))
+    }
+
+    @Test
+    fun `isNotEqualTo with null value should be valid`() {
+        validate(Company(), {
+            validate(Company::addresses).isNotEqualTo(listOf(Address(id = 1), Address(id = 2)))
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with different value should be valid`() {
+        validate(Company(addresses = listOf(Address(id = 1), Address(id = 2))), {
+            validate(Company::addresses).isNotEqualTo(listOf(Address(id = 1)))
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Company(addresses = listOf(Address(id = 1), Address(id = 2))), {
+                validate(Company::addresses).isNotEqualTo(listOf(Address(id = 1), Address(id = 2)))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "addresses", value = listOf(Address(id = 1), Address(id = 2)), constraint = NotEquals(listOf(Address(id = 1), Address(id = 2)))))
+    }
+
+    @Test
+    fun `isIn vararg with null value should be valid`() {
+        validate(Company(), {
+            validate(Company::addresses).isIn(listOf(Address(id = 1)))
+        })
+    }
+
+    @Test
+    fun `isIn vararg with same value should be valid`() {
+        validate(Company(addresses = listOf(Address(id = 1))), {
+            validate(Company::addresses).isIn(listOf(Address(id = 1)), listOf(Address(id = 1), Address(id = 2)))
+        })
+    }
+
+    @Test
+    fun `isIn vararg with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Company(addresses = emptyList()), {
+                validate(Company::addresses).isIn(listOf(Address(id = 1)))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "addresses", value = emptyList<Address>(), constraint = In(setOf(listOf(Address(id = 1))))))
+    }
+
+    @Test
+    fun `isIn iterable with null value should be valid`() {
+        validate(Company(), {
+            validate(Company::addresses).isIn(listOf(listOf(Address(id = 1))))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with same value should be valid`() {
+        validate(Company(addresses = listOf(Address(id = 1))), {
+            validate(Company::addresses).isIn(listOf(listOf(Address(id = 1)), listOf(Address(id = 1), Address(id = 2))))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Company(addresses = emptyList()), {
+                validate(Company::addresses).isIn(listOf(listOf(Address(id = 1))))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "addresses", value = emptyList<Address>(), constraint = In(listOf(listOf(Address(id = 1))))))
+    }
+
+    @Test
+    fun `isNotIn vararg with null value should be valid`() {
+        validate(Company(), {
+            validate(Company::addresses).isNotIn(listOf(Address(id = 1)))
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with same value should be valid`() {
+        validate(Company(addresses = emptyList()), {
+            validate(Company::addresses).isNotIn(listOf(Address(id = 1)), Address(id = 2))
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Company(addresses = listOf(Address(id = 1))), {
+                validate(Company::addresses).isNotIn(listOf(Address(id = 1)))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "addresses", value = listOf(Address(id = 1)), constraint = NotIn(setOf(listOf(Address(id = 1))))))
+    }
+
+    @Test
+    fun `isNotIn iterable with null value should be valid`() {
+        validate(Company(), {
+            validate(Company::addresses).isNotIn(listOf(listOf(Address(id = 1))))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with same value should be valid`() {
+        validate(Company(addresses = emptyList()), {
+            validate(Company::addresses).isNotIn(listOf(listOf(Address(id = 1)), Address(id = 2)))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Company(addresses = listOf(Address(id = 1))), {
+                validate(Company::addresses).isNotIn(listOf(listOf(Address(id = 1))))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "addresses", value = listOf(Address(id = 1)), constraint = NotIn(listOf(listOf(Address(id = 1))))))
+    }
+
+    @Test
     fun `isEmpty with null property should be valid`() {
         validate(Company(), {
             validate(Company::addresses).isEmpty()

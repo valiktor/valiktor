@@ -41,6 +41,46 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.validateForEach(block: Validator<
 }
 
 /**
+ * Validates if the [Iterable] property value is equal to one of the values
+ *
+ * @param values specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Iterable<T>?>.isIn(vararg values: Iterable<T>): Validator<E>.Property<Iterable<T>?> =
+        this.validate(In(values.toSet()), { it == null || values.contains(it) })
+
+/**
+ * Validates if the [Iterable] property value is equal to one of the values
+ *
+ * @param values specifies the iterable of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Iterable<T>?>.isIn(values: Iterable<Iterable<T>>): Validator<E>.Property<Iterable<T>?> =
+        this.validate(In(values), { it == null || values.contains(it) })
+
+/**
+ * Validates if the [Iterable] property value isn't equal to any value
+ *
+ * @param values specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotIn(vararg values: Iterable<T>): Validator<E>.Property<Iterable<T>?> =
+        this.validate(NotIn(values.toSet()), { it == null || !values.contains(it) })
+
+/**
+ * Validates if the [Iterable] property value isn't equal to any value
+ *
+ * @param values specifies the iterable of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotIn(values: Iterable<Iterable<T>>): Validator<E>.Property<Iterable<T>?> =
+        this.validate(NotIn(values), { it == null || !values.contains(it) })
+
+/**
  * Validates if the [Iterable] property is empty
  *
  * @receiver the property to be validated
