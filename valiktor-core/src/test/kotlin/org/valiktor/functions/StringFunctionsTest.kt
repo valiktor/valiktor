@@ -17,6 +17,246 @@ private object StringFunctionsFixture {
 class StringFunctionsTest {
 
     @Test
+    fun `isNull with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).isNull()
+        })
+    }
+
+    @Test
+    fun `isNull with not null property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "test"), {
+                validate(Employee::name).isNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "test", constraint = Null()))
+    }
+
+    @Test
+    fun `isNotNull with not null property should be valid`() {
+        validate(Employee(name = "test"), {
+            validate(Employee::name).isNotNull()
+        })
+    }
+
+    @Test
+    fun `isNotNull with null property should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(), {
+                validate(Employee::name).isNotNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", constraint = NotNull()))
+    }
+
+    @Test
+    fun `isEqualTo with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).isEqualTo("test")
+        })
+    }
+
+    @Test
+    fun `isEqualTo with same value should be valid`() {
+        validate(Employee(name = "test"), {
+            validate(Employee::name).isEqualTo("test")
+        })
+    }
+
+    @Test
+    fun `isEqualTo with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "test"), {
+                validate(Employee::name).isEqualTo("test1")
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "test", constraint = Equals("test1")))
+    }
+
+    @Test
+    fun `isEqualTo with different case value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "test"), {
+                validate(Employee::name).isEqualTo("TEST")
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "test", constraint = Equals("TEST")))
+    }
+
+    @Test
+    fun `isNotEqualTo with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).isNotEqualTo("test")
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with different value should be valid`() {
+        validate(Employee(name = "test"), {
+            validate(Employee::name).isNotEqualTo("test1")
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with different case value should be valid`() {
+        validate(Employee(name = "test"), {
+            validate(Employee::name).isNotEqualTo("TEST")
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "test"), {
+                validate(Employee::name).isNotEqualTo("test")
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "test", constraint = NotEquals("test")))
+    }
+
+    @Test
+    fun `isIn vararg with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).isIn("test1", "test2", "test3")
+        })
+    }
+
+    @Test
+    fun `isIn vararg with same value should be valid`() {
+        validate(Employee(name = "test2"), {
+            validate(Employee::name).isIn("test1", "test2", "test3")
+        })
+    }
+
+    @Test
+    fun `isIn vararg with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "test1"), {
+                validate(Employee::name).isIn("test0", "test2", "test3")
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "test1", constraint = In(setOf("test0", "test2", "test3"))))
+    }
+
+    @Test
+    fun `isIn vararg with different case value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "test1"), {
+                validate(Employee::name).isIn("TEST1", "test2", "test3")
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "test1", constraint = In(setOf("TEST1", "test2", "test3"))))
+    }
+
+    @Test
+    fun `isIn iterable with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).isIn(listOf("test1", "test2", "test3"))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with same value should be valid`() {
+        validate(Employee(name = "test2"), {
+            validate(Employee::name).isIn(listOf("test1", "test2", "test3"))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "test1"), {
+                validate(Employee::name).isIn(listOf("test0", "test2", "test3"))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "test1", constraint = In(listOf("test0", "test2", "test3"))))
+    }
+
+    @Test
+    fun `isIn iterable with different case value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "test1"), {
+                validate(Employee::name).isIn(listOf("TEST1", "test2", "test3"))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "test1", constraint = In(listOf("TEST1", "test2", "test3"))))
+    }
+
+    @Test
+    fun `isNotIn vararg with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).isNotIn("test1", "test2", "test3")
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with different value should be valid`() {
+        validate(Employee(name = "test1"), {
+            validate(Employee::name).isNotIn("test0", "test2", "test3")
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with different case value should be valid`() {
+        validate(Employee(name = "test1"), {
+            validate(Employee::name).isNotIn("TEST1", "test2", "test3")
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "test1"), {
+                validate(Employee::name).isNotIn("test1", "test2", "test3")
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "test1", constraint = NotIn(setOf("test1", "test2", "test3"))))
+    }
+
+    @Test
+    fun `isNotIn iterable with null property should be valid`() {
+        validate(Employee(), {
+            validate(Employee::name).isNotIn(listOf("test1", "test2", "test3"))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with different value should be valid`() {
+        validate(Employee(name = "test1"), {
+            validate(Employee::name).isNotIn(listOf("test0", "test2", "test3"))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with different case value should be valid`() {
+        validate(Employee(name = "test1"), {
+            validate(Employee::name).isNotIn(listOf("TEST1", "test2", "test3"))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(name = "test1"), {
+                validate(Employee::name).isNotIn(listOf("test1", "test2", "test3"))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "name", value = "test1", constraint = NotIn(listOf("test1", "test2", "test3"))))
+    }
+
+    @Test
     fun `isEmpty with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::name).isEmpty()

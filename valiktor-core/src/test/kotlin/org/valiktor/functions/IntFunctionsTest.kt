@@ -17,6 +17,192 @@ private object IntFunctionsFixture {
 class IntFunctionsTest {
 
     @Test
+    fun `isNull with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isNull()
+        })
+    }
+
+    @Test
+    fun `isNull with not null value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1), {
+                validate(Employee::id).isNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1, constraint = Null()))
+    }
+
+    @Test
+    fun `isNotNull with not null value should be valid`() {
+        validate(Employee(id = 1), {
+            validate(Employee::id).isNotNull()
+        })
+    }
+
+    @Test
+    fun `isNotNull with null value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(), {
+                validate(Employee::id).isNotNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", constraint = NotNull()))
+    }
+
+    @Test
+    fun `isEqualTo with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isEqualTo(1)
+        })
+    }
+
+    @Test
+    fun `isEqualTo with same value should be valid`() {
+        validate(Employee(id = 1), {
+            validate(Employee::id).isEqualTo(1)
+        })
+    }
+
+    @Test
+    fun `isEqualTo with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 2), {
+                validate(Employee::id).isEqualTo(1)
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 2, constraint = Equals(1)))
+    }
+
+    @Test
+    fun `isNotEqualTo with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isNotEqualTo(1)
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with different value should be valid`() {
+        validate(Employee(id = 2), {
+            validate(Employee::id).isNotEqualTo(1)
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1), {
+                validate(Employee::id).isNotEqualTo(1)
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1, constraint = NotEquals(1)))
+    }
+
+    @Test
+    fun `isIn vararg with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isIn(1, 2, 3)
+        })
+    }
+
+    @Test
+    fun `isIn vararg with same value should be valid`() {
+        validate(Employee(id = 2), {
+            validate(Employee::id).isIn(1, 2, 3)
+        })
+    }
+
+    @Test
+    fun `isIn vararg with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1), {
+                validate(Employee::id).isIn(0, 2, 3)
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1, constraint = In(setOf(0, 2, 3))))
+    }
+
+    @Test
+    fun `isIn iterable with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isIn(listOf(1, 2, 3))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with same value should be valid`() {
+        validate(Employee(id = 2), {
+            validate(Employee::id).isIn(listOf(1, 2, 3))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1), {
+                validate(Employee::id).isIn(listOf(0, 2, 3))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1, constraint = In(listOf(0, 2, 3))))
+    }
+
+    @Test
+    fun `isNotIn vararg with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isNotIn(0, 2, 3)
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with different value should be valid`() {
+        validate(Employee(id = 1), {
+            validate(Employee::id).isNotIn(0, 2, 3)
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1), {
+                validate(Employee::id).isNotIn(1, 2, 3)
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1, constraint = NotIn(setOf(1, 2, 3))))
+    }
+
+    @Test
+    fun `isNotIn iterable with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isNotIn(listOf(0, 2, 3))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with different value should be valid`() {
+        validate(Employee(id = 1), {
+            validate(Employee::id).isNotIn(listOf(0, 2, 3))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1), {
+                validate(Employee::id).isNotIn(listOf(1, 2, 3))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1, constraint = NotIn(listOf(1, 2, 3))))
+    }
+
+    @Test
     fun `isZero with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::id).isZero()

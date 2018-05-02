@@ -17,6 +17,192 @@ private object LongFunctionsFixture {
 class LongFunctionsTest {
 
     @Test
+    fun `isNull with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isNull()
+        })
+    }
+
+    @Test
+    fun `isNull with not null value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1.toLong()), {
+                validate(Employee::id).isNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1.toLong(), constraint = Null()))
+    }
+
+    @Test
+    fun `isNotNull with not null value should be valid`() {
+        validate(Employee(id = 1.toLong()), {
+            validate(Employee::id).isNotNull()
+        })
+    }
+
+    @Test
+    fun `isNotNull with null value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(), {
+                validate(Employee::id).isNotNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", constraint = NotNull()))
+    }
+
+    @Test
+    fun `isEqualTo with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isEqualTo(1.toLong())
+        })
+    }
+
+    @Test
+    fun `isEqualTo with same value should be valid`() {
+        validate(Employee(id = 1.toLong()), {
+            validate(Employee::id).isEqualTo(1.toLong())
+        })
+    }
+
+    @Test
+    fun `isEqualTo with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 2.toLong()), {
+                validate(Employee::id).isEqualTo(1.toLong())
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 2.toLong(), constraint = Equals(1.toLong())))
+    }
+
+    @Test
+    fun `isNotEqualTo with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isNotEqualTo(1.toLong())
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with different value should be valid`() {
+        validate(Employee(id = 2.toLong()), {
+            validate(Employee::id).isNotEqualTo(1.toLong())
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1.toLong()), {
+                validate(Employee::id).isNotEqualTo(1.toLong())
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1.toLong(), constraint = NotEquals(1.toLong())))
+    }
+
+    @Test
+    fun `isIn vararg with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isIn(1.toLong(), 2.toLong(), 3.toLong())
+        })
+    }
+
+    @Test
+    fun `isIn vararg with same value should be valid`() {
+        validate(Employee(id = 2.toLong()), {
+            validate(Employee::id).isIn(1.toLong(), 2.toLong(), 3.toLong())
+        })
+    }
+
+    @Test
+    fun `isIn vararg with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1.toLong()), {
+                validate(Employee::id).isIn(0.toLong(), 2.toLong(), 3.toLong())
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1.toLong(), constraint = In(setOf(0.toLong(), 2.toLong(), 3.toLong()))))
+    }
+
+    @Test
+    fun `isIn iterable with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isIn(listOf(1.toLong(), 2.toLong(), 3.toLong()))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with same value should be valid`() {
+        validate(Employee(id = 2.toLong()), {
+            validate(Employee::id).isIn(listOf(1.toLong(), 2.toLong(), 3.toLong()))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1.toLong()), {
+                validate(Employee::id).isIn(listOf(0.toLong(), 2.toLong(), 3.toLong()))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1.toLong(), constraint = In(listOf(0.toLong(), 2.toLong(), 3.toLong()))))
+    }
+
+    @Test
+    fun `isNotIn vararg with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isNotIn(0.toLong(), 2.toLong(), 3.toLong())
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with different value should be valid`() {
+        validate(Employee(id = 1.toLong()), {
+            validate(Employee::id).isNotIn(0.toLong(), 2.toLong(), 3.toLong())
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1.toLong()), {
+                validate(Employee::id).isNotIn(1.toLong(), 2.toLong(), 3.toLong())
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1.toLong(), constraint = NotIn(setOf(1.toLong(), 2.toLong(), 3.toLong()))))
+    }
+
+    @Test
+    fun `isNotIn iterable with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::id).isNotIn(listOf(0.toLong(), 2.toLong(), 3.toLong()))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with different value should be valid`() {
+        validate(Employee(id = 1.toLong()), {
+            validate(Employee::id).isNotIn(listOf(0.toLong(), 2.toLong(), 3.toLong()))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(id = 1.toLong()), {
+                validate(Employee::id).isNotIn(listOf(1.toLong(), 2.toLong(), 3.toLong()))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = 1.toLong(), constraint = NotIn(listOf(1.toLong(), 2.toLong(), 3.toLong()))))
+    }
+
+    @Test
     fun `isZero with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::id).isZero()

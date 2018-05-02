@@ -17,6 +17,246 @@ private object FloatFunctionsFixture {
 class FloatFunctionsTest {
 
     @Test
+    fun `isNull with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNull()
+        })
+    }
+
+    @Test
+    fun `isNull with not null value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 0.toFloat()), {
+                validate(Employee::salary).isNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "salary", value = 0.toFloat(), constraint = Null()))
+    }
+
+    @Test
+    fun `isNotNull with not null value should be valid`() {
+        validate(Employee(salary = 0.toFloat()), {
+            validate(Employee::salary).isNotNull()
+        })
+    }
+
+    @Test
+    fun `isNotNull with null value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(), {
+                validate(Employee::salary).isNotNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "salary", constraint = NotNull()))
+    }
+
+    @Test
+    fun `isEqualTo with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isEqualTo(1.toFloat())
+        })
+    }
+
+    @Test
+    fun `isEqualTo with same value should be valid`() {
+        validate(Employee(salary = 1.toFloat()), {
+            validate(Employee::salary).isEqualTo(1.toFloat())
+        })
+    }
+
+    @Test
+    fun `isEqualTo with same value and 2 decimal digits should be valid`() {
+        validate(Employee(salary = 1.toFloat()), {
+            validate(Employee::salary).isEqualTo(1.00.toFloat())
+        })
+    }
+
+    @Test
+    fun `isEqualTo with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 0.toFloat()), {
+                validate(Employee::salary).isEqualTo(1.toFloat())
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "salary", value = 0.toFloat(), constraint = Equals(1.toFloat())))
+    }
+
+    @Test
+    fun `isNotEqualTo with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNotEqualTo(1.toFloat())
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with different value should be valid`() {
+        validate(Employee(salary = 1.toFloat()), {
+            validate(Employee::salary).isNotEqualTo(0.toFloat())
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 1.toFloat()), {
+                validate(Employee::salary).isNotEqualTo(1.toFloat())
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "salary", value = 1.toFloat(), constraint = NotEquals(1.toFloat())))
+    }
+
+    @Test
+    fun `isNotEqualTo with same value and 2 decimal digits should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 1.toFloat()), {
+                validate(Employee::salary).isNotEqualTo(1.00.toFloat())
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "salary", value = 1.toFloat(), constraint = NotEquals(1.00.toFloat())))
+    }
+
+    @Test
+    fun `isIn vararg with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isIn(0.toFloat(), 1.toFloat(), 10.toFloat())
+        })
+    }
+
+    @Test
+    fun `isIn vararg with same value should be valid`() {
+        validate(Employee(salary = 1.toFloat()), {
+            validate(Employee::salary).isIn(0.toFloat(), 1.toFloat(), 10.toFloat())
+        })
+    }
+
+    @Test
+    fun `isIn vararg with same value and 2 decimal digits should be valid`() {
+        validate(Employee(salary = 1.toFloat()), {
+            validate(Employee::salary).isIn(0.toFloat(), 1.00.toFloat(), 10.toFloat())
+        })
+    }
+
+    @Test
+    fun `isIn vararg with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 1.toFloat()), {
+                validate(Employee::salary).isIn(0.toFloat(), 10.toFloat())
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "salary", value = 1.toFloat(), constraint = In(setOf(0.toFloat(), 10.toFloat()))))
+    }
+
+    @Test
+    fun `isIn iterable with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isIn(listOf(0.toFloat(), 1.toFloat(), 10.toFloat()))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with same value should be valid`() {
+        validate(Employee(salary = 1.toFloat()), {
+            validate(Employee::salary).isIn(listOf(0.toFloat(), 1.toFloat(), 10.toFloat()))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with same value and 2 decimal digits should be valid`() {
+        validate(Employee(salary = 1.toFloat()), {
+            validate(Employee::salary).isIn(listOf(0.toFloat(), 1.00.toFloat(), 10.toFloat()))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with different value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 1.toFloat()), {
+                validate(Employee::salary).isIn(listOf(0.toFloat(), 10.toFloat()))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "salary", value = 1.toFloat(), constraint = In(listOf(0.toFloat(), 10.toFloat()))))
+    }
+
+    @Test
+    fun `isNotIn vararg with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNotIn(0.toFloat(), 1.toFloat(), 10.toFloat())
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with different value should be valid`() {
+        validate(Employee(salary = 1.toFloat()), {
+            validate(Employee::salary).isNotIn(0.toFloat(), 10.toFloat())
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 1.toFloat()), {
+                validate(Employee::salary).isNotIn(0.toFloat(), 1.toFloat(), 10.toFloat())
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "salary", value = 1.toFloat(), constraint = NotIn(setOf(0.toFloat(), 1.toFloat(), 10.toFloat()))))
+    }
+
+    @Test
+    fun `isNotIn vararg with same value and 2 decimal digits should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 1.toFloat()), {
+                validate(Employee::salary).isNotIn(0.toFloat(), 1.00.toFloat(), 10.toFloat())
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "salary", value = 1.toFloat(), constraint = NotIn(setOf(0.toFloat(), 1.00.toFloat(), 10.toFloat()))))
+    }
+
+    @Test
+    fun `isNotIn iterable with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNotIn(listOf(0.toFloat(), 1.toFloat(), 10.toFloat()))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with different value should be valid`() {
+        validate(Employee(salary = 1.toFloat()), {
+            validate(Employee::salary).isNotIn(listOf(0.toFloat(), 10.toFloat()))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with same value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 1.toFloat()), {
+                validate(Employee::salary).isNotIn(listOf(0.toFloat(), 1.toFloat(), 10.toFloat()))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "salary", value = 1.toFloat(), constraint = NotIn(listOf(0.toFloat(), 1.toFloat(), 10.toFloat()))))
+    }
+
+    @Test
+    fun `isNotIn iterable with same value and 2 decimal digits should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 1.toFloat()), {
+                validate(Employee::salary).isNotIn(listOf(0.toFloat(), 1.00.toFloat(), 10.toFloat()))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "salary", value = 1.toFloat(), constraint = NotIn(listOf(0.toFloat(), 1.00.toFloat(), 10.toFloat()))))
+    }
+
+    @Test
     fun `isZero with null value should be valid`() {
         validate(Employee(), {
             validate(Employee::salary).isZero()
@@ -25,7 +265,14 @@ class FloatFunctionsTest {
 
     @Test
     fun `isZero with zero should be valid`() {
-        validate(Employee(salary = 0.0.toFloat()), {
+        validate(Employee(salary = 0.toFloat()), {
+            validate(Employee::salary).isZero()
+        })
+    }
+
+    @Test
+    fun `isZero with zero and 2 decimal digits should be valid`() {
+        validate(Employee(salary = 0.00.toFloat()), {
             validate(Employee::salary).isZero()
         })
     }
@@ -33,7 +280,7 @@ class FloatFunctionsTest {
     @Test
     fun `isZero with one should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(salary = 1.0.toFloat()), {
+            validate(Employee(salary = 1.toFloat()), {
                 validate(Employee::salary).isZero()
             })
         }
@@ -41,8 +288,8 @@ class FloatFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "salary",
-                        value = 1.0.toFloat(),
-                        constraint = Equals(0.0.toFloat())))
+                        value = 1.toFloat(),
+                        constraint = Equals(0.toFloat())))
     }
 
     @Test
@@ -54,7 +301,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotZero with one should be valid`() {
-        validate(Employee(salary = 1.0.toFloat()), {
+        validate(Employee(salary = 1.toFloat()), {
             validate(Employee::salary).isNotZero()
         })
     }
@@ -62,7 +309,7 @@ class FloatFunctionsTest {
     @Test
     fun `isNotZero with zero should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(salary = 0.0.toFloat()), {
+            validate(Employee(salary = 0.toFloat()), {
                 validate(Employee::salary).isNotZero()
             })
         }
@@ -70,8 +317,23 @@ class FloatFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "salary",
-                        value = 0.0.toFloat(),
-                        constraint = NotEquals(0.0.toFloat())))
+                        value = 0.toFloat(),
+                        constraint = NotEquals(0.toFloat())))
+    }
+
+    @Test
+    fun `isNotZero with zero and 2 decimal digits should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 0.00.toFloat()), {
+                validate(Employee::salary).isNotZero()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = 0.00.toFloat(),
+                        constraint = NotEquals(0.toFloat())))
     }
 
     @Test
@@ -83,7 +345,14 @@ class FloatFunctionsTest {
 
     @Test
     fun `isOne with one should be valid`() {
-        validate(Employee(salary = 1.0.toFloat()), {
+        validate(Employee(salary = 1.toFloat()), {
+            validate(Employee::salary).isOne()
+        })
+    }
+
+    @Test
+    fun `isOne with one and 2 decimal digits should be valid`() {
+        validate(Employee(salary = 1.00.toFloat()), {
             validate(Employee::salary).isOne()
         })
     }
@@ -91,7 +360,7 @@ class FloatFunctionsTest {
     @Test
     fun `isOne with zero should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(salary = 0.0.toFloat()), {
+            validate(Employee(salary = 0.toFloat()), {
                 validate(Employee::salary).isOne()
             })
         }
@@ -99,8 +368,8 @@ class FloatFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "salary",
-                        value = 0.0.toFloat(),
-                        constraint = Equals(1.0.toFloat())))
+                        value = 0.toFloat(),
+                        constraint = Equals(1.toFloat())))
     }
 
     @Test
@@ -112,7 +381,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotOne with zero should be valid`() {
-        validate(Employee(salary = 0.0.toFloat()), {
+        validate(Employee(salary = 0.toFloat()), {
             validate(Employee::salary).isNotOne()
         })
     }
@@ -120,7 +389,7 @@ class FloatFunctionsTest {
     @Test
     fun `isNotOne with one should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
-            validate(Employee(salary = 1.0.toFloat()), {
+            validate(Employee(salary = 1.toFloat()), {
                 validate(Employee::salary).isNotOne()
             })
         }
@@ -128,8 +397,23 @@ class FloatFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "salary",
-                        value = 1.0.toFloat(),
-                        constraint = NotEquals(1.0.toFloat())))
+                        value = 1.toFloat(),
+                        constraint = NotEquals(1.toFloat())))
+    }
+
+    @Test
+    fun `isNotOne with one and 2 decimal digits should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = 1.00.toFloat()), {
+                validate(Employee::salary).isNotOne()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = 1.00.toFloat(),
+                        constraint = NotEquals(1.toFloat())))
     }
 
     @Test
