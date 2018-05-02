@@ -26,7 +26,7 @@ import org.valiktor.constraints.*
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Float?>.isZero(): Validator<E>.Property<Float?> =
-        this.validate(Equals(0.toFloat()), { it == null || it == 0.toFloat() })
+        this.validate(Equals(0f), { it == null || it == 0f })
 
 /**
  * Validates if the [Float] property is not equal to zero
@@ -35,7 +35,7 @@ fun <E> Validator<E>.Property<Float?>.isZero(): Validator<E>.Property<Float?> =
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Float?>.isNotZero(): Validator<E>.Property<Float?> =
-        this.validate(NotEquals(0.toFloat()), { it == null || it != 0.toFloat() })
+        this.validate(NotEquals(0f), { it == null || it != 0f })
 
 /**
  * Validates if the [Float] property is equal to one
@@ -44,7 +44,7 @@ fun <E> Validator<E>.Property<Float?>.isNotZero(): Validator<E>.Property<Float?>
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Float?>.isOne(): Validator<E>.Property<Float?> =
-        this.validate(Equals(1.toFloat()), { it == null || it == 1.toFloat() })
+        this.validate(Equals(1f), { it == null || it == 1f })
 
 /**
  * Validates if the [Float] property is not equal to one
@@ -53,7 +53,7 @@ fun <E> Validator<E>.Property<Float?>.isOne(): Validator<E>.Property<Float?> =
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Float?>.isNotOne(): Validator<E>.Property<Float?> =
-        this.validate(NotEquals(1.toFloat()), { it == null || it != 1.toFloat() })
+        this.validate(NotEquals(1f), { it == null || it != 1f })
 
 /**
  * Validates if the [Float] property is positive
@@ -62,7 +62,7 @@ fun <E> Validator<E>.Property<Float?>.isNotOne(): Validator<E>.Property<Float?> 
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Float?>.isPositive(): Validator<E>.Property<Float?> =
-        this.validate(Greater(0.toFloat()), { it == null || it > 0.toFloat() })
+        this.validate(Greater(0f), { it == null || it > 0f })
 
 /**
  * Validates if the [Float] property isn't positive
@@ -71,7 +71,7 @@ fun <E> Validator<E>.Property<Float?>.isPositive(): Validator<E>.Property<Float?
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Float?>.isNotPositive(): Validator<E>.Property<Float?> =
-        this.validate(LessOrEqual(0.toFloat()), { it == null || it <= 0.toFloat() })
+        this.validate(LessOrEqual(0f), { it == null || it <= 0f })
 
 /**
  * Validates if the [Float] property is negative
@@ -80,7 +80,7 @@ fun <E> Validator<E>.Property<Float?>.isNotPositive(): Validator<E>.Property<Flo
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Float?>.isNegative(): Validator<E>.Property<Float?> =
-        this.validate(Less(0.toFloat()), { it == null || it < 0.toFloat() })
+        this.validate(Less(0f), { it == null || it < 0f })
 
 /**
  * Validates if the [Float] property isn't negative
@@ -89,7 +89,7 @@ fun <E> Validator<E>.Property<Float?>.isNegative(): Validator<E>.Property<Float?
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Float?>.isNotNegative(): Validator<E>.Property<Float?> =
-        this.validate(GreaterOrEqual(0.toFloat()), { it == null || it >= 0.toFloat() })
+        this.validate(GreaterOrEqual(0f), { it == null || it >= 0f })
 
 /**
  * Validates if the [Float] property is less than another value
