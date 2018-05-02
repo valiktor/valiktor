@@ -40,7 +40,6 @@ fun ConstraintViolation.toI18n(locale: Locale? = null,
                 constraint = this.constraint,
                 message = this.constraint.interpolator(getBundle(baseName, locale ?: Locale("")).getString(key)))
 
-
 /**
  * Converts this object to [I18nConstraintViolation]
  *

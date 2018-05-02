@@ -59,6 +59,212 @@ class ArrayFunctionsTest {
     }
 
     @Test
+    fun `isNull with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::dependents).isNull()
+        })
+    }
+
+    @Test
+    fun `isNull with not null value should be invalid`() {
+        val dependents = emptyArray<Dependent>()
+
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(dependents = dependents), {
+                validate(Employee::dependents).isNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = Null()))
+    }
+
+    @Test
+    fun `isNotNull with not null value should be valid`() {
+        validate(Employee(dependents = emptyArray()), {
+            validate(Employee::dependents).isNotNull()
+        })
+    }
+
+    @Test
+    fun `isNotNull with null value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(), {
+                validate(Employee::dependents).isNotNull()
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "dependents", constraint = NotNull()))
+    }
+
+    @Test
+    fun `isEqualTo with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::dependents).isEqualTo(arrayOf(Dependent(id = 1)))
+        })
+    }
+
+    @Test
+    fun `isEqualTo with same value should be valid`() {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2))), {
+            validate(Employee::dependents).isEqualTo(arrayOf(Dependent(id = 1), Dependent(id = 2)))
+        })
+    }
+
+    @Test
+    fun `isEqualTo with different value should be invalid`() {
+        val dependents = arrayOf(Dependent(id = 1), Dependent(id = 2))
+        val constraintDependents = arrayOf(Dependent(id = 1))
+
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(dependents = dependents), {
+                validate(Employee::dependents).isEqualTo(constraintDependents)
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = Equals(constraintDependents)))
+    }
+
+    @Test
+    fun `isNotEqualTo with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::dependents).isNotEqualTo(arrayOf(Dependent(id = 1), Dependent(id = 2)))
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with different value should be valid`() {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2))), {
+            validate(Employee::dependents).isNotEqualTo(arrayOf(Dependent(id = 1)))
+        })
+    }
+
+    @Test
+    fun `isNotEqualTo with same value should be invalid`() {
+        val dependents = arrayOf(Dependent(id = 1), Dependent(id = 2))
+        val constraintDependents = arrayOf(Dependent(id = 1), Dependent(id = 2))
+
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(dependents = dependents), {
+                validate(Employee::dependents).isNotEqualTo(constraintDependents)
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = NotEquals(constraintDependents)))
+    }
+
+    @Test
+    fun `isIn vararg with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::dependents).isIn(arrayOf(Dependent(id = 1)))
+        })
+    }
+
+    @Test
+    fun `isIn vararg with same value should be valid`() {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1))), {
+            validate(Employee::dependents).isIn(arrayOf(Dependent(id = 1)), arrayOf(Dependent(id = 1), Dependent(id = 2)))
+        })
+    }
+
+    @Test
+    fun `isIn vararg with different value should be invalid`() {
+        val dependents = emptyArray<Dependent>()
+        val constraintDependents = arrayOf(Dependent(id = 1))
+
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(dependents = dependents), {
+                validate(Employee::dependents).isIn(constraintDependents)
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = In(setOf(constraintDependents))))
+    }
+
+    @Test
+    fun `isIn iterable with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::dependents).isIn(listOf(arrayOf(Dependent(id = 1))))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with same value should be valid`() {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1))), {
+            validate(Employee::dependents).isIn(listOf(arrayOf(Dependent(id = 1)), arrayOf(Dependent(id = 1), Dependent(id = 2))))
+        })
+    }
+
+    @Test
+    fun `isIn iterable with different value should be invalid`() {
+        val dependents = emptyArray<Dependent>()
+        val constraintDependents = arrayOf(Dependent(id = 1))
+
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(dependents = dependents), {
+                validate(Employee::dependents).isIn(listOf(constraintDependents))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = In(listOf(constraintDependents))))
+    }
+
+    @Test
+    fun `isNotIn vararg with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::dependents).isNotIn(arrayOf(Dependent(id = 1)))
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with same value should be valid`() {
+        validate(Employee(dependents = emptyArray()), {
+            validate(Employee::dependents).isNotIn(arrayOf(Dependent(id = 1)), Dependent(id = 2))
+        })
+    }
+
+    @Test
+    fun `isNotIn vararg with different value should be invalid`() {
+        val dependents = arrayOf(Dependent(id = 1))
+        val constraintDependents = arrayOf(Dependent(id = 1))
+
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(dependents = dependents), {
+                validate(Employee::dependents).isNotIn(constraintDependents)
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = NotIn(setOf(constraintDependents))))
+    }
+
+    @Test
+    fun `isNotIn iterable with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::dependents).isNotIn(listOf(arrayOf(Dependent(id = 1))))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with same value should be valid`() {
+        validate(Employee(dependents = emptyArray()), {
+            validate(Employee::dependents).isNotIn(listOf(arrayOf(Dependent(id = 1)), Dependent(id = 2)))
+        })
+    }
+
+    @Test
+    fun `isNotIn iterable with different value should be invalid`() {
+        val dependents = arrayOf(Dependent(id = 1))
+        val constraintDependents = arrayOf(Dependent(id = 1))
+
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(dependents = dependents), {
+                validate(Employee::dependents).isNotIn(listOf(constraintDependents))
+            })
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "dependents", value = dependents, constraint = NotIn(listOf(constraintDependents))))
+    }
+
+    @Test
     fun `isEmpty with null property should be valid`() {
         validate(Employee(), {
             validate(Employee::dependents).isEmpty()

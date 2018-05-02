@@ -41,6 +41,66 @@ fun <E, T> Validator<E>.Property<Array<T>?>.validateForEach(block: Validator<T>.
 }
 
 /**
+ * Validates if the array property value is equal to another value
+ *
+ * @param value specifies the value that should be equal
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.isEqualTo(value: Array<T>): Validator<E>.Property<Array<T>?> =
+        this.validate(Equals(value), { it == null || it contentDeepEquals value })
+
+/**
+ * Validates if the array property value isn't equal to another value
+ *
+ * @param value specifies the value that should not be equal
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.isNotEqualTo(value: Array<T>): Validator<E>.Property<Array<T>?> =
+        this.validate(NotEquals(value), { it == null || !(it contentDeepEquals value) })
+
+/**
+ * Validates if the array property value is equal to one of the values
+ *
+ * @param values specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.isIn(vararg values: Array<T>): Validator<E>.Property<Array<T>?> =
+        this.validate(In(values.toSet()), { it == null || values.any { e -> it contentDeepEquals e } })
+
+/**
+ * Validates if the array property value is equal to one of the values
+ *
+ * @param values specifies the iterable of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.isIn(values: Iterable<Array<T>>): Validator<E>.Property<Array<T>?> =
+        this.validate(In(values), { it == null || values.any { e -> it contentDeepEquals e } })
+
+/**
+ * Validates if the array property value isn't equal to any value
+ *
+ * @param values specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.isNotIn(vararg values: Array<T>): Validator<E>.Property<Array<T>?> =
+        this.validate(NotIn(values.toSet()), { it == null || !values.any { e -> it contentDeepEquals e } })
+
+/**
+ * Validates if the array property value isn't equal to any value
+ *
+ * @param values specifies the iterable of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, T> Validator<E>.Property<Array<T>?>.isNotIn(values: Iterable<Array<T>>): Validator<E>.Property<Array<T>?> =
+        this.validate(NotIn(values), { it == null || !values.any { e -> it contentDeepEquals e } })
+
+/**
  * Validates if the array property is empty
  *
  * @receiver the property to be validated
