@@ -226,7 +226,7 @@ class IterableFunctionsTest {
     @Test
     fun `isNotIn vararg with same value should be valid`() {
         validate(Company(addresses = emptyList()), {
-            validate(Company::addresses).isNotIn(listOf(Address(id = 1)), Address(id = 2))
+            validate(Company::addresses).isNotIn(listOf(Address(id = 1), Address(id = 2)))
         })
     }
 
@@ -251,7 +251,7 @@ class IterableFunctionsTest {
     @Test
     fun `isNotIn iterable with same value should be valid`() {
         validate(Company(addresses = emptyList()), {
-            validate(Company::addresses).isNotIn(listOf(listOf(Address(id = 1)), Address(id = 2)))
+            validate(Company::addresses).isNotIn(listOf(listOf(Address(id = 1), Address(id = 2))))
         })
     }
 

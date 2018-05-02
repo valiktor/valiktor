@@ -235,7 +235,7 @@ class ArrayFunctionsTest {
     @Test
     fun `isNotIn vararg with same value should be valid`() {
         validate(Employee(dependents = emptyArray()), {
-            validate(Employee::dependents).isNotIn(arrayOf(Dependent(id = 1)), Dependent(id = 2))
+            validate(Employee::dependents).isNotIn(arrayOf(Dependent(id = 1), Dependent(id = 2)))
         })
     }
 
@@ -266,7 +266,7 @@ class ArrayFunctionsTest {
     @Test
     fun `isNotIn iterable with same value should be valid`() {
         validate(Employee(dependents = emptyArray()), {
-            validate(Employee::dependents).isNotIn(listOf(arrayOf(Dependent(id = 1)), Dependent(id = 2)))
+            validate(Employee::dependents).isNotIn(listOf(arrayOf(Dependent(id = 1), Dependent(id = 2))))
         })
     }
 
