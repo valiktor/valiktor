@@ -21,6 +21,66 @@ import org.valiktor.constraints.*
 import java.math.BigDecimal
 
 /**
+ * Validates if the [BigDecimal] property value is equal to another value
+ *
+ * @param value specifies the value that should be equal
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<BigDecimal?>.isEqualTo(value: BigDecimal): Validator<E>.Property<BigDecimal?> =
+        this.validate(Equals(value), { it == null || it.compareTo(value) == 0 })
+
+/**
+ * Validates if the [BigDecimal] property value isn't equal to another value
+ *
+ * @param value specifies the value that should not be equal
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<BigDecimal?>.isNotEqualTo(value: BigDecimal): Validator<E>.Property<BigDecimal?> =
+        this.validate(NotEquals(value), { it == null || it.compareTo(value) != 0 })
+
+/**
+ * Validates if the [BigDecimal] property value is equal to one of the values
+ *
+ * @param values specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<BigDecimal?>.isIn(vararg values: BigDecimal): Validator<E>.Property<BigDecimal?> =
+        this.validate(In(values.toSet()), { it == null || values.any { e -> it.compareTo(e) == 0 } })
+
+/**
+ * Validates if the [BigDecimal] property value is equal to one of the values
+ *
+ * @param values specifies the iterable of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<BigDecimal?>.isIn(values: Iterable<BigDecimal>): Validator<E>.Property<BigDecimal?> =
+        this.validate(In(values), { it == null || values.any { e -> it.compareTo(e) == 0 } })
+
+/**
+ * Validates if the [BigDecimal] property value isn't equal to any value
+ *
+ * @param values specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<BigDecimal?>.isNotIn(vararg values: BigDecimal): Validator<E>.Property<BigDecimal?> =
+        this.validate(NotIn(values.toSet()), { it == null || !values.any { e -> it.compareTo(e) == 0 } })
+
+/**
+ * Validates if the [BigDecimal] property value isn't equal to any value
+ *
+ * @param values specifies the iterable of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<BigDecimal?>.isNotIn(values: Iterable<BigDecimal>): Validator<E>.Property<BigDecimal?> =
+        this.validate(NotIn(values), { it == null || !values.any { e -> it.compareTo(e) == 0 } })
+
+/**
  * Validates if the [BigDecimal] property is equal to zero
  *
  * @receiver the property to be validated
