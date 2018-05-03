@@ -102,7 +102,6 @@ fun <E> Validator<E>.Property<Byte?>.isNotNegative(): Validator<E>.Property<Byte
 fun <E> Validator<E>.Property<Byte?>.isLessThan(value: Byte): Validator<E>.Property<Byte?> =
         this.validate(Less(value), { it == null || it < value })
 
-
 /**
  * Validates if the [Byte] property is less than or equal to another value
  *

@@ -38,6 +38,78 @@ class Blank : AbstractConstraint()
 class NotBlank : AbstractConstraint()
 
 /**
+ * Represents a constraint that validate if the value is letter
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+class Letter : AbstractConstraint()
+
+/**
+ * Represents a constraint that validate if the value is not letter
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+class NotLetter : AbstractConstraint()
+
+/**
+ * Represents a constraint that validate if the value is digit
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+class Digit : AbstractConstraint()
+
+/**
+ * Represents a constraint that validate if the value is not digit
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+class NotDigit : AbstractConstraint()
+
+/**
+ * Represents a constraint that validate if the value is letter or digit
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+class LetterOrDigit : AbstractConstraint()
+
+/**
+ * Represents a constraint that validate if the value is not letter or digit
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+class NotLetterOrDigit : AbstractConstraint()
+
+/**
+ * Represents a constraint that validate if the value is uppercase
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+class UpperCase : AbstractConstraint()
+
+/**
+ * Represents a constraint that validate if the value is lowercase
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+class LowerCase : AbstractConstraint()
+
+/**
  * Represents a constraint that validate if the value matches with a pattern
  *
  * @property regex specifies the pattern value that should match
