@@ -67,7 +67,7 @@ data class Size(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VALUE) : Ab
  * @see Constraint
  * @since 0.1.0
  */
-data class Contains<out T>(val value: T) : AbstractConstraint() {
+data class Contains<T>(val value: T) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
 }
 
@@ -80,7 +80,7 @@ data class Contains<out T>(val value: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class ContainsAll<out T>(val values: Iterable<T>) : AbstractConstraint() {
+data class ContainsAll<T>(val values: Iterable<T>) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
 }
 
@@ -93,7 +93,7 @@ data class ContainsAll<out T>(val values: Iterable<T>) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class ContainsAny<out T>(val values: Iterable<T>) : AbstractConstraint() {
+data class ContainsAny<T>(val values: Iterable<T>) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
 }
 
@@ -106,7 +106,7 @@ data class ContainsAny<out T>(val values: Iterable<T>) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class NotContain<out T>(val value: T) : AbstractConstraint() {
+data class NotContain<T>(val value: T) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
 }
 
@@ -119,7 +119,7 @@ data class NotContain<out T>(val value: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class NotContainAll<out T>(val values: Iterable<T>) : AbstractConstraint() {
+data class NotContainAll<T>(val values: Iterable<T>) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
 }
 
@@ -132,6 +132,6 @@ data class NotContainAll<out T>(val values: Iterable<T>) : AbstractConstraint() 
  * @see Constraint
  * @since 0.1.0
  */
-data class NotContainAny<out T>(val values: Iterable<T>) : AbstractConstraint() {
+data class NotContainAny<T>(val values: Iterable<T>) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
 }

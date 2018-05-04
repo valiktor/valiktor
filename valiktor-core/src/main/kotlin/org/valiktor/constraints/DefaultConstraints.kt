@@ -46,7 +46,7 @@ class NotNull : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-data class Equals<out T>(val value: T) : AbstractConstraint() {
+data class Equals<T>(val value: T) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
 }
 
@@ -59,7 +59,7 @@ data class Equals<out T>(val value: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class NotEquals<out T>(val value: T) : AbstractConstraint() {
+data class NotEquals<T>(val value: T) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
 }
 
@@ -72,7 +72,7 @@ data class NotEquals<out T>(val value: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class In<out T>(val values: Iterable<T>) : AbstractConstraint() {
+data class In<T>(val values: Iterable<T>) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
 }
 
@@ -85,7 +85,7 @@ data class In<out T>(val values: Iterable<T>) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class NotIn<out T>(val values: Iterable<T>) : AbstractConstraint() {
+data class NotIn<T>(val values: Iterable<T>) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
 }
 
@@ -98,4 +98,4 @@ data class NotIn<out T>(val values: Iterable<T>) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-class Valid<in T>(val validator: (T) -> Boolean) : AbstractConstraint()
+class Valid<T>(val validator: (T) -> Boolean) : AbstractConstraint()

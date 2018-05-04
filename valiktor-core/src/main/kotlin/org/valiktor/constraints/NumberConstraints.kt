@@ -28,7 +28,7 @@ import org.valiktor.Constraint
  * @see Constraint
  * @since 0.1.0
  */
-data class Less<out T>(val value: T) : AbstractConstraint() {
+data class Less<T>(val value: T) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
 }
 
@@ -41,7 +41,7 @@ data class Less<out T>(val value: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class LessOrEqual<out T>(val value: T) : AbstractConstraint() {
+data class LessOrEqual<T>(val value: T) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
 }
 
@@ -54,7 +54,7 @@ data class LessOrEqual<out T>(val value: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class Greater<out T>(val value: T) : AbstractConstraint() {
+data class Greater<T>(val value: T) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
 }
 
@@ -67,7 +67,7 @@ data class Greater<out T>(val value: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class GreaterOrEqual<out T>(val value: T) : AbstractConstraint() {
+data class GreaterOrEqual<T>(val value: T) : AbstractConstraint() {
     override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
 }
 
@@ -81,7 +81,7 @@ data class GreaterOrEqual<out T>(val value: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class Between<out T>(val start: T, val end: T) : AbstractConstraint() {
+data class Between<T>(val start: T, val end: T) : AbstractConstraint() {
     override val interpolator: (String) -> String =
             { it.replace("{start}", start.toString()).replace("{end}", end.toString()) }
 }
@@ -96,7 +96,7 @@ data class Between<out T>(val start: T, val end: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class NotBetween<out T>(val start: T, val end: T) : AbstractConstraint() {
+data class NotBetween<T>(val start: T, val end: T) : AbstractConstraint() {
     override val interpolator: (String) -> String =
             { it.replace("{start}", start.toString()).replace("{end}", end.toString()) }
 }

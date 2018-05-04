@@ -97,8 +97,8 @@ open class Validator<E>(private val obj: E) {
      * @see KProperty1
      * @since 0.1.0
      */
-    open inner class Property<out T>(internal val obj: E,
-                                     internal val property: KProperty1<E, T?>) {
+    open inner class Property<T>(internal val obj: E,
+                                 internal val property: KProperty1<E, T?>) {
 
         /**
          * Validates the property by passing the constraint and the validation function
