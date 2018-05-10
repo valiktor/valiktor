@@ -10,13 +10,12 @@ import org.valiktor.ConstraintViolationFixture.TestConstraint
 
 private object ConstraintViolationFixture {
 
-    class EmptyConstraint : AbstractConstraint()
+    object EmptyConstraint : Constraint
 
     data class TestConstraint(val value1: String,
-                              val value2: String) : AbstractConstraint() {
+                              val value2: String) : Constraint {
 
-        override val interpolator: (String) -> String =
-                { it.replace("{value1}", value1).replace("{value2}", value2) }
+        override val messageParams: Map<String, *> = mapOf("value1" to value1, "value2" to value2)
     }
 }
 
@@ -28,14 +27,14 @@ class ConstraintViolationTest {
                 DefaultConstraintViolation(
                         property = "name",
                         value = "Test",
-                        constraint = EmptyConstraint())
+                        constraint = EmptyConstraint)
 
         assertAll(
                 { assertEquals(constraintViolation.property, "name") },
                 { assertEquals(constraintViolation.value, "Test") },
                 { assertEquals(constraintViolation.constraint.name, "EmptyConstraint") },
                 { assertEquals(constraintViolation.constraint.messageKey, "org.valiktor.ConstraintViolationFixture\$EmptyConstraint.message") },
-                { assertEquals(constraintViolation.constraint.interpolator("some message"), "some message") }
+                { assertEquals(constraintViolation.constraint.messageParams, emptyMap<String, Any>()) }
         )
     }
 }
@@ -49,7 +48,7 @@ class ConstraintViolationExceptionTest {
                     DefaultConstraintViolation(
                             property = "name",
                             value = "Test",
-                            constraint = EmptyConstraint()),
+                            constraint = EmptyConstraint),
                     DefaultConstraintViolation(
                             property = "name",
                             value = "Test2",
@@ -61,7 +60,7 @@ class ConstraintViolationExceptionTest {
                         DefaultConstraintViolation(
                                 property = "name",
                                 value = "Test",
-                                constraint = EmptyConstraint()),
+                                constraint = EmptyConstraint),
                         DefaultConstraintViolation(
                                 property = "name",
                                 value = "Test2",

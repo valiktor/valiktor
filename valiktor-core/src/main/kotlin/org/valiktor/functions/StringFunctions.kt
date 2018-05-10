@@ -26,7 +26,7 @@ import org.valiktor.constraints.*
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<String?>.isEmpty(): Validator<E>.Property<String?> =
-        this.validate(Empty(), { it == null || it.isEmpty() })
+        this.validate(Empty, { it == null || it.isEmpty() })
 
 /**
  * Validates if the [String] property is not empty
@@ -35,7 +35,7 @@ fun <E> Validator<E>.Property<String?>.isEmpty(): Validator<E>.Property<String?>
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<String?>.isNotEmpty(): Validator<E>.Property<String?> =
-        this.validate(NotEmpty(), { it == null || it.isNotEmpty() })
+        this.validate(NotEmpty, { it == null || it.isNotEmpty() })
 
 /**
  * Validates if the [String] property is blank
@@ -44,7 +44,7 @@ fun <E> Validator<E>.Property<String?>.isNotEmpty(): Validator<E>.Property<Strin
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<String?>.isBlank(): Validator<E>.Property<String?> =
-        this.validate(Blank(), { it == null || it.isBlank() })
+        this.validate(Blank, { it == null || it.isBlank() })
 
 /**
  * Validates if the [String] property is not blank
@@ -53,7 +53,7 @@ fun <E> Validator<E>.Property<String?>.isBlank(): Validator<E>.Property<String?>
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<String?>.isNotBlank(): Validator<E>.Property<String?> =
-        this.validate(NotBlank(), { it == null || it.isNotBlank() })
+        this.validate(NotBlank, { it == null || it.isNotBlank() })
 
 /**
  * Validates if the property value is equal to another value ignoring case sensitive
@@ -453,7 +453,7 @@ fun <E> Validator<E>.Property<String?>.doesNotEndWithIgnoringCase(suffix: String
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<String?>.isEmail(): Validator<E>.Property<String?> =
-        this.validate(Email(), {
+        this.validate(Email, {
             it == null || it.matches(Regex(
                     "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
         })

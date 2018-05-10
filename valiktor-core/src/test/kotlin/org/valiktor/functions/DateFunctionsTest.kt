@@ -37,7 +37,7 @@ class DateFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW), constraint = Null()))
+                DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW), constraint = Null))
     }
 
     @Test
@@ -55,7 +55,7 @@ class DateFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull()))
+                DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull))
     }
 
     @Test
@@ -256,7 +256,7 @@ class DateFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW - ONE_DAY), constraint = Today()))
+                DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW - ONE_DAY), constraint = Today))
     }
 
     @Test
@@ -267,7 +267,7 @@ class DateFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW + ONE_DAY), constraint = Today()))
+                DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW + ONE_DAY), constraint = Today))
     }
 
     @Test

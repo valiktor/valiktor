@@ -16,7 +16,6 @@
 
 package org.valiktor.constraints
 
-import org.valiktor.AbstractConstraint
 import org.valiktor.Constraint
 
 /**
@@ -26,4 +25,4 @@ import org.valiktor.Constraint
  * @see Constraint
  * @since 0.1.0
  */
-class Today : AbstractConstraint()
+object Today : Constraint

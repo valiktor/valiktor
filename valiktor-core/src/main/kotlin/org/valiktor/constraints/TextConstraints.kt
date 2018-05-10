@@ -16,7 +16,6 @@
 
 package org.valiktor.constraints
 
-import org.valiktor.AbstractConstraint
 import org.valiktor.Constraint
 
 /**
@@ -26,7 +25,7 @@ import org.valiktor.Constraint
  * @see Constraint
  * @since 0.1.0
  */
-class Blank : AbstractConstraint()
+object Blank : Constraint
 
 /**
  * Represents a constraint that validate if the value is not blank
@@ -35,7 +34,7 @@ class Blank : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-class NotBlank : AbstractConstraint()
+object NotBlank : Constraint
 
 /**
  * Represents a constraint that validate if the value is letter
@@ -44,7 +43,7 @@ class NotBlank : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-class Letter : AbstractConstraint()
+object Letter : Constraint
 
 /**
  * Represents a constraint that validate if the value is not letter
@@ -53,7 +52,7 @@ class Letter : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-class NotLetter : AbstractConstraint()
+object NotLetter : Constraint
 
 /**
  * Represents a constraint that validate if the value is digit
@@ -62,7 +61,7 @@ class NotLetter : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-class Digit : AbstractConstraint()
+object Digit : Constraint
 
 /**
  * Represents a constraint that validate if the value is not digit
@@ -71,7 +70,7 @@ class Digit : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-class NotDigit : AbstractConstraint()
+object NotDigit : Constraint
 
 /**
  * Represents a constraint that validate if the value is letter or digit
@@ -80,7 +79,7 @@ class NotDigit : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-class LetterOrDigit : AbstractConstraint()
+object LetterOrDigit : Constraint
 
 /**
  * Represents a constraint that validate if the value is not letter or digit
@@ -89,7 +88,7 @@ class LetterOrDigit : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-class NotLetterOrDigit : AbstractConstraint()
+object NotLetterOrDigit : Constraint
 
 /**
  * Represents a constraint that validate if the value is uppercase
@@ -98,7 +97,7 @@ class NotLetterOrDigit : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-class UpperCase : AbstractConstraint()
+object UpperCase : Constraint
 
 /**
  * Represents a constraint that validate if the value is lowercase
@@ -107,66 +106,58 @@ class UpperCase : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-class LowerCase : AbstractConstraint()
+object LowerCase : Constraint
 
 /**
  * Represents a constraint that validate if the value matches with a pattern
  *
- * @property regex specifies the pattern value that should match
+ * @property pattern specifies the pattern value that should match
  *
  * @author Rodolpho S. Couto
  * @see Constraint
  * @since 0.1.0
  */
-data class Matches(val regex: String) : AbstractConstraint() {
+data class Matches(val pattern: String) : Constraint {
     constructor(regex: Regex) : this(regex.pattern)
-
-    override val interpolator: (String) -> String = { it.replace("{pattern}", regex) }
 }
 
 /**
  * Represents a constraint that validate if the value doesn't match with a pattern
  *
- * @property regex specifies the pattern value that shouldn't match
+ * @property pattern specifies the pattern value that shouldn't match
  *
  * @author Rodolpho S. Couto
  * @see Constraint
  * @since 0.1.0
  */
-data class NotMatch(val regex: String) : AbstractConstraint() {
+data class NotMatch(val pattern: String) : Constraint {
     constructor(regex: Regex) : this(regex.pattern)
-
-    override val interpolator: (String) -> String = { it.replace("{pattern}", regex) }
 }
 
 /**
  * Represents a constraint that validate if the value contains a pattern
  *
- * @property regex specifies the pattern value that should contain
+ * @property pattern specifies the pattern value that should contain
  *
  * @author Rodolpho S. Couto
  * @see Constraint
  * @since 0.1.0
  */
-data class ContainsRegex(val regex: String) : AbstractConstraint() {
+data class ContainsRegex(val pattern: String) : Constraint {
     constructor(regex: Regex) : this(regex.pattern)
-
-    override val interpolator: (String) -> String = { it.replace("{pattern}", regex) }
 }
 
 /**
  * Represents a constraint that validate if the value doesn't contain a pattern
  *
- * @property regex specifies the value pattern that shouldn't contain
+ * @property pattern specifies the value pattern that shouldn't contain
  *
  * @author Rodolpho S. Couto
  * @see Constraint
  * @since 0.1.0
  */
-data class NotContainRegex(val regex: String) : AbstractConstraint() {
+data class NotContainRegex(val pattern: String) : Constraint {
     constructor(regex: Regex) : this(regex.pattern)
-
-    override val interpolator: (String) -> String = { it.replace("{pattern}", regex) }
 }
 
 /**
@@ -178,9 +169,7 @@ data class NotContainRegex(val regex: String) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class StartsWith(val prefix: String) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{prefix}", prefix) }
-}
+data class StartsWith(val prefix: String) : Constraint
 
 /**
  * Represents a constraint that validate if the value doesn't start with another value
@@ -191,9 +180,7 @@ data class StartsWith(val prefix: String) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class NotStartWith(val prefix: String) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{prefix}", prefix) }
-}
+data class NotStartWith(val prefix: String) : Constraint
 
 /**
  * Represents a constraint that validate if the value ends with another value
@@ -204,9 +191,7 @@ data class NotStartWith(val prefix: String) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class EndsWith(val suffix: String) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{suffix}", suffix) }
-}
+data class EndsWith(val suffix: String) : Constraint
 
 /**
  * Represents a constraint that validate if the value doesn't end with another value
@@ -217,9 +202,7 @@ data class EndsWith(val suffix: String) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class NotEndWith(val suffix: String) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{suffix}", suffix) }
-}
+data class NotEndWith(val suffix: String) : Constraint
 
 /**
  * Represents a constraint that validate if the value is a valid e-mail
@@ -228,4 +211,4 @@ data class NotEndWith(val suffix: String) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-class Email : AbstractConstraint()
+object Email : Constraint

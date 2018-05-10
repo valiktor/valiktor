@@ -102,7 +102,6 @@ fun <E> Validator<E>.Property<Long?>.isNotNegative(): Validator<E>.Property<Long
 fun <E> Validator<E>.Property<Long?>.isLessThan(value: Long): Validator<E>.Property<Long?> =
         this.validate(Less(value), { it == null || it < value })
 
-
 /**
  * Validates if the [Long] property is less than or equal to another value
  *

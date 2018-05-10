@@ -17,11 +17,29 @@
 package org.valiktor.i18n
 
 import org.valiktor.ConstraintViolation
-import java.util.Locale
-import java.util.ResourceBundle
+import java.util.*
 import java.util.ResourceBundle.getBundle
 
 private const val DEFAULT_BASE_NAME = "org/valiktor/messages"
+
+/**
+ * Interpolate the message with parameters
+ *
+ * @param resourceBundle specifies the [ResourceBundle] that contains the messages
+ * @param messageKey specifies the message key in the message properties
+ * @param messageParams specifies the parameters to replace in the message
+ * @return the interpolated message
+ */
+internal fun interpolate(resourceBundle: ResourceBundle, messageKey: String, messageParams: Map<String, *>): String =
+        messageParams.toList()
+                .stream()
+                .reduce(resourceBundle.getString(messageKey),
+                        { message, pair ->
+                            message.replace("{${pair.first}}",
+                                    pair.second?.let { Formatters[it.javaClass.kotlin].format(it, resourceBundle) }
+                                            ?: "")
+                        },
+                        { message, _ -> message })
 
 /**
  * Converts this object to [I18nConstraintViolation]
@@ -38,7 +56,7 @@ fun ConstraintViolation.toI18n(locale: Locale? = null,
                 property = this.property,
                 value = this.value,
                 constraint = this.constraint,
-                message = this.constraint.interpolator(getBundle(baseName, locale ?: Locale("")).getString(key)))
+                message = interpolate(getBundle(baseName, locale ?: Locale("")), key, this.constraint.messageParams))
 
 /**
  * Converts this object to [I18nConstraintViolation]
@@ -53,7 +71,7 @@ fun ConstraintViolation.toI18n(resourceBundle: ResourceBundle,
                 property = this.property,
                 value = this.value,
                 constraint = this.constraint,
-                message = this.constraint.interpolator(resourceBundle.getString(key)))
+                message = interpolate(resourceBundle, key, this.constraint.messageParams))
 
 /**
  * Converts to Set<[I18nConstraintViolation]>

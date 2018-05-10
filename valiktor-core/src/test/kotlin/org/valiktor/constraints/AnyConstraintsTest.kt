@@ -10,7 +10,7 @@ class NullTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Null().interpolatedMessages()).containsExactly(
+        assertThat(Null.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must be null"),
                 entry(Locales.EN, "Must be null"),
                 entry(Locales.PT_BR, "Deve ser nulo"))
@@ -21,7 +21,7 @@ class NotNullTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotNull().interpolatedMessages()).containsExactly(
+        assertThat(NotNull.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must not be null"),
                 entry(Locales.EN, "Must not be null"),
                 entry(Locales.PT_BR, "Não deve ser nulo"))
@@ -76,7 +76,7 @@ class ValidTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Valid<Int>({ true }).interpolatedMessages()).containsExactly(
+        assertThat(Valid.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must be valid"),
                 entry(Locales.EN, "Must be valid"),
                 entry(Locales.PT_BR, "Deve ser válido"))

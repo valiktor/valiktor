@@ -31,7 +31,7 @@ class BooleanFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "active", value = true, constraint = Null()))
+                DefaultConstraintViolation(property = "active", value = true, constraint = Null))
     }
 
     @Test
@@ -49,7 +49,7 @@ class BooleanFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "active", constraint = NotNull()))
+                DefaultConstraintViolation(property = "active", constraint = NotNull))
     }
 
     @Test
@@ -228,7 +228,7 @@ class BooleanFunctionsTest {
                 DefaultConstraintViolation(
                         property = "active",
                         value = false,
-                        constraint = True()))
+                        constraint = True))
     }
 
     @Test
@@ -257,6 +257,6 @@ class BooleanFunctionsTest {
                 DefaultConstraintViolation(
                         property = "active",
                         value = true,
-                        constraint = False()))
+                        constraint = False))
     }
 }

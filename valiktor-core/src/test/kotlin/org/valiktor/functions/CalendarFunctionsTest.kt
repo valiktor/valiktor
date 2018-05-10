@@ -43,7 +43,7 @@ class CalendarFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = Null()))
+                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = Null))
     }
 
     @Test
@@ -61,7 +61,7 @@ class CalendarFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull()))
+                DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull))
     }
 
     @Test
@@ -262,7 +262,7 @@ class CalendarFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW - ONE_DAY), constraint = Today()))
+                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW - ONE_DAY), constraint = Today))
     }
 
     @Test
@@ -273,7 +273,7 @@ class CalendarFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW + ONE_DAY), constraint = Today()))
+                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW + ONE_DAY), constraint = Today))
     }
 
     @Test

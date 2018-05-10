@@ -53,9 +53,9 @@ class ArrayFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dependents[0].id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "dependents[1].id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "dependents[2].id", constraint = NotNull()))
+                DefaultConstraintViolation(property = "dependents[0].id", constraint = NotNull),
+                DefaultConstraintViolation(property = "dependents[1].id", constraint = NotNull),
+                DefaultConstraintViolation(property = "dependents[2].id", constraint = NotNull))
     }
 
     @Test
@@ -78,7 +78,7 @@ class ArrayFunctionsTest {
                 DefaultConstraintViolation(
                         property = "dependents",
                         value = dependents,
-                        constraint = Null()))
+                        constraint = Null))
     }
 
     @Test
@@ -98,7 +98,7 @@ class ArrayFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "dependents",
-                        constraint = NotNull()))
+                        constraint = NotNull))
     }
 
     @Test
@@ -315,7 +315,7 @@ class ArrayFunctionsTest {
                 DefaultConstraintViolation(
                         property = "dependents",
                         value = dependents,
-                        constraint = Empty()))
+                        constraint = Empty))
     }
 
     @Test
@@ -346,7 +346,7 @@ class ArrayFunctionsTest {
                 DefaultConstraintViolation(
                         property = "dependents",
                         value = dependents,
-                        constraint = NotEmpty()))
+                        constraint = NotEmpty))
     }
 
     @Test

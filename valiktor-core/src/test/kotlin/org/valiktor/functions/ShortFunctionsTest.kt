@@ -31,7 +31,7 @@ class ShortFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1.toShort(), constraint = Null()))
+                DefaultConstraintViolation(property = "id", value = 1.toShort(), constraint = Null))
     }
 
     @Test
@@ -49,7 +49,7 @@ class ShortFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", constraint = NotNull()))
+                DefaultConstraintViolation(property = "id", constraint = NotNull))
     }
 
     @Test

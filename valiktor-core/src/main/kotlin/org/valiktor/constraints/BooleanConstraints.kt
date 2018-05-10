@@ -16,7 +16,6 @@
 
 package org.valiktor.constraints
 
-import org.valiktor.AbstractConstraint
 import org.valiktor.Constraint
 
 /**
@@ -26,7 +25,7 @@ import org.valiktor.Constraint
  * @see Constraint
  * @since 0.1.0
  */
-class True : AbstractConstraint()
+object True : Constraint
 
 /**
  * Represents a constraint that validate if the value is false
@@ -35,4 +34,4 @@ class True : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-class False : AbstractConstraint()
+object False : Constraint

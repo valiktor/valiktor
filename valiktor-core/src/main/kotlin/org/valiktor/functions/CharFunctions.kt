@@ -26,7 +26,7 @@ import org.valiktor.constraints.*
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Char?>.isWhitespace(): Validator<E>.Property<Char?> =
-        this.validate(Blank(), { it == null || it.isWhitespace() })
+        this.validate(Blank, { it == null || it.isWhitespace() })
 
 /**
  * Validates if the [Char] property is not a whitespace
@@ -35,7 +35,7 @@ fun <E> Validator<E>.Property<Char?>.isWhitespace(): Validator<E>.Property<Char?
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Char?>.isNotWhitespace(): Validator<E>.Property<Char?> =
-        this.validate(NotBlank(), { it == null || !it.isWhitespace() })
+        this.validate(NotBlank, { it == null || !it.isWhitespace() })
 
 /**
  * Validates if the [Char] property is a letter
@@ -44,7 +44,7 @@ fun <E> Validator<E>.Property<Char?>.isNotWhitespace(): Validator<E>.Property<Ch
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Char?>.isLetter(): Validator<E>.Property<Char?> =
-        this.validate(Letter(), { it == null || it.isLetter() })
+        this.validate(Letter, { it == null || it.isLetter() })
 
 /**
  * Validates if the [Char] property is not a letter
@@ -53,7 +53,7 @@ fun <E> Validator<E>.Property<Char?>.isLetter(): Validator<E>.Property<Char?> =
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Char?>.isNotLetter(): Validator<E>.Property<Char?> =
-        this.validate(NotLetter(), { it == null || !it.isLetter() })
+        this.validate(NotLetter, { it == null || !it.isLetter() })
 
 /**
  * Validates if the [Char] property is a digit
@@ -62,7 +62,7 @@ fun <E> Validator<E>.Property<Char?>.isNotLetter(): Validator<E>.Property<Char?>
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Char?>.isDigit(): Validator<E>.Property<Char?> =
-        this.validate(Digit(), { it == null || it.isDigit() })
+        this.validate(Digit, { it == null || it.isDigit() })
 
 /**
  * Validates if the [Char] property is not a digit
@@ -71,7 +71,7 @@ fun <E> Validator<E>.Property<Char?>.isDigit(): Validator<E>.Property<Char?> =
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Char?>.isNotDigit(): Validator<E>.Property<Char?> =
-        this.validate(NotDigit(), { it == null || !it.isDigit() })
+        this.validate(NotDigit, { it == null || !it.isDigit() })
 
 /**
  * Validates if the [Char] property is a letter or a digit
@@ -80,7 +80,7 @@ fun <E> Validator<E>.Property<Char?>.isNotDigit(): Validator<E>.Property<Char?> 
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Char?>.isLetterOrDigit(): Validator<E>.Property<Char?> =
-        this.validate(LetterOrDigit(), { it == null || it.isLetterOrDigit() })
+        this.validate(LetterOrDigit, { it == null || it.isLetterOrDigit() })
 
 /**
  * Validates if the [Char] property is not a letter or a digit
@@ -89,7 +89,7 @@ fun <E> Validator<E>.Property<Char?>.isLetterOrDigit(): Validator<E>.Property<Ch
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Char?>.isNotLetterOrDigit(): Validator<E>.Property<Char?> =
-        this.validate(NotLetterOrDigit(), { it == null || !it.isLetterOrDigit() })
+        this.validate(NotLetterOrDigit, { it == null || !it.isLetterOrDigit() })
 
 /**
  * Validates if the [Char] property is uppercase
@@ -98,7 +98,7 @@ fun <E> Validator<E>.Property<Char?>.isNotLetterOrDigit(): Validator<E>.Property
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Char?>.isUpperCase(): Validator<E>.Property<Char?> =
-        this.validate(UpperCase(), { it == null || it.isUpperCase() })
+        this.validate(UpperCase, { it == null || it.isUpperCase() })
 
 /**
  * Validates if the [Char] property is lowercase
@@ -107,7 +107,7 @@ fun <E> Validator<E>.Property<Char?>.isUpperCase(): Validator<E>.Property<Char?>
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Char?>.isLowerCase(): Validator<E>.Property<Char?> =
-        this.validate(LowerCase(), { it == null || it.isLowerCase() })
+        this.validate(LowerCase, { it == null || it.isLowerCase() })
 
 /**
  * Validates if the [Char] property is less than another value

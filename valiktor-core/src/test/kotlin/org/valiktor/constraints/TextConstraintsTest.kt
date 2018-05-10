@@ -10,7 +10,7 @@ class BlankTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Blank().interpolatedMessages()).containsExactly(
+        assertThat(Blank.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must be blank"),
                 entry(Locales.EN, "Must be blank"),
                 entry(Locales.PT_BR, "Deve estar em branco"))
@@ -21,7 +21,7 @@ class NotBlankTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotBlank().interpolatedMessages()).containsExactly(
+        assertThat(NotBlank.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must not be blank"),
                 entry(Locales.EN, "Must not be blank"),
                 entry(Locales.PT_BR, "Não deve estar em branco"))
@@ -32,7 +32,7 @@ class LetterTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Letter().interpolatedMessages()).containsExactly(
+        assertThat(Letter.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must be letter"),
                 entry(Locales.EN, "Must be letter"),
                 entry(Locales.PT_BR, "Deve ser letra"))
@@ -43,7 +43,7 @@ class NotLetterTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotLetter().interpolatedMessages()).containsExactly(
+        assertThat(NotLetter.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must not be letter"),
                 entry(Locales.EN, "Must not be letter"),
                 entry(Locales.PT_BR, "Não deve ser letra"))
@@ -54,7 +54,7 @@ class DigitTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Digit().interpolatedMessages()).containsExactly(
+        assertThat(Digit.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must be digit"),
                 entry(Locales.EN, "Must be digit"),
                 entry(Locales.PT_BR, "Deve ser número"))
@@ -65,7 +65,7 @@ class NotDigitTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotDigit().interpolatedMessages()).containsExactly(
+        assertThat(NotDigit.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must not be digit"),
                 entry(Locales.EN, "Must not be digit"),
                 entry(Locales.PT_BR, "Não deve ser número"))
@@ -76,7 +76,7 @@ class LetterOrDigitTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(LetterOrDigit().interpolatedMessages()).containsExactly(
+        assertThat(LetterOrDigit.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must be letter or digit"),
                 entry(Locales.EN, "Must be letter or digit"),
                 entry(Locales.PT_BR, "Deve ser letra ou número"))
@@ -87,7 +87,7 @@ class NotLetterOrDigitTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotLetterOrDigit().interpolatedMessages()).containsExactly(
+        assertThat(NotLetterOrDigit.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must not be letter or digit"),
                 entry(Locales.EN, "Must not be letter or digit"),
                 entry(Locales.PT_BR, "Não deve ser letra ou número"))
@@ -98,7 +98,7 @@ class UpperCaseTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(UpperCase().interpolatedMessages()).containsExactly(
+        assertThat(UpperCase.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must be upper case"),
                 entry(Locales.EN, "Must be upper case"),
                 entry(Locales.PT_BR, "Deve ser maiúsculo"))
@@ -109,7 +109,7 @@ class LowerCaseTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(LowerCase().interpolatedMessages()).containsExactly(
+        assertThat(LowerCase.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must be lower case"),
                 entry(Locales.EN, "Must be lower case"),
                 entry(Locales.PT_BR, "Deve ser minúsculo"))
@@ -208,7 +208,7 @@ class EmailTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Email().interpolatedMessages()).containsExactly(
+        assertThat(Email.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must be a valid email address"),
                 entry(Locales.EN, "Must be a valid email address"),
                 entry(Locales.PT_BR, "Deve ser um endereço de e-mail válido"))

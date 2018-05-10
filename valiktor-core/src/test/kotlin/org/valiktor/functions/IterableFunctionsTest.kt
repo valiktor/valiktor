@@ -72,12 +72,12 @@ class IterableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "company.addresses[0].id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "company.addresses[0].city.id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "company.addresses[1].id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "company.addresses[2].id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull()))
+                DefaultConstraintViolation(property = "company.addresses[0].id", constraint = NotNull),
+                DefaultConstraintViolation(property = "company.addresses[0].city.id", constraint = NotNull),
+                DefaultConstraintViolation(property = "company.addresses[1].id", constraint = NotNull),
+                DefaultConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull),
+                DefaultConstraintViolation(property = "company.addresses[2].id", constraint = NotNull),
+                DefaultConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull))
     }
 
     @Test
@@ -95,7 +95,7 @@ class IterableFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "addresses", value = emptyList<Address>(), constraint = Null()))
+                DefaultConstraintViolation(property = "addresses", value = emptyList<Address>(), constraint = Null))
     }
 
     @Test
@@ -113,7 +113,7 @@ class IterableFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "addresses", constraint = NotNull()))
+                DefaultConstraintViolation(property = "addresses", constraint = NotNull))
     }
 
     @Test
@@ -292,7 +292,7 @@ class IterableFunctionsTest {
                 DefaultConstraintViolation(
                         property = "addresses",
                         value = listOf(Address()),
-                        constraint = Empty()))
+                        constraint = Empty))
     }
 
     @Test
@@ -321,7 +321,7 @@ class IterableFunctionsTest {
                 DefaultConstraintViolation(
                         property = "addresses",
                         value = emptyList<Address>(),
-                        constraint = NotEmpty()))
+                        constraint = NotEmpty))
     }
 
     @Test

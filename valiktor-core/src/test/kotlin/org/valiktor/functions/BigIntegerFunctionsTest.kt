@@ -32,7 +32,7 @@ class BigIntegerFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = Null()))
+                DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = Null))
     }
 
     @Test
@@ -50,7 +50,7 @@ class BigIntegerFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", constraint = NotNull()))
+                DefaultConstraintViolation(property = "id", constraint = NotNull))
     }
 
     @Test

@@ -16,7 +16,6 @@
 
 package org.valiktor.constraints
 
-import org.valiktor.AbstractConstraint
 import org.valiktor.Constraint
 
 /**
@@ -26,7 +25,7 @@ import org.valiktor.Constraint
  * @see Constraint
  * @since 0.1.0
  */
-class Null : AbstractConstraint()
+object Null : Constraint
 
 /**
  * Represents a constraint that validate if the value is not null
@@ -35,7 +34,7 @@ class Null : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-class NotNull : AbstractConstraint()
+object NotNull : Constraint
 
 /**
  * Represents a constraint that validate if the value is equal to another value
@@ -46,9 +45,7 @@ class NotNull : AbstractConstraint()
  * @see Constraint
  * @since 0.1.0
  */
-data class Equals<T>(val value: T) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
-}
+data class Equals<T>(val value: T) : Constraint
 
 /**
  * Represents a constraint that validate if the value isn't equal to another value
@@ -59,9 +56,7 @@ data class Equals<T>(val value: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class NotEquals<T>(val value: T) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
-}
+data class NotEquals<T>(val value: T) : Constraint
 
 /**
  * Represents a constraint that validate if the value is equal to one of the values
@@ -72,9 +67,7 @@ data class NotEquals<T>(val value: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class In<T>(val values: Iterable<T>) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
-}
+data class In<T>(val values: Iterable<T>) : Constraint
 
 /**
  * Represents a constraint that validate if the value isn't equal to any value
@@ -85,9 +78,7 @@ data class In<T>(val values: Iterable<T>) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class NotIn<T>(val values: Iterable<T>) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{values}", values.joinToString()) }
-}
+data class NotIn<T>(val values: Iterable<T>) : Constraint
 
 /**
  * Represents a constraint that validate if the value is valid by passing a custom function
@@ -98,4 +89,4 @@ data class NotIn<T>(val values: Iterable<T>) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-class Valid<T>(val validator: (T) -> Boolean) : AbstractConstraint()
+object Valid : Constraint

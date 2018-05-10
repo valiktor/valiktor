@@ -34,7 +34,7 @@ class EnumFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = MALE, constraint = Null()))
+                DefaultConstraintViolation(property = "gender", value = MALE, constraint = Null))
     }
 
     @Test
@@ -52,7 +52,7 @@ class EnumFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", constraint = NotNull()))
+                DefaultConstraintViolation(property = "gender", constraint = NotNull))
     }
 
     @Test

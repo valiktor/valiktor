@@ -33,7 +33,7 @@ class BigDecimalFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = ZERO, constraint = Null()))
+                DefaultConstraintViolation(property = "salary", value = ZERO, constraint = Null))
     }
 
     @Test
@@ -51,7 +51,7 @@ class BigDecimalFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", constraint = NotNull()))
+                DefaultConstraintViolation(property = "salary", constraint = NotNull))
     }
 
     @Test

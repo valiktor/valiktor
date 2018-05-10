@@ -31,7 +31,7 @@ class LongFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1L, constraint = Null()))
+                DefaultConstraintViolation(property = "id", value = 1L, constraint = Null))
     }
 
     @Test
@@ -49,7 +49,7 @@ class LongFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", constraint = NotNull()))
+                DefaultConstraintViolation(property = "id", constraint = NotNull))
     }
 
     @Test

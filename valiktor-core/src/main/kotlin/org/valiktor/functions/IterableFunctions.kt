@@ -87,7 +87,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotIn(values: Iterable<Iterable
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<Iterable<T>?>.isEmpty(): Validator<E>.Property<Iterable<T>?> =
-        this.validate(Empty(), { it == null || it.count() == 0 })
+        this.validate(Empty, { it == null || it.count() == 0 })
 
 /**
  * Validates if the [Iterable] property is not empty
@@ -96,7 +96,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.isEmpty(): Validator<E>.Property<
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotEmpty(): Validator<E>.Property<Iterable<T>?> =
-        this.validate(NotEmpty(), { it == null || it.count() > 0 })
+        this.validate(NotEmpty, { it == null || it.count() > 0 })
 
 /**
  * Validates if the [Iterable] property size is within the limits (min and max)

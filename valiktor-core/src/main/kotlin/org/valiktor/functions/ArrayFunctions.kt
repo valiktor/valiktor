@@ -107,7 +107,7 @@ fun <E, T> Validator<E>.Property<Array<T>?>.isNotIn(values: Iterable<Array<T>>):
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<Array<T>?>.isEmpty(): Validator<E>.Property<Array<T>?> =
-        this.validate(Empty(), { it == null || it.count() == 0 })
+        this.validate(Empty, { it == null || it.count() == 0 })
 
 /**
  * Validates if the array property is not empty
@@ -116,7 +116,7 @@ fun <E, T> Validator<E>.Property<Array<T>?>.isEmpty(): Validator<E>.Property<Arr
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<Array<T>?>.isNotEmpty(): Validator<E>.Property<Array<T>?> =
-        this.validate(NotEmpty(), { it == null || it.count() > 0 })
+        this.validate(NotEmpty, { it == null || it.count() > 0 })
 
 /**
  * Validates if the array property size is within the limits (min and max)

@@ -10,7 +10,7 @@ class TodayTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Today().interpolatedMessages()).containsExactly(
+        assertThat(Today.interpolatedMessages()).containsExactly(
                 entry(Locales.DEFAULT, "Must be today"),
                 entry(Locales.EN, "Must be today"),
                 entry(Locales.PT_BR, "Deve ser hoje"))

@@ -18,5 +18,5 @@ val SUPPORTED_LOCALES = setOf(
 
 fun Constraint.interpolatedMessages(): Map<Locale, String> =
         SUPPORTED_LOCALES
-                .map { it to this.interpolator(getBundle("org/valiktor/messages", it).getString(this.messageKey)) }
+                .map { it to interpolate(getBundle("org/valiktor/messages", it), this.messageKey, this.messageParams) }
                 .toMap()

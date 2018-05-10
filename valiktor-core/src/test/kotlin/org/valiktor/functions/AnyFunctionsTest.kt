@@ -44,7 +44,7 @@ class AnyFunctionsTest {
                 DefaultConstraintViolation(
                         property = "company",
                         value = Company(id = 1),
-                        constraint = Null()))
+                        constraint = Null))
     }
 
     @Test
@@ -64,7 +64,7 @@ class AnyFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
                         property = "company",
-                        constraint = NotNull()))
+                        constraint = NotNull))
     }
 
     @Test
@@ -260,7 +260,7 @@ class AnyFunctionsTest {
                 DefaultConstraintViolation(
                         property = "company",
                         value = Company(id = 2),
-                        constraint = Valid<Company?>({ it == Company(id = 1) })))
+                        constraint = Valid))
     }
 
     @Test
@@ -334,12 +334,12 @@ class AnyFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "company.id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "address.id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "address.city.id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "address.city.state.id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "address.city.state.country.id", constraint = NotNull()))
+                DefaultConstraintViolation(property = "id", constraint = NotNull),
+                DefaultConstraintViolation(property = "company.id", constraint = NotNull),
+                DefaultConstraintViolation(property = "address.id", constraint = NotNull),
+                DefaultConstraintViolation(property = "address.city.id", constraint = NotNull),
+                DefaultConstraintViolation(property = "address.city.state.id", constraint = NotNull),
+                DefaultConstraintViolation(property = "address.city.state.country.id", constraint = NotNull))
     }
 
     @Test
@@ -352,7 +352,7 @@ class AnyFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", constraint = NotNull()),
-                DefaultConstraintViolation(property = "name", constraint = NotNull()))
+                DefaultConstraintViolation(property = "id", constraint = NotNull),
+                DefaultConstraintViolation(property = "name", constraint = NotNull))
     }
 }

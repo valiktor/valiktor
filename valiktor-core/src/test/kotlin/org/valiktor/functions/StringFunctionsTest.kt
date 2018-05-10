@@ -31,7 +31,7 @@ class StringFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "test", constraint = Null()))
+                DefaultConstraintViolation(property = "name", value = "test", constraint = Null))
     }
 
     @Test
@@ -49,7 +49,7 @@ class StringFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", constraint = NotNull()))
+                DefaultConstraintViolation(property = "name", constraint = NotNull))
     }
 
     @Test
@@ -279,7 +279,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = " ", constraint = Empty()))
+                DefaultConstraintViolation(property = "name", value = " ", constraint = Empty))
     }
 
     @Test
@@ -305,7 +305,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "", constraint = NotEmpty()))
+                DefaultConstraintViolation(property = "name", value = "", constraint = NotEmpty))
     }
 
     @Test
@@ -338,7 +338,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "a", constraint = Blank()))
+                DefaultConstraintViolation(property = "name", value = "a", constraint = Blank))
     }
 
     @Test
@@ -365,8 +365,8 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "email", value = "", constraint = NotBlank()),
-                DefaultConstraintViolation(property = "username", value = " ", constraint = NotBlank()))
+                DefaultConstraintViolation(property = "email", value = "", constraint = NotBlank),
+                DefaultConstraintViolation(property = "username", value = " ", constraint = NotBlank))
     }
 
     @Test
@@ -1431,6 +1431,6 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "email", value = "test.test", constraint = Email()))
+                DefaultConstraintViolation(property = "email", value = "test.test", constraint = Email))
     }
 }

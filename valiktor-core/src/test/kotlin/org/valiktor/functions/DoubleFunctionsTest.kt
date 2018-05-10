@@ -31,7 +31,7 @@ class DoubleFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = 0.0, constraint = Null()))
+                DefaultConstraintViolation(property = "salary", value = 0.0, constraint = Null))
     }
 
     @Test
@@ -49,7 +49,7 @@ class DoubleFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", constraint = NotNull()))
+                DefaultConstraintViolation(property = "salary", constraint = NotNull))
     }
 
     @Test

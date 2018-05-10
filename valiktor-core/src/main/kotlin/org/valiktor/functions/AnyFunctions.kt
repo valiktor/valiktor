@@ -47,7 +47,7 @@ fun <E, T> Validator<E>.Property<T?>.validate(block: Validator<T>.() -> Unit): V
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isNull(): Validator<E>.Property<T?> =
-        this.validate(Null(), { it == null })
+        this.validate(Null, { it == null })
 
 /**
  * Validates if the property value is not null
@@ -56,7 +56,7 @@ fun <E, T> Validator<E>.Property<T?>.isNull(): Validator<E>.Property<T?> =
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isNotNull(): Validator<E>.Property<T?> =
-        this.validate(NotNull(), { it != null })
+        this.validate(NotNull, { it != null })
 
 /**
  * Validates if the property value is equal to another value
@@ -126,4 +126,4 @@ fun <E, T> Validator<E>.Property<T?>.isNotIn(values: Iterable<T>): Validator<E>.
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isValid(validator: (T) -> Boolean): Validator<E>.Property<T?> =
-        this.validate(Valid(validator), { it == null || validator(it) })
+        this.validate(Valid, { it == null || validator(it) })

@@ -39,7 +39,7 @@ fun <E> Validator<E>.Property<Calendar?>.isToday(): Validator<E>.Property<Calend
     end.set(Calendar.SECOND, 59)
     end.set(Calendar.MILLISECOND, 999)
 
-    return this.validate(Today(), { it == null || it in start.rangeTo(end) })
+    return this.validate(Today, { it == null || it in start.rangeTo(end) })
 }
 
 /**

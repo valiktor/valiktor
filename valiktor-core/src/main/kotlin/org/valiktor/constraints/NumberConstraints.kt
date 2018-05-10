@@ -16,90 +16,7 @@
 
 package org.valiktor.constraints
 
-import org.valiktor.AbstractConstraint
 import org.valiktor.Constraint
-
-/**
- * Represents a constraint that validate if the value is less than another value
- *
- * @property value specifies the value that should be validated
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class Less<T>(val value: T) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
-}
-
-/**
- * Represents a constraint that validate if the value is less than or equal to another value
- *
- * @property value specifies the value that should be validated
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class LessOrEqual<T>(val value: T) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
-}
-
-/**
- * Represents a constraint that validate if the value is greater than another value
- *
- * @property value specifies the value that should be validated
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class Greater<T>(val value: T) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
-}
-
-/**
- * Represents a constraint that validate if the value is greater than or equal to another value
- *
- * @property value specifies the value that should be validated
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class GreaterOrEqual<T>(val value: T) : AbstractConstraint() {
-    override val interpolator: (String) -> String = { it.replace("{value}", value.toString()) }
-}
-
-/**
- * Represents a constraint that validate if the value is between two values
- *
- * @property start (inclusive) specifies value that should start
- * @property end (inclusive) specifies value that should end
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class Between<T>(val start: T, val end: T) : AbstractConstraint() {
-    override val interpolator: (String) -> String =
-            { it.replace("{start}", start.toString()).replace("{end}", end.toString()) }
-}
-
-/**
- * Represents a constraint that validate if the value isn't between two values
- *
- * @property start (inclusive) specifies value that shouldn't start
- * @property end (inclusive) specifies value that shouldn't end
- *
- * @author Rodolpho S. Couto
- * @see Constraint
- * @since 0.1.0
- */
-data class NotBetween<T>(val start: T, val end: T) : AbstractConstraint() {
-    override val interpolator: (String) -> String =
-            { it.replace("{start}", start.toString()).replace("{end}", end.toString()) }
-}
 
 /**
  * Represents a constraint that validate if the integer value (before decimal separator) is within the limits (min and max)
@@ -111,15 +28,12 @@ data class NotBetween<T>(val start: T, val end: T) : AbstractConstraint() {
  * @see Constraint
  * @since 0.1.0
  */
-data class IntegerDigits(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VALUE) : AbstractConstraint() {
+data class IntegerDigits(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VALUE) : Constraint {
     override val messageKey: String =
             if (min != Int.MIN_VALUE && max != Int.MAX_VALUE) super.messageKey
             else if (min != Int.MIN_VALUE) "${this.javaClass.name}.min.message"
             else if (max != Int.MAX_VALUE) "${this.javaClass.name}.max.message"
             else super.messageKey
-
-    override val interpolator: (String) -> String =
-            { it.replace("{min}", min.toString()).replace("{max}", max.toString()) }
 }
 
 /**
@@ -132,13 +46,10 @@ data class IntegerDigits(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VA
  * @see Constraint
  * @since 0.1.0
  */
-data class DecimalDigits(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VALUE) : AbstractConstraint() {
+data class DecimalDigits(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VALUE) : Constraint {
     override val messageKey: String =
             if (min != Int.MIN_VALUE && max != Int.MAX_VALUE) super.messageKey
             else if (min != Int.MIN_VALUE) "${this.javaClass.name}.min.message"
             else if (max != Int.MAX_VALUE) "${this.javaClass.name}.max.message"
             else super.messageKey
-
-    override val interpolator: (String) -> String =
-            { it.replace("{min}", min.toString()).replace("{max}", max.toString()) }
 }

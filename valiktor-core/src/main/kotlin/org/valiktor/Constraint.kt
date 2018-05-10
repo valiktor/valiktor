@@ -16,14 +16,14 @@
 
 package org.valiktor
 
-import java.util.Objects
+import kotlin.reflect.full.declaredMemberProperties
 
 /**
  * Represents a validation constraint
  *
  * @property name specifies the name of the constraint, generally it will be the name of the class
  * @property messageKey specifies the name of the key in the message properties file
- * @property interpolator specifies the interpolation function to replace variables in the message
+ * @property messageParams specifies the parameters to replace in the message
  *
  * @author Rodolpho S. Couto
  * @since 0.1.0
@@ -31,22 +31,13 @@ import java.util.Objects
 interface Constraint {
 
     val name: String
+        get() = this.javaClass.simpleName
+
     val messageKey: String
-    val interpolator: (String) -> String
-}
+        get() = "${this.javaClass.name}.message"
 
-/**
- * Represents a abstract implementation of [Constraint]
- *
- * @author Rodolpho S. Couto
- * @since 0.1.0
- */
-abstract class AbstractConstraint : Constraint {
-    override val name: String = this.javaClass.simpleName
-    override val messageKey: String = "${this.javaClass.name}.message"
-    override val interpolator: (String) -> String = { it }
-
-    override fun equals(other: Any?): Boolean = other != null && other::class == this::class
-    override fun hashCode(): Int = Objects.hash()
-    override fun toString(): String = this.javaClass.simpleName
+    val messageParams: Map<String, *>
+        get() = this.javaClass.kotlin.declaredMemberProperties
+                .map { it.name to it.get(this) }
+                .toMap()
 }

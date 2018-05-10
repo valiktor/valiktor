@@ -31,7 +31,7 @@ class FloatFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = 0f, constraint = Null()))
+                DefaultConstraintViolation(property = "salary", value = 0f, constraint = Null))
     }
 
     @Test
@@ -49,7 +49,7 @@ class FloatFunctionsTest {
             })
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", constraint = NotNull()))
+                DefaultConstraintViolation(property = "salary", constraint = NotNull))
     }
 
     @Test
