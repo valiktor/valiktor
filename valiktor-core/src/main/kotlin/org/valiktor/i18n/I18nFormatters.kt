@@ -16,6 +16,9 @@
 
 package org.valiktor.i18n
 
+import java.math.BigDecimal
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.util.*
 import kotlin.reflect.KClass
 import kotlin.reflect.full.superclasses
@@ -31,8 +34,9 @@ object Formatters {
     /**
      * Map containing the classes and their respective formatters
      */
-    private val formatters: Map<KClass<*>, Formatter<*>> = mutableMapOf(
+    private var formatters: Map<KClass<*>, Formatter<*>> = mapOf(
             Any::class to AnyFormatter,
+            Number::class to NumberFormatter,
             Iterable::class to IterableFormatter,
             Array<Any>::class to ArrayFormatter
     )
@@ -68,7 +72,16 @@ object Formatters {
      * @param formatter specifies the respective formatter
      */
     operator fun <T : Any> set(type: KClass<T>, formatter: Formatter<T>) {
-        formatters.plus(Pair(type, formatter))
+        formatters += Pair(type, formatter)
+    }
+
+    /**
+     * Removes a formatter for a class
+     *
+     * @param type specifies the class
+     */
+    operator fun <T : Any> minusAssign(type: KClass<T>) {
+        formatters -= type
     }
 }
 
@@ -104,6 +117,33 @@ object AnyFormatter : Formatter<Any> {
 }
 
 /**
+ * Represents the formatter for [Number] values
+ *
+ * @author Rodolpho S. Couto
+ * @since 0.1.0
+ */
+object NumberFormatter : Formatter<Number> {
+    override fun format(value: Number, resourceBundle: ResourceBundle): String {
+        val symbols = DecimalFormatSymbols.getInstance(resourceBundle.locale)
+        symbols.groupingSeparator = resourceBundle.getString("org.valiktor.formatters.NumberFormatter.groupingSeparator")[0]
+        symbols.decimalSeparator = resourceBundle.getString("org.valiktor.formatters.NumberFormatter.decimalSeparator")[0]
+
+        val bigNum = value as? BigDecimal ?: BigDecimal(value.toString()).stripTrailingZeros()
+        val integerDigits = (bigNum.precision() - bigNum.scale()).let { if (it <= 0) 1 else it }
+        val fractionDigits = bigNum.scale().let { if (it < 0) 0 else it }
+
+        val decimalFormat = DecimalFormat("#,###.#")
+        decimalFormat.decimalFormatSymbols = symbols
+        decimalFormat.minimumIntegerDigits = integerDigits
+        decimalFormat.maximumIntegerDigits = integerDigits
+        decimalFormat.minimumFractionDigits = fractionDigits
+        decimalFormat.maximumFractionDigits = fractionDigits
+
+        return decimalFormat.format(value)
+    }
+}
+
+/**
  * Represents the formatter for [Iterable] values
  *
  * @author Rodolpho S. Couto
@@ -111,7 +151,9 @@ object AnyFormatter : Formatter<Any> {
  */
 object IterableFormatter : Formatter<Iterable<Any>> {
     override fun format(value: Iterable<Any>, resourceBundle: ResourceBundle): String =
-            value.joinToString { Formatters[it.javaClass.kotlin].format(it, resourceBundle) }
+            value.joinToString(
+                    separator = resourceBundle.getString("org.valiktor.formatters.IterableFormatter.separator"),
+                    transform = { Formatters[it.javaClass.kotlin].format(it, resourceBundle) })
 }
 
 /**
@@ -122,5 +164,7 @@ object IterableFormatter : Formatter<Iterable<Any>> {
  */
 object ArrayFormatter : Formatter<Array<Any>> {
     override fun format(value: Array<Any>, resourceBundle: ResourceBundle): String =
-            value.joinToString { Formatters[it.javaClass.kotlin].format(it, resourceBundle) }
+            value.joinToString(
+                    separator = resourceBundle.getString("org.valiktor.formatters.ArrayFormatter.separator"),
+                    transform = { Formatters[it.javaClass.kotlin].format(it, resourceBundle) })
 }
