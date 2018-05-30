@@ -481,21 +481,21 @@ class ByteFunctionsTest {
     @Test
     fun `isLessThan with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isLessThan(10)
+            validate(Employee::id).isLessThan(10.toByte())
         })
     }
 
     @Test
     fun `isLessThan with less value should be valid`() {
         validate(Employee(id = 99), {
-            validate(Employee::id).isLessThan(100)
+            validate(Employee::id).isLessThan(100.toByte())
         })
     }
 
     @Test
     fun `isLessThan with negative less value should be valid`() {
         validate(Employee(id = -4), {
-            validate(Employee::id).isLessThan(-3)
+            validate(Employee::id).isLessThan(3.unaryMinus().toByte())
         })
     }
 
@@ -503,7 +503,7 @@ class ByteFunctionsTest {
     fun `isLessThan with greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 50), {
-                validate(Employee::id).isLessThan(49)
+                validate(Employee::id).isLessThan(49.toByte())
             })
         }
 
@@ -518,7 +518,7 @@ class ByteFunctionsTest {
     fun `isLessThan with negative greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -50), {
-                validate(Employee::id).isLessThan(-51)
+                validate(Employee::id).isLessThan(51.unaryMinus().toByte())
             })
         }
 
@@ -533,7 +533,7 @@ class ByteFunctionsTest {
     fun `isLessThan with equal value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 0), {
-                validate(Employee::id).isLessThan(0)
+                validate(Employee::id).isLessThan(0.toByte())
             })
         }
 
@@ -547,28 +547,28 @@ class ByteFunctionsTest {
     @Test
     fun `isLessThanOrEqualTo with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isLessThanOrEqualTo(10)
+            validate(Employee::id).isLessThanOrEqualTo(10.toByte())
         })
     }
 
     @Test
     fun `isLessThanOrEqualTo with less value should be valid`() {
         validate(Employee(id = 99), {
-            validate(Employee::id).isLessThanOrEqualTo(100)
+            validate(Employee::id).isLessThanOrEqualTo(100.toByte())
         })
     }
 
     @Test
     fun `isLessThanOrEqualTo with negative less value should be valid`() {
         validate(Employee(id = -4), {
-            validate(Employee::id).isLessThanOrEqualTo(-3)
+            validate(Employee::id).isLessThanOrEqualTo(3.unaryMinus().toByte())
         })
     }
 
     @Test
     fun `isLessThanOrEqualTo with equal value should be valid`() {
         validate(Employee(id = 0), {
-            validate(Employee::id).isLessThanOrEqualTo(0)
+            validate(Employee::id).isLessThanOrEqualTo(0.toByte())
         })
     }
 
@@ -576,7 +576,7 @@ class ByteFunctionsTest {
     fun `isLessThanOrEqualTo with greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 58), {
-                validate(Employee::id).isLessThanOrEqualTo(57)
+                validate(Employee::id).isLessThanOrEqualTo(57.toByte())
             })
         }
 
@@ -591,7 +591,7 @@ class ByteFunctionsTest {
     fun `isLessThanOrEqualTo with negative greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -96), {
-                validate(Employee::id).isLessThanOrEqualTo(-97)
+                validate(Employee::id).isLessThanOrEqualTo(97.unaryMinus().toByte())
             })
         }
 
@@ -605,21 +605,21 @@ class ByteFunctionsTest {
     @Test
     fun `isGreaterThan with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isGreaterThan(10)
+            validate(Employee::id).isGreaterThan(10.toByte())
         })
     }
 
     @Test
     fun `isGreaterThan with greater value should be valid`() {
         validate(Employee(id = 11), {
-            validate(Employee::id).isGreaterThan(10)
+            validate(Employee::id).isGreaterThan(10.toByte())
         })
     }
 
     @Test
     fun `isGreaterThan with negative greater value should be valid`() {
         validate(Employee(id = -88), {
-            validate(Employee::id).isGreaterThan(-89)
+            validate(Employee::id).isGreaterThan(89.unaryMinus().toByte())
         })
     }
 
@@ -627,7 +627,7 @@ class ByteFunctionsTest {
     fun `isGreaterThan with less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 10), {
-                validate(Employee::id).isGreaterThan(11)
+                validate(Employee::id).isGreaterThan(11.toByte())
             })
         }
 
@@ -642,7 +642,7 @@ class ByteFunctionsTest {
     fun `isGreaterThan with negative less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -19), {
-                validate(Employee::id).isGreaterThan(-18)
+                validate(Employee::id).isGreaterThan(18.unaryMinus().toByte())
             })
         }
 
@@ -657,7 +657,7 @@ class ByteFunctionsTest {
     fun `isGreaterThan with equal value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 0), {
-                validate(Employee::id).isGreaterThan(0)
+                validate(Employee::id).isGreaterThan(0.toByte())
             })
         }
 
@@ -671,28 +671,28 @@ class ByteFunctionsTest {
     @Test
     fun `isGreaterThanOrEqualTo with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isGreaterThanOrEqualTo(10)
+            validate(Employee::id).isGreaterThanOrEqualTo(10.toByte())
         })
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with greater value should be valid`() {
         validate(Employee(id = 100), {
-            validate(Employee::id).isGreaterThanOrEqualTo(99)
+            validate(Employee::id).isGreaterThanOrEqualTo(99.toByte())
         })
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with negative greater value should be valid`() {
         validate(Employee(id = -3), {
-            validate(Employee::id).isGreaterThanOrEqualTo(-4)
+            validate(Employee::id).isGreaterThanOrEqualTo(4.unaryMinus().toByte())
         })
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with equal value should be valid`() {
         validate(Employee(id = 0), {
-            validate(Employee::id).isGreaterThanOrEqualTo(0)
+            validate(Employee::id).isGreaterThanOrEqualTo(0.toByte())
         })
     }
 
@@ -700,7 +700,7 @@ class ByteFunctionsTest {
     fun `isGreaterThanOrEqualTo with less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 57), {
-                validate(Employee::id).isGreaterThanOrEqualTo(58)
+                validate(Employee::id).isGreaterThanOrEqualTo(58.toByte())
             })
         }
 
@@ -715,7 +715,7 @@ class ByteFunctionsTest {
     fun `isGreaterThanOrEqualTo with negative less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -97), {
-                validate(Employee::id).isGreaterThanOrEqualTo(-96)
+                validate(Employee::id).isGreaterThanOrEqualTo(96.unaryMinus().toByte())
             })
         }
 
@@ -729,49 +729,49 @@ class ByteFunctionsTest {
     @Test
     fun `isBetween with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isBetween(start = 1, end = 9)
+            validate(Employee::id).isBetween(start = 1.toByte(), end = 9.toByte())
         })
     }
 
     @Test
     fun `isBetween with equal start value should be valid`() {
         validate(Employee(id = 0), {
-            validate(Employee::id).isBetween(start = 0, end = 1)
+            validate(Employee::id).isBetween(start = 0.toByte(), end = 1.toByte())
         })
     }
 
     @Test
     fun `isBetween with equal end value should be valid`() {
         validate(Employee(id = 1), {
-            validate(Employee::id).isBetween(start = 0, end = 1)
+            validate(Employee::id).isBetween(start = 0.toByte(), end = 1.toByte())
         })
     }
 
     @Test
     fun `isBetween with within value should be valid`() {
         validate(Employee(id = 5), {
-            validate(Employee::id).isBetween(start = 0, end = 10)
+            validate(Employee::id).isBetween(start = 0.toByte(), end = 10.toByte())
         })
     }
 
     @Test
     fun `isBetween with equal negative start value should be valid`() {
         validate(Employee(id = -2), {
-            validate(Employee::id).isBetween(start = -2, end = -1)
+            validate(Employee::id).isBetween(start = 2.unaryMinus().toByte(), end = 1.unaryMinus().toByte())
         })
     }
 
     @Test
     fun `isBetween with equal negative end value should be valid`() {
         validate(Employee(id = -1), {
-            validate(Employee::id).isBetween(start = -2, end = -1)
+            validate(Employee::id).isBetween(start = 2.unaryMinus().toByte(), end = 1.unaryMinus().toByte())
         })
     }
 
     @Test
     fun `isBetween with within negative value should be valid`() {
         validate(Employee(id = -15), {
-            validate(Employee::id).isBetween(start = -20, end = -10)
+            validate(Employee::id).isBetween(start = 20.unaryMinus().toByte(), end = 10.unaryMinus().toByte())
         })
     }
 
@@ -779,7 +779,7 @@ class ByteFunctionsTest {
     fun `isBetween with less start value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 10), {
-                validate(Employee::id).isBetween(start = 11, end = 12)
+                validate(Employee::id).isBetween(start = 11.toByte(), end = 12.toByte())
             })
         }
 
@@ -794,7 +794,7 @@ class ByteFunctionsTest {
     fun `isBetween with greater end value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 12), {
-                validate(Employee::id).isBetween(start = 10, end = 11)
+                validate(Employee::id).isBetween(start = 10.toByte(), end = 11.toByte())
             })
         }
 
@@ -809,7 +809,7 @@ class ByteFunctionsTest {
     fun `isBetween with less negative start value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -10), {
-                validate(Employee::id).isBetween(start = -9, end = -8)
+                validate(Employee::id).isBetween(start = 9.unaryMinus().toByte(), end = 8.unaryMinus().toByte())
             })
         }
 
@@ -824,7 +824,7 @@ class ByteFunctionsTest {
     fun `isBetween with greater negative end value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -12), {
-                validate(Employee::id).isBetween(start = -14, end = -13)
+                validate(Employee::id).isBetween(start = 14.unaryMinus().toByte(), end = 13.unaryMinus().toByte())
             })
         }
 
@@ -838,35 +838,35 @@ class ByteFunctionsTest {
     @Test
     fun `isNotBetween with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isNotBetween(start = 1, end = 9)
+            validate(Employee::id).isNotBetween(start = 1.toByte(), end = 9.toByte())
         })
     }
 
     @Test
     fun `isNotBetween with less start value should be valid`() {
         validate(Employee(id = 10), {
-            validate(Employee::id).isNotBetween(start = 11, end = 12)
+            validate(Employee::id).isNotBetween(start = 11.toByte(), end = 12.toByte())
         })
     }
 
     @Test
     fun `isNotBetween with greater end value should be valid`() {
         validate(Employee(id = 12), {
-            validate(Employee::id).isNotBetween(start = 10, end = 11)
+            validate(Employee::id).isNotBetween(start = 10.toByte(), end = 11.toByte())
         })
     }
 
     @Test
     fun `isNotBetween with less negative start value should be valid`() {
         validate(Employee(id = -10), {
-            validate(Employee::id).isNotBetween(start = -9, end = -8)
+            validate(Employee::id).isNotBetween(start = 9.unaryMinus().toByte(), end = 8.unaryMinus().toByte())
         })
     }
 
     @Test
     fun `isNotBetween with greater negative end value should be valid`() {
         validate(Employee(id = -12), {
-            validate(Employee::id).isNotBetween(start = -14, end = -13)
+            validate(Employee::id).isNotBetween(start = 14.unaryMinus().toByte(), end = 13.unaryMinus().toByte())
         })
     }
 
@@ -874,7 +874,7 @@ class ByteFunctionsTest {
     fun `isNotBetween with equal start value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 0), {
-                validate(Employee::id).isNotBetween(start = 0, end = 1)
+                validate(Employee::id).isNotBetween(start = 0.toByte(), end = 1.toByte())
             })
         }
 
@@ -889,7 +889,7 @@ class ByteFunctionsTest {
     fun `isNotBetween with equal end value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 1), {
-                validate(Employee::id).isNotBetween(start = 0, end = 1)
+                validate(Employee::id).isNotBetween(start = 0.toByte(), end = 1.toByte())
             })
         }
 
@@ -904,7 +904,7 @@ class ByteFunctionsTest {
     fun `isNotBetween with equal negative start value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -2), {
-                validate(Employee::id).isNotBetween(start = -2, end = -1)
+                validate(Employee::id).isNotBetween(start = 2.unaryMinus().toByte(), end = 1.unaryMinus().toByte())
             })
         }
 
@@ -919,7 +919,7 @@ class ByteFunctionsTest {
     fun `isNotBetween with equal negative end value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -1), {
-                validate(Employee::id).isNotBetween(start = -2, end = -1)
+                validate(Employee::id).isNotBetween(start = 2.unaryMinus().toByte(), end = 1.unaryMinus().toByte())
             })
         }
 
@@ -934,7 +934,7 @@ class ByteFunctionsTest {
     fun `isNotBetween with within value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 5), {
-                validate(Employee::id).isNotBetween(start = 0, end = 10)
+                validate(Employee::id).isNotBetween(start = 0.toByte(), end = 10.toByte())
             })
         }
 
@@ -949,7 +949,7 @@ class ByteFunctionsTest {
     fun `isNotBetween with within negative value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -15), {
-                validate(Employee::id).isNotBetween(start = -20, end = -10)
+                validate(Employee::id).isNotBetween(start = 20.unaryMinus().toByte(), end = 10.unaryMinus().toByte())
             })
         }
 

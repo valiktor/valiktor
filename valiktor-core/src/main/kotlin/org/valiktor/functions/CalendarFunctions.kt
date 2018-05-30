@@ -17,7 +17,7 @@
 package org.valiktor.functions
 
 import org.valiktor.Validator
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Today
 import java.util.*
 
 /**
@@ -41,72 +41,3 @@ fun <E> Validator<E>.Property<Calendar?>.isToday(): Validator<E>.Property<Calend
 
     return this.validate(Today, { it == null || it in start.rangeTo(end) })
 }
-
-/**
- * Validates if the [Calendar] property is before another value
- *
- * @property value specifies the value that should be validated
- *
- * @receiver the property to be validated
- * @return the same receiver property
- */
-fun <E> Validator<E>.Property<Calendar?>.isBefore(value: Calendar): Validator<E>.Property<Calendar?> =
-        this.validate(Less(value), { it == null || it < value })
-
-
-/**
- * Validates if the [Calendar] property is before or equal to another value
- *
- * @property value specifies the value that should be validated
- *
- * @receiver the property to be validated
- * @return the same receiver property
- */
-fun <E> Validator<E>.Property<Calendar?>.isBeforeOrEqualTo(value: Calendar): Validator<E>.Property<Calendar?> =
-        this.validate(LessOrEqual(value), { it == null || it <= value })
-
-/**
- * Validates if the [Calendar] property is after another value
- *
- * @property value specifies the value that should be validated
- *
- * @receiver the property to be validated
- * @return the same receiver property
- */
-fun <E> Validator<E>.Property<Calendar?>.isAfter(value: Calendar): Validator<E>.Property<Calendar?> =
-        this.validate(Greater(value), { it == null || it > value })
-
-/**
- * Validates if the [Calendar] property is after or equal to another value
- *
- * @property value specifies the value that should be validated
- *
- * @receiver the property to be validated
- * @return the same receiver property
- */
-fun <E> Validator<E>.Property<Calendar?>.isAfterOrEqualTo(value: Calendar): Validator<E>.Property<Calendar?> =
-        this.validate(GreaterOrEqual(value), { it == null || it >= value })
-
-/**
- * Validates if the [Calendar] property is between two values
- *
- * @property start (inclusive) specifies value that should start
- * @property end (inclusive) specifies value that should end
- *
- * @receiver the property to be validated
- * @return the same receiver property
- */
-fun <E> Validator<E>.Property<Calendar?>.isBetween(start: Calendar, end: Calendar): Validator<E>.Property<Calendar?> =
-        this.validate(Between(start, end), { it == null || it in start.rangeTo(end) })
-
-/**
- * Validates if the [Calendar] property isn't between two values
- *
- * @property start (inclusive) specifies value that shouldn't start
- * @property end (inclusive) specifies value that shouldn't end
- *
- * @receiver the property to be validated
- * @return the same receiver property
- */
-fun <E> Validator<E>.Property<Calendar?>.isNotBetween(start: Calendar, end: Calendar): Validator<E>.Property<Calendar?> =
-        this.validate(NotBetween(start, end), { it == null || it !in start.rangeTo(end) })

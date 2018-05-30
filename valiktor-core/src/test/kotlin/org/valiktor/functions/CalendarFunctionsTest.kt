@@ -277,24 +277,24 @@ class CalendarFunctionsTest {
     }
 
     @Test
-    fun `isBefore with null value should be valid`() {
+    fun `isLessThan with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::dateOfBirth).isBefore(Calendar.getInstance())
+            validate(Employee::dateOfBirth).isLessThan(Calendar.getInstance())
         })
     }
 
     @Test
-    fun `isBefore with less value should be valid`() {
+    fun `isLessThan with less value should be valid`() {
         validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-            validate(Employee::dateOfBirth).isBefore(calendarFrom(NOW + 1))
+            validate(Employee::dateOfBirth).isLessThan(calendarFrom(NOW + 1))
         })
     }
 
     @Test
-    fun `isBefore with greater value should be invalid`() {
+    fun `isLessThan with greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-                validate(Employee::dateOfBirth).isBefore(calendarFrom(NOW - 1))
+                validate(Employee::dateOfBirth).isLessThan(calendarFrom(NOW - 1))
             })
         }
 
@@ -306,10 +306,10 @@ class CalendarFunctionsTest {
     }
 
     @Test
-    fun `isBefore with equal value should be invalid`() {
+    fun `isLessThan with equal value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-                validate(Employee::dateOfBirth).isBefore(calendarFrom(NOW))
+                validate(Employee::dateOfBirth).isLessThan(calendarFrom(NOW))
             })
         }
 
@@ -321,31 +321,31 @@ class CalendarFunctionsTest {
     }
 
     @Test
-    fun `isBeforeOrEqualTo with null value should be valid`() {
+    fun `isLessThanOrEqualTo with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::dateOfBirth).isBeforeOrEqualTo(Calendar.getInstance())
+            validate(Employee::dateOfBirth).isLessThanOrEqualTo(Calendar.getInstance())
         })
     }
 
     @Test
-    fun `isBeforeOrEqualTo with less value should be valid`() {
+    fun `isLessThanOrEqualTo with less value should be valid`() {
         validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-            validate(Employee::dateOfBirth).isBeforeOrEqualTo(calendarFrom(NOW + 1))
+            validate(Employee::dateOfBirth).isLessThanOrEqualTo(calendarFrom(NOW + 1))
         })
     }
 
     @Test
-    fun `isBeforeOrEqualTo with equal value should be valid`() {
+    fun `isLessThanOrEqualTo with equal value should be valid`() {
         validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-            validate(Employee::dateOfBirth).isBeforeOrEqualTo(calendarFrom(NOW))
+            validate(Employee::dateOfBirth).isLessThanOrEqualTo(calendarFrom(NOW))
         })
     }
 
     @Test
-    fun `isBeforeOrEqualTo with greater value should be invalid`() {
+    fun `isLessThanOrEqualTo with greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-                validate(Employee::dateOfBirth).isBeforeOrEqualTo(calendarFrom(NOW - 1))
+                validate(Employee::dateOfBirth).isLessThanOrEqualTo(calendarFrom(NOW - 1))
             })
         }
 
@@ -357,24 +357,24 @@ class CalendarFunctionsTest {
     }
 
     @Test
-    fun `isAfter with null value should be valid`() {
+    fun `isGreaterThan with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::dateOfBirth).isAfter(Calendar.getInstance())
+            validate(Employee::dateOfBirth).isGreaterThan(Calendar.getInstance())
         })
     }
 
     @Test
-    fun `isAfter with greater value should be valid`() {
+    fun `isGreaterThan with greater value should be valid`() {
         validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-            validate(Employee::dateOfBirth).isAfter(calendarFrom(NOW - 1))
+            validate(Employee::dateOfBirth).isGreaterThan(calendarFrom(NOW - 1))
         })
     }
 
     @Test
-    fun `isAfter with less value should be invalid`() {
+    fun `isGreaterThan with less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-                validate(Employee::dateOfBirth).isAfter(calendarFrom(NOW + 1))
+                validate(Employee::dateOfBirth).isGreaterThan(calendarFrom(NOW + 1))
             })
         }
 
@@ -386,10 +386,10 @@ class CalendarFunctionsTest {
     }
 
     @Test
-    fun `isAfter with equal value should be invalid`() {
+    fun `isGreaterThan with equal value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-                validate(Employee::dateOfBirth).isAfter(calendarFrom(NOW))
+                validate(Employee::dateOfBirth).isGreaterThan(calendarFrom(NOW))
             })
         }
 
@@ -401,31 +401,31 @@ class CalendarFunctionsTest {
     }
 
     @Test
-    fun `isAfterOrEqualTo with null value should be valid`() {
+    fun `isGreaterThanOrEqualTo with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::dateOfBirth).isAfterOrEqualTo(Calendar.getInstance())
+            validate(Employee::dateOfBirth).isGreaterThanOrEqualTo(Calendar.getInstance())
         })
     }
 
     @Test
-    fun `isAfterOrEqualTo with greater value should be valid`() {
+    fun `isGreaterThanOrEqualTo with greater value should be valid`() {
         validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-            validate(Employee::dateOfBirth).isAfterOrEqualTo(calendarFrom(NOW - 1))
+            validate(Employee::dateOfBirth).isGreaterThanOrEqualTo(calendarFrom(NOW - 1))
         })
     }
 
     @Test
-    fun `isAfterOrEqualTo with equal value should be valid`() {
+    fun `isGreaterThanOrEqualTo with equal value should be valid`() {
         validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-            validate(Employee::dateOfBirth).isAfterOrEqualTo(calendarFrom(NOW))
+            validate(Employee::dateOfBirth).isGreaterThanOrEqualTo(calendarFrom(NOW))
         })
     }
 
     @Test
-    fun `isAfterOrEqualTo with less value should be invalid`() {
+    fun `isGreaterThanOrEqualTo with less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(dateOfBirth = calendarFrom(NOW)), {
-                validate(Employee::dateOfBirth).isAfterOrEqualTo(calendarFrom(NOW + 1))
+                validate(Employee::dateOfBirth).isGreaterThanOrEqualTo(calendarFrom(NOW + 1))
             })
         }
 

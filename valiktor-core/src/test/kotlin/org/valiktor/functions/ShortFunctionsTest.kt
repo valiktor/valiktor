@@ -481,21 +481,21 @@ class ShortFunctionsTest {
     @Test
     fun `isLessThan with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isLessThan(10)
+            validate(Employee::id).isLessThan(10.toShort())
         })
     }
 
     @Test
     fun `isLessThan with less value should be valid`() {
         validate(Employee(id = 999), {
-            validate(Employee::id).isLessThan(1000)
+            validate(Employee::id).isLessThan(1000.toShort())
         })
     }
 
     @Test
     fun `isLessThan with negative less value should be valid`() {
         validate(Employee(id = -4), {
-            validate(Employee::id).isLessThan(-3)
+            validate(Employee::id).isLessThan(3.unaryMinus().toShort())
         })
     }
 
@@ -503,7 +503,7 @@ class ShortFunctionsTest {
     fun `isLessThan with greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 50), {
-                validate(Employee::id).isLessThan(49)
+                validate(Employee::id).isLessThan(49.toShort())
             })
         }
 
@@ -518,7 +518,7 @@ class ShortFunctionsTest {
     fun `isLessThan with negative greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -50), {
-                validate(Employee::id).isLessThan(-51)
+                validate(Employee::id).isLessThan(51.unaryMinus().toShort())
             })
         }
 
@@ -533,7 +533,7 @@ class ShortFunctionsTest {
     fun `isLessThan with equal value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 0), {
-                validate(Employee::id).isLessThan(0)
+                validate(Employee::id).isLessThan(0.toShort())
             })
         }
 
@@ -547,28 +547,28 @@ class ShortFunctionsTest {
     @Test
     fun `isLessThanOrEqualTo with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isLessThanOrEqualTo(10)
+            validate(Employee::id).isLessThanOrEqualTo(10.toShort())
         })
     }
 
     @Test
     fun `isLessThanOrEqualTo with less value should be valid`() {
         validate(Employee(id = 999), {
-            validate(Employee::id).isLessThanOrEqualTo(1000)
+            validate(Employee::id).isLessThanOrEqualTo(1000.toShort())
         })
     }
 
     @Test
     fun `isLessThanOrEqualTo with negative less value should be valid`() {
         validate(Employee(id = -4), {
-            validate(Employee::id).isLessThanOrEqualTo(-3)
+            validate(Employee::id).isLessThanOrEqualTo(3.unaryMinus().toShort())
         })
     }
 
     @Test
     fun `isLessThanOrEqualTo with equal value should be valid`() {
         validate(Employee(id = 0), {
-            validate(Employee::id).isLessThanOrEqualTo(0)
+            validate(Employee::id).isLessThanOrEqualTo(0.toShort())
         })
     }
 
@@ -576,7 +576,7 @@ class ShortFunctionsTest {
     fun `isLessThanOrEqualTo with greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 5678), {
-                validate(Employee::id).isLessThanOrEqualTo(57)
+                validate(Employee::id).isLessThanOrEqualTo(57.toShort())
             })
         }
 
@@ -591,7 +591,7 @@ class ShortFunctionsTest {
     fun `isLessThanOrEqualTo with negative greater value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -96), {
-                validate(Employee::id).isLessThanOrEqualTo(-97)
+                validate(Employee::id).isLessThanOrEqualTo(97.unaryMinus().toShort())
             })
         }
 
@@ -605,21 +605,21 @@ class ShortFunctionsTest {
     @Test
     fun `isGreaterThan with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isGreaterThan(10)
+            validate(Employee::id).isGreaterThan(10.toShort())
         })
     }
 
     @Test
     fun `isGreaterThan with greater value should be valid`() {
         validate(Employee(id = 11), {
-            validate(Employee::id).isGreaterThan(10)
+            validate(Employee::id).isGreaterThan(10.toShort())
         })
     }
 
     @Test
     fun `isGreaterThan with negative greater value should be valid`() {
         validate(Employee(id = -88), {
-            validate(Employee::id).isGreaterThan(-89)
+            validate(Employee::id).isGreaterThan(89.unaryMinus().toShort())
         })
     }
 
@@ -627,7 +627,7 @@ class ShortFunctionsTest {
     fun `isGreaterThan with less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 10), {
-                validate(Employee::id).isGreaterThan(11)
+                validate(Employee::id).isGreaterThan(11.toShort())
             })
         }
 
@@ -642,7 +642,7 @@ class ShortFunctionsTest {
     fun `isGreaterThan with negative less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -189), {
-                validate(Employee::id).isGreaterThan(-180)
+                validate(Employee::id).isGreaterThan(180.unaryMinus().toShort())
             })
         }
 
@@ -657,7 +657,7 @@ class ShortFunctionsTest {
     fun `isGreaterThan with equal value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 0), {
-                validate(Employee::id).isGreaterThan(0)
+                validate(Employee::id).isGreaterThan(0.toShort())
             })
         }
 
@@ -671,28 +671,28 @@ class ShortFunctionsTest {
     @Test
     fun `isGreaterThanOrEqualTo with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isGreaterThanOrEqualTo(10)
+            validate(Employee::id).isGreaterThanOrEqualTo(10.toShort())
         })
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with greater value should be valid`() {
         validate(Employee(id = 10000), {
-            validate(Employee::id).isGreaterThanOrEqualTo(9999)
+            validate(Employee::id).isGreaterThanOrEqualTo(9999.toShort())
         })
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with negative greater value should be valid`() {
         validate(Employee(id = -3), {
-            validate(Employee::id).isGreaterThanOrEqualTo(-4)
+            validate(Employee::id).isGreaterThanOrEqualTo(4.unaryMinus().toShort())
         })
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with equal value should be valid`() {
         validate(Employee(id = 0), {
-            validate(Employee::id).isGreaterThanOrEqualTo(0)
+            validate(Employee::id).isGreaterThanOrEqualTo(0.toShort())
         })
     }
 
@@ -700,7 +700,7 @@ class ShortFunctionsTest {
     fun `isGreaterThanOrEqualTo with less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 57), {
-                validate(Employee::id).isGreaterThanOrEqualTo(5678)
+                validate(Employee::id).isGreaterThanOrEqualTo(5678.toShort())
             })
         }
 
@@ -715,7 +715,7 @@ class ShortFunctionsTest {
     fun `isGreaterThanOrEqualTo with negative less value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -97), {
-                validate(Employee::id).isGreaterThanOrEqualTo(-96)
+                validate(Employee::id).isGreaterThanOrEqualTo(96.unaryMinus().toShort())
             })
         }
 
@@ -729,49 +729,49 @@ class ShortFunctionsTest {
     @Test
     fun `isBetween with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isBetween(start = 1, end = 9)
+            validate(Employee::id).isBetween(start = 1.toShort(), end = 9.toShort())
         })
     }
 
     @Test
     fun `isBetween with equal start value should be valid`() {
         validate(Employee(id = 0), {
-            validate(Employee::id).isBetween(start = 0, end = 1)
+            validate(Employee::id).isBetween(start = 0.toShort(), end = 1.toShort())
         })
     }
 
     @Test
     fun `isBetween with equal end value should be valid`() {
         validate(Employee(id = 1), {
-            validate(Employee::id).isBetween(start = 0, end = 1)
+            validate(Employee::id).isBetween(start = 0.toShort(), end = 1.toShort())
         })
     }
 
     @Test
     fun `isBetween with within value should be valid`() {
         validate(Employee(id = 5), {
-            validate(Employee::id).isBetween(start = 0, end = 10)
+            validate(Employee::id).isBetween(start = 0.toShort(), end = 10.toShort())
         })
     }
 
     @Test
     fun `isBetween with equal negative start value should be valid`() {
         validate(Employee(id = -2), {
-            validate(Employee::id).isBetween(start = -2, end = -1)
+            validate(Employee::id).isBetween(start = 2.unaryMinus().toShort(), end = 1.unaryMinus().toShort())
         })
     }
 
     @Test
     fun `isBetween with equal negative end value should be valid`() {
         validate(Employee(id = -1), {
-            validate(Employee::id).isBetween(start = -2, end = -1)
+            validate(Employee::id).isBetween(start = 2.unaryMinus().toShort(), end = 1.unaryMinus().toShort())
         })
     }
 
     @Test
     fun `isBetween with within negative value should be valid`() {
         validate(Employee(id = -15), {
-            validate(Employee::id).isBetween(start = -20, end = -10)
+            validate(Employee::id).isBetween(start = 20.unaryMinus().toShort(), end = 10.unaryMinus().toShort())
         })
     }
 
@@ -779,7 +779,7 @@ class ShortFunctionsTest {
     fun `isBetween with less start value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 10), {
-                validate(Employee::id).isBetween(start = 11, end = 12)
+                validate(Employee::id).isBetween(start = 11.toShort(), end = 12.toShort())
             })
         }
 
@@ -794,7 +794,7 @@ class ShortFunctionsTest {
     fun `isBetween with greater end value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 12), {
-                validate(Employee::id).isBetween(start = 10, end = 11)
+                validate(Employee::id).isBetween(start = 10.toShort(), end = 11.toShort())
             })
         }
 
@@ -809,7 +809,7 @@ class ShortFunctionsTest {
     fun `isBetween with less negative start value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -10), {
-                validate(Employee::id).isBetween(start = -9, end = -8)
+                validate(Employee::id).isBetween(start = 9.unaryMinus().toShort(), end = 8.unaryMinus().toShort())
             })
         }
 
@@ -824,7 +824,7 @@ class ShortFunctionsTest {
     fun `isBetween with greater negative end value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -12), {
-                validate(Employee::id).isBetween(start = -14, end = -13)
+                validate(Employee::id).isBetween(start = 14.unaryMinus().toShort(), end = 13.unaryMinus().toShort())
             })
         }
 
@@ -838,35 +838,35 @@ class ShortFunctionsTest {
     @Test
     fun `isNotBetween with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isNotBetween(start = 1, end = 9)
+            validate(Employee::id).isNotBetween(start = 1.toShort(), end = 9.toShort())
         })
     }
 
     @Test
     fun `isNotBetween with less start value should be valid`() {
         validate(Employee(id = 10), {
-            validate(Employee::id).isNotBetween(start = 11, end = 12)
+            validate(Employee::id).isNotBetween(start = 11.toShort(), end = 12.toShort())
         })
     }
 
     @Test
     fun `isNotBetween with greater end value should be valid`() {
         validate(Employee(id = 12), {
-            validate(Employee::id).isNotBetween(start = 10, end = 11)
+            validate(Employee::id).isNotBetween(start = 10.toShort(), end = 11.toShort())
         })
     }
 
     @Test
     fun `isNotBetween with less negative start value should be valid`() {
         validate(Employee(id = -10), {
-            validate(Employee::id).isNotBetween(start = -9, end = -8)
+            validate(Employee::id).isNotBetween(start = 9.unaryMinus().toShort(), end = 8.unaryMinus().toShort())
         })
     }
 
     @Test
     fun `isNotBetween with greater negative end value should be valid`() {
         validate(Employee(id = -12), {
-            validate(Employee::id).isNotBetween(start = -14, end = -13)
+            validate(Employee::id).isNotBetween(start = 14.unaryMinus().toShort(), end = 13.unaryMinus().toShort())
         })
     }
 
@@ -874,7 +874,7 @@ class ShortFunctionsTest {
     fun `isNotBetween with equal start value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 0), {
-                validate(Employee::id).isNotBetween(start = 0, end = 1)
+                validate(Employee::id).isNotBetween(start = 0.toShort(), end = 1.toShort())
             })
         }
 
@@ -889,7 +889,7 @@ class ShortFunctionsTest {
     fun `isNotBetween with equal end value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 1), {
-                validate(Employee::id).isNotBetween(start = 0, end = 1)
+                validate(Employee::id).isNotBetween(start = 0.toShort(), end = 1.toShort())
             })
         }
 
@@ -904,7 +904,7 @@ class ShortFunctionsTest {
     fun `isNotBetween with equal negative start value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -2), {
-                validate(Employee::id).isNotBetween(start = -2, end = -1)
+                validate(Employee::id).isNotBetween(start = 2.unaryMinus().toShort(), end = 1.unaryMinus().toShort())
             })
         }
 
@@ -919,7 +919,7 @@ class ShortFunctionsTest {
     fun `isNotBetween with equal negative end value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -1), {
-                validate(Employee::id).isNotBetween(start = -2, end = -1)
+                validate(Employee::id).isNotBetween(start = 2.unaryMinus().toShort(), end = 1.unaryMinus().toShort())
             })
         }
 
@@ -934,7 +934,7 @@ class ShortFunctionsTest {
     fun `isNotBetween with within value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 5), {
-                validate(Employee::id).isNotBetween(start = 0, end = 10)
+                validate(Employee::id).isNotBetween(start = 0.toShort(), end = 10.toShort())
             })
         }
 
@@ -949,7 +949,7 @@ class ShortFunctionsTest {
     fun `isNotBetween with within negative value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = -15), {
-                validate(Employee::id).isNotBetween(start = -20, end = -10)
+                validate(Employee::id).isNotBetween(start = 20.unaryMinus().toShort(), end = 10.unaryMinus().toShort())
             })
         }
 
