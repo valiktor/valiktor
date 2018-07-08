@@ -79,6 +79,7 @@ class FormattersTest {
                 { assertEquals(Formatters[Any::class], AnyFormatter) },
                 { assertEquals(Formatters[Number::class], NumberFormatter) },
                 { assertEquals(Formatters[Date::class], DateFormatter) },
+                { assertEquals(Formatters[Calendar::class], CalendarFormatter) },
                 { assertEquals(Formatters[Iterable::class], IterableFormatter) },
                 { assertEquals(Formatters[Array<Any>::class], ArrayFormatter) }
         )
@@ -707,6 +708,31 @@ class DateFormatterTest {
         calendar.set(2018, Calendar.DECEMBER, 31, 23, 58, 59)
 
         assertThat(Formatters[Date::class].format(calendar.time)).containsExactly(
+                entry(Locales.DEFAULT, "12/31/2018 23:58:59"),
+                entry(Locales.EN, "12/31/2018 23:58:59"),
+                entry(Locales.PT_BR, "31/12/2018 23:58:59"))
+    }
+}
+
+class CalendarFormatterTest {
+
+    @Test
+    fun `should format date`() {
+        val calendar = Calendar.getInstance()
+        calendar.set(2018, Calendar.DECEMBER, 31, 0, 0, 0)
+
+        assertThat(Formatters[Calendar::class].format(calendar)).containsExactly(
+                entry(Locales.DEFAULT, "12/31/2018"),
+                entry(Locales.EN, "12/31/2018"),
+                entry(Locales.PT_BR, "31/12/2018"))
+    }
+
+    @Test
+    fun `should format date and time`() {
+        val calendar = Calendar.getInstance()
+        calendar.set(2018, Calendar.DECEMBER, 31, 23, 58, 59)
+
+        assertThat(Formatters[Calendar::class].format(calendar)).containsExactly(
                 entry(Locales.DEFAULT, "12/31/2018 23:58:59"),
                 entry(Locales.EN, "12/31/2018 23:58:59"),
                 entry(Locales.PT_BR, "31/12/2018 23:58:59"))

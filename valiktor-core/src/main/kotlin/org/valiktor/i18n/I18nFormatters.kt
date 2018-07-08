@@ -39,6 +39,7 @@ object Formatters {
             Any::class to AnyFormatter,
             Number::class to NumberFormatter,
             Date::class to DateFormatter,
+            Calendar::class to CalendarFormatter,
             Iterable::class to IterableFormatter,
             Array<Any>::class to ArrayFormatter
     )
@@ -167,6 +168,30 @@ object DateFormatter : Formatter<Date> {
         val hours = calendar.get(Calendar.HOUR_OF_DAY)
         val minutes = calendar.get(Calendar.MINUTE)
         val seconds = calendar.get(Calendar.SECOND)
+
+        return hours + minutes + seconds > 0
+    }
+}
+
+/**
+ * Represents the formatter for [Calendar] values
+ *
+ * @author Rodolpho S. Couto
+ * @since 0.1.0
+ */
+object CalendarFormatter : Formatter<Calendar> {
+    override fun format(value: Calendar, resourceBundle: ResourceBundle): String =
+            SimpleDateFormat(resourceBundle.getString(
+                    if (value.hasTime())
+                        "org.valiktor.formatters.DateFormatter.dateTimePattern"
+                    else
+                        "org.valiktor.formatters.DateFormatter.datePattern"
+            )).format(value.time)
+
+    private fun Calendar.hasTime(): Boolean {
+        val hours = this.get(Calendar.HOUR_OF_DAY)
+        val minutes = this.get(Calendar.MINUTE)
+        val seconds = this.get(Calendar.SECOND)
 
         return hours + minutes + seconds > 0
     }
