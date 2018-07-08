@@ -19,6 +19,7 @@ package org.valiktor.i18n
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.reflect.KClass
 import kotlin.reflect.full.superclasses
@@ -37,6 +38,7 @@ object Formatters {
     private var formatters: Map<KClass<*>, Formatter<*>> = mapOf(
             Any::class to AnyFormatter,
             Number::class to NumberFormatter,
+            Date::class to DateFormatter,
             Iterable::class to IterableFormatter,
             Array<Any>::class to ArrayFormatter
     )
@@ -140,6 +142,33 @@ object NumberFormatter : Formatter<Number> {
         decimalFormat.maximumFractionDigits = fractionDigits
 
         return decimalFormat.format(value)
+    }
+}
+
+/**
+ * Represents the formatter for [Date] values
+ *
+ * @author Rodolpho S. Couto
+ * @since 0.1.0
+ */
+object DateFormatter : Formatter<Date> {
+    override fun format(value: Date, resourceBundle: ResourceBundle): String =
+            SimpleDateFormat(resourceBundle.getString(
+                    if (value.hasTime())
+                        "org.valiktor.formatters.DateFormatter.dateTimePattern"
+                    else
+                        "org.valiktor.formatters.DateFormatter.datePattern"
+            )).format(value)
+
+    private fun Date.hasTime(): Boolean {
+        val calendar = Calendar.getInstance()
+        calendar.time = this
+
+        val hours = calendar.get(Calendar.HOUR_OF_DAY)
+        val minutes = calendar.get(Calendar.MINUTE)
+        val seconds = calendar.get(Calendar.SECOND)
+
+        return hours + minutes + seconds > 0
     }
 }
 
