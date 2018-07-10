@@ -22,6 +22,7 @@ import kotlin.reflect.full.declaredMemberProperties
  * Represents a validation constraint
  *
  * @property name specifies the name of the constraint, generally it will be the name of the class
+ * @property messageBundle specifies the base name of the default message properties file
  * @property messageKey specifies the name of the key in the message properties file
  * @property messageParams specifies the parameters to replace in the message
  *
@@ -32,6 +33,9 @@ interface Constraint {
 
     val name: String
         get() = this.javaClass.simpleName
+
+    val messageBundle: String
+        get() = "org/valiktor/messages"
 
     val messageKey: String
         get() = "${this.javaClass.name}.message"

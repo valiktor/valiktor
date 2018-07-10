@@ -102,10 +102,10 @@ interface Formatter<in T : Any> {
      * Format the value
      *
      * @param value specifies the value to be formatted
-     * @param resourceBundle specifies the loaded resource bundle with the messages
+     * @param messageBundle specifies the loaded resource bundle with the messages
      * @return the formatted value
      */
-    fun format(value: T, resourceBundle: ResourceBundle): String
+    fun format(value: T, messageBundle: MessageBundle): String
 }
 
 /**
@@ -115,8 +115,7 @@ interface Formatter<in T : Any> {
  * @since 0.1.0
  */
 object AnyFormatter : Formatter<Any> {
-    override fun format(value: Any, resourceBundle: ResourceBundle): String =
-            value.toString()
+    override fun format(value: Any, messageBundle: MessageBundle): String = value.toString()
 }
 
 /**
@@ -126,10 +125,10 @@ object AnyFormatter : Formatter<Any> {
  * @since 0.1.0
  */
 object NumberFormatter : Formatter<Number> {
-    override fun format(value: Number, resourceBundle: ResourceBundle): String {
-        val symbols = DecimalFormatSymbols.getInstance(resourceBundle.locale)
-        symbols.groupingSeparator = resourceBundle.getString("org.valiktor.formatters.NumberFormatter.groupingSeparator")[0]
-        symbols.decimalSeparator = resourceBundle.getString("org.valiktor.formatters.NumberFormatter.decimalSeparator")[0]
+    override fun format(value: Number, messageBundle: MessageBundle): String {
+        val symbols = DecimalFormatSymbols.getInstance(messageBundle.locale)
+        symbols.groupingSeparator = messageBundle.getMessage("org.valiktor.formatters.NumberFormatter.groupingSeparator")[0]
+        symbols.decimalSeparator = messageBundle.getMessage("org.valiktor.formatters.NumberFormatter.decimalSeparator")[0]
 
         val bigNum = value as? BigDecimal ?: BigDecimal(value.toString()).stripTrailingZeros()
         val integerDigits = (bigNum.precision() - bigNum.scale()).let { if (it <= 0) 1 else it }
@@ -153,8 +152,8 @@ object NumberFormatter : Formatter<Number> {
  * @since 0.1.0
  */
 object DateFormatter : Formatter<Date> {
-    override fun format(value: Date, resourceBundle: ResourceBundle): String =
-            SimpleDateFormat(resourceBundle.getString(
+    override fun format(value: Date, messageBundle: MessageBundle): String =
+            SimpleDateFormat(messageBundle.getMessage(
                     if (value.hasTime())
                         "org.valiktor.formatters.DateFormatter.dateTimePattern"
                     else
@@ -180,8 +179,8 @@ object DateFormatter : Formatter<Date> {
  * @since 0.1.0
  */
 object CalendarFormatter : Formatter<Calendar> {
-    override fun format(value: Calendar, resourceBundle: ResourceBundle): String =
-            SimpleDateFormat(resourceBundle.getString(
+    override fun format(value: Calendar, messageBundle: MessageBundle): String =
+            SimpleDateFormat(messageBundle.getMessage(
                     if (value.hasTime())
                         "org.valiktor.formatters.DateFormatter.dateTimePattern"
                     else
@@ -204,10 +203,10 @@ object CalendarFormatter : Formatter<Calendar> {
  * @since 0.1.0
  */
 object IterableFormatter : Formatter<Iterable<Any>> {
-    override fun format(value: Iterable<Any>, resourceBundle: ResourceBundle): String =
+    override fun format(value: Iterable<Any>, messageBundle: MessageBundle): String =
             value.joinToString(
-                    separator = resourceBundle.getString("org.valiktor.formatters.IterableFormatter.separator"),
-                    transform = { Formatters[it.javaClass.kotlin].format(it, resourceBundle) })
+                    separator = messageBundle.getMessage("org.valiktor.formatters.IterableFormatter.separator"),
+                    transform = { Formatters[it.javaClass.kotlin].format(it, messageBundle) })
 }
 
 /**
@@ -217,8 +216,8 @@ object IterableFormatter : Formatter<Iterable<Any>> {
  * @since 0.1.0
  */
 object ArrayFormatter : Formatter<Array<Any>> {
-    override fun format(value: Array<Any>, resourceBundle: ResourceBundle): String =
+    override fun format(value: Array<Any>, messageBundle: MessageBundle): String =
             value.joinToString(
-                    separator = resourceBundle.getString("org.valiktor.formatters.ArrayFormatter.separator"),
-                    transform = { Formatters[it.javaClass.kotlin].format(it, resourceBundle) })
+                    separator = messageBundle.getMessage("org.valiktor.formatters.ArrayFormatter.separator"),
+                    transform = { Formatters[it.javaClass.kotlin].format(it, messageBundle) })
 }
