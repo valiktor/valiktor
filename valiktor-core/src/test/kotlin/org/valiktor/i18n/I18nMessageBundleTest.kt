@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import java.util.*
-import java.util.ResourceBundle.getBundle
 
 class MessageBundleTest {
 
@@ -15,7 +14,8 @@ class MessageBundleTest {
         val messageBundle = MessageBundle(
                 baseName = "testMessages",
                 locale = SupportedLocales.EN,
-                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+                fallbackBaseName = "org/valiktor/messages",
+                fallbackLocale = SupportedLocales.DEFAULT)
 
         assertAll(
                 { assertEquals(messageBundle.baseName, "testMessages") },
@@ -31,11 +31,12 @@ class MessageBundleTest {
         val messageBundle = MessageBundle(
                 baseName = "testMessages",
                 locale = INVALID_LOCALE,
-                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+                fallbackBaseName = "org/valiktor/messages",
+                fallbackLocale = SupportedLocales.DEFAULT)
 
         assertAll(
                 { assertEquals(messageBundle.baseName, "testMessages") },
-                { assertEquals(messageBundle.locale, SupportedLocales.EN) },
+                { assertEquals(messageBundle.locale, INVALID_LOCALE) },
                 { assertEquals(messageBundle.getMessage("org.valiktor.constraints.NotEquals.message"), "Cannot be equal to {value}") }
         )
     }
@@ -47,11 +48,12 @@ class MessageBundleTest {
         val messageBundle = MessageBundle(
                 baseName = "testMessages",
                 locale = INVALID_LOCALE,
-                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+                fallbackBaseName = "org/valiktor/messages",
+                fallbackLocale = SupportedLocales.DEFAULT)
 
         assertAll(
                 { assertEquals(messageBundle.baseName, "testMessages") },
-                { assertEquals(messageBundle.locale, SupportedLocales.DEFAULT) },
+                { assertEquals(messageBundle.locale, INVALID_LOCALE) },
                 { assertEquals(messageBundle.getMessage("org.valiktor.constraints.NotEquals.message"), "Should not be equal to {value}") }
         )
     }
@@ -63,10 +65,11 @@ class MessageBundleTest {
         val messageBundle = MessageBundle(
                 baseName = "invalidTestMessages",
                 locale = SupportedLocales.EN,
-                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+                fallbackBaseName = "org/valiktor/messages",
+                fallbackLocale = SupportedLocales.DEFAULT)
 
         assertAll(
-                { assertEquals(messageBundle.baseName, "org/valiktor/messages") },
+                { assertEquals(messageBundle.baseName, "invalidTestMessages") },
                 { assertEquals(messageBundle.locale, SupportedLocales.EN) },
                 { assertEquals(messageBundle.getMessage("org.valiktor.constraints.NotEquals.message"), "Must not be equal to {value}") }
         )
@@ -79,11 +82,12 @@ class MessageBundleTest {
         val messageBundle = MessageBundle(
                 baseName = "invalidTestMessages",
                 locale = INVALID_LOCALE,
-                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+                fallbackBaseName = "org/valiktor/messages",
+                fallbackLocale = SupportedLocales.DEFAULT)
 
         assertAll(
-                { assertEquals(messageBundle.baseName, "org/valiktor/messages") },
-                { assertEquals(messageBundle.locale, SupportedLocales.EN) },
+                { assertEquals(messageBundle.baseName, "invalidTestMessages") },
+                { assertEquals(messageBundle.locale, INVALID_LOCALE) },
                 { assertEquals(messageBundle.getMessage("org.valiktor.constraints.NotEquals.message"), "Must not be equal to {value}") }
         )
     }
@@ -95,11 +99,12 @@ class MessageBundleTest {
         val messageBundle = MessageBundle(
                 baseName = "invalidTestMessages",
                 locale = INVALID_LOCALE,
-                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+                fallbackBaseName = "org/valiktor/messages",
+                fallbackLocale = SupportedLocales.DEFAULT)
 
         assertAll(
-                { assertEquals(messageBundle.baseName, "org/valiktor/messages") },
-                { assertEquals(messageBundle.locale, SupportedLocales.DEFAULT) },
+                { assertEquals(messageBundle.baseName, "invalidTestMessages") },
+                { assertEquals(messageBundle.locale, INVALID_LOCALE) },
                 { assertEquals(messageBundle.getMessage("org.valiktor.constraints.NotEquals.message"), "Must not be equal to {value}") }
         )
     }
@@ -111,7 +116,8 @@ class MessageBundleTest {
         val messageBundle = MessageBundle(
                 baseName = "testMessages",
                 locale = SupportedLocales.PT_BR,
-                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+                fallbackBaseName = "org/valiktor/messages",
+                fallbackLocale = SupportedLocales.DEFAULT)
 
         assertAll(
                 { assertEquals(messageBundle.baseName, "testMessages") },
@@ -127,7 +133,8 @@ class MessageBundleTest {
         val messageBundle = MessageBundle(
                 baseName = "testMessages",
                 locale = Locale.JAPANESE,
-                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+                fallbackBaseName = "org/valiktor/messages",
+                fallbackLocale = SupportedLocales.DEFAULT)
 
         assertAll(
                 { assertEquals(messageBundle.baseName, "testMessages") },
@@ -143,7 +150,8 @@ class MessageBundleTest {
         val messageBundle = MessageBundle(
                 baseName = "testMessages",
                 locale = Locale.JAPANESE,
-                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+                fallbackBaseName = "org/valiktor/messages",
+                fallbackLocale = SupportedLocales.DEFAULT)
 
         assertAll(
                 { assertEquals(messageBundle.baseName, "testMessages") },

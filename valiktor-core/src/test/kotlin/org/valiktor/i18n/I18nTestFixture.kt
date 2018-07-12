@@ -2,7 +2,6 @@ package org.valiktor.i18n
 
 import org.valiktor.Constraint
 import java.util.*
-import java.util.ResourceBundle.getBundle
 import kotlin.reflect.full.declaredMemberProperties
 
 object SupportedLocales {
@@ -27,7 +26,8 @@ fun Constraint.interpolatedMessages(): Map<Locale, String> =
                             MessageBundle(
                                     baseName = this.messageBundle,
                                     locale = it,
-                                    fallbackBundle = getBundle(this.messageBundle, SupportedLocales.DEFAULT)),
+                                    fallbackBaseName = this.messageBundle,
+                                    fallbackLocale = SupportedLocales.DEFAULT),
                             this.messageKey,
                             this.messageParams)
                 }
@@ -38,7 +38,8 @@ fun <T : Any> Formatter<T>.formatAllSupportedLocales(value: T): Map<Locale, Stri
             it to this.format(value, MessageBundle(
                     baseName = DEFAULT_BUNDLE,
                     locale = it,
-                    fallbackBundle = getBundle(DEFAULT_BUNDLE, SupportedLocales.DEFAULT)))
+                    fallbackBaseName = DEFAULT_BUNDLE,
+                    fallbackLocale = SupportedLocales.DEFAULT))
         }
         .toMap()
 
@@ -47,6 +48,7 @@ fun Formatter<Array<Any>>.formatAllSupportedLocales(value: Array<Any>): Map<Loca
             it to this.format(value, MessageBundle(
                     baseName = DEFAULT_BUNDLE,
                     locale = it,
-                    fallbackBundle = getBundle(DEFAULT_BUNDLE, SupportedLocales.DEFAULT)))
+                    fallbackBaseName = DEFAULT_BUNDLE,
+                    fallbackLocale = SupportedLocales.DEFAULT))
         }
         .toMap()

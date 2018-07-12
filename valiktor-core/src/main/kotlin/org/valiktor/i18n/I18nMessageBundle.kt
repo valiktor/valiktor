@@ -17,37 +17,64 @@
 package org.valiktor.i18n
 
 import java.util.*
-import java.util.ResourceBundle.getBundle
+import java.util.ResourceBundle.Control
+import java.util.ResourceBundle.Control.FORMAT_PROPERTIES
+import java.util.concurrent.ConcurrentHashMap
+
+private const val PREFIX_KEY = "org.valiktor"
+private const val INITIAL_CACHE_SIZE = 48
+
+private data class CacheKey(val baseName: String,
+                            val locale: Locale,
+                            val fallbackBaseName: String,
+                            val fallbackLocale: Locale,
+                            val defaultLocale: Locale)
+
+private val cachedMessages = ConcurrentHashMap<CacheKey, Map<String, String>>(INITIAL_CACHE_SIZE)
 
 /**
  * Represents a bundle of locale-specific messages.
  *
- * @property bundle specifies the primary bundle
- * @property fallbackBundle specifies the locale bundle
+ * @property baseName specifies the base name of the message bundle
+ * @property locale specifies the [Locale] of the message bundle
  * @constructor creates a new message bundle
  *
  * @author Rodolpho S. Couto
  * @see ResourceBundle
+ * @see Locale
  * @since 0.1.0
  */
-class MessageBundle(private val bundle: ResourceBundle,
-                    private val fallbackBundle: ResourceBundle) {
+class MessageBundle(val baseName: String,
+                    val locale: Locale,
+                    private val fallbackBaseName: String,
+                    private val fallbackLocale: Locale) {
 
-    val baseName: String = bundle.baseBundleName
-    val locale: Locale = bundle.locale
+    private val messages: Map<String, String> = cachedMessages.getOrPut(
+            CacheKey(baseName, locale, fallbackBaseName, fallbackLocale, Locale.getDefault()), {
+        getMessages(fallbackBaseName, fallbackLocale)
+                .plus(getMessages(baseName, fallbackLocale))
+                .plus(getMessages(fallbackBaseName, Locale.getDefault()))
+                .plus(getMessages(baseName, Locale.getDefault()))
+                .plus(getMessages(fallbackBaseName, locale))
+                .plus(getMessages(baseName, locale))
+    })
 
-    constructor(baseName: String,
-                locale: Locale,
-                fallbackBundle: ResourceBundle) :
-            this(
-                    bundle =
-                    try {
-                        getBundle(baseName, locale)
-                    } catch (ex: MissingResourceException) {
-                        getBundle(fallbackBundle.baseBundleName, locale)
-                    },
-                    fallbackBundle = fallbackBundle
-            )
+    private fun getMessages(baseName: String, locale: Locale): Map<String, String> =
+            try {
+                ResourceBundle.getBundle(baseName, locale, Control.getNoFallbackControl(FORMAT_PROPERTIES))
+                        .let { bundle ->
+                            if (bundle.baseBundleName != baseName || bundle.locale != locale)
+                                emptyMap()
+                            else
+                                bundle.keySet()
+                                        .filter { it.startsWith(PREFIX_KEY) }
+                                        .map { it to bundle.getString(it) }
+                                        .filter { it.second.isNotBlank() }
+                                        .toMap()
+                        }
+            } catch (ex: MissingResourceException) {
+                emptyMap()
+            }
 
     /**
      * Gets a message from the bundle.
@@ -57,10 +84,5 @@ class MessageBundle(private val bundle: ResourceBundle,
      * @param key: the message key
      * @return the message value
      */
-    fun getMessage(key: String): String =
-            try {
-                bundle.getString(key)
-            } catch (ex: MissingResourceException) {
-                getBundle(fallbackBundle.baseBundleName, locale).getString(key)
-            }
+    fun getMessage(key: String): String = messages[key] ?: ""
 }

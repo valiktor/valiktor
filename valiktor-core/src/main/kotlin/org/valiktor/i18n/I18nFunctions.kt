@@ -18,7 +18,6 @@ package org.valiktor.i18n
 
 import org.valiktor.ConstraintViolation
 import java.util.*
-import java.util.ResourceBundle.getBundle
 
 private val FALLBACK_LOCALE = Locale("")
 
@@ -58,25 +57,8 @@ fun ConstraintViolation.toI18n(baseName: String = constraint.messageBundle,
                         MessageBundle(
                                 baseName = baseName,
                                 locale = locale,
-                                fallbackBundle = getBundle(this.constraint.messageBundle, FALLBACK_LOCALE)),
-                        this.constraint.messageKey,
-                        this.constraint.messageParams))
-
-/**
- * Converts this object to [I18nConstraintViolation]
- *
- * @param resourceBundle specifies the [ResourceBundle] that contains the messages
- * @return a new [I18nConstraintViolation]
- */
-fun ConstraintViolation.toI18n(resourceBundle: ResourceBundle): I18nConstraintViolation =
-        DefaultI18nConstraintViolation(
-                property = this.property,
-                value = this.value,
-                constraint = this.constraint,
-                message = interpolate(
-                        MessageBundle(
-                                bundle = resourceBundle,
-                                fallbackBundle = getBundle(this.constraint.messageBundle, FALLBACK_LOCALE)),
+                                fallbackBaseName = this.constraint.messageBundle,
+                                fallbackLocale = FALLBACK_LOCALE),
                         this.constraint.messageKey,
                         this.constraint.messageParams))
 
@@ -96,18 +78,3 @@ fun ConstraintViolation.toI18n(resourceBundle: ResourceBundle): I18nConstraintVi
 fun Set<ConstraintViolation>.mapToI18n(baseName: String? = null,
                                        locale: Locale = Locale.getDefault()) =
         this.map { it.toI18n(baseName ?: it.constraint.messageBundle, locale) }.toSet()
-
-/**
- * Converts to Set<[I18nConstraintViolation]>
- *
- * @param resourceBundle specifies the [ResourceBundle] that contains the messages
- * @receiver the Set of <[ConstraintViolation]>
- * @return the Set of <[I18nConstraintViolation]>
- *
- * @author Rodolpho S. Couto
- * @see ConstraintViolation
- * @see I18nConstraintViolation
- * @since 0.1.0
- */
-fun Set<ConstraintViolation>.mapToI18n(resourceBundle: ResourceBundle) =
-        this.map { it.toI18n(resourceBundle) }.toSet()
