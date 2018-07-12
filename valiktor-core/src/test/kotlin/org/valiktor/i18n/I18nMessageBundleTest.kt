@@ -103,4 +103,52 @@ class MessageBundleTest {
                 { assertEquals(messageBundle.getMessage("org.valiktor.constraints.NotEquals.message"), "Must not be equal to {value}") }
         )
     }
+
+    @Test
+    fun `should get fallback locale message with invalid message key`() {
+        Locale.setDefault(SupportedLocales.EN)
+
+        val messageBundle = MessageBundle(
+                baseName = "testMessages",
+                locale = SupportedLocales.PT_BR,
+                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+
+        assertAll(
+                { assertEquals(messageBundle.baseName, "testMessages") },
+                { assertEquals(messageBundle.locale, SupportedLocales.PT_BR) },
+                { assertEquals(messageBundle.getMessage("org.valiktor.constraints.GreaterOrEqual.message"), "Deve ser maior ou igual a {value}") }
+        )
+    }
+
+    @Test
+    fun `should get fallback baseName and default locale with invalid message key`() {
+        Locale.setDefault(SupportedLocales.PT_BR)
+
+        val messageBundle = MessageBundle(
+                baseName = "testMessages",
+                locale = Locale.JAPANESE,
+                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+
+        assertAll(
+                { assertEquals(messageBundle.baseName, "testMessages") },
+                { assertEquals(messageBundle.locale, Locale.JAPANESE) },
+                { assertEquals(messageBundle.getMessage("org.valiktor.constraints.GreaterOrEqual.message"), "Deve ser maior ou igual a {value}") }
+        )
+    }
+
+    @Test
+    fun `should get fallback baseName and locale with invalid message key and invalid default locale`() {
+        Locale.setDefault(INVALID_LOCALE)
+
+        val messageBundle = MessageBundle(
+                baseName = "testMessages",
+                locale = Locale.JAPANESE,
+                fallbackBundle = getBundle("org/valiktor/messages", SupportedLocales.DEFAULT))
+
+        assertAll(
+                { assertEquals(messageBundle.baseName, "testMessages") },
+                { assertEquals(messageBundle.locale, Locale.JAPANESE) },
+                { assertEquals(messageBundle.getMessage("org.valiktor.constraints.GreaterOrEqual.message"), "Must be greater than or equal to {value}") }
+        )
+    }
 }

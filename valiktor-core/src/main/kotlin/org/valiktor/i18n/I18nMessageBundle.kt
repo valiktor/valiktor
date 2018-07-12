@@ -44,11 +44,7 @@ class MessageBundle(private val bundle: ResourceBundle,
                     try {
                         getBundle(baseName, locale)
                     } catch (ex: MissingResourceException) {
-                        try {
-                            getBundle(fallbackBundle.baseBundleName, locale)
-                        } catch (ex: MissingResourceException) {
-                            fallbackBundle
-                        }
+                        getBundle(fallbackBundle.baseBundleName, locale)
                     },
                     fallbackBundle = fallbackBundle
             )
@@ -65,6 +61,6 @@ class MessageBundle(private val bundle: ResourceBundle,
             try {
                 bundle.getString(key)
             } catch (ex: MissingResourceException) {
-                fallbackBundle.getString(key)
+                getBundle(fallbackBundle.baseBundleName, locale).getString(key)
             }
 }
