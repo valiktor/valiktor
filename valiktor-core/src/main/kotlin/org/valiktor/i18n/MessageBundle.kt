@@ -36,6 +36,8 @@ private val cachedMessages: ConcurrentMap<CacheKey, Map<String, String>> = Concu
  *
  * @property baseName specifies the base name of the message bundle
  * @property locale specifies the [Locale] of the message bundle
+ * @param fallbackBaseName specifies the base name that will be used if the [baseName] does not exist
+ * @param fallbackLocale specifies the locale that will be used if the [locale] does not exist
  * @constructor creates a new message bundle
  *
  * @author Rodolpho S. Couto
@@ -45,10 +47,11 @@ private val cachedMessages: ConcurrentMap<CacheKey, Map<String, String>> = Concu
  */
 class MessageBundle(val baseName: String,
                     val locale: Locale,
-                    fallbackBaseName: String) {
+                    fallbackBaseName: String,
+                    fallbackLocale: Locale) {
 
     private val messages: Map<String, String> = cachedMessages.getOrPut(
-            CacheKey(baseName, locale, fallbackBaseName, Locale.getDefault()), {
+            CacheKey(baseName, locale, fallbackBaseName, fallbackLocale), {
         val control = ResourceBundle.Control.getControl(FORMAT_PROPERTIES)
 
         if (locale == Locale(""))
@@ -58,7 +61,7 @@ class MessageBundle(val baseName: String,
         else
             control.getCandidateLocales(baseName, locale)
                     .filter { it != Locale("") }
-                    .plus(control.getCandidateLocales(baseName, Locale.getDefault()))
+                    .plus(control.getCandidateLocales(baseName, fallbackLocale))
                     .reversed()
                     .flatMap { getMessages(fallbackBaseName, it).plus(getMessages(baseName, it)) }
                     .toMap()

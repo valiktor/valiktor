@@ -26,7 +26,8 @@ fun Constraint.interpolatedMessages(): Map<Locale, String> =
                             MessageBundle(
                                     baseName = this.messageBundle,
                                     locale = it,
-                                    fallbackBaseName = this.messageBundle),
+                                    fallbackBaseName = this.messageBundle,
+                                    fallbackLocale = Locale.getDefault()),
                             this.messageKey,
                             this.messageParams)
                 }
@@ -37,7 +38,8 @@ fun <T : Any> Formatter<T>.formatAllSupportedLocales(value: T): Map<Locale, Stri
             it to this.format(value, MessageBundle(
                     baseName = DEFAULT_BUNDLE,
                     locale = it,
-                    fallbackBaseName = DEFAULT_BUNDLE))
+                    fallbackBaseName = DEFAULT_BUNDLE,
+                    fallbackLocale = Locale.getDefault()))
         }
         .toMap()
 
@@ -46,6 +48,7 @@ fun Formatter<Array<Any>>.formatAllSupportedLocales(value: Array<Any>): Map<Loca
             it to this.format(value, MessageBundle(
                     baseName = DEFAULT_BUNDLE,
                     locale = it,
-                    fallbackBaseName = DEFAULT_BUNDLE))
+                    fallbackBaseName = DEFAULT_BUNDLE,
+                    fallbackLocale = Locale.getDefault()))
         }
         .toMap()

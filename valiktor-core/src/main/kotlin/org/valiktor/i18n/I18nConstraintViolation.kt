@@ -59,7 +59,8 @@ fun ConstraintViolation.toI18n(baseName: String = constraint.messageBundle,
                         MessageBundle(
                                 baseName = baseName,
                                 locale = locale,
-                                fallbackBaseName = this.constraint.messageBundle),
+                                fallbackBaseName = this.constraint.messageBundle,
+                                fallbackLocale = Locale.getDefault()),
                         this.constraint.messageKey,
                         this.constraint.messageParams))
 
