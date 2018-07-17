@@ -25,33 +25,33 @@ import java.util.*
  * Represents a constraint violation with internationalized message
  *
  * @property message specifies the internationalized message of this constraint violation
- * @constructor creates a i18n constraint violation
+ * @constructor creates a constraint violation with message
  *
  * @author Rodolpho S. Couto
  * @see ConstraintViolation
  * @since 0.1.0
  */
-interface I18nConstraintViolation : ConstraintViolation {
+interface ConstraintViolationMessage : ConstraintViolation {
 
     val message: String
 }
 
-internal data class DefaultI18nConstraintViolation(override val property: String,
-                                                   override val value: Any? = null,
-                                                   override val constraint: Constraint,
-                                                   override val message: String) :
-        ConstraintViolation by DefaultConstraintViolation(property, value, constraint), I18nConstraintViolation
+internal data class DefaultConstraintViolationMessage(override val property: String,
+                                                      override val value: Any? = null,
+                                                      override val constraint: Constraint,
+                                                      override val message: String) :
+        ConstraintViolation by DefaultConstraintViolation(property, value, constraint), ConstraintViolationMessage
 
 /**
- * Converts this object to [I18nConstraintViolation]
+ * Converts this object to [ConstraintViolationMessage]
  *
  * @param baseName specifies the prefix name of the message properties
  * @param locale specifies the [Locale] of the message properties
- * @return a new [I18nConstraintViolation]
+ * @return a new [ConstraintViolationMessage]
  */
-fun ConstraintViolation.toI18n(baseName: String = constraint.messageBundle,
-                               locale: Locale = Locale.getDefault()): I18nConstraintViolation =
-        DefaultI18nConstraintViolation(
+fun ConstraintViolation.toMessage(baseName: String = constraint.messageBundle,
+                                  locale: Locale = Locale.getDefault()): ConstraintViolationMessage =
+        DefaultConstraintViolationMessage(
                 property = this.property,
                 value = this.value,
                 constraint = this.constraint,
@@ -65,18 +65,18 @@ fun ConstraintViolation.toI18n(baseName: String = constraint.messageBundle,
                         this.constraint.messageParams))
 
 /**
- * Converts to Set<[I18nConstraintViolation]>
+ * Converts to Set<[ConstraintViolationMessage]>
  *
  * @param baseName specifies the prefix name of the message properties
  * @param locale specifies the [Locale] of the message properties
  * @receiver the Set of <[ConstraintViolation]>
- * @return the Set of <[I18nConstraintViolation]>
+ * @return the Set of <[ConstraintViolationMessage]>
  *
  * @author Rodolpho S. Couto
  * @see ConstraintViolation
- * @see I18nConstraintViolation
+ * @see ConstraintViolationMessage
  * @since 0.1.0
  */
-fun Set<ConstraintViolation>.mapToI18n(baseName: String? = null,
-                                       locale: Locale = Locale.getDefault()) =
-        this.map { it.toI18n(baseName ?: it.constraint.messageBundle, locale) }.toSet()
+fun Set<ConstraintViolation>.mapToMessage(baseName: String? = null,
+                                          locale: Locale = Locale.getDefault()) =
+        this.map { it.toMessage(baseName ?: it.constraint.messageBundle, locale) }.toSet()
