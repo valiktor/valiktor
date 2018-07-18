@@ -65,13 +65,13 @@ fun <E> Validator<E>.Property<Byte?>.isPositive(): Validator<E>.Property<Byte?> 
         this.validate(Greater<Byte>(0), { it == null || it > 0.toByte() })
 
 /**
- * Validates if the [Byte] property isn't positive
+ * Validates if the [Byte] property isn't negative
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Byte?>.isNotPositive(): Validator<E>.Property<Byte?> =
-        this.validate(LessOrEqual<Byte>(0), { it == null || it <= 0.toByte() })
+fun <E> Validator<E>.Property<Byte?>.isPositiveOrZero(): Validator<E>.Property<Byte?> =
+        this.validate(GreaterOrEqual<Byte>(0), { it == null || it >= 0.toByte() })
 
 /**
  * Validates if the [Byte] property is negative
@@ -83,13 +83,13 @@ fun <E> Validator<E>.Property<Byte?>.isNegative(): Validator<E>.Property<Byte?> 
         this.validate(Less<Byte>(0), { it == null || it < 0.toByte() })
 
 /**
- * Validates if the [Byte] property isn't negative
+ * Validates if the [Byte] property isn't positive
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Byte?>.isNotNegative(): Validator<E>.Property<Byte?> =
-        this.validate(GreaterOrEqual<Byte>(0), { it == null || it >= 0.toByte() })
+fun <E> Validator<E>.Property<Byte?>.isNegativeOrZero(): Validator<E>.Property<Byte?> =
+        this.validate(LessOrEqual<Byte>(0), { it == null || it <= 0.toByte() })
 
 /**
  * Validates if the [Byte] property digits is within the limits (min and max)

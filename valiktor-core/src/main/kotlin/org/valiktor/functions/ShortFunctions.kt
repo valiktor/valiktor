@@ -65,13 +65,13 @@ fun <E> Validator<E>.Property<Short?>.isPositive(): Validator<E>.Property<Short?
         this.validate(Greater<Short>(0), { it == null || it > 0.toShort() })
 
 /**
- * Validates if the [Short] property isn't positive
+ * Validates if the [Short] property isn't negative
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Short?>.isNotPositive(): Validator<E>.Property<Short?> =
-        this.validate(LessOrEqual<Short>(0), { it == null || it <= 0.toShort() })
+fun <E> Validator<E>.Property<Short?>.isPositiveOrZero(): Validator<E>.Property<Short?> =
+        this.validate(GreaterOrEqual<Short>(0), { it == null || it >= 0.toShort() })
 
 /**
  * Validates if the [Short] property is negative
@@ -83,13 +83,13 @@ fun <E> Validator<E>.Property<Short?>.isNegative(): Validator<E>.Property<Short?
         this.validate(Less<Short>(0), { it == null || it < 0.toShort() })
 
 /**
- * Validates if the [Short] property isn't negative
+ * Validates if the [Short] property isn't positive
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Short?>.isNotNegative(): Validator<E>.Property<Short?> =
-        this.validate(GreaterOrEqual<Short>(0), { it == null || it >= 0.toShort() })
+fun <E> Validator<E>.Property<Short?>.isNegativeOrZero(): Validator<E>.Property<Short?> =
+        this.validate(LessOrEqual<Short>(0), { it == null || it <= 0.toShort() })
 
 /**
  * Validates if the [Short] property digits is within the limits (min and max)

@@ -65,13 +65,13 @@ fun <E> Validator<E>.Property<Int?>.isPositive(): Validator<E>.Property<Int?> =
         this.validate(Greater(0), { it == null || it > 0 })
 
 /**
- * Validates if the [Int] property isn't positive
+ * Validates if the [Int] property isn't negative
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Int?>.isNotPositive(): Validator<E>.Property<Int?> =
-        this.validate(LessOrEqual(0), { it == null || it <= 0 })
+fun <E> Validator<E>.Property<Int?>.isPositiveOrZero(): Validator<E>.Property<Int?> =
+        this.validate(GreaterOrEqual(0), { it == null || it >= 0 })
 
 /**
  * Validates if the [Int] property is negative
@@ -83,13 +83,13 @@ fun <E> Validator<E>.Property<Int?>.isNegative(): Validator<E>.Property<Int?> =
         this.validate(Less(0), { it == null || it < 0 })
 
 /**
- * Validates if the [Int] property isn't negative
+ * Validates if the [Int] property isn't positive
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Int?>.isNotNegative(): Validator<E>.Property<Int?> =
-        this.validate(GreaterOrEqual(0), { it == null || it >= 0 })
+fun <E> Validator<E>.Property<Int?>.isNegativeOrZero(): Validator<E>.Property<Int?> =
+        this.validate(LessOrEqual(0), { it == null || it <= 0 })
 
 /**
  * Validates if the [Int] property digits is within the limits (min and max)

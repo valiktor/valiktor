@@ -66,13 +66,13 @@ fun <E> Validator<E>.Property<BigInteger?>.isPositive(): Validator<E>.Property<B
         this.validate(Greater(BigInteger.ZERO), { it == null || it > BigInteger.ZERO })
 
 /**
- * Validates if the [BigInteger] property isn't positive
+ * Validates if the [BigInteger] property isn't negative
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<BigInteger?>.isNotPositive(): Validator<E>.Property<BigInteger?> =
-        this.validate(LessOrEqual(BigInteger.ZERO), { it == null || it <= BigInteger.ZERO })
+fun <E> Validator<E>.Property<BigInteger?>.isPositiveOrZero(): Validator<E>.Property<BigInteger?> =
+        this.validate(GreaterOrEqual(BigInteger.ZERO), { it == null || it >= BigInteger.ZERO })
 
 /**
  * Validates if the [BigInteger] property is negative
@@ -84,13 +84,13 @@ fun <E> Validator<E>.Property<BigInteger?>.isNegative(): Validator<E>.Property<B
         this.validate(Less(BigInteger.ZERO), { it == null || it < BigInteger.ZERO })
 
 /**
- * Validates if the [BigInteger] property isn't negative
+ * Validates if the [BigInteger] property isn't positive
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<BigInteger?>.isNotNegative(): Validator<E>.Property<BigInteger?> =
-        this.validate(GreaterOrEqual(BigInteger.ZERO), { it == null || it >= BigInteger.ZERO })
+fun <E> Validator<E>.Property<BigInteger?>.isNegativeOrZero(): Validator<E>.Property<BigInteger?> =
+        this.validate(LessOrEqual(BigInteger.ZERO), { it == null || it <= BigInteger.ZERO })
 
 /**
  * Validates if the [BigInteger] property digits is within the limits (min and max)

@@ -938,7 +938,7 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `hasCurrencyIn iterable with same value should be valid`() {
         validate(Employee(salary = Money.of(ONE, DOLLAR)), {
-            validate(Employee::salary).hasCurrencyIn(REAL, DOLLAR)
+            validate(Employee::salary).hasCurrencyIn(listOf(REAL, DOLLAR))
         })
     }
 

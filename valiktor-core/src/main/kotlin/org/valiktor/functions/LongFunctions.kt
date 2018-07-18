@@ -65,13 +65,13 @@ fun <E> Validator<E>.Property<Long?>.isPositive(): Validator<E>.Property<Long?> 
         this.validate(Greater(0L), { it == null || it > 0L })
 
 /**
- * Validates if the [Long] property isn't positive
+ * Validates if the [Long] property isn't negative
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Long?>.isNotPositive(): Validator<E>.Property<Long?> =
-        this.validate(LessOrEqual(0L), { it == null || it <= 0L })
+fun <E> Validator<E>.Property<Long?>.isPositiveOrZero(): Validator<E>.Property<Long?> =
+        this.validate(GreaterOrEqual(0L), { it == null || it >= 0L })
 
 /**
  * Validates if the [Long] property is negative
@@ -83,13 +83,13 @@ fun <E> Validator<E>.Property<Long?>.isNegative(): Validator<E>.Property<Long?> 
         this.validate(Less(0L), { it == null || it < 0L })
 
 /**
- * Validates if the [Long] property isn't negative
+ * Validates if the [Long] property isn't positive
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Long?>.isNotNegative(): Validator<E>.Property<Long?> =
-        this.validate(GreaterOrEqual(0L), { it == null || it >= 0L })
+fun <E> Validator<E>.Property<Long?>.isNegativeOrZero(): Validator<E>.Property<Long?> =
+        this.validate(LessOrEqual(0L), { it == null || it <= 0L })
 
 /**
  * Validates if the [Long] property digits is within the limits (min and max)

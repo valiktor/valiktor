@@ -364,31 +364,31 @@ class BigIntegerFunctionsTest {
     }
 
     @Test
-    fun `isNotPositive with null value should be valid`() {
+    fun `isNegativeOrZero with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isNotPositive()
+            validate(Employee::id).isNegativeOrZero()
         })
     }
 
     @Test
-    fun `isNotPositive with zero should be valid`() {
+    fun `isNegativeOrZero with zero should be valid`() {
         validate(Employee(id = 0.toBigInteger()), {
-            validate(Employee::id).isNotPositive()
+            validate(Employee::id).isNegativeOrZero()
         })
     }
 
     @Test
-    fun `isNotPositive with negative value should be valid`() {
+    fun `isNegativeOrZero with negative value should be valid`() {
         validate(Employee(id = 98765.unaryMinus().toBigInteger()), {
-            validate(Employee::id).isNotPositive()
+            validate(Employee::id).isNegativeOrZero()
         })
     }
 
     @Test
-    fun `isNotPositive with positive value should be invalid`() {
+    fun `isNegativeOrZero with positive value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
-                validate(Employee::id).isNotPositive()
+                validate(Employee::id).isNegativeOrZero()
             })
         }
 
@@ -444,31 +444,31 @@ class BigIntegerFunctionsTest {
     }
 
     @Test
-    fun `isNotNegative with null value should be valid`() {
+    fun `isPositiveOrZero with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::id).isNotNegative()
+            validate(Employee::id).isPositiveOrZero()
         })
     }
 
     @Test
-    fun `isNotNegative with zero should be valid`() {
+    fun `isPositiveOrZero with zero should be valid`() {
         validate(Employee(id = 0.toBigInteger()), {
-            validate(Employee::id).isNotNegative()
+            validate(Employee::id).isPositiveOrZero()
         })
     }
 
     @Test
-    fun `isNotNegative with positive value should be valid`() {
+    fun `isPositiveOrZero with positive value should be valid`() {
         validate(Employee(id = 1.toBigInteger()), {
-            validate(Employee::id).isNotNegative()
+            validate(Employee::id).isPositiveOrZero()
         })
     }
 
     @Test
-    fun `isNotNegative with negative value should be invalid`() {
+    fun `isPositiveOrZero with negative value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(id = 98765.unaryMinus().toBigInteger()), {
-                validate(Employee::id).isNotNegative()
+                validate(Employee::id).isPositiveOrZero()
             })
         }
 

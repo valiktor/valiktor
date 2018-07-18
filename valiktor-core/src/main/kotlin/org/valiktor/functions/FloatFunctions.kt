@@ -65,13 +65,13 @@ fun <E> Validator<E>.Property<Float?>.isPositive(): Validator<E>.Property<Float?
         this.validate(Greater(0f), { it == null || it > 0f })
 
 /**
- * Validates if the [Float] property isn't positive
+ * Validates if the [Float] property isn't negative
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.isNotPositive(): Validator<E>.Property<Float?> =
-        this.validate(LessOrEqual(0f), { it == null || it <= 0f })
+fun <E> Validator<E>.Property<Float?>.isPositiveOrZero(): Validator<E>.Property<Float?> =
+        this.validate(GreaterOrEqual(0f), { it == null || it >= 0f })
 
 /**
  * Validates if the [Float] property is negative
@@ -83,13 +83,13 @@ fun <E> Validator<E>.Property<Float?>.isNegative(): Validator<E>.Property<Float?
         this.validate(Less(0f), { it == null || it < 0f })
 
 /**
- * Validates if the [Float] property isn't negative
+ * Validates if the [Float] property isn't positive
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.isNotNegative(): Validator<E>.Property<Float?> =
-        this.validate(GreaterOrEqual(0f), { it == null || it >= 0f })
+fun <E> Validator<E>.Property<Float?>.isNegativeOrZero(): Validator<E>.Property<Float?> =
+        this.validate(LessOrEqual(0f), { it == null || it <= 0f })
 
 /**
  * Validates if the [Float] integer digits (before decimal separator) is within the limits (min and max)

@@ -463,31 +463,31 @@ class BigDecimalFunctionsTest {
     }
 
     @Test
-    fun `isNotPositive with null value should be valid`() {
+    fun `isNegativeOrZero with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::salary).isNotPositive()
+            validate(Employee::salary).isNegativeOrZero()
         })
     }
 
     @Test
-    fun `isNotPositive with zero should be valid`() {
+    fun `isNegativeOrZero with zero should be valid`() {
         validate(Employee(salary = ZERO), {
-            validate(Employee::salary).isNotPositive()
+            validate(Employee::salary).isNegativeOrZero()
         })
     }
 
     @Test
-    fun `isNotPositive with negative value should be valid`() {
+    fun `isNegativeOrZero with negative value should be valid`() {
         validate(Employee(salary = 98765.432.unaryMinus().toBigDecimal()), {
-            validate(Employee::salary).isNotPositive()
+            validate(Employee::salary).isNegativeOrZero()
         })
     }
 
     @Test
-    fun `isNotPositive with positive value should be invalid`() {
+    fun `isNegativeOrZero with positive value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(salary = ONE), {
-                validate(Employee::salary).isNotPositive()
+                validate(Employee::salary).isNegativeOrZero()
             })
         }
 
@@ -543,31 +543,31 @@ class BigDecimalFunctionsTest {
     }
 
     @Test
-    fun `isNotNegative with null value should be valid`() {
+    fun `isPositiveOrZero with null value should be valid`() {
         validate(Employee(), {
-            validate(Employee::salary).isNotNegative()
+            validate(Employee::salary).isPositiveOrZero()
         })
     }
 
     @Test
-    fun `isNotNegative with zero should be valid`() {
+    fun `isPositiveOrZero with zero should be valid`() {
         validate(Employee(salary = ZERO), {
-            validate(Employee::salary).isNotNegative()
+            validate(Employee::salary).isPositiveOrZero()
         })
     }
 
     @Test
-    fun `isNotNegative with positive value should be valid`() {
+    fun `isPositiveOrZero with positive value should be valid`() {
         validate(Employee(salary = ONE), {
-            validate(Employee::salary).isNotNegative()
+            validate(Employee::salary).isPositiveOrZero()
         })
     }
 
     @Test
-    fun `isNotNegative with negative value should be invalid`() {
+    fun `isPositiveOrZero with negative value should be invalid`() {
         val exception = assertThrows<ConstraintViolationException> {
             validate(Employee(salary = 98765.432.unaryMinus().toBigDecimal()), {
-                validate(Employee::salary).isNotNegative()
+                validate(Employee::salary).isPositiveOrZero()
             })
         }
 
