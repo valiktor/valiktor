@@ -17,12 +17,107 @@
 package org.valiktor.functions
 
 import org.valiktor.Validator
-import org.valiktor.constraints.CurrencyEquals
-import org.valiktor.constraints.CurrencyIn
-import org.valiktor.constraints.CurrencyNotEquals
-import org.valiktor.constraints.CurrencyNotIn
+import org.valiktor.constraints.*
+import java.math.BigDecimal.ONE
+import java.math.BigDecimal.ZERO
 import javax.money.CurrencyUnit
 import javax.money.MonetaryAmount
+
+/**
+ * Validates if the [MonetaryAmount] property is equal to zero
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<MonetaryAmount?>.isZero(): Validator<E>.Property<MonetaryAmount?> =
+        this.validate({ Equals(it?.factory?.setNumber(ZERO)?.create()) }, { it == null || it.isZero })
+
+/**
+ * Validates if the [MonetaryAmount] property is not equal to zero
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<MonetaryAmount?>.isNotZero(): Validator<E>.Property<MonetaryAmount?> =
+        this.validate({ NotEquals(it?.factory?.setNumber(ZERO)?.create()) }, { it == null || !it.isZero })
+
+/**
+ * Validates if the [MonetaryAmount] property is equal to one
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<MonetaryAmount?>.isOne(): Validator<E>.Property<MonetaryAmount?> =
+        this.validate({ Equals(it?.factory?.setNumber(ONE)?.create()) }, { it == null || it == it.factory.setNumber(ONE).create() })
+
+/**
+ * Validates if the [MonetaryAmount] property is not equal to one
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<MonetaryAmount?>.isNotOne(): Validator<E>.Property<MonetaryAmount?> =
+        this.validate({ NotEquals(it?.factory?.setNumber(ONE)?.create()) }, { it == null || it != it.factory.setNumber(ONE).create() })
+
+/**
+ * Validates if the [MonetaryAmount] property is positive
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<MonetaryAmount?>.isPositive(): Validator<E>.Property<MonetaryAmount?> =
+        this.validate({ Greater(it?.factory?.setNumber(ZERO)?.create()) }, { it == null || it > it.factory.setNumber(ZERO).create() })
+
+/**
+ * Validates if the [MonetaryAmount] property isn't negative
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<MonetaryAmount?>.isPositiveOrZero(): Validator<E>.Property<MonetaryAmount?> =
+        this.validate({ GreaterOrEqual(it?.factory?.setNumber(ZERO)?.create()) }, { it == null || it >= it.factory.setNumber(ZERO).create() })
+
+/**
+ * Validates if the [MonetaryAmount] property is negative
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<MonetaryAmount?>.isNegative(): Validator<E>.Property<MonetaryAmount?> =
+        this.validate({ Less(it?.factory?.setNumber(ZERO)?.create()) }, { it == null || it < it.factory.setNumber(ZERO).create() })
+
+/**
+ * Validates if the [MonetaryAmount] property isn't positive
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<MonetaryAmount?>.isNegativeOrZero(): Validator<E>.Property<MonetaryAmount?> =
+        this.validate({ LessOrEqual(it?.factory?.setNumber(ZERO)?.create()) }, { it == null || it <= it.factory.setNumber(ZERO).create() })
+
+/**
+ * Validates if the [MonetaryAmount] integer digits (before decimal separator) is within the limits (min and max)
+ *
+ * @property min specifies the minimum size
+ * @property max specifies the maximum size
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<MonetaryAmount?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<MonetaryAmount?> =
+        this.validate(IntegerDigits(min, max), { it == null || it.number.precision - it.number.scale in min.rangeTo(max) })
+
+/**
+ * Validates if the [MonetaryAmount] decimal digits (after decimal separator) is within the limits (min and max)
+ *
+ * @property min specifies the minimum size
+ * @property max specifies the maximum size
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<MonetaryAmount?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<MonetaryAmount?> =
+        this.validate(DecimalDigits(min, max), { it == null || (if (it.number.scale < 0) 0 else it.number.scale) in min.rangeTo(max) })
 
 /**
  * Validates if the currency unit is equal to another value

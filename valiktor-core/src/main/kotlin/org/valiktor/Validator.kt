@@ -105,17 +105,28 @@ open class Validator<E>(private val obj: E) {
          *
          * This function is used by all constraint validations
          *
+         * @param constraint specifies the function that returns the constraint to be validated
+         * @param isValid specifies the validation function
+         * @return the property validator
+         */
+        fun validate(constraint: (T?) -> Constraint, isValid: (T?) -> Boolean): Property<T> {
+            val value = this.property.get(obj)
+            if (this@Validator.constraintViolations.none { it.property == this.property.name } && !isValid(value)) {
+                this@Validator.constraintViolations += DefaultConstraintViolation(this.property.name, value, constraint(value))
+            }
+            return this
+        }
+
+        /**
+         * Validates the property by passing the constraint and the validation function
+         *
+         * This function is used by all constraint validations
+         *
          * @param constraint specifies the constraint that will be validated
          * @param isValid specifies the validation function
          * @return the property validator
          */
-        fun validate(constraint: Constraint, isValid: (T?) -> Boolean): Property<T> {
-            val value = this.property.get(obj)
-            if (this@Validator.constraintViolations.none { it.property == this.property.name } && !isValid(value)) {
-                this@Validator.constraintViolations += DefaultConstraintViolation(this.property.name, value, constraint)
-            }
-            return this
-        }
+        fun validate(constraint: Constraint, isValid: (T?) -> Boolean): Property<T> = validate({ constraint }, isValid)
 
         /**
          * Adds the constraint violations to property

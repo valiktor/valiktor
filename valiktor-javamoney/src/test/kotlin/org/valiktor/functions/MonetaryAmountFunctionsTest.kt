@@ -1002,4 +1002,616 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "salary", value = Money.of(ONE, REAL), constraint = CurrencyNotIn(listOf(DOLLAR, REAL))))
     }
+
+    @Test
+    fun `isZero with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isZero()
+        })
+    }
+
+    @Test
+    fun `isZero with zero should be valid`() {
+        validate(Employee(salary = Money.of(ZERO, REAL)), {
+            validate(Employee::salary).isZero()
+        })
+    }
+
+    @Test
+    fun `isZero with zero and 2 decimal digits should be valid`() {
+        validate(Employee(salary = Money.of(0.00.toBigDecimal(), DOLLAR)), {
+            validate(Employee::salary).isZero()
+        })
+    }
+
+    @Test
+    fun `isZero with one should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(ONE, REAL)), {
+                validate(Employee::salary).isZero()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(ONE, REAL),
+                        constraint = Equals(Money.of(ZERO, REAL))))
+    }
+
+    @Test
+    fun `isNotZero with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNotZero()
+        })
+    }
+
+    @Test
+    fun `isNotZero with one should be valid`() {
+        validate(Employee(salary = Money.of(ONE, DOLLAR)), {
+            validate(Employee::salary).isNotZero()
+        })
+    }
+
+    @Test
+    fun `isNotZero with zero should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(ZERO, REAL)), {
+                validate(Employee::salary).isNotZero()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(ZERO, REAL),
+                        constraint = NotEquals(Money.of(ZERO, REAL))))
+    }
+
+    @Test
+    fun `isNotZero with zero and 2 decimal digits should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(0.00.toBigDecimal(), DOLLAR)), {
+                validate(Employee::salary).isNotZero()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(0.00.toBigDecimal(), DOLLAR),
+                        constraint = NotEquals(Money.of(ZERO, DOLLAR))))
+    }
+
+    @Test
+    fun `isOne with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isOne()
+        })
+    }
+
+    @Test
+    fun `isOne with one should be valid`() {
+        validate(Employee(salary = Money.of(ONE, REAL)), {
+            validate(Employee::salary).isOne()
+        })
+    }
+
+    @Test
+    fun `isOne with one and 2 decimal digits should be valid`() {
+        validate(Employee(salary = Money.of(1.00.toBigDecimal(), DOLLAR)), {
+            validate(Employee::salary).isOne()
+        })
+    }
+
+    @Test
+    fun `isOne with zero should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(ZERO, REAL)), {
+                validate(Employee::salary).isOne()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(ZERO, REAL),
+                        constraint = Equals(Money.of(ONE, REAL))))
+    }
+
+    @Test
+    fun `isNotOne with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNotOne()
+        })
+    }
+
+    @Test
+    fun `isNotOne with zero should be valid`() {
+        validate(Employee(salary = Money.of(ZERO, DOLLAR)), {
+            validate(Employee::salary).isNotOne()
+        })
+    }
+
+    @Test
+    fun `isNotOne with one should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(ONE, REAL)), {
+                validate(Employee::salary).isNotOne()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(ONE, REAL),
+                        constraint = NotEquals(Money.of(ONE, REAL))))
+    }
+
+    @Test
+    fun `isNotOne with one and 2 decimal digits should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(1.00.toBigDecimal(), DOLLAR)), {
+                validate(Employee::salary).isNotOne()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(1.00.toBigDecimal(), DOLLAR),
+                        constraint = NotEquals(Money.of(ONE, DOLLAR))))
+    }
+
+    @Test
+    fun `isPositive with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isPositive()
+        })
+    }
+
+    @Test
+    fun `isPositive with positive value should be valid`() {
+        validate(Employee(salary = Money.of(ONE, REAL)), {
+            validate(Employee::salary).isPositive()
+        })
+    }
+
+    @Test
+    fun `isPositive with zero should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(ZERO, DOLLAR)), {
+                validate(Employee::salary).isPositive()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(ZERO, DOLLAR),
+                        constraint = Greater(Money.of(ZERO, DOLLAR))))
+    }
+
+    @Test
+    fun `isPositive with negative value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(98765.432.unaryMinus().toBigDecimal(), REAL)), {
+                validate(Employee::salary).isPositive()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(98765.432.unaryMinus().toBigDecimal(), REAL),
+                        constraint = Greater(Money.of(ZERO, REAL))))
+    }
+
+    @Test
+    fun `isNegativeOrZero with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNegativeOrZero()
+        })
+    }
+
+    @Test
+    fun `isNegativeOrZero with zero should be valid`() {
+        validate(Employee(salary = Money.of(ZERO, DOLLAR)), {
+            validate(Employee::salary).isNegativeOrZero()
+        })
+    }
+
+    @Test
+    fun `isNegativeOrZero with negative value should be valid`() {
+        validate(Employee(salary = Money.of(98765.432.unaryMinus().toBigDecimal(), DOLLAR)), {
+            validate(Employee::salary).isNegativeOrZero()
+        })
+    }
+
+    @Test
+    fun `isNegativeOrZero with positive value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(ONE, DOLLAR)), {
+                validate(Employee::salary).isNegativeOrZero()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(ONE, DOLLAR),
+                        constraint = LessOrEqual(Money.of(ZERO, DOLLAR))))
+    }
+
+    @Test
+    fun `isNegative with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isNegative()
+        })
+    }
+
+    @Test
+    fun `isNegative with negative value should be valid`() {
+        validate(Employee(salary = Money.of(1.0.unaryMinus().toBigDecimal(), REAL)), {
+            validate(Employee::salary).isNegative()
+        })
+    }
+
+    @Test
+    fun `isNegative with zero should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(ZERO, DOLLAR)), {
+                validate(Employee::salary).isNegative()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(ZERO, DOLLAR),
+                        constraint = Less(Money.of(ZERO, DOLLAR))))
+    }
+
+    @Test
+    fun `isNegative with positive value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(ONE, REAL)), {
+                validate(Employee::salary).isNegative()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(ONE, REAL),
+                        constraint = Less(Money.of(ZERO, REAL))))
+    }
+
+    @Test
+    fun `isPositiveOrZero with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).isPositiveOrZero()
+        })
+    }
+
+    @Test
+    fun `isPositiveOrZero with zero should be valid`() {
+        validate(Employee(salary = Money.of(ZERO, DOLLAR)), {
+            validate(Employee::salary).isPositiveOrZero()
+        })
+    }
+
+    @Test
+    fun `isPositiveOrZero with positive value should be valid`() {
+        validate(Employee(salary = Money.of(ONE, REAL)), {
+            validate(Employee::salary).isPositiveOrZero()
+        })
+    }
+
+    @Test
+    fun `isPositiveOrZero with negative value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(98765.432.unaryMinus().toBigDecimal(), DOLLAR)), {
+                validate(Employee::salary).isPositiveOrZero()
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(98765.432.unaryMinus().toBigDecimal(), DOLLAR),
+                        constraint = GreaterOrEqual(Money.of(ZERO, DOLLAR))))
+    }
+
+    @Test
+    fun `hasIntegerDigits with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).hasIntegerDigits(min = 1, max = 10)
+        })
+    }
+
+    @Test
+    fun `hasIntegerDigits with valid min value should be valid`() {
+        validate(Employee(salary = Money.of(9999.99.toBigDecimal(), REAL)), {
+            validate(Employee::salary).hasIntegerDigits(min = 4)
+        })
+    }
+
+    @Test
+    fun `hasIntegerDigits with valid max value should be valid`() {
+        validate(Employee(salary = Money.of(9999.99.toBigDecimal(), DOLLAR)), {
+            validate(Employee::salary).hasIntegerDigits(max = 4)
+        })
+    }
+
+    @Test
+    fun `hasIntegerDigits with valid min and max value should be valid`() {
+        validate(Employee(salary = Money.of(9999.99.toBigDecimal(), REAL)), {
+            validate(Employee::salary).hasIntegerDigits(min = 4, max = 4)
+        })
+    }
+
+    @Test
+    fun `hasIntegerDigits with negative valid min value should be valid`() {
+        validate(Employee(salary = Money.of(99999.99.unaryMinus().toBigDecimal(), DOLLAR)), {
+            validate(Employee::salary).hasIntegerDigits(min = 5)
+        })
+    }
+
+    @Test
+    fun `hasIntegerDigits with negative valid max value should be valid`() {
+        validate(Employee(salary = Money.of(99999.99.unaryMinus().toBigDecimal(), REAL)), {
+            validate(Employee::salary).hasIntegerDigits(max = 5)
+        })
+    }
+
+    @Test
+    fun `hasIntegerDigits with negative valid min and max value should be valid`() {
+        validate(Employee(salary = Money.of(99999.99.unaryMinus().toBigDecimal(), DOLLAR)), {
+            validate(Employee::salary).hasIntegerDigits(min = 5, max = 5)
+        })
+    }
+
+    @Test
+    fun `hasIntegerDigits without min and max should be valid`() {
+        validate(Employee(salary = Money.of(9999.99.toBigDecimal(), REAL)), {
+            validate(Employee::salary).hasIntegerDigits()
+        })
+    }
+
+    @Test
+    fun `hasIntegerDigits with less min value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(748536.78.toBigDecimal(), DOLLAR)), {
+                validate(Employee::salary).hasIntegerDigits(min = 7)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(748536.78.toBigDecimal(), DOLLAR),
+                        constraint = IntegerDigits(min = 7)))
+    }
+
+    @Test
+    fun `hasIntegerDigits with greater max value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(748536.78.toBigDecimal(), REAL)), {
+                validate(Employee::salary).hasIntegerDigits(max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(748536.78.toBigDecimal(), REAL),
+                        constraint = IntegerDigits(max = 5)))
+    }
+
+    @Test
+    fun `hasIntegerDigits with less value and greater value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(748536.78.toBigDecimal(), DOLLAR)), {
+                validate(Employee::salary).hasIntegerDigits(min = 7, max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(748536.78.toBigDecimal(), DOLLAR),
+                        constraint = IntegerDigits(min = 7, max = 5)))
+    }
+
+    @Test
+    fun `hasIntegerDigits with negative less min value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(748536.78.unaryMinus().toBigDecimal(), REAL)), {
+                validate(Employee::salary).hasIntegerDigits(min = 7)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(748536.78.unaryMinus().toBigDecimal(), REAL),
+                        constraint = IntegerDigits(min = 7)))
+    }
+
+    @Test
+    fun `hasIntegerDigits with negative greater max value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(748536.78.unaryMinus().toBigDecimal(), DOLLAR)), {
+                validate(Employee::salary).hasIntegerDigits(max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(748536.78.unaryMinus().toBigDecimal(), DOLLAR),
+                        constraint = IntegerDigits(max = 5)))
+    }
+
+    @Test
+    fun `hasIntegerDigits with negative less value and negative greater value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(748536.78.unaryMinus().toBigDecimal(), DOLLAR)), {
+                validate(Employee::salary).hasIntegerDigits(min = 7, max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(748536.78.unaryMinus().toBigDecimal(), DOLLAR),
+                        constraint = IntegerDigits(min = 7, max = 5)))
+    }
+
+    @Test
+    fun `hasDecimalDigits with null value should be valid`() {
+        validate(Employee(), {
+            validate(Employee::salary).hasDecimalDigits(min = 1, max = 10)
+        })
+    }
+
+    @Test
+    fun `hasDecimalDigits with valid min value should be valid`() {
+        validate(Employee(salary = Money.of(99.9999.toBigDecimal(), DOLLAR)), {
+            validate(Employee::salary).hasDecimalDigits(min = 4)
+        })
+    }
+
+    @Test
+    fun `hasDecimalDigits with valid max value should be valid`() {
+        validate(Employee(salary = Money.of(99.9999.toBigDecimal(), REAL)), {
+            validate(Employee::salary).hasDecimalDigits(max = 4)
+        })
+    }
+
+    @Test
+    fun `hasDecimalDigits with valid min and max value should be valid`() {
+        validate(Employee(salary = Money.of(99.9999.toBigDecimal(), DOLLAR)), {
+            validate(Employee::salary).hasDecimalDigits(min = 4, max = 4)
+        })
+    }
+
+    @Test
+    fun `hasDecimalDigits with negative valid min value should be valid`() {
+        validate(Employee(salary = Money.of(99.99999.unaryMinus().toBigDecimal(), REAL)), {
+            validate(Employee::salary).hasDecimalDigits(min = 5)
+        })
+    }
+
+    @Test
+    fun `hasDecimalDigits with negative valid max value should be valid`() {
+        validate(Employee(salary = Money.of(99.99999.unaryMinus().toBigDecimal(), DOLLAR)), {
+            validate(Employee::salary).hasDecimalDigits(max = 5)
+        })
+    }
+
+    @Test
+    fun `hasDecimalDigits with negative valid min and max value should be valid`() {
+        validate(Employee(salary = Money.of(99.99999.unaryMinus().toBigDecimal(), REAL)), {
+            validate(Employee::salary).hasDecimalDigits(min = 5, max = 5)
+        })
+    }
+
+    @Test
+    fun `hasDecimalDigits without min and max should be valid`() {
+        validate(Employee(salary = Money.of(99.9999.toBigDecimal(), DOLLAR)), {
+            validate(Employee::salary).hasDecimalDigits()
+        })
+    }
+
+    @Test
+    fun `hasDecimalDigits with less min value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(78.748536.toBigDecimal(), REAL)), {
+                validate(Employee::salary).hasDecimalDigits(min = 7)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(78.748536.toBigDecimal(), REAL),
+                        constraint = DecimalDigits(min = 7)))
+    }
+
+    @Test
+    fun `hasDecimalDigits with greater max value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(78.748536.toBigDecimal(), DOLLAR)), {
+                validate(Employee::salary).hasDecimalDigits(max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(78.748536.toBigDecimal(), DOLLAR),
+                        constraint = DecimalDigits(max = 5)))
+    }
+
+    @Test
+    fun `hasDecimalDigits with less value and greater value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(78.748536.toBigDecimal(), REAL)), {
+                validate(Employee::salary).hasDecimalDigits(min = 7, max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(78.748536.toBigDecimal(), REAL),
+                        constraint = DecimalDigits(min = 7, max = 5)))
+    }
+
+    @Test
+    fun `hasDecimalDigits with negative less min value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(78.748536.unaryMinus().toBigDecimal(), REAL)), {
+                validate(Employee::salary).hasDecimalDigits(min = 7)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(78.748536.unaryMinus().toBigDecimal(), REAL),
+                        constraint = DecimalDigits(min = 7)))
+    }
+
+    @Test
+    fun `hasDecimalDigits with negative greater max value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(78.748536.unaryMinus().toBigDecimal(), DOLLAR)), {
+                validate(Employee::salary).hasDecimalDigits(max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(78.748536.unaryMinus().toBigDecimal(), DOLLAR),
+                        constraint = DecimalDigits(max = 5)))
+    }
+
+    @Test
+    fun `hasDecimalDigits with negative less value and negative greater value should be invalid`() {
+        val exception = assertThrows<ConstraintViolationException> {
+            validate(Employee(salary = Money.of(78.748536.unaryMinus().toBigDecimal(), REAL)), {
+                validate(Employee::salary).hasDecimalDigits(min = 7, max = 5)
+            })
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "salary",
+                        value = Money.of(78.748536.unaryMinus().toBigDecimal(), REAL),
+                        constraint = DecimalDigits(min = 7, max = 5)))
+    }
 }
