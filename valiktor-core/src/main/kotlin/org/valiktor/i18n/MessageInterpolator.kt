@@ -24,7 +24,7 @@ package org.valiktor.i18n
  * @param messageParams specifies the parameters to replace in the message
  * @return the interpolated message
  */
-internal fun interpolate(messageBundle: MessageBundle, messageKey: String, messageParams: Map<String, *>): String =
+fun interpolate(messageBundle: MessageBundle, messageKey: String, messageParams: Map<String, *>): String =
         messageParams.toList()
                 .stream()
                 .reduce(messageBundle.getMessage(messageKey),

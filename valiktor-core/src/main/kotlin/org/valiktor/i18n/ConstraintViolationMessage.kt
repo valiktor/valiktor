@@ -36,10 +36,10 @@ interface ConstraintViolationMessage : ConstraintViolation {
     val message: String
 }
 
-internal data class DefaultConstraintViolationMessage(override val property: String,
-                                                      override val value: Any? = null,
-                                                      override val constraint: Constraint,
-                                                      override val message: String) :
+data class DefaultConstraintViolationMessage(override val property: String,
+                                             override val value: Any? = null,
+                                             override val constraint: Constraint,
+                                             override val message: String) :
         ConstraintViolation by DefaultConstraintViolation(property, value, constraint), ConstraintViolationMessage
 
 /**

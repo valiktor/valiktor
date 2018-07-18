@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
 private const val PREFIX_KEY = "org.valiktor"
+private const val DEFAULT_BASE_NAME = "org/valiktor/messages"
 private const val INITIAL_CACHE_SIZE = 48
 
 private data class CacheKey(val baseName: String,
@@ -55,7 +56,8 @@ class MessageBundle(val baseName: String,
         val control = ResourceBundle.Control.getControl(FORMAT_PROPERTIES)
 
         if (locale == Locale(""))
-            getMessages(fallbackBaseName, locale)
+            getMessages(DEFAULT_BASE_NAME, locale)
+                    .plus(getMessages(fallbackBaseName, locale))
                     .plus(getMessages(baseName, locale))
                     .toMap()
         else
@@ -63,7 +65,11 @@ class MessageBundle(val baseName: String,
                     .filter { it != Locale("") }
                     .plus(control.getCandidateLocales(baseName, fallbackLocale))
                     .reversed()
-                    .flatMap { getMessages(fallbackBaseName, it).plus(getMessages(baseName, it)) }
+                    .flatMap {
+                        getMessages(DEFAULT_BASE_NAME, locale)
+                                .plus(getMessages(fallbackBaseName, it))
+                                .plus(getMessages(baseName, it))
+                    }
                     .toMap()
     })
 
