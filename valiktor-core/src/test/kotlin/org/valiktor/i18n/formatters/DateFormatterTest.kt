@@ -1,6 +1,7 @@
 package org.valiktor.i18n.formatters
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.Test
 import org.valiktor.i18n.Formatters
 import org.valiktor.i18n.SupportedLocales
@@ -14,10 +15,10 @@ class DateFormatterTest {
         val calendar = Calendar.getInstance()
         calendar.set(2018, Calendar.DECEMBER, 31, 0, 0, 0)
 
-        Assertions.assertThat(Formatters[Date::class].formatAllSupportedLocales(calendar.time)).containsExactly(
-                Assertions.entry(SupportedLocales.DEFAULT, "12/31/2018"),
-                Assertions.entry(SupportedLocales.EN, "12/31/2018"),
-                Assertions.entry(SupportedLocales.PT_BR, "31/12/2018"))
+        assertThat(Formatters[Date::class].formatAllSupportedLocales(calendar.time)).containsExactly(
+                entry(SupportedLocales.DEFAULT, "Dec 31, 2018"),
+                entry(SupportedLocales.EN, "Dec 31, 2018"),
+                entry(SupportedLocales.PT_BR, "31/12/2018"))
     }
 
     @Test
@@ -25,9 +26,9 @@ class DateFormatterTest {
         val calendar = Calendar.getInstance()
         calendar.set(2018, Calendar.DECEMBER, 31, 23, 58, 59)
 
-        Assertions.assertThat(Formatters[Date::class].formatAllSupportedLocales(calendar.time)).containsExactly(
-                Assertions.entry(SupportedLocales.DEFAULT, "12/31/2018 23:58:59"),
-                Assertions.entry(SupportedLocales.EN, "12/31/2018 23:58:59"),
-                Assertions.entry(SupportedLocales.PT_BR, "31/12/2018 23:58:59"))
+        assertThat(Formatters[Date::class].formatAllSupportedLocales(calendar.time)).containsExactly(
+                entry(SupportedLocales.DEFAULT, "Dec 31, 2018 11:58:59 PM"),
+                entry(SupportedLocales.EN, "Dec 31, 2018 11:58:59 PM"),
+                entry(SupportedLocales.PT_BR, "31/12/2018 23:58:59"))
     }
 }

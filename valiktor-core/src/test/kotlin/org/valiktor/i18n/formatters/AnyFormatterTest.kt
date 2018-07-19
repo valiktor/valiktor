@@ -1,6 +1,7 @@
 package org.valiktor.i18n.formatters
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.Test
 import org.valiktor.i18n.Formatters
 import org.valiktor.i18n.SupportedLocales
@@ -18,41 +19,41 @@ class AnyFormatterTest {
 
     @Test
     fun `should format Any value`() {
-        Assertions.assertThat(Formatters[AnyFormatterFixture.TestObject::class].formatAllSupportedLocales(AnyFormatterFixture.TestObject)).containsExactly(
-                Assertions.entry(SupportedLocales.DEFAULT, "TestObject"),
-                Assertions.entry(SupportedLocales.EN, "TestObject"),
-                Assertions.entry(SupportedLocales.PT_BR, "TestObject"))
+        assertThat(Formatters[AnyFormatterFixture.TestObject::class].formatAllSupportedLocales(AnyFormatterFixture.TestObject)).containsExactly(
+                entry(SupportedLocales.DEFAULT, "TestObject"),
+                entry(SupportedLocales.EN, "TestObject"),
+                entry(SupportedLocales.PT_BR, "TestObject"))
     }
 
     @Test
     fun `should format Enum value`() {
-        Assertions.assertThat(Formatters[Enum::class].formatAllSupportedLocales(AnyFormatterFixture.TestEnum.E1)).containsExactly(
-                Assertions.entry(SupportedLocales.DEFAULT, "E1"),
-                Assertions.entry(SupportedLocales.EN, "E1"),
-                Assertions.entry(SupportedLocales.PT_BR, "E1"))
+        assertThat(Formatters[Enum::class].formatAllSupportedLocales(AnyFormatterFixture.TestEnum.E1)).containsExactly(
+                entry(SupportedLocales.DEFAULT, "E1"),
+                entry(SupportedLocales.EN, "E1"),
+                entry(SupportedLocales.PT_BR, "E1"))
     }
 
     @Test
     fun `should format String value`() {
-        Assertions.assertThat(Formatters[String::class].formatAllSupportedLocales("test")).containsExactly(
-                Assertions.entry(SupportedLocales.DEFAULT, "test"),
-                Assertions.entry(SupportedLocales.EN, "test"),
-                Assertions.entry(SupportedLocales.PT_BR, "test"))
+        assertThat(Formatters[String::class].formatAllSupportedLocales("test")).containsExactly(
+                entry(SupportedLocales.DEFAULT, "test"),
+                entry(SupportedLocales.EN, "test"),
+                entry(SupportedLocales.PT_BR, "test"))
     }
 
     @Test
     fun `should format Char value`() {
-        Assertions.assertThat(Formatters[Char::class].formatAllSupportedLocales('A')).containsExactly(
-                Assertions.entry(SupportedLocales.DEFAULT, "A"),
-                Assertions.entry(SupportedLocales.EN, "A"),
-                Assertions.entry(SupportedLocales.PT_BR, "A"))
+        assertThat(Formatters[Char::class].formatAllSupportedLocales('A')).containsExactly(
+                entry(SupportedLocales.DEFAULT, "A"),
+                entry(SupportedLocales.EN, "A"),
+                entry(SupportedLocales.PT_BR, "A"))
     }
 
     @Test
     fun `should format Boolean value`() {
-        Assertions.assertThat(Formatters[Boolean::class].formatAllSupportedLocales(true)).containsExactly(
-                Assertions.entry(SupportedLocales.DEFAULT, "true"),
-                Assertions.entry(SupportedLocales.EN, "true"),
-                Assertions.entry(SupportedLocales.PT_BR, "true"))
+        assertThat(Formatters[Boolean::class].formatAllSupportedLocales(true)).containsExactly(
+                entry(SupportedLocales.DEFAULT, "true"),
+                entry(SupportedLocales.EN, "true"),
+                entry(SupportedLocales.PT_BR, "true"))
     }
 }

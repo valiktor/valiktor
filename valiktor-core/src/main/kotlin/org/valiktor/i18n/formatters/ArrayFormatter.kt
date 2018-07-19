@@ -29,7 +29,5 @@ import org.valiktor.i18n.MessageBundle
 object ArrayFormatter : Formatter<Array<Any>> {
 
     override fun format(value: Array<Any>, messageBundle: MessageBundle): String =
-            value.joinToString(
-                    separator = messageBundle.getMessage("org.valiktor.formatters.ArrayFormatter.separator"),
-                    transform = { Formatters[it.javaClass.kotlin].format(it, messageBundle) })
+            value.joinToString { Formatters[it.javaClass.kotlin].format(it, messageBundle) }
 }

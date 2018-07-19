@@ -29,7 +29,5 @@ import org.valiktor.i18n.MessageBundle
 object IterableFormatter : Formatter<Iterable<Any>> {
 
     override fun format(value: Iterable<Any>, messageBundle: MessageBundle): String =
-            value.joinToString(
-                    separator = messageBundle.getMessage("org.valiktor.formatters.IterableFormatter.separator"),
-                    transform = { Formatters[it.javaClass.kotlin].format(it, messageBundle) })
+            value.joinToString { Formatters[it.javaClass.kotlin].format(it, messageBundle) }
 }

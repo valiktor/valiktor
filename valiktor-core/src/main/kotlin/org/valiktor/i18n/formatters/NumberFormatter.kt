@@ -19,8 +19,7 @@ package org.valiktor.i18n.formatters
 import org.valiktor.i18n.Formatter
 import org.valiktor.i18n.MessageBundle
 import java.math.BigDecimal
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
 
 /**
  * Represents the formatter for [Number] values
@@ -31,21 +30,16 @@ import java.text.DecimalFormatSymbols
 object NumberFormatter : Formatter<Number> {
 
     override fun format(value: Number, messageBundle: MessageBundle): String {
-        val symbols = DecimalFormatSymbols.getInstance(messageBundle.locale)
-        symbols.groupingSeparator = messageBundle.getMessage("org.valiktor.formatters.NumberFormatter.groupingSeparator")[0]
-        symbols.decimalSeparator = messageBundle.getMessage("org.valiktor.formatters.NumberFormatter.decimalSeparator")[0]
-
         val bigNum = value as? BigDecimal ?: BigDecimal(value.toString()).stripTrailingZeros()
         val integerDigits = (bigNum.precision() - bigNum.scale()).let { if (it <= 0) 1 else it }
         val fractionDigits = bigNum.scale().let { if (it < 0) 0 else it }
 
-        val decimalFormat = DecimalFormat("#,###.#")
-        decimalFormat.decimalFormatSymbols = symbols
-        decimalFormat.minimumIntegerDigits = integerDigits
-        decimalFormat.maximumIntegerDigits = integerDigits
-        decimalFormat.minimumFractionDigits = fractionDigits
-        decimalFormat.maximumFractionDigits = fractionDigits
+        val numberFormat = NumberFormat.getNumberInstance(messageBundle.locale)
+        numberFormat.minimumIntegerDigits = integerDigits
+        numberFormat.maximumIntegerDigits = integerDigits
+        numberFormat.minimumFractionDigits = fractionDigits
+        numberFormat.maximumFractionDigits = fractionDigits
 
-        return decimalFormat.format(value)
+        return numberFormat.format(value)
     }
 }
