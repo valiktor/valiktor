@@ -1,9 +1,5 @@
 package org.valiktor.i18n
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import org.valiktor.i18n.FormattersFixture.TestFormatter
 import org.valiktor.i18n.FormattersFixture.TestObject
 import org.valiktor.i18n.FormattersFixture.TestParentL
@@ -18,6 +14,9 @@ import org.valiktor.i18n.FormattersFixture.TestParentR
 import org.valiktor.i18n.FormattersFixture.TestParentRFormatter
 import org.valiktor.i18n.formatters.*
 import java.util.*
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 private object FormattersFixture {
 
@@ -58,7 +57,7 @@ private object FormattersFixture {
 
 class FormattersTest {
 
-    @BeforeEach
+    @BeforeTest
     fun `remove formatters`() {
         Formatters -= TestObject::class
         Formatters -= TestParentL::class
@@ -70,14 +69,12 @@ class FormattersTest {
 
     @Test
     fun `should get default formatters`() {
-        assertAll(
-                { assertEquals(Formatters[Any::class], AnyFormatter) },
-                { assertEquals(Formatters[Number::class], NumberFormatter) },
-                { assertEquals(Formatters[Date::class], DateFormatter) },
-                { assertEquals(Formatters[Calendar::class], CalendarFormatter) },
-                { assertEquals(Formatters[Iterable::class], IterableFormatter) },
-                { assertEquals(Formatters[Array<Any>::class], ArrayFormatter) }
-        )
+        assertEquals(Formatters[Any::class], AnyFormatter)
+        assertEquals(Formatters[Number::class], NumberFormatter)
+        assertEquals(Formatters[Date::class], DateFormatter)
+        assertEquals(Formatters[Calendar::class], CalendarFormatter)
+        assertEquals<Formatter<Iterable<Any>>>(Formatters[Iterable::class], IterableFormatter)
+        assertEquals(Formatters[Array<Any>::class], ArrayFormatter)
     }
 
     @Test

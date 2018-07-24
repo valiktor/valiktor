@@ -1,14 +1,14 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.*
 import org.valiktor.functions.BigIntegerFunctionsFixture.Employee
 import org.valiktor.validate
 import java.math.BigInteger
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 private object BigIntegerFunctionsFixture {
 
@@ -26,7 +26,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNull with not null value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
                 validate(Employee::id).isNull()
             })
@@ -44,7 +44,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotNull with null value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(), {
                 validate(Employee::id).isNotNull()
             })
@@ -69,7 +69,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isEqualTo with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 2.toBigInteger()), {
                 validate(Employee::id).isEqualTo(1.toBigInteger())
             })
@@ -94,7 +94,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotEqualTo with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
                 validate(Employee::id).isNotEqualTo(1.toBigInteger())
             })
@@ -119,7 +119,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isIn vararg with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
                 validate(Employee::id).isIn(0.toBigInteger(), 2.toBigInteger(), 3.toBigInteger())
             })
@@ -144,7 +144,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isIn iterable with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
                 validate(Employee::id).isIn(listOf(0.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))
             })
@@ -169,7 +169,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotIn vararg with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
                 validate(Employee::id).isNotIn(1.toBigInteger(), 2.toBigInteger(), 3.toBigInteger())
             })
@@ -194,7 +194,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotIn iterable with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
                 validate(Employee::id).isNotIn(listOf(1.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))
             })
@@ -219,7 +219,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isZero with one should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
                 validate(Employee::id).isZero()
             })
@@ -248,7 +248,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotZero with zero should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 0.toBigInteger()), {
                 validate(Employee::id).isNotZero()
             })
@@ -277,7 +277,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isOne with zero should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 0.toBigInteger()), {
                 validate(Employee::id).isOne()
             })
@@ -306,7 +306,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotOne with one should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
                 validate(Employee::id).isNotOne()
             })
@@ -335,7 +335,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isPositive with zero should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 0.toBigInteger()), {
                 validate(Employee::id).isPositive()
             })
@@ -350,7 +350,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isPositive with negative value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 98765.unaryMinus().toBigInteger()), {
                 validate(Employee::id).isPositive()
             })
@@ -386,7 +386,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNegativeOrZero with positive value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
                 validate(Employee::id).isNegativeOrZero()
             })
@@ -415,7 +415,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNegative with zero should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 0.toBigInteger()), {
                 validate(Employee::id).isNegative()
             })
@@ -430,7 +430,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNegative with positive value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
                 validate(Employee::id).isNegative()
             })
@@ -466,7 +466,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isPositiveOrZero with negative value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 98765.unaryMinus().toBigInteger()), {
                 validate(Employee::id).isPositiveOrZero()
             })
@@ -502,7 +502,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isLessThan with greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 50.toBigInteger()), {
                 validate(Employee::id).isLessThan(49.toBigInteger())
             })
@@ -517,7 +517,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isLessThan with negative greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 50.unaryMinus().toBigInteger()), {
                 validate(Employee::id).isLessThan(51.unaryMinus().toBigInteger())
             })
@@ -532,7 +532,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isLessThan with equal value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 0.toBigInteger()), {
                 validate(Employee::id).isLessThan(0.toBigInteger())
             })
@@ -575,7 +575,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo with greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 56789.toBigInteger()), {
                 validate(Employee::id).isLessThanOrEqualTo(57.toBigInteger())
             })
@@ -590,7 +590,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo with negative greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 96.unaryMinus().toBigInteger()), {
                 validate(Employee::id).isLessThanOrEqualTo(97.unaryMinus().toBigInteger())
             })
@@ -626,7 +626,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isGreaterThan with less value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 10.toBigInteger()), {
                 validate(Employee::id).isGreaterThan(11.toBigInteger())
             })
@@ -641,7 +641,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isGreaterThan with negative less value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 189.unaryMinus().toBigInteger()), {
                 validate(Employee::id).isGreaterThan(180.unaryMinus().toBigInteger())
             })
@@ -656,7 +656,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isGreaterThan with equal value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 0.toBigInteger()), {
                 validate(Employee::id).isGreaterThan(0.toBigInteger())
             })
@@ -699,7 +699,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo with less value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 57.toBigInteger()), {
                 validate(Employee::id).isGreaterThanOrEqualTo(56789.toBigInteger())
             })
@@ -714,7 +714,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo with negative less value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 97.unaryMinus().toBigInteger()), {
                 validate(Employee::id).isGreaterThanOrEqualTo(96.unaryMinus().toBigInteger())
             })
@@ -778,7 +778,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isBetween with less start value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 10.toBigInteger()), {
                 validate(Employee::id).isBetween(start = 11.toBigInteger(), end = 12.toBigInteger())
             })
@@ -793,7 +793,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isBetween with greater end value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 12.toBigInteger()), {
                 validate(Employee::id).isBetween(start = 10.toBigInteger(), end = 11.toBigInteger())
             })
@@ -808,7 +808,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isBetween with less negative start value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 10.unaryMinus().toBigInteger()), {
                 validate(Employee::id).isBetween(start = 9.unaryMinus().toBigInteger(), end = 8.unaryMinus().toBigInteger())
             })
@@ -823,7 +823,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isBetween with greater negative end value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 12.unaryMinus().toBigInteger()), {
                 validate(Employee::id).isBetween(start = 14.unaryMinus().toBigInteger(), end = 13.unaryMinus().toBigInteger())
             })
@@ -873,7 +873,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotBetween with equal start value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 0.toBigInteger()), {
                 validate(Employee::id).isNotBetween(start = 0.toBigInteger(), end = 1.toBigInteger())
             })
@@ -888,7 +888,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotBetween with equal end value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.toBigInteger()), {
                 validate(Employee::id).isNotBetween(start = 0.toBigInteger(), end = 1.toBigInteger())
             })
@@ -903,7 +903,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotBetween with equal negative start value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 2.unaryMinus().toBigInteger()), {
                 validate(Employee::id).isNotBetween(start = 2.unaryMinus().toBigInteger(), end = 1.unaryMinus().toBigInteger())
             })
@@ -918,7 +918,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotBetween with equal negative end value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 1.unaryMinus().toBigInteger()), {
                 validate(Employee::id).isNotBetween(start = 2.unaryMinus().toBigInteger(), end = 1.unaryMinus().toBigInteger())
             })
@@ -933,7 +933,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotBetween with within value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 5.toBigInteger()), {
                 validate(Employee::id).isNotBetween(start = 0.toBigInteger(), end = 10.toBigInteger())
             })
@@ -948,7 +948,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `isNotBetween with within negative value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 15.unaryMinus().toBigInteger()), {
                 validate(Employee::id).isNotBetween(start = 20.unaryMinus().toBigInteger(), end = 10.unaryMinus().toBigInteger())
             })
@@ -1019,7 +1019,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `hasDigits with less min value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 748536.toBigInteger()), {
                 validate(Employee::id).hasDigits(min = 7)
             })
@@ -1034,7 +1034,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `hasDigits with greater max value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 748536.toBigInteger()), {
                 validate(Employee::id).hasDigits(max = 5)
             })
@@ -1049,7 +1049,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `hasDigits with less value and greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 748536.toBigInteger()), {
                 validate(Employee::id).hasDigits(min = 7, max = 5)
             })
@@ -1064,7 +1064,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `hasDigits with negative less min value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 748536.unaryMinus().toBigInteger()), {
                 validate(Employee::id).hasDigits(min = 7)
             })
@@ -1079,7 +1079,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `hasDigits with negative greater max value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 748536.unaryMinus().toBigInteger()), {
                 validate(Employee::id).hasDigits(max = 5)
             })
@@ -1094,7 +1094,7 @@ class BigIntegerFunctionsTest {
 
     @Test
     fun `hasDigits with negative less value and negative greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(id = 748536.unaryMinus().toBigInteger()), {
                 validate(Employee::id).hasDigits(min = 7, max = 5)
             })

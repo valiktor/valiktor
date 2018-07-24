@@ -1,13 +1,13 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.*
 import org.valiktor.functions.FloatFunctionsFixture.Employee
 import org.valiktor.validate
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 private object FloatFunctionsFixture {
 
@@ -25,7 +25,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNull with not null value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 0f), {
                 validate(Employee::salary).isNull()
             })
@@ -43,7 +43,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotNull with null value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(), {
                 validate(Employee::salary).isNotNull()
             })
@@ -75,7 +75,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isEqualTo with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 0f), {
                 validate(Employee::salary).isEqualTo(1f)
             })
@@ -100,7 +100,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotEqualTo with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1f), {
                 validate(Employee::salary).isNotEqualTo(1f)
             })
@@ -111,7 +111,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotEqualTo with same value and 2 decimal digits should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1f), {
                 validate(Employee::salary).isNotEqualTo(1.00f)
             })
@@ -143,7 +143,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isIn vararg with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1f), {
                 validate(Employee::salary).isIn(0f, 10f)
             })
@@ -175,7 +175,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isIn iterable with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1f), {
                 validate(Employee::salary).isIn(listOf(0f, 10f))
             })
@@ -200,7 +200,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotIn vararg with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1f), {
                 validate(Employee::salary).isNotIn(0f, 1f, 10f)
             })
@@ -211,7 +211,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotIn vararg with same value and 2 decimal digits should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1f), {
                 validate(Employee::salary).isNotIn(0f, 1.00f, 10f)
             })
@@ -236,7 +236,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotIn iterable with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1f), {
                 validate(Employee::salary).isNotIn(listOf(0f, 1f, 10f))
             })
@@ -247,7 +247,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotIn iterable with same value and 2 decimal digits should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1f), {
                 validate(Employee::salary).isNotIn(listOf(0f, 1.00f, 10f))
             })
@@ -279,7 +279,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isZero with one should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1f), {
                 validate(Employee::salary).isZero()
             })
@@ -308,7 +308,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotZero with zero should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 0f), {
                 validate(Employee::salary).isNotZero()
             })
@@ -323,7 +323,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotZero with zero and 2 decimal digits should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 0.00f), {
                 validate(Employee::salary).isNotZero()
             })
@@ -359,7 +359,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isOne with zero should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 0f), {
                 validate(Employee::salary).isOne()
             })
@@ -388,7 +388,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotOne with one should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1f), {
                 validate(Employee::salary).isNotOne()
             })
@@ -403,7 +403,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotOne with one and 2 decimal digits should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1.00f), {
                 validate(Employee::salary).isNotOne()
             })
@@ -432,7 +432,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isPositive with zero should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 0.0f), {
                 validate(Employee::salary).isPositive()
             })
@@ -447,7 +447,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isPositive with negative value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 98765.432f.unaryMinus()), {
                 validate(Employee::salary).isPositive()
             })
@@ -483,7 +483,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNegativeOrZero with positive value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1.0f), {
                 validate(Employee::salary).isNegativeOrZero()
             })
@@ -512,7 +512,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNegative with zero should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 0.0f), {
                 validate(Employee::salary).isNegative()
             })
@@ -527,7 +527,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNegative with positive value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1.0f), {
                 validate(Employee::salary).isNegative()
             })
@@ -563,7 +563,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isPositiveOrZero with negative value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 98765.432f.unaryMinus()), {
                 validate(Employee::salary).isPositiveOrZero()
             })
@@ -599,7 +599,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isLessThan with greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 50.0f), {
                 validate(Employee::salary).isLessThan(49.9f)
             })
@@ -614,7 +614,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isLessThan with negative greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 50.9f.unaryMinus()), {
                 validate(Employee::salary).isLessThan(51.0f.unaryMinus())
             })
@@ -629,7 +629,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isLessThan with equal value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 0.0f), {
                 validate(Employee::salary).isLessThan(0.0f)
             })
@@ -672,7 +672,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo with greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 56789.19f), {
                 validate(Employee::salary).isLessThanOrEqualTo(57.0f)
             })
@@ -687,7 +687,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo with negative greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 96.0f.unaryMinus()), {
                 validate(Employee::salary).isLessThanOrEqualTo(97.0f.unaryMinus())
             })
@@ -723,7 +723,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isGreaterThan with less value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 10.0f), {
                 validate(Employee::salary).isGreaterThan(11.0f)
             })
@@ -738,7 +738,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isGreaterThan with negative less value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 189.20f.unaryMinus()), {
                 validate(Employee::salary).isGreaterThan(180.0f.unaryMinus())
             })
@@ -753,7 +753,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isGreaterThan with equal value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 0.0f), {
                 validate(Employee::salary).isGreaterThan(0.0f)
             })
@@ -796,7 +796,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo with less value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 57.0f), {
                 validate(Employee::salary).isGreaterThanOrEqualTo(56789.19f)
             })
@@ -811,7 +811,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo with negative less value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 97.0f.unaryMinus()), {
                 validate(Employee::salary).isGreaterThanOrEqualTo(96.0f.unaryMinus())
             })
@@ -875,7 +875,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isBetween with less start value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 10.0f), {
                 validate(Employee::salary).isBetween(start = 10.1f, end = 11.0f)
             })
@@ -890,7 +890,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isBetween with greater end value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 12.0f), {
                 validate(Employee::salary).isBetween(start = 10.1f, end = 11.0f)
             })
@@ -905,7 +905,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isBetween with less negative start value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 10.0f.unaryMinus()), {
                 validate(Employee::salary).isBetween(start = 9.9f.unaryMinus(), end = 8.0f.unaryMinus())
             })
@@ -920,7 +920,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isBetween with greater negative end value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 12.0f.unaryMinus()), {
                 validate(Employee::salary).isBetween(start = 13.0f.unaryMinus(), end = 12.9f.unaryMinus())
             })
@@ -970,7 +970,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotBetween with equal start value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 0.0f), {
                 validate(Employee::salary).isNotBetween(start = 0.0f, end = 1.0f)
             })
@@ -985,7 +985,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotBetween with equal end value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1.0f), {
                 validate(Employee::salary).isNotBetween(start = 0.0f, end = 1.0f)
             })
@@ -1000,7 +1000,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotBetween with equal negative start value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 2.0f.unaryMinus()), {
                 validate(Employee::salary).isNotBetween(start = 2.0f.unaryMinus(), end = 1.0f.unaryMinus())
             })
@@ -1015,7 +1015,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotBetween with equal negative end value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1.0f.unaryMinus()), {
                 validate(Employee::salary).isNotBetween(start = 2.0f.unaryMinus(), end = 1.0f.unaryMinus())
             })
@@ -1030,7 +1030,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotBetween with within value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 0.5f), {
                 validate(Employee::salary).isNotBetween(start = 0.0f, end = 1.0f)
             })
@@ -1045,7 +1045,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `isNotBetween with within negative value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 1.5f.unaryMinus()), {
                 validate(Employee::salary).isNotBetween(start = 2.0f.unaryMinus(), end = 1.0f.unaryMinus())
             })
@@ -1116,7 +1116,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasIntegerDigits with less min value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 748536.78f), {
                 validate(Employee::salary).hasIntegerDigits(min = 7)
             })
@@ -1131,7 +1131,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasIntegerDigits with greater max value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 748536.78f), {
                 validate(Employee::salary).hasIntegerDigits(max = 5)
             })
@@ -1146,7 +1146,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasIntegerDigits with less value and greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 748536.78f), {
                 validate(Employee::salary).hasIntegerDigits(min = 7, max = 5)
             })
@@ -1161,7 +1161,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasIntegerDigits with negative less min value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 748536.78f.unaryMinus()), {
                 validate(Employee::salary).hasIntegerDigits(min = 7)
             })
@@ -1176,7 +1176,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasIntegerDigits with negative greater max value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 748536.78f.unaryMinus()), {
                 validate(Employee::salary).hasIntegerDigits(max = 5)
             })
@@ -1191,7 +1191,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasIntegerDigits with negative less value and negative greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 748536.78f.unaryMinus()), {
                 validate(Employee::salary).hasIntegerDigits(min = 7, max = 5)
             })
@@ -1262,7 +1262,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasDecimalDigits with less min value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 78.748536f), {
                 validate(Employee::salary).hasDecimalDigits(min = 7)
             })
@@ -1277,7 +1277,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasDecimalDigits with greater max value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 78.748536f), {
                 validate(Employee::salary).hasDecimalDigits(max = 5)
             })
@@ -1292,7 +1292,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasDecimalDigits with less value and greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 78.748536f), {
                 validate(Employee::salary).hasDecimalDigits(min = 7, max = 5)
             })
@@ -1307,7 +1307,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasDecimalDigits with negative less min value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 78.748536f.unaryMinus()), {
                 validate(Employee::salary).hasDecimalDigits(min = 7)
             })
@@ -1322,7 +1322,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasDecimalDigits with negative greater max value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 78.748536f.unaryMinus()), {
                 validate(Employee::salary).hasDecimalDigits(max = 5)
             })
@@ -1337,7 +1337,7 @@ class FloatFunctionsTest {
 
     @Test
     fun `hasDecimalDigits with negative less value and negative greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(salary = 78.748536f.unaryMinus()), {
                 validate(Employee::salary).hasDecimalDigits(min = 7, max = 5)
             })

@@ -1,8 +1,6 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.*
@@ -10,6 +8,8 @@ import org.valiktor.functions.EnumFunctionsFixture.Employee
 import org.valiktor.functions.EnumFunctionsFixture.Gender.FEMALE
 import org.valiktor.functions.EnumFunctionsFixture.Gender.MALE
 import org.valiktor.validate
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 private object EnumFunctionsFixture {
 
@@ -28,7 +28,7 @@ class EnumFunctionsTest {
 
     @Test
     fun `isNull with not null value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = MALE), {
                 validate(Employee::gender).isNull()
             })
@@ -46,7 +46,7 @@ class EnumFunctionsTest {
 
     @Test
     fun `isNotNull with null value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(), {
                 validate(Employee::gender).isNotNull()
             })
@@ -71,7 +71,7 @@ class EnumFunctionsTest {
 
     @Test
     fun `isEqualTo with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = MALE), {
                 validate(Employee::gender).isEqualTo(FEMALE)
             })
@@ -96,7 +96,7 @@ class EnumFunctionsTest {
 
     @Test
     fun `isNotEqualTo with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = MALE), {
                 validate(Employee::gender).isNotEqualTo(MALE)
             })
@@ -121,7 +121,7 @@ class EnumFunctionsTest {
 
     @Test
     fun `isIn vararg with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = MALE), {
                 validate(Employee::gender).isIn(FEMALE)
             })
@@ -146,7 +146,7 @@ class EnumFunctionsTest {
 
     @Test
     fun `isIn iterable with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = MALE), {
                 validate(Employee::gender).isIn(listOf(FEMALE))
             })
@@ -171,7 +171,7 @@ class EnumFunctionsTest {
 
     @Test
     fun `isNotIn vararg with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = MALE), {
                 validate(Employee::gender).isNotIn(MALE, FEMALE)
             })
@@ -196,7 +196,7 @@ class EnumFunctionsTest {
 
     @Test
     fun `isNotIn iterable with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = MALE), {
                 validate(Employee::gender).isNotIn(listOf(MALE, FEMALE))
             })

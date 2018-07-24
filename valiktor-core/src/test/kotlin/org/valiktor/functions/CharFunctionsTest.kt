@@ -1,13 +1,13 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.*
 import org.valiktor.functions.CharFunctionsFixture.Employee
 import org.valiktor.validate
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 private object CharFunctionsFixture {
 
@@ -25,7 +25,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNull with not null property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isNull()
             })
@@ -43,7 +43,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotNull with null property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(), {
                 validate(Employee::gender).isNotNull()
             })
@@ -68,7 +68,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isEqualTo with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isEqualTo('F')
             })
@@ -79,7 +79,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isEqualTo with different case value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'm'), {
                 validate(Employee::gender).isEqualTo('M')
             })
@@ -111,7 +111,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotEqualTo with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isNotEqualTo('M')
             })
@@ -136,7 +136,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isIn vararg with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isIn('F')
             })
@@ -147,7 +147,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isIn vararg with different case value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'm'), {
                 validate(Employee::gender).isIn('M', 'F')
             })
@@ -172,7 +172,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isIn iterable with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isIn(listOf('F'))
             })
@@ -183,7 +183,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isIn iterable with different case value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'm'), {
                 validate(Employee::gender).isIn(listOf('M', 'F'))
             })
@@ -215,7 +215,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotIn vararg with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isNotIn('M', 'F')
             })
@@ -247,7 +247,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotIn iterable with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isNotIn(listOf('M', 'F'))
             })
@@ -272,7 +272,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isWhitespace with another character should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isWhitespace()
             })
@@ -298,7 +298,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotWhitespace with whitespace should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = ' '), {
                 validate(Employee::gender).isNotWhitespace()
             })
@@ -324,7 +324,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isLetter with digit should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = '9'), {
                 validate(Employee::gender).isLetter()
             })
@@ -350,7 +350,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotLetter with letter should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isNotLetter()
             })
@@ -376,7 +376,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isDigit with letter should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isDigit()
             })
@@ -402,7 +402,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotDigit with digit should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = '9'), {
                 validate(Employee::gender).isNotDigit()
             })
@@ -435,7 +435,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isLetterOrDigit with special character should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = '~'), {
                 validate(Employee::gender).isLetterOrDigit()
             })
@@ -461,7 +461,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotLetterOrDigit with letter should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isNotLetterOrDigit()
             })
@@ -473,7 +473,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotLetterOrDigit with digit should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = '9'), {
                 validate(Employee::gender).isNotLetterOrDigit()
             })
@@ -499,7 +499,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isUpperCase with lower case character should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'm'), {
                 validate(Employee::gender).isUpperCase()
             })
@@ -525,7 +525,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isLowerCase with lower case character should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isLowerCase()
             })
@@ -551,7 +551,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isEqualToIgnoringCase with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isEqualToIgnoringCase('F')
             })
@@ -576,7 +576,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotEqualToIgnoringCase with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isNotEqualToIgnoringCase('m')
             })
@@ -601,7 +601,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isInIgnoringCase vararg with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isInIgnoringCase('F')
             })
@@ -626,7 +626,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isInIgnoringCase iterable with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isInIgnoringCase(listOf('F'))
             })
@@ -651,7 +651,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotInIgnoringCase vararg with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isNotInIgnoringCase('m', 'f')
             })
@@ -676,7 +676,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotInIgnoringCase iterable with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'M'), {
                 validate(Employee::gender).isNotInIgnoringCase(listOf('m', 'f'))
             })
@@ -701,7 +701,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isLessThan with greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'm'), {
                 validate(Employee::gender).isLessThan('k')
             })
@@ -716,7 +716,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isLessThan with equal value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'm'), {
                 validate(Employee::gender).isLessThan('m')
             })
@@ -752,7 +752,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo with greater value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'm'), {
                 validate(Employee::gender).isLessThanOrEqualTo('l')
             })
@@ -781,7 +781,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isGreaterThan with less value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'm'), {
                 validate(Employee::gender).isGreaterThan('n')
             })
@@ -796,7 +796,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isGreaterThan with equal value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'm'), {
                 validate(Employee::gender).isGreaterThan('m')
             })
@@ -832,7 +832,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo with less value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'm'), {
                 validate(Employee::gender).isGreaterThanOrEqualTo('n')
             })
@@ -875,7 +875,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isBetween with less start value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'a'), {
                 validate(Employee::gender).isBetween(start = 'b', end = 'd')
             })
@@ -890,7 +890,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isBetween with greater end value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'e'), {
                 validate(Employee::gender).isBetween(start = 'b', end = 'd')
             })
@@ -926,7 +926,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotBetween with equal start value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'a'), {
                 validate(Employee::gender).isNotBetween(start = 'a', end = 'c')
             })
@@ -941,7 +941,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotBetween with equal end value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'c'), {
                 validate(Employee::gender).isNotBetween(start = 'a', end = 'c')
             })
@@ -956,7 +956,7 @@ class CharFunctionsTest {
 
     @Test
     fun `isNotBetween with within value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(gender = 'b'), {
                 validate(Employee::gender).isNotBetween(start = 'a', end = 'c')
             })

@@ -1,13 +1,13 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.*
 import org.valiktor.functions.StringFunctionsFixture.Employee
 import org.valiktor.validate
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 private object StringFunctionsFixture {
 
@@ -25,7 +25,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isNull with not null property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "test"), {
                 validate(Employee::name).isNull()
             })
@@ -43,7 +43,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isNotNull with null property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(), {
                 validate(Employee::name).isNotNull()
             })
@@ -68,7 +68,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isEqualTo with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "test"), {
                 validate(Employee::name).isEqualTo("test1")
             })
@@ -79,7 +79,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isEqualTo with different case value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "test"), {
                 validate(Employee::name).isEqualTo("TEST")
             })
@@ -111,7 +111,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isNotEqualTo with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "test"), {
                 validate(Employee::name).isNotEqualTo("test")
             })
@@ -136,7 +136,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isIn vararg with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "test1"), {
                 validate(Employee::name).isIn("test0", "test2", "test3")
             })
@@ -147,7 +147,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isIn vararg with different case value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "test1"), {
                 validate(Employee::name).isIn("TEST1", "test2", "test3")
             })
@@ -172,7 +172,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isIn iterable with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "test1"), {
                 validate(Employee::name).isIn(listOf("test0", "test2", "test3"))
             })
@@ -183,7 +183,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isIn iterable with different case value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "test1"), {
                 validate(Employee::name).isIn(listOf("TEST1", "test2", "test3"))
             })
@@ -215,7 +215,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isNotIn vararg with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "test1"), {
                 validate(Employee::name).isNotIn("test1", "test2", "test3")
             })
@@ -247,7 +247,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isNotIn iterable with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "test1"), {
                 validate(Employee::name).isNotIn(listOf("test1", "test2", "test3"))
             })
@@ -272,7 +272,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isEmpty with blank value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = " "), {
                 validate(Employee::name).isEmpty()
             })
@@ -298,7 +298,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isNotEmpty with empty value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = ""), {
                 validate(Employee::name).isNotEmpty()
             })
@@ -331,7 +331,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isBlank with not blank value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "a"), {
                 validate(Employee::name).isBlank()
             })
@@ -357,7 +357,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isNotBlank with empty or blank value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(email = "", username = " "), {
                 validate(Employee::email).isNotBlank()
                 validate(Employee::username).isNotBlank()
@@ -385,7 +385,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isEqualToIgnoringCase with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "a"), {
                 validate(Employee::name).isEqualToIgnoringCase("b")
             })
@@ -410,7 +410,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isNotEqualToIgnoringCase with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "a"), {
                 validate(Employee::name).isNotEqualToIgnoringCase("A")
             })
@@ -435,7 +435,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isInIgnoringCase vararg with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "a"), {
                 validate(Employee::name).isInIgnoringCase("b", "c")
             })
@@ -460,7 +460,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isInIgnoringCase iterable with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "a"), {
                 validate(Employee::name).isInIgnoringCase(listOf("b", "c"))
             })
@@ -485,7 +485,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isNotInIgnoringCase vararg with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "A"), {
                 validate(Employee::name).isNotInIgnoringCase("a", "b", "c")
             })
@@ -510,7 +510,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isNotInIgnoringCase iterable with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "A"), {
                 validate(Employee::name).isNotInIgnoringCase(listOf("a", "b", "c"))
             })
@@ -556,7 +556,7 @@ class StringFunctionsTest {
 
     @Test
     fun `size with invalid min and max value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John", email = "john@company.com", username = "john"), {
                 validate(Employee::name).hasSize(min = 5)
                 validate(Employee::email).hasSize(max = 15)
@@ -586,7 +586,7 @@ class StringFunctionsTest {
 
     @Test
     fun `contains with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).contains("j")
             })
@@ -612,7 +612,7 @@ class StringFunctionsTest {
 
     @Test
     fun `containsIgnoringCase with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsIgnoringCase("g")
             })
@@ -638,7 +638,7 @@ class StringFunctionsTest {
 
     @Test
     fun `containsAll vararg with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAll("j", "o", "h", "n")
             })
@@ -664,7 +664,7 @@ class StringFunctionsTest {
 
     @Test
     fun `containsAll iterable with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAll(listOf("j", "o", "h", "n"))
             })
@@ -690,7 +690,7 @@ class StringFunctionsTest {
 
     @Test
     fun `containsAllIgnoringCase vararg with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAllIgnoringCase("j", "o", "h", "n", "k")
             })
@@ -716,7 +716,7 @@ class StringFunctionsTest {
 
     @Test
     fun `containsAllIgnoringCase iterable with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAllIgnoringCase(listOf("j", "o", "h", "n", "k"))
             })
@@ -742,7 +742,7 @@ class StringFunctionsTest {
 
     @Test
     fun `containsAny vararg with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAny("j", "w", "x", "e")
             })
@@ -768,7 +768,7 @@ class StringFunctionsTest {
 
     @Test
     fun `containsAny iterable with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAny(listOf("j", "w", "x", "e"))
             })
@@ -794,7 +794,7 @@ class StringFunctionsTest {
 
     @Test
     fun `containsAnyIgnoringCase vararg with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAnyIgnoringCase("w", "x", "e")
             })
@@ -820,7 +820,7 @@ class StringFunctionsTest {
 
     @Test
     fun `containsAnyIgnoringCase iterable with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).containsAnyIgnoringCase(listOf("w", "x", "e"))
             })
@@ -846,7 +846,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotContain with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContain("J")
             })
@@ -872,7 +872,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotContainIgnoringCase with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainIgnoringCase("j")
             })
@@ -898,7 +898,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotContainAll vararg with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAll("J", "o", "h", "n")
             })
@@ -924,7 +924,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotContainAll iterable with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAll(listOf("J", "o", "h", "n"))
             })
@@ -950,7 +950,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotContainAllIgnoringCase vararg with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAllIgnoringCase("J", "O", "H", "N")
             })
@@ -976,7 +976,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotContainAllIgnoringCase iterable with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAllIgnoringCase(listOf("J", "O", "H", "N"))
             })
@@ -1002,7 +1002,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotContainAny vararg with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAny("J", "w", "x", "e")
             })
@@ -1028,7 +1028,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotContainAny iterable with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAny(listOf("J", "w", "x", "e"))
             })
@@ -1054,7 +1054,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotContainAnyIgnoringCase vararg with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAnyIgnoringCase("j", "w", "x", "e")
             })
@@ -1080,7 +1080,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotContainAnyIgnoringCase iterable with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotContainAnyIgnoringCase(listOf("j", "w", "x", "e"))
             })
@@ -1106,7 +1106,7 @@ class StringFunctionsTest {
 
     @Test
     fun `matches with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).matches(Regex("^[0-9]*\$"))
             })
@@ -1132,7 +1132,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotMatch with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "0123456789"), {
                 validate(Employee::name).doesNotMatch(Regex("^[0-9]*\$"))
             })
@@ -1158,7 +1158,7 @@ class StringFunctionsTest {
 
     @Test
     fun `containsRegex with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).contains(Regex("a([bc]+)d?"))
             })
@@ -1184,7 +1184,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotContainRegex with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "xJohny"), {
                 validate(Employee::name).doesNotContain(Regex("J([oh]+)n?"))
             })
@@ -1210,7 +1210,7 @@ class StringFunctionsTest {
 
     @Test
     fun `startsWith with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).startsWith("j")
             })
@@ -1236,7 +1236,7 @@ class StringFunctionsTest {
 
     @Test
     fun `startsWithIgnoringCase with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).startsWithIgnoringCase("g")
             })
@@ -1262,7 +1262,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotStartWith with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotStartWith("J")
             })
@@ -1288,7 +1288,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotStartWithIgnoringCase with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotStartWithIgnoringCase("j")
             })
@@ -1314,7 +1314,7 @@ class StringFunctionsTest {
 
     @Test
     fun `endsWith with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).endsWith("N")
             })
@@ -1340,7 +1340,7 @@ class StringFunctionsTest {
 
     @Test
     fun `endsWithIgnoringCase with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).endsWithIgnoringCase("o")
             })
@@ -1366,7 +1366,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotEndWith with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotEndWith("n")
             })
@@ -1392,7 +1392,7 @@ class StringFunctionsTest {
 
     @Test
     fun `doesNotEndWithIgnoringCase with invalid value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(name = "John"), {
                 validate(Employee::name).doesNotEndWithIgnoringCase("N")
             })
@@ -1424,7 +1424,7 @@ class StringFunctionsTest {
 
     @Test
     fun `isEmail with blank value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(email = "test.test"), {
                 validate(Employee::email).isEmail()
             })

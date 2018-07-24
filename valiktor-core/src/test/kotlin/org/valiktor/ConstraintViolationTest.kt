@@ -1,12 +1,11 @@
 package org.valiktor
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
-import org.junit.jupiter.api.assertThrows
 import org.valiktor.ConstraintViolationFixture.EmptyConstraint
 import org.valiktor.ConstraintViolationFixture.TestConstraint
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 private object ConstraintViolationFixture {
 
@@ -29,13 +28,11 @@ class ConstraintViolationTest {
                         value = "Test",
                         constraint = EmptyConstraint)
 
-        assertAll(
-                { assertEquals(constraintViolation.property, "name") },
-                { assertEquals(constraintViolation.value, "Test") },
-                { assertEquals(constraintViolation.constraint.name, "EmptyConstraint") },
-                { assertEquals(constraintViolation.constraint.messageKey, "org.valiktor.ConstraintViolationFixture\$EmptyConstraint.message") },
-                { assertEquals(constraintViolation.constraint.messageParams, emptyMap<String, Any>()) }
-        )
+        assertEquals(constraintViolation.property, "name")
+        assertEquals(constraintViolation.value, "Test")
+        assertEquals(constraintViolation.constraint.name, "EmptyConstraint")
+        assertEquals(constraintViolation.constraint.messageKey, "org.valiktor.ConstraintViolationFixture\$EmptyConstraint.message")
+        assertEquals(constraintViolation.constraint.messageParams, emptyMap<String, Any>())
     }
 }
 
@@ -43,7 +40,7 @@ class ConstraintViolationExceptionTest {
 
     @Test
     fun `should throws ConstraintViolationException`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             throw ConstraintViolationException(setOf(
                     DefaultConstraintViolation(
                             property = "name",

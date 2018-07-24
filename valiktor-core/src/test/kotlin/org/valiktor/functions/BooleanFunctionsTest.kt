@@ -1,13 +1,13 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.*
 import org.valiktor.functions.BooleanFunctionsFixture.Employee
 import org.valiktor.validate
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 private object BooleanFunctionsFixture {
 
@@ -25,7 +25,7 @@ class BooleanFunctionsTest {
 
     @Test
     fun `isNull with not null value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = true), {
                 validate(Employee::active).isNull()
             })
@@ -43,7 +43,7 @@ class BooleanFunctionsTest {
 
     @Test
     fun `isNotNull with null value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(), {
                 validate(Employee::active).isNotNull()
             })
@@ -68,7 +68,7 @@ class BooleanFunctionsTest {
 
     @Test
     fun `isEqualTo with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = true), {
                 validate(Employee::active).isEqualTo(false)
             })
@@ -93,7 +93,7 @@ class BooleanFunctionsTest {
 
     @Test
     fun `isNotEqualTo with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = false), {
                 validate(Employee::active).isNotEqualTo(false)
             })
@@ -118,7 +118,7 @@ class BooleanFunctionsTest {
 
     @Test
     fun `isIn vararg with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = true), {
                 validate(Employee::active).isIn(false)
             })
@@ -143,7 +143,7 @@ class BooleanFunctionsTest {
 
     @Test
     fun `isIn iterable with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = true), {
                 validate(Employee::active).isIn(listOf(false))
             })
@@ -168,7 +168,7 @@ class BooleanFunctionsTest {
 
     @Test
     fun `isNotIn vararg with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = false), {
                 validate(Employee::active).isNotIn(true, false)
             })
@@ -193,7 +193,7 @@ class BooleanFunctionsTest {
 
     @Test
     fun `isNotIn iterable with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = false), {
                 validate(Employee::active).isNotIn(listOf(true, false))
             })
@@ -218,7 +218,7 @@ class BooleanFunctionsTest {
 
     @Test
     fun `isTrue with false should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = false), {
                 validate(Employee::active).isTrue()
             })
@@ -247,7 +247,7 @@ class BooleanFunctionsTest {
 
     @Test
     fun `isFalse with true should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = true), {
                 validate(Employee::active).isFalse()
             })

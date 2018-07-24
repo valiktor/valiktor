@@ -2,12 +2,12 @@ package org.valiktor.i18n.formatters
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.entry
-import org.junit.jupiter.api.Test
 import org.valiktor.i18n.Formatters
 import org.valiktor.i18n.SupportedLocales
 import org.valiktor.i18n.formatAllSupportedLocales
 import java.math.BigDecimal
 import java.math.BigInteger
+import kotlin.test.Test
 
 class NumberFormatterTest {
 

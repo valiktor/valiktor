@@ -1,6 +1,11 @@
+fun DependencyHandler.javaMoney(module: String) = "javax.money:money-$module:1.0.3"
+fun DependencyHandler.moneta(module: String) = "org.javamoney:$module:1.3"
+
 dependencies {
     implementation(project(":valiktor-core"))
-    implementation("javax.money:money-api:1.0.3")
+    implementation(javaMoney("api"))
 
-    testRuntimeOnly("org.javamoney:moneta:1.3")
+    testImplementation(kotlin("reflect"))
+
+    testRuntimeOnly(moneta("moneta"))
 }

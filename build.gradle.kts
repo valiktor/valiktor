@@ -1,11 +1,11 @@
 import org.gradle.kotlin.dsl.kotlin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-fun DependencyHandler.junit(module: String) = "org.junit.jupiter:junit-jupiter-$module:5.1.0"
+fun DependencyHandler.junit5(module: String) = "org.junit.jupiter:junit-jupiter-$module:5.0.0"
 fun DependencyHandler.assertj(module: String) = "org.assertj:assertj-$module:3.9.1"
 
 plugins {
-    kotlin("jvm") version "1.2.31"
+    kotlin("jvm") version "1.2.50"
     id("com.adarshr.test-logger") version "1.2.0"
 }
 
@@ -24,12 +24,12 @@ subprojects {
     }
 
     dependencies {
-        implementation(kotlin("stdlib-jdk8"))
-        implementation(kotlin("reflect"))
+        implementation(kotlin("stdlib"))
 
+        testImplementation(kotlin("test-junit5"))
         testImplementation(assertj("core"))
-        testImplementation(junit("api"))
-        testRuntimeOnly(junit("engine"))
+
+        testRuntimeOnly(junit5("engine"))
     }
 
     testlogger {
@@ -39,7 +39,7 @@ subprojects {
     tasks {
         withType<KotlinCompile> {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "1.6"
             }
         }
 

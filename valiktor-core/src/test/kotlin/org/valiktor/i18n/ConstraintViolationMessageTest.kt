@@ -1,16 +1,15 @@
 package org.valiktor.i18n
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import org.valiktor.Constraint
 import org.valiktor.ConstraintViolation
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.NotEquals
 import org.valiktor.i18n.ConstraintViolationMessageFixture.EmptyConstraint
 import java.util.*
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 private object ConstraintViolationMessageFixture {
 
@@ -28,14 +27,12 @@ class ConstraintViolationMessageTest {
                         constraint = EmptyConstraint,
                         message = "some message")
 
-        assertAll(
-                { assertEquals(constraintViolationMessage.property, "name") },
-                { assertEquals(constraintViolationMessage.value, "Test") },
-                { assertEquals(constraintViolationMessage.constraint.name, "EmptyConstraint") },
-                { assertEquals(constraintViolationMessage.constraint.messageKey, "org.valiktor.i18n.ConstraintViolationMessageFixture\$EmptyConstraint.message") },
-                { assertEquals(constraintViolationMessage.constraint.messageParams, emptyMap<String, Any>()) },
-                { assertEquals(constraintViolationMessage.message, "some message") }
-        )
+        assertEquals(constraintViolationMessage.property, "name")
+        assertEquals(constraintViolationMessage.value, "Test")
+        assertEquals(constraintViolationMessage.constraint.name, "EmptyConstraint")
+        assertEquals(constraintViolationMessage.constraint.messageKey, "org.valiktor.i18n.ConstraintViolationMessageFixture\$EmptyConstraint.message")
+        assertEquals(constraintViolationMessage.constraint.messageParams, emptyMap<String, Any>())
+        assertEquals(constraintViolationMessage.message, "some message")
     }
 }
 
@@ -44,7 +41,7 @@ class ConstraintViolationFunctionsTest {
     private fun createConstraintViolation(): ConstraintViolation =
             DefaultConstraintViolation(property = "name", value = "Test", constraint = NotEquals("Test"))
 
-    @BeforeEach
+    @BeforeTest
     fun setUp() {
         Locale.setDefault(SupportedLocales.EN)
     }
@@ -54,12 +51,10 @@ class ConstraintViolationFunctionsTest {
         val constraintViolationMessage = createConstraintViolation()
                 .toMessage()
 
-        assertAll(
-                { assertEquals(constraintViolationMessage.property, "name") },
-                { assertEquals(constraintViolationMessage.value, "Test") },
-                { assertEquals(constraintViolationMessage.constraint, NotEquals("Test")) },
-                { assertEquals(constraintViolationMessage.message, "Must not be equal to Test") }
-        )
+        assertEquals(constraintViolationMessage.property, "name")
+        assertEquals(constraintViolationMessage.value, "Test")
+        assertEquals(constraintViolationMessage.constraint, NotEquals("Test"))
+        assertEquals(constraintViolationMessage.message, "Must not be equal to Test")
     }
 
     @Test
@@ -67,12 +62,10 @@ class ConstraintViolationFunctionsTest {
         val constraintViolationMessage = createConstraintViolation()
                 .toMessage(locale = SupportedLocales.PT_BR)
 
-        assertAll(
-                { assertEquals(constraintViolationMessage.property, "name") },
-                { assertEquals(constraintViolationMessage.value, "Test") },
-                { assertEquals(constraintViolationMessage.constraint, NotEquals("Test")) },
-                { assertEquals(constraintViolationMessage.message, "Não deve ser igual a Test") }
-        )
+        assertEquals(constraintViolationMessage.property, "name")
+        assertEquals(constraintViolationMessage.value, "Test")
+        assertEquals(constraintViolationMessage.constraint, NotEquals("Test"))
+        assertEquals(constraintViolationMessage.message, "Não deve ser igual a Test")
     }
 
     @Test
@@ -82,12 +75,10 @@ class ConstraintViolationFunctionsTest {
         val constraintViolationMessage = createConstraintViolation()
                 .toMessage(baseName = "testMessages")
 
-        assertAll(
-                { assertEquals(constraintViolationMessage.property, "name") },
-                { assertEquals(constraintViolationMessage.value, "Test") },
-                { assertEquals(constraintViolationMessage.constraint, NotEquals("Test")) },
-                { assertEquals(constraintViolationMessage.message, "Should not be equal to Test") }
-        )
+        assertEquals(constraintViolationMessage.property, "name")
+        assertEquals(constraintViolationMessage.value, "Test")
+        assertEquals(constraintViolationMessage.constraint, NotEquals("Test"))
+        assertEquals(constraintViolationMessage.message, "Should not be equal to Test")
     }
 
     @Test
@@ -96,12 +87,10 @@ class ConstraintViolationFunctionsTest {
                 .toMessage(locale = SupportedLocales.EN,
                         baseName = "testMessages")
 
-        assertAll(
-                { assertEquals(constraintViolationMessage.property, "name") },
-                { assertEquals(constraintViolationMessage.value, "Test") },
-                { assertEquals(constraintViolationMessage.constraint, NotEquals("Test")) },
-                { assertEquals(constraintViolationMessage.message, "Cannot be equal to Test") }
-        )
+        assertEquals(constraintViolationMessage.property, "name")
+        assertEquals(constraintViolationMessage.value, "Test")
+        assertEquals(constraintViolationMessage.constraint, NotEquals("Test"))
+        assertEquals(constraintViolationMessage.message, "Cannot be equal to Test")
     }
 }
 
@@ -112,7 +101,7 @@ class ConstraintViolationSetFunctionsTest {
             DefaultConstraintViolation(property = "name", value = "Test", constraint = NotEquals("Test")),
             DefaultConstraintViolation(property = "email", value = "test@test.com", constraint = NotEquals("test@test.com")))
 
-    @BeforeEach
+    @BeforeTest
     fun setUp() {
         Locale.setDefault(SupportedLocales.EN)
     }

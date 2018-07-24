@@ -2,11 +2,11 @@ package org.valiktor.i18n.formatters
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.entry
-import org.junit.jupiter.api.Test
 import org.valiktor.i18n.Formatters
 import org.valiktor.i18n.SupportedLocales
 import org.valiktor.i18n.formatAllSupportedLocales
 import java.util.*
+import kotlin.test.Test
 
 class CalendarFormatterTest {
 

@@ -1,8 +1,6 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.*
@@ -11,6 +9,8 @@ import org.valiktor.functions.IterableFunctionsFixture.City
 import org.valiktor.functions.IterableFunctionsFixture.Company
 import org.valiktor.functions.IterableFunctionsFixture.Employee
 import org.valiktor.validate
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 private object IterableFunctionsFixture {
 
@@ -55,7 +55,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `inner iterable properties should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(company = Company(addresses = listOf(
                     Address(city = City()),
                     Address(city = City()),
@@ -89,7 +89,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `isNull with not null value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = emptyList()), {
                 validate(Company::addresses).isNull()
             })
@@ -107,7 +107,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `isNotNull with null value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(), {
                 validate(Company::addresses).isNotNull()
             })
@@ -132,7 +132,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `isEqualTo with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(id = 1), Address(id = 2))), {
                 validate(Company::addresses).isEqualTo(listOf(Address(id = 1)))
             })
@@ -157,7 +157,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `isNotEqualTo with same value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(id = 1), Address(id = 2))), {
                 validate(Company::addresses).isNotEqualTo(listOf(Address(id = 1), Address(id = 2)))
             })
@@ -182,7 +182,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `isIn vararg with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = emptyList()), {
                 validate(Company::addresses).isIn(listOf(Address(id = 1)))
             })
@@ -207,7 +207,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `isIn iterable with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = emptyList()), {
                 validate(Company::addresses).isIn(listOf(listOf(Address(id = 1))))
             })
@@ -232,7 +232,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `isNotIn vararg with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(id = 1))), {
                 validate(Company::addresses).isNotIn(listOf(Address(id = 1)))
             })
@@ -257,7 +257,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `isNotIn iterable with different value should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(id = 1))), {
                 validate(Company::addresses).isNotIn(listOf(listOf(Address(id = 1))))
             })
@@ -282,7 +282,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `isEmpty with not empty property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address())), {
                 validate(Company::addresses).isEmpty()
             })
@@ -311,7 +311,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `isNotEmpty with empty property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = emptyList()), {
                 validate(Company::addresses).isNotEmpty()
             })
@@ -361,7 +361,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `size with invalid min size property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(), Address())), {
                 validate(Company::addresses).hasSize(min = 5)
             })
@@ -376,7 +376,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `size with invalid max size property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(), Address())), {
                 validate(Company::addresses).hasSize(max = 1)
             })
@@ -391,7 +391,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `size with invalid min and max size property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(), Address())), {
                 validate(Company::addresses).hasSize(min = 3, max = 1)
             })
@@ -420,7 +420,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `contains with invalid property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = emptyList()), {
                 validate(Company::addresses).contains(Address(id = 1))
             })
@@ -449,7 +449,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `containsAll vararg with invalid property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = emptyList()), {
                 validate(Company::addresses).containsAll(Address(id = 1), Address(id = 2))
             })
@@ -478,7 +478,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `containsAll iterable with invalid property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(id = 1))), {
                 validate(Company::addresses).containsAll(listOf(Address(id = 1), Address(id = 2)))
             })
@@ -507,7 +507,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `containsAny vararg with invalid property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = emptyList()), {
                 validate(Company::addresses).containsAny(Address(id = 1), Address(id = 2))
             })
@@ -536,7 +536,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `containsAny iterable with invalid property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = emptyList()), {
                 validate(Company::addresses).containsAny(listOf(Address(id = 1), Address(id = 2)))
             })
@@ -565,7 +565,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `doesNotContain with invalid property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(id = 1))), {
                 validate(Company::addresses).doesNotContain(Address(id = 1))
             })
@@ -594,7 +594,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `doesNotContainAll vararg with invalid property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(id = 3))), {
                 validate(Company::addresses).doesNotContainAll(Address(id = 1), Address(id = 2))
             })
@@ -623,7 +623,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `doesNotContainAll iterable with invalid property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(id = 3))), {
                 validate(Company::addresses).doesNotContainAll(listOf(Address(id = 1), Address(id = 2)))
             })
@@ -652,7 +652,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `doesNotContainAny vararg with invalid property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(id = 3))), {
                 validate(Company::addresses).doesNotContainAny(Address(id = 1), Address(id = 5))
             })
@@ -681,7 +681,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `doesNotContainAny iterable with invalid property should be invalid`() {
-        val exception = assertThrows<ConstraintViolationException> {
+        val exception = assertFailsWith<ConstraintViolationException> {
             validate(Company(addresses = listOf(Address(id = 1), Address(id = 2), Address(id = 3))), {
                 validate(Company::addresses).doesNotContainAny(listOf(Address(id = 1), Address(id = 5)))
             })
