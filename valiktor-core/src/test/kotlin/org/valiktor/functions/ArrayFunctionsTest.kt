@@ -20,11 +20,11 @@ class ArrayFunctionsTest {
 
     @Test
     fun `inner null array properties should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).validateForEach {
                 validate(Dependent::id).isNotNull()
             }
-        })
+        }
     }
 
     @Test
@@ -32,11 +32,11 @@ class ArrayFunctionsTest {
         validate(Employee(dependents = arrayOf(
                 Dependent(id = 1),
                 Dependent(id = 1),
-                Dependent(id = 1))), {
+                Dependent(id = 1)))) {
             validate(Employee::dependents).validateForEach {
                 validate(Dependent::id).isNotNull()
             }
-        })
+        }
     }
 
     @Test
@@ -45,11 +45,11 @@ class ArrayFunctionsTest {
             validate(Employee(dependents = arrayOf(
                     Dependent(),
                     Dependent(),
-                    Dependent())), {
+                    Dependent()))) {
                 validate(Employee::dependents).validateForEach {
                     validate(Dependent::id).isNotNull()
                 }
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -60,9 +60,9 @@ class ArrayFunctionsTest {
 
     @Test
     fun `isNull with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).isNull()
-        })
+        }
     }
 
     @Test
@@ -70,9 +70,9 @@ class ArrayFunctionsTest {
         val dependents = emptyArray<Dependent>()
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).isNull()
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -83,17 +83,17 @@ class ArrayFunctionsTest {
 
     @Test
     fun `isNotNull with not null value should be valid`() {
-        validate(Employee(dependents = emptyArray()), {
+        validate(Employee(dependents = emptyArray())) {
             validate(Employee::dependents).isNotNull()
-        })
+        }
     }
 
     @Test
     fun `isNotNull with null value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(), {
+            validate(Employee()) {
                 validate(Employee::dependents).isNotNull()
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -103,16 +103,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `isEqualTo with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).isEqualTo(arrayOf(Dependent(id = 1)))
-        })
+        }
     }
 
     @Test
     fun `isEqualTo with same value should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2)))) {
             validate(Employee::dependents).isEqualTo(arrayOf(Dependent(id = 1), Dependent(id = 2)))
-        })
+        }
     }
 
     @Test
@@ -121,9 +121,9 @@ class ArrayFunctionsTest {
         val constraintDependents = arrayOf(Dependent(id = 1))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).isEqualTo(constraintDependents)
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -134,16 +134,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `isNotEqualTo with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).isNotEqualTo(arrayOf(Dependent(id = 1), Dependent(id = 2)))
-        })
+        }
     }
 
     @Test
     fun `isNotEqualTo with different value should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2)))) {
             validate(Employee::dependents).isNotEqualTo(arrayOf(Dependent(id = 1)))
-        })
+        }
     }
 
     @Test
@@ -152,9 +152,9 @@ class ArrayFunctionsTest {
         val constraintDependents = arrayOf(Dependent(id = 1), Dependent(id = 2))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).isNotEqualTo(constraintDependents)
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -165,16 +165,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `isIn vararg with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).isIn(arrayOf(Dependent(id = 1)))
-        })
+        }
     }
 
     @Test
     fun `isIn vararg with same value should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1)))) {
             validate(Employee::dependents).isIn(arrayOf(Dependent(id = 1)), arrayOf(Dependent(id = 1), Dependent(id = 2)))
-        })
+        }
     }
 
     @Test
@@ -183,9 +183,9 @@ class ArrayFunctionsTest {
         val constraintDependents = arrayOf(Dependent(id = 1))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).isIn(constraintDependents)
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -196,16 +196,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `isIn iterable with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).isIn(listOf(arrayOf(Dependent(id = 1))))
-        })
+        }
     }
 
     @Test
     fun `isIn iterable with same value should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1)))) {
             validate(Employee::dependents).isIn(listOf(arrayOf(Dependent(id = 1)), arrayOf(Dependent(id = 1), Dependent(id = 2))))
-        })
+        }
     }
 
     @Test
@@ -214,9 +214,9 @@ class ArrayFunctionsTest {
         val constraintDependents = arrayOf(Dependent(id = 1))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).isIn(listOf(constraintDependents))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -227,16 +227,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `isNotIn vararg with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).isNotIn(arrayOf(Dependent(id = 1)))
-        })
+        }
     }
 
     @Test
     fun `isNotIn vararg with same value should be valid`() {
-        validate(Employee(dependents = emptyArray()), {
+        validate(Employee(dependents = emptyArray())) {
             validate(Employee::dependents).isNotIn(arrayOf(Dependent(id = 1), Dependent(id = 2)))
-        })
+        }
     }
 
     @Test
@@ -245,9 +245,9 @@ class ArrayFunctionsTest {
         val constraintDependents = arrayOf(Dependent(id = 1))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).isNotIn(constraintDependents)
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -258,16 +258,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `isNotIn iterable with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).isNotIn(listOf(arrayOf(Dependent(id = 1))))
-        })
+        }
     }
 
     @Test
     fun `isNotIn iterable with same value should be valid`() {
-        validate(Employee(dependents = emptyArray()), {
+        validate(Employee(dependents = emptyArray())) {
             validate(Employee::dependents).isNotIn(listOf(arrayOf(Dependent(id = 1), Dependent(id = 2))))
-        })
+        }
     }
 
     @Test
@@ -276,9 +276,9 @@ class ArrayFunctionsTest {
         val constraintDependents = arrayOf(Dependent(id = 1))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).isNotIn(listOf(constraintDependents))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -289,16 +289,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `isEmpty with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).isEmpty()
-        })
+        }
     }
 
     @Test
     fun `isEmpty with empty property should be valid`() {
-        validate(Employee(dependents = emptyArray()), {
+        validate(Employee(dependents = emptyArray())) {
             validate(Employee::dependents).isEmpty()
-        })
+        }
     }
 
     @Test
@@ -306,9 +306,9 @@ class ArrayFunctionsTest {
         val dependents = arrayOf(Dependent())
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).isEmpty()
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -320,16 +320,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `isNotEmpty with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).isNotEmpty()
-        })
+        }
     }
 
     @Test
     fun `isNotEmpty with not empty property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent())), {
+        validate(Employee(dependents = arrayOf(Dependent()))) {
             validate(Employee::dependents).isNotEmpty()
-        })
+        }
     }
 
     @Test
@@ -337,9 +337,9 @@ class ArrayFunctionsTest {
         val dependents = emptyArray<Dependent>()
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).isNotEmpty()
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -351,37 +351,37 @@ class ArrayFunctionsTest {
 
     @Test
     fun `size with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).hasSize(min = 1, max = 10)
-        })
+        }
     }
 
     @Test
     fun `size with valid min length property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent())), {
+        validate(Employee(dependents = arrayOf(Dependent()))) {
             validate(Employee::dependents).hasSize(min = 1)
-        })
+        }
     }
 
     @Test
     fun `size with valid max length property should be valid`() {
-        validate(Employee(dependents = emptyArray()), {
+        validate(Employee(dependents = emptyArray())) {
             validate(Employee::dependents).hasSize(max = 4)
-        })
+        }
     }
 
     @Test
     fun `size with valid min and max length property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent())), {
+        validate(Employee(dependents = arrayOf(Dependent()))) {
             validate(Employee::dependents).hasSize(min = 1, max = 2)
-        })
+        }
     }
 
     @Test
     fun `size without min and max should be valid`() {
-        validate(Employee(dependents = emptyArray()), {
+        validate(Employee(dependents = emptyArray())) {
             validate(Employee::dependents).hasSize()
-        })
+        }
     }
 
     @Test
@@ -389,9 +389,9 @@ class ArrayFunctionsTest {
         val dependents = arrayOf(Dependent(), Dependent())
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).hasSize(min = 5)
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -406,9 +406,9 @@ class ArrayFunctionsTest {
         val dependents = arrayOf(Dependent(), Dependent())
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).hasSize(max = 1)
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -423,9 +423,9 @@ class ArrayFunctionsTest {
         val dependents = arrayOf(Dependent(), Dependent())
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).hasSize(min = 3, max = 1)
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -437,16 +437,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `contains with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).contains(Dependent())
-        })
+        }
     }
 
     @Test
     fun `contains with valid property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2)))) {
             validate(Employee::dependents).contains(Dependent(id = 1))
-        })
+        }
     }
 
     @Test
@@ -454,9 +454,9 @@ class ArrayFunctionsTest {
         val dependents = emptyArray<Dependent>()
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).contains(Dependent(id = 1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -468,16 +468,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `containsAll vararg with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).containsAll(Dependent())
-        })
+        }
     }
 
     @Test
     fun `containsAll vararg with valid property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3)))) {
             validate(Employee::dependents).containsAll(Dependent(id = 1), Dependent(id = 2))
-        })
+        }
     }
 
     @Test
@@ -485,9 +485,9 @@ class ArrayFunctionsTest {
         val dependents = emptyArray<Dependent>()
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).containsAll(Dependent(id = 1), Dependent(id = 2))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -499,16 +499,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `containsAll iterable with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).containsAll(listOf(Dependent()))
-        })
+        }
     }
 
     @Test
     fun `containsAll iterable with valid property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3)))) {
             validate(Employee::dependents).containsAll(listOf(Dependent(id = 1), Dependent(id = 2)))
-        })
+        }
     }
 
     @Test
@@ -516,9 +516,9 @@ class ArrayFunctionsTest {
         val dependents = arrayOf(Dependent(id = 1))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).containsAll(listOf(Dependent(id = 1), Dependent(id = 2)))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -530,16 +530,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `containsAny vararg with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).containsAny(Dependent())
-        })
+        }
     }
 
     @Test
     fun `containsAny vararg with valid property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 3))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 3)))) {
             validate(Employee::dependents).containsAny(Dependent(id = 1), Dependent(id = 2))
-        })
+        }
     }
 
     @Test
@@ -547,9 +547,9 @@ class ArrayFunctionsTest {
         val dependents = emptyArray<Dependent>()
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).containsAny(Dependent(id = 1), Dependent(id = 2))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -561,16 +561,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `containsAny iterable with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).containsAny(listOf(Dependent()))
-        })
+        }
     }
 
     @Test
     fun `containsAny iterable with valid property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 3))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 3)))) {
             validate(Employee::dependents).containsAny(listOf(Dependent(id = 1), Dependent(id = 2)))
-        })
+        }
     }
 
     @Test
@@ -578,9 +578,9 @@ class ArrayFunctionsTest {
         val dependents = emptyArray<Dependent>()
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).containsAny(listOf(Dependent(id = 1), Dependent(id = 2)))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -592,16 +592,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `doesNotContain with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).doesNotContain(Dependent())
-        })
+        }
     }
 
     @Test
     fun `doesNotContain with valid property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2)))) {
             validate(Employee::dependents).doesNotContain(Dependent(id = 3))
-        })
+        }
     }
 
     @Test
@@ -609,9 +609,9 @@ class ArrayFunctionsTest {
         val dependents = arrayOf(Dependent(id = 1))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).doesNotContain(Dependent(id = 1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -623,16 +623,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `doesNotContainAll vararg with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).doesNotContainAll(Dependent())
-        })
+        }
     }
 
     @Test
     fun `doesNotContainAll vararg with valid property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3)))) {
             validate(Employee::dependents).doesNotContainAll(Dependent(id = 1), Dependent(id = 5))
-        })
+        }
     }
 
     @Test
@@ -640,9 +640,9 @@ class ArrayFunctionsTest {
         val dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).doesNotContainAll(Dependent(id = 1), Dependent(id = 2))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -654,16 +654,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `doesNotContainAll iterable with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).doesNotContainAll(listOf(Dependent()))
-        })
+        }
     }
 
     @Test
     fun `doesNotContainAll iterable with valid property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3)))) {
             validate(Employee::dependents).doesNotContainAll(listOf(Dependent(id = 1), Dependent(id = 5)))
-        })
+        }
     }
 
     @Test
@@ -671,9 +671,9 @@ class ArrayFunctionsTest {
         val dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).doesNotContainAll(listOf(Dependent(id = 1), Dependent(id = 2)))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -685,16 +685,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `doesNotContainAny vararg with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).doesNotContainAny(Dependent())
-        })
+        }
     }
 
     @Test
     fun `doesNotContainAny vararg with valid property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3)))) {
             validate(Employee::dependents).doesNotContainAny(Dependent(id = 4), Dependent(id = 5))
-        })
+        }
     }
 
     @Test
@@ -702,9 +702,9 @@ class ArrayFunctionsTest {
         val dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).doesNotContainAny(Dependent(id = 1), Dependent(id = 5))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -716,16 +716,16 @@ class ArrayFunctionsTest {
 
     @Test
     fun `doesNotContainAny iterable with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dependents).doesNotContainAny(listOf(Dependent()))
-        })
+        }
     }
 
     @Test
     fun `doesNotContainAny iterable with valid property should be valid`() {
-        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3))), {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3)))) {
             validate(Employee::dependents).doesNotContainAny(listOf(Dependent(id = 4), Dependent(id = 5)))
-        })
+        }
     }
 
     @Test
@@ -733,9 +733,9 @@ class ArrayFunctionsTest {
         val dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3))
 
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = dependents), {
+            validate(Employee(dependents = dependents)) {
                 validate(Employee::dependents).doesNotContainAny(listOf(Dependent(id = 1), Dependent(id = 5)))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(

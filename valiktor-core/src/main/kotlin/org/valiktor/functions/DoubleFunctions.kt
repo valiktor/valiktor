@@ -26,7 +26,7 @@ import org.valiktor.constraints.*
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Double?>.isZero(): Validator<E>.Property<Double?> =
-        this.validate(Equals(0.0), { it == null || it == 0.0 })
+        this.validate(Equals(0.0)) { it == null || it == 0.0 }
 
 /**
  * Validates if the [Double] property is not equal to zero
@@ -35,7 +35,7 @@ fun <E> Validator<E>.Property<Double?>.isZero(): Validator<E>.Property<Double?> 
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Double?>.isNotZero(): Validator<E>.Property<Double?> =
-        this.validate(NotEquals(0.0), { it == null || it != 0.0 })
+        this.validate(NotEquals(0.0)) { it == null || it != 0.0 }
 
 /**
  * Validates if the [Double] property is equal to one
@@ -44,7 +44,7 @@ fun <E> Validator<E>.Property<Double?>.isNotZero(): Validator<E>.Property<Double
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Double?>.isOne(): Validator<E>.Property<Double?> =
-        this.validate(Equals(1.0), { it == null || it == 1.0 })
+        this.validate(Equals(1.0)) { it == null || it == 1.0 }
 
 /**
  * Validates if the [Double] property is not equal to one
@@ -53,7 +53,7 @@ fun <E> Validator<E>.Property<Double?>.isOne(): Validator<E>.Property<Double?> =
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Double?>.isNotOne(): Validator<E>.Property<Double?> =
-        this.validate(NotEquals(1.0), { it == null || it != 1.0 })
+        this.validate(NotEquals(1.0)) { it == null || it != 1.0 }
 
 /**
  * Validates if the [Double] property is positive
@@ -62,7 +62,7 @@ fun <E> Validator<E>.Property<Double?>.isNotOne(): Validator<E>.Property<Double?
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Double?>.isPositive(): Validator<E>.Property<Double?> =
-        this.validate(Greater(0.0), { it == null || it > 0.0 })
+        this.validate(Greater(0.0)) { it == null || it > 0.0 }
 
 /**
  * Validates if the [Double] property isn't negative
@@ -71,7 +71,7 @@ fun <E> Validator<E>.Property<Double?>.isPositive(): Validator<E>.Property<Doubl
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Double?>.isPositiveOrZero(): Validator<E>.Property<Double?> =
-        this.validate(GreaterOrEqual(0.0), { it == null || it >= 0.0 })
+        this.validate(GreaterOrEqual(0.0)) { it == null || it >= 0.0 }
 
 /**
  * Validates if the [Double] property is negative
@@ -80,7 +80,7 @@ fun <E> Validator<E>.Property<Double?>.isPositiveOrZero(): Validator<E>.Property
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Double?>.isNegative(): Validator<E>.Property<Double?> =
-        this.validate(Less(0.0), { it == null || it < 0.0 })
+        this.validate(Less(0.0)) { it == null || it < 0.0 }
 
 /**
  * Validates if the [Double] property isn't positive
@@ -89,7 +89,7 @@ fun <E> Validator<E>.Property<Double?>.isNegative(): Validator<E>.Property<Doubl
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Double?>.isNegativeOrZero(): Validator<E>.Property<Double?> =
-        this.validate(LessOrEqual(0.0), { it == null || it <= 0.0 })
+        this.validate(LessOrEqual(0.0)) { it == null || it <= 0.0 }
 
 /**
  * Validates if the [Double] integer digits (before decimal separator) is within the limits (min and max)
@@ -101,7 +101,7 @@ fun <E> Validator<E>.Property<Double?>.isNegativeOrZero(): Validator<E>.Property
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Double?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Double?> =
-        this.validate(IntegerDigits(min, max), { it == null || it.toString().removePrefix("-").split(".")[0].length in min.rangeTo(max) })
+        this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").split(".")[0].length in min.rangeTo(max) }
 
 /**
  * Validates if the [Double] decimal digits (after decimal separator) is within the limits (min and max)
@@ -113,4 +113,4 @@ fun <E> Validator<E>.Property<Double?>.hasIntegerDigits(min: Int = Int.MIN_VALUE
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Double?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Double?> =
-        this.validate(DecimalDigits(min, max), { it == null || it.toString().removePrefix("-").split(".")[1].length in min.rangeTo(max) })
+        this.validate(DecimalDigits(min, max)) { it == null || it.toString().removePrefix("-").split(".")[1].length in min.rangeTo(max) }

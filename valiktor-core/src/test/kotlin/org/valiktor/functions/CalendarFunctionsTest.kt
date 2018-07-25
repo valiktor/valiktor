@@ -30,17 +30,17 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isNull with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isNull()
-        })
+        }
     }
 
     @Test
     fun `isNull with not null value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isNull()
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = Null))
@@ -48,17 +48,17 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isNotNull with not null value should be valid`() {
-        validate(Employee(dateOfBirth = Calendar.getInstance()), {
+        validate(Employee(dateOfBirth = Calendar.getInstance())) {
             validate(Employee::dateOfBirth).isNotNull()
-        })
+        }
     }
 
     @Test
     fun `isNotNull with null value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(), {
+            validate(Employee()) {
                 validate(Employee::dateOfBirth).isNotNull()
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull))
@@ -66,24 +66,24 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isEqualTo with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isEqualTo(Calendar.getInstance())
-        })
+        }
     }
 
     @Test
     fun `isEqualTo with same value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isEqualTo(calendarFrom(NOW))
-        })
+        }
     }
 
     @Test
     fun `isEqualTo with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isEqualTo(calendarFrom(NOW - 1))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = Equals(calendarFrom(NOW - 1))))
@@ -91,24 +91,24 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isNotEqualTo with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isNotEqualTo(Calendar.getInstance())
-        })
+        }
     }
 
     @Test
     fun `isNotEqualTo with different value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isNotEqualTo(calendarFrom(NOW - 1))
-        })
+        }
     }
 
     @Test
     fun `isNotEqualTo with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isNotEqualTo(calendarFrom(NOW))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = NotEquals(calendarFrom(NOW))))
@@ -116,24 +116,24 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isIn vararg with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isIn(Calendar.getInstance(), Calendar.getInstance())
-        })
+        }
     }
 
     @Test
     fun `isIn vararg with same value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isIn(calendarFrom(NOW), calendarFrom(NOW - 1))
-        })
+        }
     }
 
     @Test
     fun `isIn vararg with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isIn(calendarFrom(NOW - 1), calendarFrom(NOW - 2))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = In(setOf(calendarFrom(NOW - 1), calendarFrom(NOW - 2)))))
@@ -141,24 +141,24 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isIn iterable with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isIn(listOf(Calendar.getInstance(), Calendar.getInstance()))
-        })
+        }
     }
 
     @Test
     fun `isIn iterable with same value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isIn(listOf(calendarFrom(NOW), calendarFrom(NOW - 1)))
-        })
+        }
     }
 
     @Test
     fun `isIn iterable with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isIn(listOf(calendarFrom(NOW - 1), calendarFrom(NOW - 2)))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = In(listOf(calendarFrom(NOW - 1), calendarFrom(NOW - 2)))))
@@ -166,24 +166,24 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isNotIn vararg with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isNotIn(Calendar.getInstance(), Calendar.getInstance())
-        })
+        }
     }
 
     @Test
     fun `isNotIn vararg with different value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isNotIn(calendarFrom(NOW - 1), calendarFrom(NOW + 1))
-        })
+        }
     }
 
     @Test
     fun `isNotIn vararg with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isNotIn(calendarFrom(NOW), calendarFrom(NOW + 1))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = NotIn(setOf(calendarFrom(NOW), calendarFrom(NOW + 1)))))
@@ -191,24 +191,24 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isNotIn iterable with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isNotIn(listOf(Calendar.getInstance(), Calendar.getInstance()))
-        })
+        }
     }
 
     @Test
     fun `isNotIn iterable with different value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isNotIn(listOf(calendarFrom(NOW - 1), calendarFrom(NOW + 1)))
-        })
+        }
     }
 
     @Test
     fun `isNotIn iterable with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isNotIn(listOf(calendarFrom(NOW), calendarFrom(NOW + 1)))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = NotIn(listOf(calendarFrom(NOW), calendarFrom(NOW + 1)))))
@@ -216,9 +216,9 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isToday with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isToday()
-        })
+        }
     }
 
     @Test
@@ -229,9 +229,9 @@ class CalendarFunctionsTest {
         today.set(Calendar.SECOND, 0)
         today.set(Calendar.MILLISECOND, 0)
 
-        validate(Employee(dateOfBirth = today), {
+        validate(Employee(dateOfBirth = today)) {
             validate(Employee::dateOfBirth).isToday()
-        })
+        }
     }
 
     @Test
@@ -242,24 +242,24 @@ class CalendarFunctionsTest {
         today.set(Calendar.SECOND, 59)
         today.set(Calendar.MILLISECOND, 999)
 
-        validate(Employee(dateOfBirth = today), {
+        validate(Employee(dateOfBirth = today)) {
             validate(Employee::dateOfBirth).isToday()
-        })
+        }
     }
 
     @Test
     fun `isToday with now should be valid`() {
-        validate(Employee(dateOfBirth = Calendar.getInstance()), {
+        validate(Employee(dateOfBirth = Calendar.getInstance())) {
             validate(Employee::dateOfBirth).isToday()
-        })
+        }
     }
 
     @Test
     fun `isToday with yesterday value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW - ONE_DAY)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW - ONE_DAY))) {
                 validate(Employee::dateOfBirth).isToday()
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW - ONE_DAY), constraint = Today))
@@ -268,9 +268,9 @@ class CalendarFunctionsTest {
     @Test
     fun `isToday with tomorrow value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW + ONE_DAY)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW + ONE_DAY))) {
                 validate(Employee::dateOfBirth).isToday()
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW + ONE_DAY), constraint = Today))
@@ -278,24 +278,24 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isLessThan with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isLessThan(Calendar.getInstance())
-        })
+        }
     }
 
     @Test
     fun `isLessThan with less value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isLessThan(calendarFrom(NOW + 1))
-        })
+        }
     }
 
     @Test
     fun `isLessThan with greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isLessThan(calendarFrom(NOW - 1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -308,9 +308,9 @@ class CalendarFunctionsTest {
     @Test
     fun `isLessThan with equal value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isLessThan(calendarFrom(NOW))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -322,31 +322,31 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isLessThanOrEqualTo(Calendar.getInstance())
-        })
+        }
     }
 
     @Test
     fun `isLessThanOrEqualTo with less value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isLessThanOrEqualTo(calendarFrom(NOW + 1))
-        })
+        }
     }
 
     @Test
     fun `isLessThanOrEqualTo with equal value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isLessThanOrEqualTo(calendarFrom(NOW))
-        })
+        }
     }
 
     @Test
     fun `isLessThanOrEqualTo with greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isLessThanOrEqualTo(calendarFrom(NOW - 1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -358,24 +358,24 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isGreaterThan with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isGreaterThan(Calendar.getInstance())
-        })
+        }
     }
 
     @Test
     fun `isGreaterThan with greater value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isGreaterThan(calendarFrom(NOW - 1))
-        })
+        }
     }
 
     @Test
     fun `isGreaterThan with less value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isGreaterThan(calendarFrom(NOW + 1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -388,9 +388,9 @@ class CalendarFunctionsTest {
     @Test
     fun `isGreaterThan with equal value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isGreaterThan(calendarFrom(NOW))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -402,31 +402,31 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isGreaterThanOrEqualTo(Calendar.getInstance())
-        })
+        }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with greater value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isGreaterThanOrEqualTo(calendarFrom(NOW - 1))
-        })
+        }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with equal value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isGreaterThanOrEqualTo(calendarFrom(NOW))
-        })
+        }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with less value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isGreaterThanOrEqualTo(calendarFrom(NOW + 1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -438,38 +438,38 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isBetween with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isBetween(start = Calendar.getInstance(), end = Calendar.getInstance())
-        })
+        }
     }
 
     @Test
     fun `isBetween with equal start value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 1))
-        })
+        }
     }
 
     @Test
     fun `isBetween with equal end value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW + 1)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW + 1))) {
             validate(Employee::dateOfBirth).isBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 1))
-        })
+        }
     }
 
     @Test
     fun `isBetween with within value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW + 1)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW + 1))) {
             validate(Employee::dateOfBirth).isBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 2))
-        })
+        }
     }
 
     @Test
     fun `isBetween with less start value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isBetween(start = calendarFrom(NOW + 1), end = calendarFrom(NOW + 3))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -482,9 +482,9 @@ class CalendarFunctionsTest {
     @Test
     fun `isBetween with greater end value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW + 4)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW + 4))) {
                 validate(Employee::dateOfBirth).isBetween(start = calendarFrom(NOW + 1), end = calendarFrom(NOW + 3))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -496,31 +496,31 @@ class CalendarFunctionsTest {
 
     @Test
     fun `isNotBetween with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::dateOfBirth).isNotBetween(start = Calendar.getInstance(), end = Calendar.getInstance())
-        })
+        }
     }
 
     @Test
     fun `isNotBetween with less start value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW))) {
             validate(Employee::dateOfBirth).isNotBetween(start = calendarFrom(NOW + 1), end = calendarFrom(NOW + 2))
-        })
+        }
     }
 
     @Test
     fun `isNotBetween with greater end value should be valid`() {
-        validate(Employee(dateOfBirth = calendarFrom(NOW + 2)), {
+        validate(Employee(dateOfBirth = calendarFrom(NOW + 2))) {
             validate(Employee::dateOfBirth).isNotBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 1))
-        })
+        }
     }
 
     @Test
     fun `isNotBetween with equal start value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW))) {
                 validate(Employee::dateOfBirth).isNotBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -533,9 +533,9 @@ class CalendarFunctionsTest {
     @Test
     fun `isNotBetween with equal end value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW + 1)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW + 1))) {
                 validate(Employee::dateOfBirth).isNotBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -548,9 +548,9 @@ class CalendarFunctionsTest {
     @Test
     fun `isNotBetween with within value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = calendarFrom(NOW + 1)), {
+            validate(Employee(dateOfBirth = calendarFrom(NOW + 1))) {
                 validate(Employee::dateOfBirth).isNotBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 2))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(

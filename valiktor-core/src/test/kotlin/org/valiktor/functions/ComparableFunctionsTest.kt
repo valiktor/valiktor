@@ -23,31 +23,31 @@ class ComparableFunctionsTest {
 
     @Test
     fun `isLessThan with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isLessThan(Company(id = 10))
-        })
+        }
     }
 
     @Test
     fun `isLessThan with less value should be valid`() {
-        validate(Employee(company = Company(id = 9999)), {
+        validate(Employee(company = Company(id = 9999))) {
             validate(Employee::company).isLessThan(Company(id = 100000))
-        })
+        }
     }
 
     @Test
     fun `isLessThan with negative less value should be valid`() {
-        validate(Employee(company = Company(id = -4)), {
+        validate(Employee(company = Company(id = -4))) {
             validate(Employee::company).isLessThan(Company(id = -3))
-        })
+        }
     }
 
     @Test
     fun `isLessThan with greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 50)), {
+            validate(Employee(company = Company(id = 50))) {
                 validate(Employee::company).isLessThan(Company(id = 49))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -60,9 +60,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isLessThan with negative greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = -50)), {
+            validate(Employee(company = Company(id = -50))) {
                 validate(Employee::company).isLessThan(Company(id = -51))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -75,9 +75,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isLessThan with equal value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 0)), {
+            validate(Employee(company = Company(id = 0))) {
                 validate(Employee::company).isLessThan(Company(id = 0))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -89,38 +89,38 @@ class ComparableFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isLessThanOrEqualTo(Company(id = 10))
-        })
+        }
     }
 
     @Test
     fun `isLessThanOrEqualTo with less value should be valid`() {
-        validate(Employee(company = Company(id = 9999)), {
+        validate(Employee(company = Company(id = 9999))) {
             validate(Employee::company).isLessThanOrEqualTo(Company(id = 100000))
-        })
+        }
     }
 
     @Test
     fun `isLessThanOrEqualTo with negative less value should be valid`() {
-        validate(Employee(company = Company(id = -4)), {
+        validate(Employee(company = Company(id = -4))) {
             validate(Employee::company).isLessThanOrEqualTo(Company(id = -3))
-        })
+        }
     }
 
     @Test
     fun `isLessThanOrEqualTo with equal value should be valid`() {
-        validate(Employee(company = Company(id = 0)), {
+        validate(Employee(company = Company(id = 0))) {
             validate(Employee::company).isLessThanOrEqualTo(Company(id = 0))
-        })
+        }
     }
 
     @Test
     fun `isLessThanOrEqualTo with greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 56789)), {
+            validate(Employee(company = Company(id = 56789))) {
                 validate(Employee::company).isLessThanOrEqualTo(Company(id = 57))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -133,9 +133,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isLessThanOrEqualTo with negative greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = -96)), {
+            validate(Employee(company = Company(id = -96))) {
                 validate(Employee::company).isLessThanOrEqualTo(Company(id = -97))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -147,31 +147,31 @@ class ComparableFunctionsTest {
 
     @Test
     fun `isGreaterThan with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isGreaterThan(Company(id = 10))
-        })
+        }
     }
 
     @Test
     fun `isGreaterThan with greater value should be valid`() {
-        validate(Employee(company = Company(id = 11)), {
+        validate(Employee(company = Company(id = 11))) {
             validate(Employee::company).isGreaterThan(Company(id = 10))
-        })
+        }
     }
 
     @Test
     fun `isGreaterThan with negative greater value should be valid`() {
-        validate(Employee(company = Company(id = -88)), {
+        validate(Employee(company = Company(id = -88))) {
             validate(Employee::company).isGreaterThan(Company(id = -89))
-        })
+        }
     }
 
     @Test
     fun `isGreaterThan with less value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 10)), {
+            validate(Employee(company = Company(id = 10))) {
                 validate(Employee::company).isGreaterThan(Company(id = 11))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -184,9 +184,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isGreaterThan with negative less value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = -189)), {
+            validate(Employee(company = Company(id = -189))) {
                 validate(Employee::company).isGreaterThan(Company(id = -180))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -199,9 +199,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isGreaterThan with equal value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 0)), {
+            validate(Employee(company = Company(id = 0))) {
                 validate(Employee::company).isGreaterThan(Company(id = 0))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -213,38 +213,38 @@ class ComparableFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isGreaterThanOrEqualTo(Company(id = 10))
-        })
+        }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with greater value should be valid`() {
-        validate(Employee(company = Company(id = 10000)), {
+        validate(Employee(company = Company(id = 10000))) {
             validate(Employee::company).isGreaterThanOrEqualTo(Company(id = 9999))
-        })
+        }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with negative greater value should be valid`() {
-        validate(Employee(company = Company(id = -3)), {
+        validate(Employee(company = Company(id = -3))) {
             validate(Employee::company).isGreaterThanOrEqualTo(Company(id = -4))
-        })
+        }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with equal value should be valid`() {
-        validate(Employee(company = Company(id = 0)), {
+        validate(Employee(company = Company(id = 0))) {
             validate(Employee::company).isGreaterThanOrEqualTo(Company(id = 0))
-        })
+        }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with less value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 57)), {
+            validate(Employee(company = Company(id = 57))) {
                 validate(Employee::company).isGreaterThanOrEqualTo(Company(id = 56789))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -257,9 +257,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isGreaterThanOrEqualTo with negative less value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = -97)), {
+            validate(Employee(company = Company(id = -97))) {
                 validate(Employee::company).isGreaterThanOrEqualTo(Company(id = -96))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -271,59 +271,59 @@ class ComparableFunctionsTest {
 
     @Test
     fun `isBetween with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isBetween(start = Company(id = 1), end = Company(id = 9))
-        })
+        }
     }
 
     @Test
     fun `isBetween with equal start value should be valid`() {
-        validate(Employee(company = Company(id = 0)), {
+        validate(Employee(company = Company(id = 0))) {
             validate(Employee::company).isBetween(start = Company(id = 0), end = Company(id = 1))
-        })
+        }
     }
 
     @Test
     fun `isBetween with equal end value should be valid`() {
-        validate(Employee(company = Company(id = 1)), {
+        validate(Employee(company = Company(id = 1))) {
             validate(Employee::company).isBetween(start = Company(id = 0), end = Company(id = 1))
-        })
+        }
     }
 
     @Test
     fun `isBetween with within value should be valid`() {
-        validate(Employee(company = Company(id = 5)), {
+        validate(Employee(company = Company(id = 5))) {
             validate(Employee::company).isBetween(start = Company(id = 0), end = Company(id = 10))
-        })
+        }
     }
 
     @Test
     fun `isBetween with equal negative start value should be valid`() {
-        validate(Employee(company = Company(id = -2)), {
+        validate(Employee(company = Company(id = -2))) {
             validate(Employee::company).isBetween(start = Company(id = -2), end = Company(id = -1))
-        })
+        }
     }
 
     @Test
     fun `isBetween with equal negative end value should be valid`() {
-        validate(Employee(company = Company(id = -1)), {
+        validate(Employee(company = Company(id = -1))) {
             validate(Employee::company).isBetween(start = Company(id = -2), end = Company(id = -1))
-        })
+        }
     }
 
     @Test
     fun `isBetween with within negative value should be valid`() {
-        validate(Employee(company = Company(id = -15)), {
+        validate(Employee(company = Company(id = -15))) {
             validate(Employee::company).isBetween(start = Company(id = -20), end = Company(id = -10))
-        })
+        }
     }
 
     @Test
     fun `isBetween with less start value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 10)), {
+            validate(Employee(company = Company(id = 10))) {
                 validate(Employee::company).isBetween(start = Company(id = 11), end = Company(id = 12))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -336,9 +336,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isBetween with greater end value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 12)), {
+            validate(Employee(company = Company(id = 12))) {
                 validate(Employee::company).isBetween(start = Company(id = 10), end = Company(id = 11))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -351,9 +351,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isBetween with less negative start value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = -10)), {
+            validate(Employee(company = Company(id = -10))) {
                 validate(Employee::company).isBetween(start = Company(id = -9), end = Company(id = -8))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -366,9 +366,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isBetween with greater negative end value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = -12)), {
+            validate(Employee(company = Company(id = -12))) {
                 validate(Employee::company).isBetween(start = Company(id = -14), end = Company(id = -13))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -380,45 +380,45 @@ class ComparableFunctionsTest {
 
     @Test
     fun `isNotBetween with null value should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isNotBetween(start = Company(id = 1), end = Company(id = 9))
-        })
+        }
     }
 
     @Test
     fun `isNotBetween with less start value should be valid`() {
-        validate(Employee(company = Company(id = 10)), {
+        validate(Employee(company = Company(id = 10))) {
             validate(Employee::company).isNotBetween(start = Company(id = 11), end = Company(id = 12))
-        })
+        }
     }
 
     @Test
     fun `isNotBetween with greater end value should be valid`() {
-        validate(Employee(company = Company(id = 12)), {
+        validate(Employee(company = Company(id = 12))) {
             validate(Employee::company).isNotBetween(start = Company(id = 10), end = Company(id = 11))
-        })
+        }
     }
 
     @Test
     fun `isNotBetween with less negative start value should be valid`() {
-        validate(Employee(company = Company(id = -10)), {
+        validate(Employee(company = Company(id = -10))) {
             validate(Employee::company).isNotBetween(start = Company(id = -9), end = Company(id = -8))
-        })
+        }
     }
 
     @Test
     fun `isNotBetween with greater negative end value should be valid`() {
-        validate(Employee(company = Company(id = -12)), {
+        validate(Employee(company = Company(id = -12))) {
             validate(Employee::company).isNotBetween(start = Company(id = -14), end = Company(id = -13))
-        })
+        }
     }
 
     @Test
     fun `isNotBetween with equal start value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 0)), {
+            validate(Employee(company = Company(id = 0))) {
                 validate(Employee::company).isNotBetween(start = Company(id = 0), end = Company(id = 1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -431,9 +431,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isNotBetween with equal end value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 1)), {
+            validate(Employee(company = Company(id = 1))) {
                 validate(Employee::company).isNotBetween(start = Company(id = 0), end = Company(id = 1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -446,9 +446,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isNotBetween with equal negative start value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = -2)), {
+            validate(Employee(company = Company(id = -2))) {
                 validate(Employee::company).isNotBetween(start = Company(id = -2), end = Company(id = -1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -461,9 +461,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isNotBetween with equal negative end value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = -1)), {
+            validate(Employee(company = Company(id = -1))) {
                 validate(Employee::company).isNotBetween(start = Company(id = -2), end = Company(id = -1))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -476,9 +476,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isNotBetween with within value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 5)), {
+            validate(Employee(company = Company(id = 5))) {
                 validate(Employee::company).isNotBetween(start = Company(id = 0), end = Company(id = 10))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -491,9 +491,9 @@ class ComparableFunctionsTest {
     @Test
     fun `isNotBetween with within negative value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = -15)), {
+            validate(Employee(company = Company(id = -15))) {
                 validate(Employee::company).isNotBetween(start = Company(id = -20), end = Company(id = -10))
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(

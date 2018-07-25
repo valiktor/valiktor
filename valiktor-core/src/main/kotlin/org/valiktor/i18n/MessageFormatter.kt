@@ -84,7 +84,7 @@ object Formatters {
      */
     @Suppress("UNCHECKED_CAST")
     operator fun <T : Any> get(type: KClass<T>): Formatter<T> =
-            formatters.getOrElse(type, {
+            formatters.getOrElse(type) {
                 val superclass = type.superclasses.firstOrNull { formatters.containsKey(it) } ?: Any::class
                 if (superclass != Any::class) {
                     return formatters.getValue(superclass) as Formatter<T>
@@ -98,7 +98,7 @@ object Formatters {
                 }
 
                 return AnyFormatter
-            }) as Formatter<T>
+            } as Formatter<T>
 
     /**
      * Adds a custom formatter for a class

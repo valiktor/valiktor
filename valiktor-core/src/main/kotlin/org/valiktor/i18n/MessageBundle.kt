@@ -52,7 +52,7 @@ class MessageBundle(val baseName: String,
                     fallbackLocale: Locale) {
 
     private val messages: Map<String, String> = cachedMessages.getOrPut(
-            CacheKey(baseName, locale, fallbackBaseName, fallbackLocale), {
+            CacheKey(baseName, locale, fallbackBaseName, fallbackLocale)) {
         val control = ResourceBundle.Control.getControl(FORMAT_PROPERTIES)
 
         if (locale == Locale(""))
@@ -71,7 +71,7 @@ class MessageBundle(val baseName: String,
                                 .plus(getMessages(baseName, it))
                     }
                     .toMap()
-    })
+    }
 
     private fun getMessages(baseName: String, locale: Locale): List<Pair<String, String>> =
             try {

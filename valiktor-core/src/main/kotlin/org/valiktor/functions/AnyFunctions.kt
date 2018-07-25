@@ -47,7 +47,7 @@ fun <E, T> Validator<E>.Property<T?>.validate(block: Validator<T>.() -> Unit): V
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isNull(): Validator<E>.Property<T?> =
-        this.validate(Null, { it == null })
+        this.validate(Null) { it == null }
 
 /**
  * Validates if the property value is not null
@@ -56,7 +56,7 @@ fun <E, T> Validator<E>.Property<T?>.isNull(): Validator<E>.Property<T?> =
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isNotNull(): Validator<E>.Property<T?> =
-        this.validate(NotNull, { it != null })
+        this.validate(NotNull) { it != null }
 
 /**
  * Validates if the property value is equal to another value
@@ -66,7 +66,7 @@ fun <E, T> Validator<E>.Property<T?>.isNotNull(): Validator<E>.Property<T?> =
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isEqualTo(value: T): Validator<E>.Property<T?> =
-        this.validate(Equals(value), { it == null || it == value })
+        this.validate(Equals(value)) { it == null || it == value }
 
 /**
  * Validates if the property value isn't equal to another value
@@ -76,7 +76,7 @@ fun <E, T> Validator<E>.Property<T?>.isEqualTo(value: T): Validator<E>.Property<
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isNotEqualTo(value: T): Validator<E>.Property<T?> =
-        this.validate(NotEquals(value), { it == null || it != value })
+        this.validate(NotEquals(value)) { it == null || it != value }
 
 /**
  * Validates if the property value is equal to one of the values
@@ -86,7 +86,7 @@ fun <E, T> Validator<E>.Property<T?>.isNotEqualTo(value: T): Validator<E>.Proper
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isIn(vararg values: T): Validator<E>.Property<T?> =
-        this.validate(In(values.toSet()), { it == null || values.contains(it) })
+        this.validate(In(values.toSet())) { it == null || values.contains(it) }
 
 /**
  * Validates if the property value is equal to one of the values
@@ -96,7 +96,7 @@ fun <E, T> Validator<E>.Property<T?>.isIn(vararg values: T): Validator<E>.Proper
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isIn(values: Iterable<T>): Validator<E>.Property<T?> =
-        this.validate(In(values), { it == null || values.contains(it) })
+        this.validate(In(values)) { it == null || values.contains(it) }
 
 /**
  * Validates if the property value isn't equal to any value
@@ -106,7 +106,7 @@ fun <E, T> Validator<E>.Property<T?>.isIn(values: Iterable<T>): Validator<E>.Pro
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isNotIn(vararg values: T): Validator<E>.Property<T?> =
-        this.validate(NotIn(values.toSet()), { it == null || !values.contains(it) })
+        this.validate(NotIn(values.toSet())) { it == null || !values.contains(it) }
 
 /**
  * Validates if the property value isn't equal to any value
@@ -116,7 +116,7 @@ fun <E, T> Validator<E>.Property<T?>.isNotIn(vararg values: T): Validator<E>.Pro
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isNotIn(values: Iterable<T>): Validator<E>.Property<T?> =
-        this.validate(NotIn(values), { it == null || !values.contains(it) })
+        this.validate(NotIn(values)) { it == null || !values.contains(it) }
 
 /**
  * Validates if the property is valid by passing a custom function
@@ -126,4 +126,4 @@ fun <E, T> Validator<E>.Property<T?>.isNotIn(values: Iterable<T>): Validator<E>.
  * @return the same receiver property
  */
 fun <E, T> Validator<E>.Property<T?>.isValid(validator: (T) -> Boolean): Validator<E>.Property<T?> =
-        this.validate(Valid, { it == null || validator(it) })
+        this.validate(Valid) { it == null || validator(it) }

@@ -28,17 +28,17 @@ class AnyFunctionsTest {
 
     @Test
     fun `isNull with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isNull()
-        })
+        }
     }
 
     @Test
     fun `isNull with not null property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 1)), {
+            validate(Employee(company = Company(id = 1))) {
                 validate(Employee::company).isNull()
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -49,17 +49,17 @@ class AnyFunctionsTest {
 
     @Test
     fun `isNotNull with not null property should be valid`() {
-        validate(Employee(company = Company(id = 1)), {
+        validate(Employee(company = Company(id = 1))) {
             validate(Employee::company).isNotNull()
-        })
+        }
     }
 
     @Test
     fun `isNotNull with null property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(), {
+            validate(Employee()) {
                 validate(Employee::company).isNotNull()
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -69,24 +69,24 @@ class AnyFunctionsTest {
 
     @Test
     fun `isEqualTo with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isEqualTo(Company(id = 1))
-        })
+        }
     }
 
     @Test
     fun `isEqualTo with same value should be valid`() {
-        validate(Employee(company = Company(id = 1)), {
+        validate(Employee(company = Company(id = 1))) {
             validate(Employee::company).isEqualTo(Company(id = 1))
-        })
+        }
     }
 
     @Test
     fun `isEqualTo with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 2)), {
+            validate(Employee(company = Company(id = 2))) {
                 validate(Employee::company).isEqualTo(Company(id = 1))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -97,24 +97,24 @@ class AnyFunctionsTest {
 
     @Test
     fun `isNotEqualTo with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isNotEqualTo(Company(id = 1))
-        })
+        }
     }
 
     @Test
     fun `isNotEqualTo with different value should be valid`() {
-        validate(Employee(company = Company(id = 2)), {
+        validate(Employee(company = Company(id = 2))) {
             validate(Employee::company).isNotEqualTo(Company(id = 1))
-        })
+        }
     }
 
     @Test
     fun `isNotEqualTo with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 1)), {
+            validate(Employee(company = Company(id = 1))) {
                 validate(Employee::company).isNotEqualTo(Company(id = 1))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -125,24 +125,24 @@ class AnyFunctionsTest {
 
     @Test
     fun `isIn vararg with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isIn(Company(id = 1), Company(id = 2), Company(id = 3))
-        })
+        }
     }
 
     @Test
     fun `isIn vararg with same value should be valid`() {
-        validate(Employee(company = Company(id = 2)), {
+        validate(Employee(company = Company(id = 2))) {
             validate(Employee::company).isIn(Company(id = 1), Company(id = 2), Company(id = 3))
-        })
+        }
     }
 
     @Test
     fun `isIn vararg with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 1)), {
+            validate(Employee(company = Company(id = 1))) {
                 validate(Employee::company).isIn(Company(id = 0), Company(id = 2), Company(id = 3))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -153,24 +153,24 @@ class AnyFunctionsTest {
 
     @Test
     fun `isIn iterable with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isIn(listOf(Company(id = 1), Company(id = 2), Company(id = 3)))
-        })
+        }
     }
 
     @Test
     fun `isIn iterable with same value should be valid`() {
-        validate(Employee(company = Company(id = 2)), {
+        validate(Employee(company = Company(id = 2))) {
             validate(Employee::company).isIn(listOf(Company(id = 1), Company(id = 2), Company(id = 3)))
-        })
+        }
     }
 
     @Test
     fun `isIn iterable with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 1)), {
+            validate(Employee(company = Company(id = 1))) {
                 validate(Employee::company).isIn(listOf(Company(id = 0), Company(id = 2), Company(id = 3)))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -181,24 +181,24 @@ class AnyFunctionsTest {
 
     @Test
     fun `isNotIn vararg with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isNotIn(Company(id = 0), Company(id = 2), Company(id = 3))
-        })
+        }
     }
 
     @Test
     fun `isNotIn vararg with different value should be valid`() {
-        validate(Employee(company = Company(id = 1)), {
+        validate(Employee(company = Company(id = 1))) {
             validate(Employee::company).isNotIn(Company(id = 0), Company(id = 2), Company(id = 3))
-        })
+        }
     }
 
     @Test
     fun `isNotIn vararg with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 1)), {
+            validate(Employee(company = Company(id = 1))) {
                 validate(Employee::company).isNotIn(Company(id = 1), Company(id = 2), Company(id = 3))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -209,24 +209,24 @@ class AnyFunctionsTest {
 
     @Test
     fun `isNotIn iterable with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isNotIn(listOf(Company(id = 0), Company(id = 2), Company(id = 3)))
-        })
+        }
     }
 
     @Test
     fun `isNotIn iterable with different value should be valid`() {
-        validate(Employee(company = Company(id = 1)), {
+        validate(Employee(company = Company(id = 1))) {
             validate(Employee::company).isNotIn(listOf(Company(id = 0), Company(id = 2), Company(id = 3)))
-        })
+        }
     }
 
     @Test
     fun `isNotIn iterable with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 1)), {
+            validate(Employee(company = Company(id = 1))) {
                 validate(Employee::company).isNotIn(listOf(Company(id = 1), Company(id = 2), Company(id = 3)))
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -237,24 +237,24 @@ class AnyFunctionsTest {
 
     @Test
     fun `isValid with null property should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).isValid { it == Company(id = 1) }
-        })
+        }
     }
 
     @Test
     fun `isValid with same value should be valid`() {
-        validate(Employee(company = Company(id = 1)), {
+        validate(Employee(company = Company(id = 1))) {
             validate(Employee::company).isValid { it == Company(id = 1) }
-        })
+        }
     }
 
     @Test
     fun `isValid with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(id = 2)), {
+            validate(Employee(company = Company(id = 2))) {
                 validate(Employee::company).isValid { it == Company(id = 1) }
-            })
+            }
         }
         assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(
@@ -265,7 +265,7 @@ class AnyFunctionsTest {
 
     @Test
     fun `inner null properties should be valid`() {
-        validate(Employee(), {
+        validate(Employee()) {
             validate(Employee::company).validate {
                 validate(Company::id).isNotNull()
             }
@@ -281,14 +281,14 @@ class AnyFunctionsTest {
                     }
                 }
             }
-        })
+        }
     }
 
     @Test
     fun `inner not null properties should be valid`() {
         validate(Employee(id = 1, company = Company(id = 1), address =
         Address(id = 1, city = City(id = 1, state =
-        State(id = 1, country = Country(id = 1))))), {
+        State(id = 1, country = Country(id = 1)))))) {
             validate(Employee::id).isNotNull()
             validate(Employee::company).validate {
                 validate(Company::id).isNotNull()
@@ -305,7 +305,7 @@ class AnyFunctionsTest {
                     }
                 }
             }
-        })
+        }
     }
 
     @Test
@@ -313,7 +313,7 @@ class AnyFunctionsTest {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(company = Company(), address =
             Address(city = City(state =
-            State(country = Country())))), {
+            State(country = Country()))))) {
                 validate(Employee::id).isNotNull()
                 validate(Employee::company).validate {
                     validate(Company::id).isNotNull()
@@ -330,7 +330,7 @@ class AnyFunctionsTest {
                         }
                     }
                 }
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
@@ -345,10 +345,10 @@ class AnyFunctionsTest {
     @Test
     fun `should not repeat the property`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(), {
+            validate(Employee()) {
                 validate(Employee::id).isNotNull().isEqualTo(1).isIn(1, 2, 3)
                 validate(Employee::name).isNotNull().isEqualTo("test").isIn("test1", "test2", "test3")
-            })
+            }
         }
 
         assertThat(exception.constraintViolations).containsExactly(

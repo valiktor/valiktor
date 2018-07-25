@@ -273,7 +273,7 @@ fun <E> Validator<E>.Property<MonetaryAmount?>.isNegativeOrZero(): Validator<E>.
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<MonetaryAmount?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<MonetaryAmount?> =
-        this.validate(IntegerDigits(min, max), { it == null || it.number.precision - it.number.scale in min.rangeTo(max) })
+        this.validate(IntegerDigits(min, max)) { it == null || it.number.precision - it.number.scale in min.rangeTo(max) }
 
 /**
  * Validates if the [MonetaryAmount] decimal digits (after decimal separator) is within the limits (min and max)
@@ -285,7 +285,7 @@ fun <E> Validator<E>.Property<MonetaryAmount?>.hasIntegerDigits(min: Int = Int.M
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<MonetaryAmount?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<MonetaryAmount?> =
-        this.validate(DecimalDigits(min, max), { it == null || (if (it.number.scale < 0) 0 else it.number.scale) in min.rangeTo(max) })
+        this.validate(DecimalDigits(min, max)) { it == null || (if (it.number.scale < 0) 0 else it.number.scale) in min.rangeTo(max) }
 
 /**
  * Validates if the currency unit is equal to another value
@@ -295,7 +295,7 @@ fun <E> Validator<E>.Property<MonetaryAmount?>.hasDecimalDigits(min: Int = Int.M
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<MonetaryAmount?>.hasCurrencyEqualTo(currency: CurrencyUnit): Validator<E>.Property<MonetaryAmount?> =
-        this.validate(CurrencyEquals(currency), { it == null || it.currency == currency })
+        this.validate(CurrencyEquals(currency)) { it == null || it.currency == currency }
 
 /**
  * Validates if the currency unit isn't equal to another value
@@ -305,7 +305,7 @@ fun <E> Validator<E>.Property<MonetaryAmount?>.hasCurrencyEqualTo(currency: Curr
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<MonetaryAmount?>.hasCurrencyNotEqualTo(currency: CurrencyUnit): Validator<E>.Property<MonetaryAmount?> =
-        this.validate(CurrencyNotEquals(currency), { it == null || it.currency != currency })
+        this.validate(CurrencyNotEquals(currency)) { it == null || it.currency != currency }
 
 /**
  * Validates if the currency unit is equal to one of the values
@@ -315,7 +315,7 @@ fun <E> Validator<E>.Property<MonetaryAmount?>.hasCurrencyNotEqualTo(currency: C
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<MonetaryAmount?>.hasCurrencyIn(vararg currencies: CurrencyUnit): Validator<E>.Property<MonetaryAmount?> =
-        this.validate(CurrencyIn(currencies.toSet()), { it == null || currencies.contains(it.currency) })
+        this.validate(CurrencyIn(currencies.toSet())) { it == null || currencies.contains(it.currency) }
 
 /**
  * Validates if the currency unit is equal to one of the values
@@ -325,7 +325,7 @@ fun <E> Validator<E>.Property<MonetaryAmount?>.hasCurrencyIn(vararg currencies: 
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<MonetaryAmount?>.hasCurrencyIn(currencies: Iterable<CurrencyUnit>): Validator<E>.Property<MonetaryAmount?> =
-        this.validate(CurrencyIn(currencies), { it == null || currencies.contains(it.currency) })
+        this.validate(CurrencyIn(currencies)) { it == null || currencies.contains(it.currency) }
 
 /**
  * Validates if the currency unit isn't equal to any value
@@ -335,7 +335,7 @@ fun <E> Validator<E>.Property<MonetaryAmount?>.hasCurrencyIn(currencies: Iterabl
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<MonetaryAmount?>.hasCurrencyNotIn(vararg currencies: CurrencyUnit): Validator<E>.Property<MonetaryAmount?> =
-        this.validate(CurrencyNotIn(currencies.toSet()), { it == null || !currencies.contains(it.currency) })
+        this.validate(CurrencyNotIn(currencies.toSet())) { it == null || !currencies.contains(it.currency) }
 
 /**
  * Validates if the currency unit isn't equal to any value
@@ -345,4 +345,4 @@ fun <E> Validator<E>.Property<MonetaryAmount?>.hasCurrencyNotIn(vararg currencie
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<MonetaryAmount?>.hasCurrencyNotIn(currencies: Iterable<CurrencyUnit>): Validator<E>.Property<MonetaryAmount?> =
-        this.validate(CurrencyNotIn(currencies), { it == null || !currencies.contains(it.currency) })
+        this.validate(CurrencyNotIn(currencies)) { it == null || !currencies.contains(it.currency) }
