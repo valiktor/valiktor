@@ -6,6 +6,5 @@ dependencies {
     implementation(javaMoney("api-bp"))
 
     testImplementation(kotlin("reflect"))
-
     testRuntimeOnly(moneta("moneta-bp"))
 }

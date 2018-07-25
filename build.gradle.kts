@@ -28,7 +28,6 @@ subprojects {
 
         testImplementation(kotlin("test-junit5"))
         testImplementation(assertj("core"))
-
         testRuntimeOnly(junit5("engine"))
     }
 
@@ -38,6 +37,9 @@ subprojects {
 
     tasks {
         withType<KotlinCompile> {
+            sourceCompatibility = JavaVersion.VERSION_1_6.toString()
+            targetCompatibility = JavaVersion.VERSION_1_6.toString()
+
             kotlinOptions {
                 jvmTarget = "1.6"
             }
