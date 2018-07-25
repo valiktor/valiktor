@@ -26,11 +26,8 @@ package org.valiktor.i18n
  */
 fun interpolate(messageBundle: MessageBundle, messageKey: String, messageParams: Map<String, *>): String =
         messageParams.toList()
-                .stream()
-                .reduce(messageBundle.getMessage(messageKey),
-                        { message, pair ->
-                            message.replace("{${pair.first}}",
-                                    pair.second?.let { Formatters[it.javaClass.kotlin].format(it, messageBundle) }
-                                            ?: "")
-                        },
-                        { message, _ -> message })
+                .fold(messageBundle.getMessage(messageKey)) { message, pair ->
+                    message.replace("{${pair.first}}",
+                            pair.second?.let { Formatters[it.javaClass.kotlin].format(it, messageBundle) }
+                                    ?: "")
+                }
