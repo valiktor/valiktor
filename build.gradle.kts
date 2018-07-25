@@ -5,7 +5,7 @@ fun DependencyHandler.junit5(module: String) = "org.junit.jupiter:junit-jupiter-
 fun DependencyHandler.assertj(module: String) = "org.assertj:assertj-$module:3.9.1"
 
 plugins {
-    kotlin("jvm") version "1.2.50"
+    kotlin("jvm") version "1.2.51"
     id("com.adarshr.test-logger") version "1.2.0"
 }
 
