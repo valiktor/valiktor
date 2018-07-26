@@ -19,13 +19,13 @@ package org.valiktor.functions
 import org.valiktor.Validator
 import org.valiktor.constraints.Today
 import java.time.LocalDate
-import java.time.OffsetDateTime
+import java.time.ZonedDateTime
 
 /**
- * Validates if the [OffsetDateTime] property is today
+ * Validates if the [ZonedDateTime] property is today
  *
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<OffsetDateTime?>.isToday(): Validator<E>.Property<OffsetDateTime?> =
-        this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.offset) }
+fun <E> Validator<E>.Property<ZonedDateTime?>.isToday(): Validator<E>.Property<ZonedDateTime?> =
+        this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.zone) }
