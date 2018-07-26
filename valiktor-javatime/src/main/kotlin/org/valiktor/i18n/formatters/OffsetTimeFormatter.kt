@@ -14,26 +14,24 @@
  * limitations under the License.
  */
 
-package org.valiktor.i18n
+package org.valiktor.i18n.formatters
 
-import org.valiktor.i18n.formatters.*
-import java.time.*
+import org.valiktor.i18n.Formatter
+import org.valiktor.i18n.MessageBundle
+import java.time.OffsetTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 /**
- * Represents the implementation for service provider interface for JavaTime formatters
- *
- * @property formatters specifies the [Set] of JavaTime formatters
+ * Represents the formatter for [OffsetTime] values
  *
  * @author Rodolpho S. Couto
  * @since 0.1.0
  */
-class JavaTimeFormatterSpi : FormatterSpi {
+object OffsetTimeFormatter : Formatter<OffsetTime> {
 
-    override val formatters = setOf(
-            LocalDate::class to LocalDateFormatter,
-            LocalDateTime::class to LocalDateTimeFormatter,
-            LocalTime::class to LocalTimeFormatter,
-            OffsetDateTime::class to OffsetDateTimeFormatter,
-            OffsetTime::class to OffsetTimeFormatter
-    )
+    override fun format(value: OffsetTime, messageBundle: MessageBundle): String =
+            value.format(DateTimeFormatter
+                    .ofLocalizedTime(FormatStyle.MEDIUM)
+                    .withLocale(messageBundle.locale))
 }
