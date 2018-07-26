@@ -65,18 +65,35 @@ fun ConstraintViolation.toMessage(baseName: String = constraint.messageBundle,
                         this.constraint.messageParams))
 
 /**
- * Converts to Set<[ConstraintViolationMessage]>
+ * Converts to List<[ConstraintViolationMessage]>
  *
  * @param baseName specifies the prefix name of the message properties
  * @param locale specifies the [Locale] of the message properties
- * @receiver the Set of <[ConstraintViolation]>
- * @return the Set of <[ConstraintViolationMessage]>
+ * @receiver the Iterable of <[ConstraintViolation]>
+ * @return the List of <[ConstraintViolationMessage]>
  *
  * @author Rodolpho S. Couto
  * @see ConstraintViolation
  * @see ConstraintViolationMessage
  * @since 0.1.0
  */
-fun Set<ConstraintViolation>.mapToMessage(baseName: String? = null,
-                                          locale: Locale = Locale.getDefault()) =
-        this.map { it.toMessage(baseName ?: it.constraint.messageBundle, locale) }.toSet()
+fun Iterable<ConstraintViolation>.mapToMessage(baseName: String? = null,
+                                               locale: Locale = Locale.getDefault()): List<ConstraintViolationMessage> =
+        this.map { it.toMessage(baseName ?: it.constraint.messageBundle, locale) }
+
+/**
+ * Converts to Sequence<[ConstraintViolationMessage]>
+ *
+ * @param baseName specifies the prefix name of the message properties
+ * @param locale specifies the [Locale] of the message properties
+ * @receiver the Sequence of <[ConstraintViolation]>
+ * @return the Sequence of <[ConstraintViolationMessage]>
+ *
+ * @author Rodolpho S. Couto
+ * @see ConstraintViolation
+ * @see ConstraintViolationMessage
+ * @since 0.1.0
+ */
+fun Sequence<ConstraintViolation>.mapToMessage(baseName: String? = null,
+                                               locale: Locale = Locale.getDefault()): Sequence<ConstraintViolationMessage> =
+        this.map { it.toMessage(baseName ?: it.constraint.messageBundle, locale) }

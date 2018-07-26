@@ -62,9 +62,12 @@ class MessageBundle(val baseName: String,
                     .toMap()
         else
             control.getCandidateLocales(baseName, locale)
+                    .asSequence()
                     .filter { it != Locale("") }
                     .plus(control.getCandidateLocales(baseName, fallbackLocale))
+                    .asIterable()
                     .reversed()
+                    .asSequence()
                     .flatMap {
                         getMessages(DEFAULT_BASE_NAME, locale)
                                 .plus(getMessages(fallbackBaseName, it))
@@ -73,7 +76,7 @@ class MessageBundle(val baseName: String,
                     .toMap()
     }
 
-    private fun getMessages(baseName: String, locale: Locale): List<Pair<String, String>> =
+    private fun getMessages(baseName: String, locale: Locale): Sequence<Pair<String, String>> =
             try {
                 ResourceBundle.getBundle(baseName, locale,
                         object : ResourceBundle.Control() {
@@ -83,12 +86,13 @@ class MessageBundle(val baseName: String,
                         })
                         .let { bundle ->
                             bundle.keySet()
+                                    .asSequence()
                                     .filter { it.startsWith(PREFIX_KEY) }
                                     .map { it to bundle.getString(it) }
                                     .filter { it.second.isNotBlank() }
                         }
             } catch (ex: MissingResourceException) {
-                emptyList()
+                emptySequence()
             }
 
     /**
