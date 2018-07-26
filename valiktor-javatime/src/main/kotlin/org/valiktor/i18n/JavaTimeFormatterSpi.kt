@@ -34,6 +34,7 @@ class JavaTimeFormatterSpi : FormatterSpi {
             LocalDateTime::class to LocalDateTimeFormatter,
             LocalTime::class to LocalTimeFormatter,
             OffsetDateTime::class to OffsetDateTimeFormatter,
-            OffsetTime::class to OffsetTimeFormatter
+            OffsetTime::class to OffsetTimeFormatter,
+            ZonedDateTime::class to ZonedDateTimeFormatter
     )
 }

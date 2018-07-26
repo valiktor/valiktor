@@ -14,5 +14,6 @@ class JavaTimeFormatterSpiTest {
         assertEquals(Formatters[LocalTime::class], LocalTimeFormatter)
         assertEquals(Formatters[OffsetDateTime::class], OffsetDateTimeFormatter)
         assertEquals(Formatters[OffsetTime::class], OffsetTimeFormatter)
+        assertEquals(Formatters[ZonedDateTime::class], ZonedDateTimeFormatter)
     }
 }
