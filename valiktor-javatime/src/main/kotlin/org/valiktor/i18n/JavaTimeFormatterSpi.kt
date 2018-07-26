@@ -19,9 +19,11 @@ package org.valiktor.i18n
 import org.valiktor.i18n.formatters.LocalDateFormatter
 import org.valiktor.i18n.formatters.LocalDateTimeFormatter
 import org.valiktor.i18n.formatters.LocalTimeFormatter
+import org.valiktor.i18n.formatters.OffsetDateTimeFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.OffsetDateTime
 
 /**
  * Represents the implementation for service provider interface for JavaTime formatters
@@ -36,6 +38,7 @@ class JavaTimeFormatterSpi : FormatterSpi {
     override val formatters = setOf(
             LocalDate::class to LocalDateFormatter,
             LocalDateTime::class to LocalDateTimeFormatter,
-            LocalTime::class to LocalTimeFormatter
+            LocalTime::class to LocalTimeFormatter,
+            OffsetDateTime::class to OffsetDateTimeFormatter
     )
 }
