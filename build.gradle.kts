@@ -1,15 +1,15 @@
 import org.gradle.kotlin.dsl.kotlin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-fun DependencyHandler.junit5(module: String) = "org.junit.jupiter:junit-jupiter-$module:5.0.0"
-fun DependencyHandler.assertj(module: String) = "org.assertj:assertj-$module:3.9.1"
-
 plugins {
     kotlin("jvm") version "1.2.51"
-    id("com.adarshr.test-logger") version "1.2.0"
+    id("com.adarshr.test-logger") version "1.3.1"
 }
 
 subprojects {
+    fun DependencyHandler.assertj(module: String) = "org.assertj:assertj-$module:3.9.1"
+    fun DependencyHandler.junit5(module: String) = "org.junit.jupiter:junit-jupiter-$module:5.0.0"
+
     apply {
         plugin("kotlin")
         plugin("jacoco")
@@ -37,9 +37,6 @@ subprojects {
 
     tasks {
         withType<KotlinCompile> {
-            sourceCompatibility = JavaVersion.VERSION_1_6.toString()
-            targetCompatibility = JavaVersion.VERSION_1_6.toString()
-
             kotlinOptions {
                 jvmTarget = "1.6"
             }
