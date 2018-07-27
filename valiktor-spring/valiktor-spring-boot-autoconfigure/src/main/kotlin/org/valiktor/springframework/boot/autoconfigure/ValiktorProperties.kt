@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.config
+package org.valiktor.springframework.boot.autoconfigure
 
-import org.springframework.stereotype.Component
-import java.util.*
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.valiktor.springframework.config.ValiktorConfiguration
 
 /**
- * Represents the Valiktor configuration for Spring Framework integration
+ * Represents the SpringBoot Configuration Properties for [ValiktorConfiguration]
  *
  * @property baseBundleName specifies the base name of the message properties
  *
  * @author Rodolpho S. Couto
- * @see ResourceBundle
+ * @see ValiktorConfiguration
+ * @see ValiktorAutoConfiguration
  * @since 0.1.0
  */
-@Component
-data class ValiktorConfiguration(val baseBundleName: String?)
+@ConfigurationProperties(prefix = "valiktor", ignoreUnknownFields = true)
+class ValiktorProperties {
+
+    lateinit var baseBundleName: String
+}

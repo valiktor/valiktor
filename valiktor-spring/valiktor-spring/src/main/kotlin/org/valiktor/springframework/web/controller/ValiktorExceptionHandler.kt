@@ -56,7 +56,7 @@ class ValiktorExceptionHandler(private val config: ValiktorConfiguration) {
                     .unprocessableEntity()
                     .body(UnprocessableEntity(errors = ex.constraintViolations
                             .asSequence()
-                            .mapToMessage(baseName = config.bundleBaseName, locale = acceptLanguage.defaultLocale)
+                            .mapToMessage(baseName = config.baseBundleName, locale = acceptLanguage.defaultLocale)
                             .map {
                                 ValidationError(
                                         property = it.property,
