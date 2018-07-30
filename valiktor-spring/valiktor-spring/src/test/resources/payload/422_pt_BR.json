@@ -57,14 +57,14 @@
     },
     {
       "property": "dateOfBirth",
-      "value": 978400800000,
+      "value": "2001-01-02",
       "message": "Deve ser igual a 01/01/2001",
       "constraint": {
         "name": "Equals",
         "params": [
           {
             "name": "value",
-            "value": 978314400000
+            "value": "2001-01-01"
           }
         ]
       }

@@ -1,11 +1,13 @@
 package org.valiktor.springframework.web.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.springframework.http.HttpHeaders.ACCEPT_LANGUAGE
 import org.springframework.http.HttpHeaders.LOCATION
 import org.springframework.http.MediaType.*
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.log
@@ -24,6 +26,7 @@ import org.valiktor.functions.isEqualTo
 import org.valiktor.springframework.config.ValiktorConfiguration
 import org.valiktor.validate
 import java.math.BigDecimal
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Month
 import java.time.ZoneId
@@ -58,11 +61,17 @@ class ValiktorTestController {
 
 class ValiktorExceptionHandlerTest {
 
-    private val objectMapper = ObjectMapper().registerModule(KotlinModule())
+    private val objectMapper = ObjectMapper()
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .setDateFormat(SimpleDateFormat("yyyy-MM-dd"))
+            .registerModule(KotlinModule())
 
     private val mockMvc: MockMvc = MockMvcBuilders
             .standaloneSetup(ValiktorTestController())
             .setControllerAdvice(ValiktorExceptionHandler(config = ValiktorConfiguration()))
+            .setMessageConverters(MappingJackson2HttpMessageConverter().also {
+                it.objectMapper = this.objectMapper
+            })
             .setLocaleResolver(object : AcceptHeaderLocaleResolver() {
                 override fun resolveLocale(req: HttpServletRequest): Locale =
                         Locale.lookup(
