@@ -7,11 +7,11 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":valiktor-core"))
     implementation(project(":valiktor-spring:valiktor-spring"))
     implementation(project(":valiktor-spring:valiktor-spring-boot-autoconfigure"))
     implementation(kotlin("stdlib-jdk8"))
     implementation(springBoot("starter"))
+    implementation(springBoot("starter-web"))
 }
 
 tasks {

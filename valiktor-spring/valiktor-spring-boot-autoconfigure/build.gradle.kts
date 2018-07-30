@@ -7,8 +7,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":valiktor-core"))
-    implementation(project(":valiktor-spring:valiktor-spring"))
+    compileOnly(project(":valiktor-spring:valiktor-spring"))
     implementation(kotlin("stdlib-jdk8"))
     implementation(springBoot("autoconfigure"))
     annotationProcessor(springBoot("autoconfigure-processor"))
