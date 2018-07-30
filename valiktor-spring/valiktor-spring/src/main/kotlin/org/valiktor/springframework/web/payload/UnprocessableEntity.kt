@@ -16,6 +16,11 @@
 
 package org.valiktor.springframework.web.payload
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import javax.xml.bind.annotation.XmlElement
+import javax.xml.bind.annotation.XmlElementWrapper
 import javax.xml.bind.annotation.XmlRootElement
 
 /**
@@ -27,8 +32,13 @@ import javax.xml.bind.annotation.XmlRootElement
  * @see ValidationError
  * @since 0.1.0
  */
-@XmlRootElement
-data class UnprocessableEntity(val errors: Set<ValidationError>)
+@XmlRootElement(name = "unprocessableEntity")
+@JacksonXmlRootElement(localName = "unprocessableEntity")
+data class UnprocessableEntity(@XmlElement(name = "error")
+                               @XmlElementWrapper(name = "errors")
+                               @JacksonXmlProperty(localName = "error")
+                               @JacksonXmlElementWrapper(localName = "errors")
+                               val errors: Set<ValidationError>)
 
 /**
  * Represents a validation error
@@ -42,7 +52,6 @@ data class UnprocessableEntity(val errors: Set<ValidationError>)
  * @see ValidationConstraint
  * @since 0.1.0
  */
-@XmlRootElement
 data class ValidationError(val property: String,
                            val value: Any?,
                            val message: String,
@@ -58,8 +67,11 @@ data class ValidationError(val property: String,
  * @see ValidationParam
  * @since 0.1.0
  */
-@XmlRootElement
 data class ValidationConstraint(val name: String,
+                                @XmlElement(name = "param")
+                                @XmlElementWrapper(name = "params")
+                                @JacksonXmlProperty(localName = "param")
+                                @JacksonXmlElementWrapper(localName = "params")
                                 val params: Set<ValidationParam>)
 
 /**
@@ -71,6 +83,5 @@ data class ValidationConstraint(val name: String,
  * @author Rodolpho S. Couto
  * @since 0.1.0
  */
-@XmlRootElement
 data class ValidationParam(val name: String,
                            val value: Any?)

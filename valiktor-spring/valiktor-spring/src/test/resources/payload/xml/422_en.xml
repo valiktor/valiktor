@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unprocessableEntity>
+    <errors>
+        <error>
+            <property>id</property>
+            <value>2</value>
+            <message>Must be equal to 1</message>
+            <constraint>
+                <name>Equals</name>
+                <params>
+                    <param>
+                        <name>value</name>
+                        <value>1</value>
+                    </param>
+                </params>
+            </constraint>
+        </error>
+        <error>
+            <property>name</property>
+            <value>Jon</value>
+            <message>Size must be greater than or equal to 4</message>
+            <constraint>
+                <name>Size</name>
+                <params>
+                    <param>
+                        <name>min</name>
+                        <value>4</value>
+                    </param>
+                </params>
+            </constraint>
+        </error>
+        <error>
+            <property>email</property>
+            <value>jon</value>
+            <message>Must be a valid email address</message>
+            <constraint>
+                <name>Email</name>
+                <params/>
+            </constraint>
+        </error>
+        <error>
+            <property>salary</property>
+            <value>10000</value>
+            <message>Must be between 999.99 and 9,999.99</message>
+            <constraint>
+                <name>Between</name>
+                <params>
+                    <param>
+                        <name>end</name>
+                        <value>9999.99</value>
+                    </param>
+                    <param>
+                        <name>start</name>
+                        <value>999.99</value>
+                    </param>
+                </params>
+            </constraint>
+        </error>
+        <error>
+            <property>dateOfBirth</property>
+            <value>2001-01-02</value>
+            <message>Must be equal to Jan 1, 2001</message>
+            <constraint>
+                <name>Equals</name>
+                <params>
+                    <param>
+                        <name>value</name>
+                        <value>2001-01-01</value>
+                    </param>
+                </params>
+            </constraint>
+        </error>
+    </errors>
+</unprocessableEntity>
