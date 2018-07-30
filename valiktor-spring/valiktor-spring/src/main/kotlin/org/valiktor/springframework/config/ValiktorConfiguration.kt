@@ -29,4 +29,4 @@ import java.util.*
  * @since 0.1.0
  */
 @Component
-data class ValiktorConfiguration(val baseBundleName: String?)
+data class ValiktorConfiguration(val baseBundleName: String? = null)

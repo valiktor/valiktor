@@ -12,8 +12,6 @@ dependencies {
     implementation(project(":valiktor-spring:valiktor-spring-boot-autoconfigure"))
     implementation(kotlin("stdlib-jdk8"))
     implementation(springBoot("starter"))
-
-    testImplementation(kotlin("reflect"))
 }
 
 tasks {

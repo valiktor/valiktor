@@ -19,7 +19,6 @@ package org.valiktor.springframework.web.controller
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver
 import org.valiktor.ConstraintViolationException
 import org.valiktor.i18n.mapToMessage
 import org.valiktor.springframework.config.ValiktorConfiguration
@@ -27,6 +26,7 @@ import org.valiktor.springframework.web.payload.UnprocessableEntity
 import org.valiktor.springframework.web.payload.ValidationConstraint
 import org.valiktor.springframework.web.payload.ValidationError
 import org.valiktor.springframework.web.payload.ValidationParam
+import java.util.*
 
 /**
  * Represents the REST controller that handle [ConstraintViolationException] and returns an appropriate HTTP response.
@@ -46,17 +46,17 @@ class ValiktorExceptionHandler(private val config: ValiktorConfiguration) {
      * with the constraint violations.
      *
      * @param ex specifies the [ConstraintViolationException]
-     * @param acceptLanguage specifies the Accept-Language HTTP header of the request
+     * @param locale specifies the [Locale] of the Request
      * @return the ResponseEntity with 422 status code and the constraint violations
      */
     @ExceptionHandler(ConstraintViolationException::class)
     fun handleConstraintViolationException(ex: ConstraintViolationException,
-                                           acceptLanguage: AcceptHeaderLocaleResolver): ResponseEntity<UnprocessableEntity> =
+                                           locale: Locale): ResponseEntity<UnprocessableEntity> =
             ResponseEntity
                     .unprocessableEntity()
                     .body(UnprocessableEntity(errors = ex.constraintViolations
                             .asSequence()
-                            .mapToMessage(baseName = config.baseBundleName, locale = acceptLanguage.defaultLocale)
+                            .mapToMessage(baseName = config.baseBundleName, locale = locale)
                             .map {
                                 ValidationError(
                                         property = it.property,

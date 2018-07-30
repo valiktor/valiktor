@@ -12,8 +12,6 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(springBoot("autoconfigure"))
     annotationProcessor(springBoot("autoconfigure-processor"))
-
-    testImplementation(kotlin("reflect"))
 }
 
 tasks {

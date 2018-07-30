@@ -1,0 +1,73 @@
+{
+  "errors": [
+    {
+      "property": "id",
+      "value": 2,
+      "message": "Deve ser igual a 1",
+      "constraint": {
+        "name": "Equals",
+        "params": [
+          {
+            "name": "value",
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
+      "property": "name",
+      "value": "Jon",
+      "message": "O tamanho deve ser maior ou igual a 4",
+      "constraint": {
+        "name": "Size",
+        "params": [
+          {
+            "name": "min",
+            "value": 4
+          }
+        ]
+      }
+    },
+    {
+      "property": "email",
+      "value": "jon",
+      "message": "Deve ser um endereço de e-mail válido",
+      "constraint": {
+        "name": "Email",
+        "params": []
+      }
+    },
+    {
+      "property": "salary",
+      "value": 10000,
+      "message": "Deve estar entre 999,99 e 9.999,99",
+      "constraint": {
+        "name": "Between",
+        "params": [
+          {
+            "name": "end",
+            "value": 9999.99
+          },
+          {
+            "name": "start",
+            "value": 999.99
+          }
+        ]
+      }
+    },
+    {
+      "property": "dateOfBirth",
+      "value": 978400800000,
+      "message": "Deve ser igual a 01/01/2001",
+      "constraint": {
+        "name": "Equals",
+        "params": [
+          {
+            "name": "value",
+            "value": 978314400000
+          }
+        ]
+      }
+    }
+  ]
+}
