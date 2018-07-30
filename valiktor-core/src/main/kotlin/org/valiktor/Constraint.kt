@@ -42,6 +42,11 @@ interface Constraint {
 
     val messageParams: Map<String, *>
         get() = this.javaClass.kotlin.declaredMemberProperties
+                .asSequence()
+                .filter {
+                    Constraint::class.declaredMemberProperties
+                            .none { p -> p.name == it.name }
+                }
                 .map { it.name to it.get(this) }
                 .toMap()
 }

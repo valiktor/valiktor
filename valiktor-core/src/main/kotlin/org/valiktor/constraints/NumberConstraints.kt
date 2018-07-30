@@ -34,6 +34,16 @@ data class IntegerDigits(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VA
             else if (min != Int.MIN_VALUE) "${this.javaClass.name}.min.message"
             else if (max != Int.MAX_VALUE) "${this.javaClass.name}.max.message"
             else super.messageKey
+
+    override val messageParams: Map<String, *>
+        get() = if (min != Int.MIN_VALUE && max != Int.MAX_VALUE)
+            mapOf(this::min.name to this.min, this::max.name to this.max)
+        else if (min != Int.MIN_VALUE)
+            mapOf(this::min.name to this.min)
+        else if (max != Int.MAX_VALUE)
+            mapOf(this::max.name to this.max)
+        else
+            mapOf(this::min.name to this.min, this::max.name to this.max)
 }
 
 /**
@@ -52,4 +62,14 @@ data class DecimalDigits(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VA
             else if (min != Int.MIN_VALUE) "${this.javaClass.name}.min.message"
             else if (max != Int.MAX_VALUE) "${this.javaClass.name}.max.message"
             else super.messageKey
+
+    override val messageParams: Map<String, *>
+        get() = if (min != Int.MIN_VALUE && max != Int.MAX_VALUE)
+            mapOf(this::min.name to this.min, this::max.name to this.max)
+        else if (min != Int.MIN_VALUE)
+            mapOf(this::min.name to this.min)
+        else if (max != Int.MAX_VALUE)
+            mapOf(this::max.name to this.max)
+        else
+            mapOf(this::min.name to this.min, this::max.name to this.max)
 }
