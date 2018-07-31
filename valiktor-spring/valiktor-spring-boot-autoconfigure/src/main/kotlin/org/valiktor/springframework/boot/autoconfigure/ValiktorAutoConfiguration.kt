@@ -22,6 +22,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.valiktor.springframework.config.ValiktorConfiguration
+import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
 
 /**
  * Represents the SpringBoot Auto Configuration for [ValiktorConfiguration]
@@ -39,7 +40,7 @@ import org.valiktor.springframework.config.ValiktorConfiguration
 class ValiktorAutoConfiguration(private val properties: ValiktorProperties) {
 
     /**
-     * Creates [ValiktorConfiguration] based on the properties
+     * Creates a [ValiktorConfiguration] based on the properties
      *
      * @return the respective [ValiktorConfiguration]
      */
@@ -47,4 +48,14 @@ class ValiktorAutoConfiguration(private val properties: ValiktorProperties) {
     @ConditionalOnMissingBean
     fun valiktorConfiguration() = ValiktorConfiguration(
             baseBundleName = properties.baseBundleName)
+
+    /**
+     * Creates a [ValiktorExceptionHandler]
+     *
+     * @return the respective [ValiktorExceptionHandler]
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    fun valiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration): ValiktorExceptionHandler =
+            ValiktorExceptionHandler(valiktorConfiguration)
 }

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.valiktor.springframework.config.ValiktorConfiguration
+import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
 import kotlin.test.*
 
 class ValiktorAutoConfigurationTest {
@@ -29,7 +30,10 @@ class ValiktorAutoConfigurationTest {
                 PropertyPlaceholderAutoConfiguration::class.java))
 
         val config = this.context.getBean(ValiktorConfiguration::class.java)
+        val handler = this.context.getBean(ValiktorExceptionHandler::class.java)
+
         assertNull(config.baseBundleName)
+        assertNotNull(handler)
     }
 
     @Test
@@ -41,7 +45,10 @@ class ValiktorAutoConfigurationTest {
                 PropertyPlaceholderAutoConfiguration::class.java))
 
         val config = this.context.getBean(ValiktorConfiguration::class.java)
+        val handler = this.context.getBean(ValiktorExceptionHandler::class.java)
+
         assertEquals(config.baseBundleName, "test")
+        assertNotNull(handler)
     }
 
     @Test
@@ -54,7 +61,10 @@ class ValiktorAutoConfigurationTest {
                 PropertyPlaceholderAutoConfiguration::class.java))
 
         val config = this.context.getBean(ValiktorConfiguration::class.java)
+        val handler = this.context.getBean(ValiktorExceptionHandler::class.java)
+
         assertEquals(config.baseBundleName, "testMessages")
+        assertNotNull(handler)
     }
 
     private fun registerAndRefresh(annotatedClasses: List<Class<*>>) {
