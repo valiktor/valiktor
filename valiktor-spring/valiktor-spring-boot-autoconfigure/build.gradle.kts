@@ -11,6 +11,9 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(springBoot("autoconfigure"))
     annotationProcessor(springBoot("autoconfigure-processor"))
+
+    testImplementation(project(":valiktor-spring:valiktor-spring"))
+    testImplementation(springBoot("test"))
 }
 
 tasks {

@@ -32,5 +32,5 @@ import org.valiktor.springframework.config.ValiktorConfiguration
 @ConfigurationProperties(prefix = "valiktor", ignoreUnknownFields = true)
 class ValiktorProperties {
 
-    lateinit var baseBundleName: String
+    var baseBundleName: String? = null
 }
