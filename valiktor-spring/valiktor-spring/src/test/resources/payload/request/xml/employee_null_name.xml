@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employee>
+    <id>1</id>
+    <name/>
+    <email>john@john.com</email>
+    <salary>1000</salary>
+    <dateOfBirth>2001-01-01</dateOfBirth>
+</employee>

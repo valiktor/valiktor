@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.valiktor.springframework.config.ValiktorConfiguration
 import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
+import org.valiktor.springframework.web.controller.ValiktorJacksonExceptionHandler
 
 /**
  * Represents the SpringBoot Auto Configuration for [ValiktorConfiguration]
@@ -58,4 +59,15 @@ class ValiktorAutoConfiguration(private val properties: ValiktorProperties) {
     @ConditionalOnMissingBean
     fun valiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration): ValiktorExceptionHandler =
             ValiktorExceptionHandler(valiktorConfiguration)
+
+    /**
+     * Creates a [ValiktorJacksonExceptionHandler]
+     *
+     * @return the respective [ValiktorJacksonExceptionHandler]
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnClass(name = ["com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException"])
+    fun valiktorJacksonExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler): ValiktorJacksonExceptionHandler =
+            ValiktorJacksonExceptionHandler(valiktorExceptionHandler)
 }

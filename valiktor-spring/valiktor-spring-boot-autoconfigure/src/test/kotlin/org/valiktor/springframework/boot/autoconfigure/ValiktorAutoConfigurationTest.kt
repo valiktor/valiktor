@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.valiktor.springframework.config.ValiktorConfiguration
 import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
+import org.valiktor.springframework.web.controller.ValiktorJacksonExceptionHandler
 import kotlin.test.*
 
 class ValiktorAutoConfigurationTest {
@@ -31,9 +32,11 @@ class ValiktorAutoConfigurationTest {
 
         val config = this.context.getBean(ValiktorConfiguration::class.java)
         val handler = this.context.getBean(ValiktorExceptionHandler::class.java)
+        val jacksonHandler = this.context.getBean(ValiktorJacksonExceptionHandler::class.java)
 
         assertNull(config.baseBundleName)
         assertNotNull(handler)
+        assertNotNull(jacksonHandler)
     }
 
     @Test
@@ -46,9 +49,11 @@ class ValiktorAutoConfigurationTest {
 
         val config = this.context.getBean(ValiktorConfiguration::class.java)
         val handler = this.context.getBean(ValiktorExceptionHandler::class.java)
+        val jacksonHandler = this.context.getBean(ValiktorJacksonExceptionHandler::class.java)
 
         assertEquals(config.baseBundleName, "test")
         assertNotNull(handler)
+        assertNotNull(jacksonHandler)
     }
 
     @Test
@@ -62,9 +67,11 @@ class ValiktorAutoConfigurationTest {
 
         val config = this.context.getBean(ValiktorConfiguration::class.java)
         val handler = this.context.getBean(ValiktorExceptionHandler::class.java)
+        val jacksonHandler = this.context.getBean(ValiktorJacksonExceptionHandler::class.java)
 
         assertEquals(config.baseBundleName, "testMessages")
         assertNotNull(handler)
+        assertNotNull(jacksonHandler)
     }
 
     private fun registerAndRefresh(annotatedClasses: List<Class<*>>) {

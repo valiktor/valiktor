@@ -1,0 +1,13 @@
+{
+  "errors": [
+    {
+      "property": "name",
+      "value": null,
+      "message": "Não deve ser nulo",
+      "constraint": {
+        "name": "NotNull",
+        "params": []
+      }
+    }
+  ]
+}

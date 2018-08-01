@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unprocessableEntity>
+    <errors>
+        <error>
+            <property>name</property>
+            <value/>
+            <message>Não deve ser nulo</message>
+            <constraint>
+                <name>NotNull</name>
+                <params/>
+            </constraint>
+        </error>
+    </errors>
+</unprocessableEntity>

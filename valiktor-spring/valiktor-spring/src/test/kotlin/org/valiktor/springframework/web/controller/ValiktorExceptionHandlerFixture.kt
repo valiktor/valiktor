@@ -74,9 +74,12 @@ object ValiktorExceptionHandlerFixture {
             .registerModule(KotlinModule())
             .registerModule(JaxbAnnotationModule())
 
+    private val valiktorExceptionHandler = ValiktorExceptionHandler(config = ValiktorConfiguration())
+    private val valiktorJacksonExceptionHandler = ValiktorJacksonExceptionHandler(valiktorExceptionHandler = valiktorExceptionHandler)
+
     val mockMvc: MockMvc = MockMvcBuilders
             .standaloneSetup(ValiktorTestController())
-            .setControllerAdvice(ValiktorExceptionHandler(config = ValiktorConfiguration()))
+            .setControllerAdvice(valiktorExceptionHandler, valiktorJacksonExceptionHandler)
             .setMessageConverters(
                     MappingJackson2HttpMessageConverter().also { it.objectMapper = this.jsonMapper },
                     MappingJackson2XmlHttpMessageConverter().also { it.objectMapper = this.xmlMapper })
@@ -90,47 +93,21 @@ object ValiktorExceptionHandlerFixture {
 
     object JSON {
 
-        val validEmployee: ByteArray = jsonMapper.writeValueAsBytes(
-                Employee(
-                        id = 1,
-                        name = "John",
-                        email = "john@john.com",
-                        salary = "1000".toBigDecimal(),
-                        dateOfBirth = Date.from(LocalDate.of(2001, Month.JANUARY, 1)
-                                .atStartOfDay(ZoneId.systemDefault()).toInstant())))
+        fun payloadEmployeeValid() = this.javaClass.classLoader.getResource("payload/request/json/employee_valid.json").readText()
+        fun payloadEmployeeInvalid() = this.javaClass.classLoader.getResource("payload/request/json/employee_invalid.json").readText()
+        fun payloadEmployeeNullName() = this.javaClass.classLoader.getResource("payload/request/json/employee_null_name.json").readText()
 
-        val invalidEmployee: ByteArray = jsonMapper.writeValueAsBytes(
-                Employee(
-                        id = 2,
-                        name = "Jon",
-                        email = "jon",
-                        salary = "10000".toBigDecimal(),
-                        dateOfBirth = Date.from(LocalDate.of(2001, Month.JANUARY, 2)
-                                .atStartOfDay(ZoneId.systemDefault()).toInstant())))
-
-        fun payload422(locale: Locale) = this.javaClass.classLoader.getResource("payload/json/422_$locale.json").readText()
+        fun payload422(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/json/$locale/422.json").readText()
+        fun payload422NullName(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/json/$locale/422_null_name.json").readText()
     }
 
     object XML {
 
-        val validEmployee: ByteArray = xmlMapper.writeValueAsBytes(
-                Employee(
-                        id = 1,
-                        name = "John",
-                        email = "john@john.com",
-                        salary = "1000".toBigDecimal(),
-                        dateOfBirth = Date.from(LocalDate.of(2001, Month.JANUARY, 1)
-                                .atStartOfDay(ZoneId.systemDefault()).toInstant())))
+        fun payloadEmployeeValid() = this.javaClass.classLoader.getResource("payload/request/xml/employee_valid.xml").readText()
+        fun payloadEmployeeInvalid() = this.javaClass.classLoader.getResource("payload/request/xml/employee_invalid.xml").readText()
+        fun payloadEmployeeNullName() = this.javaClass.classLoader.getResource("payload/request/xml/employee_null_name.xml").readText()
 
-        val invalidEmployee: ByteArray = xmlMapper.writeValueAsBytes(
-                Employee(
-                        id = 2,
-                        name = "Jon",
-                        email = "jon",
-                        salary = "10000".toBigDecimal(),
-                        dateOfBirth = Date.from(LocalDate.of(2001, Month.JANUARY, 2)
-                                .atStartOfDay(ZoneId.systemDefault()).toInstant())))
-
-        fun payload422(locale: Locale) = this.javaClass.classLoader.getResource("payload/xml/422_$locale.xml").readText()
+        fun payload422(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/xml/$locale/422.xml").readText()
+        fun payload422NullName(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/xml/$locale/422_null_name.xml").readText()
     }
 }

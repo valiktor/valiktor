@@ -16,6 +16,7 @@ dependencies {
     implementation(project(":valiktor-core"))
     implementation(kotlin("stdlib-jdk8"))
     implementation(spring("webmvc"))
+    compileOnly(jacksonModule("kotlin"))
     compileOnly(jacksonDataFormat("xml"))
 
     testImplementation(spring("test"))
