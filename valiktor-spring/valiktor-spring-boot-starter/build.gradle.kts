@@ -1,17 +1,17 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-fun DependencyHandler.springBoot(module: String) = "org.springframework.boot:spring-boot-$module:1.5.14.RELEASE"
+fun DependencyHandler.springBoot(module: String) = "org.springframework.boot:spring-boot-$module:1.5.15.RELEASE"
 
 plugins {
     kotlin("plugin.spring") version "1.2.51"
 }
 
 dependencies {
-    implementation(project(":valiktor-spring:valiktor-spring"))
-    implementation(project(":valiktor-spring:valiktor-spring-boot-autoconfigure"))
-    implementation(kotlin("stdlib-jdk8"))
-    implementation(springBoot("starter"))
-    implementation(springBoot("starter-web"))
+    compile(project(":valiktor-spring:valiktor-spring"))
+    compile(project(":valiktor-spring:valiktor-spring-boot-autoconfigure"))
+    compile(kotlin("stdlib-jdk8"))
+    compile(springBoot("starter"))
+    compile(springBoot("starter-web"))
 }
 
 tasks {

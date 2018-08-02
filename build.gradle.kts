@@ -24,11 +24,11 @@ subprojects {
     }
 
     dependencies {
-        implementation(kotlin("stdlib"))
+        compile(kotlin("stdlib"))
 
-        testImplementation(kotlin("test-junit5"))
-        testImplementation(assertj("core"))
-        testRuntimeOnly(junit5("engine"))
+        testCompile(kotlin("test-junit5"))
+        testCompile(assertj("core"))
+        testRuntime(junit5("engine"))
     }
 
     testlogger {

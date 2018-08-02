@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("plugin.spring") version "1.2.51"
-    id("org.springframework.boot") version "1.5.4.RELEASE"
+    id("org.springframework.boot") version "1.5.15.RELEASE"
 }
 
 apply {
@@ -10,20 +10,20 @@ apply {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-    implementation(project(":valiktor-core"))
-    implementation(project(":valiktor-javamoney"))
-    implementation(project(":valiktor-javatime"))
-    implementation(project(":valiktor-spring:valiktor-spring-boot-starter"))
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
-    implementation("org.zalando:jackson-datatype-money:1.0.2")
-    implementation("javax.money:money-api:1.0.3")
-    runtimeOnly("org.javamoney:moneta:1.3")
+    compile(kotlin("stdlib-jdk8"))
+    compile(kotlin("reflect"))
+    compile(project(":valiktor-javamoney"))
+    compile(project(":valiktor-javatime"))
+    compile(project(":valiktor-spring:valiktor-spring-boot-starter"))
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.6")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.6")
+    compile("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.6")
+    compile("org.zalando:jackson-datatype-money:1.0.2")
+    compile("javax.money:money-api:1.0.3")
+    runtime("org.javamoney:moneta:1.3")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks {

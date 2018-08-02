@@ -1,3 +1,3 @@
 dependencies {
-    implementation(kotlin("reflect"))
+    compile(kotlin("reflect"))
 }

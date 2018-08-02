@@ -13,20 +13,20 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":valiktor-core"))
-    implementation(kotlin("stdlib-jdk8"))
-    implementation(spring("webmvc"))
+    compile(project(":valiktor-core"))
+    compile(kotlin("stdlib-jdk8"))
+    compile(spring("webmvc"))
     compileOnly(jacksonModule("kotlin"))
     compileOnly(jacksonDataFormat("xml"))
 
-    testImplementation(spring("test"))
-    testImplementation(servlet("api"))
-    testImplementation(jacksonCore("databind"))
-    testImplementation(jacksonModule("kotlin"))
-    testImplementation(jacksonModule("jaxb-annotations"))
-    testImplementation(jacksonDataFormat("xml"))
-    testRuntimeOnly(jsonAssert())
-    testRuntimeOnly(xmlUnit())
+    testCompile(spring("test"))
+    testCompile(servlet("api"))
+    testCompile(jacksonCore("databind"))
+    testCompile(jacksonModule("kotlin"))
+    testCompile(jacksonModule("jaxb-annotations"))
+    testCompile(jacksonDataFormat("xml"))
+    testRuntime(jsonAssert())
+    testRuntime(xmlUnit())
 }
 
 tasks {
