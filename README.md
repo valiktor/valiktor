@@ -13,15 +13,15 @@ Example:
 import org.valiktor.validate
 import org.valiktor.functions.*
 
-data class Employee(val id: Int?, val name: String, val email: String)
-
-fun main(args: Array<String>) {
-    val employee = Employee(id = 1, name = "John", email = "john@company.com")
-    
-    validate(employee) {
-        validate(Employee::id).isNotNull()
-        validate(Employee::name).isNotBlank().hasSize(min = 1, max = 100)
-        validate(Employee::email).isNotBlank().hasSize(min = 1, max = 50).isEmail()
+data class Employee(val id: Int, 
+                    val name: String, 
+                    val email: String) {
+    init {
+        validate(this) {
+            validate(Employee::id).isPositive()
+            validate(Employee::name).isNotBlank().hasSize(min = 1, max = 80)
+            validate(Employee::email).isNotBlank().hasSize(min = 1, max = 50).isEmail()
+        }
     }
 }
 ```
