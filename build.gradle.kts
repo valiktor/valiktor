@@ -6,6 +6,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 plugins {
     kotlin("jvm") version "1.2.51"
     id("maven-publish")
+    id("signing")
     id("org.jetbrains.dokka") version "0.9.17"
     id("com.adarshr.test-logger") version "1.3.1"
 }
@@ -18,12 +19,12 @@ subprojects {
         plugin("kotlin")
         plugin("jacoco")
         plugin("maven-publish")
+        plugin("signing")
         plugin("org.jetbrains.dokka")
         plugin("com.adarshr.test-logger")
     }
 
     group = "org.valiktor"
-    version = "0.1.0"
 
     repositories {
         mavenCentral()
@@ -81,23 +82,33 @@ subprojects {
         }
     }
 
-    val sourcesJar by tasks.creating(Jar::class) {
-        classifier = "sources"
-        from(java.sourceSets["main"].allSource)
-    }
-
-    val javadocJar by tasks.creating(Jar::class) {
-        classifier = "javadoc"
-        from("$buildDir/javadoc")
-    }
-
     publishing {
+        val ossrhUsername: String by project
+        val ossrhPassword: String by project
+
         repositories {
-            mavenCentral()
+            maven(url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                credentials {
+                    username = ossrhUsername
+                    password = ossrhPassword
+                }
+            }
         }
         (publications) {
             "mavenJava"(MavenPublication::class) {
-                from(components["java"])
+                val binaryJar = components["java"]
+
+                val sourcesJar by tasks.creating(Jar::class) {
+                    classifier = "sources"
+                    from(java.sourceSets["main"].allSource)
+                }
+
+                val javadocJar by tasks.creating(Jar::class) {
+                    classifier = "javadoc"
+                    from("$buildDir/javadoc")
+                }
+
+                from(binaryJar)
                 artifact(sourcesJar)
                 artifact(javadocJar)
 
@@ -125,6 +136,12 @@ subprojects {
                     }
                 }
             }
+        }
+    }
+
+    afterEvaluate {
+        signing {
+            sign(publishing.publications["mavenJava"])
         }
     }
 }
