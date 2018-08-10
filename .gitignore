@@ -16,6 +16,9 @@ nbactions.xml
 *.iml
 *.iws
 
+# GPG keys
+*.gpg
+
 # OS
 .DS_Store
 .DS_Store?
