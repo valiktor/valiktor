@@ -4,7 +4,7 @@ jdk:
   - oraclejdk8
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_446ef87682bf_key -iv $encrypted_446ef87682bf_iv -in private-key.gpg.enc -out private-key.gpg -d
+  - openssl aes-256-cbc -K $encrypted_446ef87682bf_key -iv $encrypted_446ef87682bf_iv -in private-key.gpg.enc -out $SIGNING_FILE -d
 
 install:
   - ./gradlew -v
