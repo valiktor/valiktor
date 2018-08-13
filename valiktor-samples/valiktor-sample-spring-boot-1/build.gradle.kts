@@ -10,7 +10,7 @@ apply {
 }
 
 dependencies {
-    compile(kotlin("stdlib-jdk8"))
+    compile(kotlin("stdlib"))
     compile(kotlin("reflect"))
     compile(project(":valiktor-javamoney"))
     compile(project(":valiktor-javatime"))
@@ -24,12 +24,4 @@ dependencies {
     runtime("org.javamoney:moneta:1.3")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "1.8"
-        }
-    }
 }

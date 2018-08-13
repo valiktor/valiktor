@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 dependencies {
     compile(project(":valiktor-core"))
-    compile(kotlin("stdlib-jdk8"))
 
     testCompile(kotlin("reflect"))
 }

@@ -14,7 +14,6 @@ plugins {
 
 dependencies {
     compile(project(":valiktor-core"))
-    compile(kotlin("stdlib-jdk8"))
     compile(spring("webmvc"))
     compileOnly(jacksonModule("kotlin"))
     compileOnly(jacksonDataFormat("xml"))
@@ -27,12 +26,4 @@ dependencies {
     testCompile(jacksonDataFormat("xml"))
     testRuntime(jsonAssert())
     testRuntime(xmlUnit())
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "1.8"
-        }
-    }
 }

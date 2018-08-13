@@ -9,15 +9,6 @@ plugins {
 dependencies {
     compile(project(":valiktor-spring:valiktor-spring"))
     compile(project(":valiktor-spring:valiktor-spring-boot-autoconfigure"))
-    compile(kotlin("stdlib-jdk8"))
     compile(springBoot("starter"))
     compile(springBoot("starter-web"))
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "1.8"
-        }
-    }
 }
