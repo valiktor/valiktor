@@ -13,6 +13,7 @@ nbactions.xml
 
 # IntelliJ
 .idea/
+out/
 *.iml
 *.iws
 
