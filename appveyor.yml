@@ -4,8 +4,13 @@ configuration:
   - Java10
 
 cache:
-  - C:\Users\appveyor\.gradle\caches
-  - C:\Users\appveyor\.gradle\wrapper
+  - C:\Users\appveyor\.gradle\caches\build-cache-1
+  - C:\Users\appveyor\.gradle\caches\jars-1
+  - C:\Users\appveyor\.gradle\caches\jars-2
+  - C:\Users\appveyor\.gradle\caches\jars-3
+  - C:\Users\appveyor\.gradle\caches\modules-2
+  - C:\Users\appveyor\.gradle\caches\transforms-1
+  - C:\Users\appveyor\.gradle\wrapper\dists
   - C:\Users\appveyor\.m2\repository
 
 install:
