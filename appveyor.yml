@@ -3,6 +3,11 @@ configuration:
   - Java9
   - Java10
 
+cache:
+  - C:\Users\appveyor\.gradle\caches
+  - C:\Users\appveyor\.gradle\wrapper
+  - C:\Users\appveyor\.m2\repository
+
 install:
   - ./gradlew -v
 
