@@ -1,0 +1,9 @@
+configuration:
+  - Java8
+  - Java9
+
+install:
+  - ./gradlew -v
+
+build_script:
+  - ./gradlew clean build
