@@ -3,7 +3,6 @@ package org.valiktor.springframework.web.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.springframework.http.HttpHeaders.ACCEPT_LANGUAGE
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
@@ -72,7 +71,6 @@ object ValiktorExceptionHandlerFixture {
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
             .setDateFormat(SimpleDateFormat("yyyy-MM-dd"))
             .registerModule(KotlinModule())
-            .registerModule(JaxbAnnotationModule())
 
     private val valiktorExceptionHandler = ValiktorExceptionHandler(config = ValiktorConfiguration())
     private val valiktorJacksonExceptionHandler = ValiktorJacksonExceptionHandler(valiktorExceptionHandler = valiktorExceptionHandler)

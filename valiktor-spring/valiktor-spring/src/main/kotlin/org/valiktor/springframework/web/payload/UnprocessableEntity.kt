@@ -19,9 +19,6 @@ package org.valiktor.springframework.web.payload
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
-import javax.xml.bind.annotation.XmlElement
-import javax.xml.bind.annotation.XmlElementWrapper
-import javax.xml.bind.annotation.XmlRootElement
 
 /**
  * Represents the payload for responses with 422 (Unprocessable Entity) status code
@@ -32,11 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement
  * @see ValidationError
  * @since 0.1.0
  */
-@XmlRootElement(name = "unprocessableEntity")
 @JacksonXmlRootElement(localName = "unprocessableEntity")
-data class UnprocessableEntity(@XmlElement(name = "error")
-                               @XmlElementWrapper(name = "errors")
-                               @JacksonXmlProperty(localName = "error")
+data class UnprocessableEntity(@JacksonXmlProperty(localName = "error")
                                @JacksonXmlElementWrapper(localName = "errors")
                                val errors: Set<ValidationError>)
 
@@ -68,8 +62,6 @@ data class ValidationError(val property: String,
  * @since 0.1.0
  */
 data class ValidationConstraint(val name: String,
-                                @XmlElement(name = "param")
-                                @XmlElementWrapper(name = "params")
                                 @JacksonXmlProperty(localName = "param")
                                 @JacksonXmlElementWrapper(localName = "params")
                                 val params: Set<ValidationParam>)

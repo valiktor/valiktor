@@ -22,7 +22,6 @@ dependencies {
     testCompile(servlet("api"))
     testCompile(jacksonCore("databind"))
     testCompile(jacksonModule("kotlin"))
-    testCompile(jacksonModule("jaxb-annotations"))
     testCompile(jacksonDataFormat("xml"))
     testRuntime(jsonAssert())
     testRuntime(xmlUnit())
