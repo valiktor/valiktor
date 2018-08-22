@@ -14,6 +14,7 @@ import org.valiktor.constraints.NotBetween
 import org.valiktor.constraints.NotEquals
 import org.valiktor.constraints.NotIn
 import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.NotToday
 import org.valiktor.constraints.Null
 import org.valiktor.constraints.Today
 import org.valiktor.functions.DateFunctionsFixture.Employee
@@ -281,6 +282,74 @@ class DateFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW + ONE_DAY), constraint = Today))
+    }
+
+    @Test
+    fun `isNotToday with null value should be valid`() {
+        validate(Employee()) {
+            validate(Employee::dateOfBirth).isNotToday()
+        }
+    }
+
+    @Test
+    fun `isNotToday with 00h00m00 should be invalid`() {
+        val today = Calendar.getInstance()
+        today.set(Calendar.HOUR_OF_DAY, 0)
+        today.set(Calendar.MINUTE, 0)
+        today.set(Calendar.SECOND, 0)
+        today.set(Calendar.MILLISECOND, 0)
+
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(dateOfBirth = today.time)) {
+                validate(Employee::dateOfBirth).isNotToday()
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(property = "dateOfBirth", value = today.time, constraint = NotToday))
+    }
+
+    @Test
+    fun `isNotToday with 23h59m59 should be invalid`() {
+        val today = Calendar.getInstance()
+        today.set(Calendar.HOUR_OF_DAY, 23)
+        today.set(Calendar.MINUTE, 59)
+        today.set(Calendar.SECOND, 59)
+        today.set(Calendar.MILLISECOND, 999)
+
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(dateOfBirth = today.time)) {
+                validate(Employee::dateOfBirth).isNotToday()
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(property = "dateOfBirth", value = today.time, constraint = NotToday))
+    }
+
+    @Test
+    fun `isNotToday with now should be invalid`() {
+        val now = Date()
+
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(dateOfBirth = now)) {
+                validate(Employee::dateOfBirth).isNotToday()
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(property = "dateOfBirth", value = now, constraint = NotToday))
+    }
+
+    @Test
+    fun `isNotToday with yesterday value should be valid`() {
+        validate(Employee(dateOfBirth = Date(NOW - ONE_DAY))) {
+            validate(Employee::dateOfBirth).isNotToday()
+        }
+    }
+
+    @Test
+    fun `isNotToday with tomorrow value should be valid`() {
+        validate(Employee(dateOfBirth = Date(NOW + ONE_DAY))) {
+            validate(Employee::dateOfBirth).isNotToday()
+        }
     }
 
     @Test

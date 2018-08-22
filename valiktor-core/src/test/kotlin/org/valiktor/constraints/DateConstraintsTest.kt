@@ -16,3 +16,14 @@ class TodayTest {
             entry(SupportedLocales.PT_BR, "Deve ser hoje"))
     }
 }
+
+class NotTodayTest {
+
+    @Test
+    fun `should validate messages`() {
+        assertThat(NotToday.interpolatedMessages()).containsExactly(
+            entry(SupportedLocales.DEFAULT, "Must not be today"),
+            entry(SupportedLocales.EN, "Must not be today"),
+            entry(SupportedLocales.PT_BR, "Não deve ser hoje"))
+    }
+}

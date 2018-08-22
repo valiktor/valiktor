@@ -26,3 +26,12 @@ import org.valiktor.Constraint
  * @since 0.1.0
  */
 object Today : Constraint
+
+/**
+ * Represents a constraint that validate if the date isn't today
+ *
+ * @author Rodolpho S. Couto
+ * @see Constraint
+ * @since 0.1.0
+ */
+object NotToday : Constraint

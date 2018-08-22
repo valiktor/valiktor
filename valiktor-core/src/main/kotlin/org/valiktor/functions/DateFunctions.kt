@@ -17,6 +17,7 @@
 package org.valiktor.functions
 
 import org.valiktor.Validator
+import org.valiktor.constraints.NotToday
 import org.valiktor.constraints.Today
 import java.util.Calendar
 import java.util.Date
@@ -41,4 +42,26 @@ fun <E> Validator<E>.Property<Date?>.isToday(): Validator<E>.Property<Date?> {
     end.set(Calendar.MILLISECOND, 999)
 
     return this.validate(Today) { it == null || it in start.time.rangeTo(end.time) }
+}
+
+/**
+ * Validates if the [Date] property isn't today
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<Date?>.isNotToday(): Validator<E>.Property<Date?> {
+    val start = Calendar.getInstance()
+    start.set(Calendar.HOUR_OF_DAY, 0)
+    start.set(Calendar.MINUTE, 0)
+    start.set(Calendar.SECOND, 0)
+    start.set(Calendar.MILLISECOND, 0)
+
+    val end = Calendar.getInstance()
+    end.set(Calendar.HOUR_OF_DAY, 23)
+    end.set(Calendar.MINUTE, 59)
+    end.set(Calendar.SECOND, 59)
+    end.set(Calendar.MILLISECOND, 999)
+
+    return this.validate(NotToday) { it == null || it !in start.time.rangeTo(end.time) }
 }

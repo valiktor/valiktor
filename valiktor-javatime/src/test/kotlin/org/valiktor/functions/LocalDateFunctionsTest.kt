@@ -14,6 +14,7 @@ import org.valiktor.constraints.NotBetween
 import org.valiktor.constraints.NotEquals
 import org.valiktor.constraints.NotIn
 import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.NotToday
 import org.valiktor.constraints.Null
 import org.valiktor.constraints.Today
 import org.valiktor.functions.LocalDateFunctionsFixture.Employee
@@ -249,6 +250,38 @@ class LocalDateFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now().plusDays(1), constraint = Today))
+    }
+
+    @Test
+    fun `isNotToday with null value should be valid`() {
+        validate(Employee()) {
+            validate(Employee::dateOfBirth).isNotToday()
+        }
+    }
+
+    @Test
+    fun `isNotToday with now should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(dateOfBirth = LocalDate.now())) {
+                validate(Employee::dateOfBirth).isNotToday()
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotToday))
+    }
+
+    @Test
+    fun `isNotToday with yesterday value should be valid`() {
+        validate(Employee(dateOfBirth = LocalDate.now().minusDays(1))) {
+            validate(Employee::dateOfBirth).isNotToday()
+        }
+    }
+
+    @Test
+    fun `isNotToday with tomorrow value should be valid`() {
+        validate(Employee(dateOfBirth = LocalDate.now().plusDays(1))) {
+            validate(Employee::dateOfBirth).isNotToday()
+        }
     }
 
     @Test

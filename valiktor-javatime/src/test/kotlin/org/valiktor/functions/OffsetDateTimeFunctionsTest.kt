@@ -14,6 +14,7 @@ import org.valiktor.constraints.NotBetween
 import org.valiktor.constraints.NotEquals
 import org.valiktor.constraints.NotIn
 import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.NotToday
 import org.valiktor.constraints.Null
 import org.valiktor.constraints.Today
 import org.valiktor.functions.OffsetDateTimeFunctionsFixture.Employee
@@ -230,7 +231,7 @@ class OffsetDateTimeFunctionsTest {
 
     @Test
     fun `isToday with 00h00m00 should be valid`() {
-        validate(Employee(dateOfBirth = LocalDate.now().atTime(0, 0, 0).atOffset(ZoneOffset.UTC))) {
+        validate(Employee(dateOfBirth = LocalDate.now().atStartOfDay().atOffset(ZoneOffset.UTC))) {
             validate(Employee::dateOfBirth).isToday()
         }
     }
@@ -251,6 +252,8 @@ class OffsetDateTimeFunctionsTest {
 
     @Test
     fun `isToday with yesterday value should be invalid`() {
+        val dateTime = OffsetDateTime.now()
+
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(dateOfBirth = dateTime.minusDays(1))) {
                 validate(Employee::dateOfBirth).isToday()
@@ -262,6 +265,8 @@ class OffsetDateTimeFunctionsTest {
 
     @Test
     fun `isToday with tomorrow value should be invalid`() {
+        val dateTime = OffsetDateTime.now()
+
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(dateOfBirth = dateTime.plusDays(1))) {
                 validate(Employee::dateOfBirth).isToday()
@@ -269,6 +274,62 @@ class OffsetDateTimeFunctionsTest {
         }
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(property = "dateOfBirth", value = dateTime.plusDays(1), constraint = Today))
+    }
+
+    @Test
+    fun `isNotToday with null value should be valid`() {
+        validate(Employee()) {
+            validate(Employee::dateOfBirth).isNotToday()
+        }
+    }
+
+    @Test
+    fun `isNotToday with 00h00m00 should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(dateOfBirth = LocalDate.now().atStartOfDay().atOffset(ZoneOffset.UTC))) {
+                validate(Employee::dateOfBirth).isNotToday()
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now().atStartOfDay().atOffset(ZoneOffset.UTC), constraint = NotToday))
+    }
+
+    @Test
+    fun `isNotToday with 23h59m59 should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(dateOfBirth = LocalDate.now().atTime(23, 59, 59).atOffset(ZoneOffset.UTC))) {
+                validate(Employee::dateOfBirth).isNotToday()
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now().atTime(23, 59, 59).atOffset(ZoneOffset.UTC), constraint = NotToday))
+    }
+
+    @Test
+    fun `isNotToday with now should be invalid`() {
+        val now = OffsetDateTime.now()
+
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(dateOfBirth = now)) {
+                validate(Employee::dateOfBirth).isNotToday()
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(property = "dateOfBirth", value = now, constraint = NotToday))
+    }
+
+    @Test
+    fun `isNotToday with yesterday value should be valid`() {
+        validate(Employee(dateOfBirth = LocalDateTime.now().minusDays(1).atOffset(ZoneOffset.UTC))) {
+            validate(Employee::dateOfBirth).isNotToday()
+        }
+    }
+
+    @Test
+    fun `isNotToday with tomorrow value should be valid`() {
+        validate(Employee(dateOfBirth = LocalDateTime.now().plusDays(1).atOffset(ZoneOffset.UTC))) {
+            validate(Employee::dateOfBirth).isNotToday()
+        }
     }
 
     @Test

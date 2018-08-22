@@ -17,6 +17,7 @@
 package org.valiktor.functions
 
 import org.valiktor.Validator
+import org.valiktor.constraints.NotToday
 import org.valiktor.constraints.Today
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -29,3 +30,12 @@ import java.time.OffsetDateTime
  */
 fun <E> Validator<E>.Property<OffsetDateTime?>.isToday(): Validator<E>.Property<OffsetDateTime?> =
     this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.offset) }
+
+/**
+ * Validates if the [OffsetDateTime] property isn't today
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<OffsetDateTime?>.isNotToday(): Validator<E>.Property<OffsetDateTime?> =
+    this.validate(NotToday) { it == null || it.toLocalDate() != LocalDate.now(it.offset) }
