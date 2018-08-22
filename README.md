@@ -82,6 +82,10 @@ Work in progress.
 
 For latest updates see [CHANGELOG.md](CHANGELOG.md) file.
 
+## Contributing 
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for more details, and the process for submitting pull requests to us.
+
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/valiktor/valiktor/tags).
