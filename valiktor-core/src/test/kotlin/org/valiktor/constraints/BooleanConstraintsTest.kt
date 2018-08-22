@@ -11,9 +11,9 @@ class TrueTest {
     @Test
     fun `should validate messages`() {
         assertThat(True.interpolatedMessages()).containsExactly(
-                entry(SupportedLocales.DEFAULT, "Must be true"),
-                entry(SupportedLocales.EN, "Must be true"),
-                entry(SupportedLocales.PT_BR, "Deve ser verdadeiro"))
+            entry(SupportedLocales.DEFAULT, "Must be true"),
+            entry(SupportedLocales.EN, "Must be true"),
+            entry(SupportedLocales.PT_BR, "Deve ser verdadeiro"))
     }
 }
 
@@ -22,8 +22,8 @@ class FalseTest {
     @Test
     fun `should validate messages`() {
         assertThat(False.interpolatedMessages()).containsExactly(
-                entry(SupportedLocales.DEFAULT, "Must be false"),
-                entry(SupportedLocales.EN, "Must be false"),
-                entry(SupportedLocales.PT_BR, "Deve ser falso"))
+            entry(SupportedLocales.DEFAULT, "Must be false"),
+            entry(SupportedLocales.EN, "Must be false"),
+            entry(SupportedLocales.PT_BR, "Deve ser falso"))
     }
 }

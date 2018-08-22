@@ -28,4 +28,4 @@ import java.time.OffsetDateTime
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<OffsetDateTime?>.isToday(): Validator<E>.Property<OffsetDateTime?> =
-        this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.offset) }
+    this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.offset) }

@@ -35,9 +35,11 @@ interface ConstraintViolation {
     val constraint: Constraint
 }
 
-data class DefaultConstraintViolation(override val property: String,
-                                      override val value: Any? = null,
-                                      override val constraint: Constraint) : ConstraintViolation
+data class DefaultConstraintViolation(
+    override val property: String,
+    override val value: Any? = null,
+    override val constraint: Constraint
+) : ConstraintViolation
 
 /**
  * Represents a exception that contains all the violated constraints of an object

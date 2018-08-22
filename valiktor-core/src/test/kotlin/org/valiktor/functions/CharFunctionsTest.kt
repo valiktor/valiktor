@@ -3,7 +3,28 @@ package org.valiktor.functions
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Between
+import org.valiktor.constraints.Blank
+import org.valiktor.constraints.Digit
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.Greater
+import org.valiktor.constraints.GreaterOrEqual
+import org.valiktor.constraints.In
+import org.valiktor.constraints.Less
+import org.valiktor.constraints.LessOrEqual
+import org.valiktor.constraints.Letter
+import org.valiktor.constraints.LetterOrDigit
+import org.valiktor.constraints.LowerCase
+import org.valiktor.constraints.NotBetween
+import org.valiktor.constraints.NotBlank
+import org.valiktor.constraints.NotDigit
+import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
+import org.valiktor.constraints.NotLetter
+import org.valiktor.constraints.NotLetterOrDigit
+import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.Null
+import org.valiktor.constraints.UpperCase
 import org.valiktor.functions.CharFunctionsFixture.Employee
 import org.valiktor.validate
 import kotlin.test.Test
@@ -31,7 +52,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = Null))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = Null))
     }
 
     @Test
@@ -49,7 +70,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", constraint = NotNull))
+            DefaultConstraintViolation(property = "gender", constraint = NotNull))
     }
 
     @Test
@@ -74,7 +95,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = Equals('F')))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = Equals('F')))
     }
 
     @Test
@@ -85,7 +106,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'm', constraint = Equals('M')))
+            DefaultConstraintViolation(property = "gender", value = 'm', constraint = Equals('M')))
     }
 
     @Test
@@ -117,7 +138,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotEquals('M')))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotEquals('M')))
     }
 
     @Test
@@ -142,7 +163,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(setOf('F'))))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(setOf('F'))))
     }
 
     @Test
@@ -153,7 +174,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'm', constraint = In(setOf('M', 'F'))))
+            DefaultConstraintViolation(property = "gender", value = 'm', constraint = In(setOf('M', 'F'))))
     }
 
     @Test
@@ -178,7 +199,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(listOf('F'))))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(listOf('F'))))
     }
 
     @Test
@@ -189,7 +210,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'm', constraint = In(listOf('M', 'F'))))
+            DefaultConstraintViolation(property = "gender", value = 'm', constraint = In(listOf('M', 'F'))))
     }
 
     @Test
@@ -221,7 +242,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(setOf('M', 'F'))))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(setOf('M', 'F'))))
     }
 
     @Test
@@ -253,7 +274,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(listOf('M', 'F'))))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(listOf('M', 'F'))))
     }
 
     @Test
@@ -279,7 +300,7 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = Blank))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = Blank))
     }
 
     @Test
@@ -305,7 +326,7 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = ' ', constraint = NotBlank))
+            DefaultConstraintViolation(property = "gender", value = ' ', constraint = NotBlank))
     }
 
     @Test
@@ -331,7 +352,7 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = '9', constraint = Letter))
+            DefaultConstraintViolation(property = "gender", value = '9', constraint = Letter))
     }
 
     @Test
@@ -357,7 +378,7 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotLetter))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotLetter))
     }
 
     @Test
@@ -383,7 +404,7 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = Digit))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = Digit))
     }
 
     @Test
@@ -409,7 +430,7 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = '9', constraint = NotDigit))
+            DefaultConstraintViolation(property = "gender", value = '9', constraint = NotDigit))
     }
 
     @Test
@@ -442,7 +463,7 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = '~', constraint = LetterOrDigit))
+            DefaultConstraintViolation(property = "gender", value = '~', constraint = LetterOrDigit))
     }
 
     @Test
@@ -468,7 +489,7 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotLetterOrDigit))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotLetterOrDigit))
     }
 
     @Test
@@ -480,7 +501,7 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = '9', constraint = NotLetterOrDigit))
+            DefaultConstraintViolation(property = "gender", value = '9', constraint = NotLetterOrDigit))
     }
 
     @Test
@@ -506,7 +527,7 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'm', constraint = UpperCase))
+            DefaultConstraintViolation(property = "gender", value = 'm', constraint = UpperCase))
     }
 
     @Test
@@ -532,7 +553,7 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = LowerCase))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = LowerCase))
     }
 
     @Test
@@ -557,7 +578,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = Equals('F')))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = Equals('F')))
     }
 
     @Test
@@ -582,7 +603,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotEquals('m')))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotEquals('m')))
     }
 
     @Test
@@ -607,7 +628,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(setOf('F'))))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(setOf('F'))))
     }
 
     @Test
@@ -632,7 +653,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(listOf('F'))))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(listOf('F'))))
     }
 
     @Test
@@ -657,7 +678,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(setOf('m', 'f'))))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(setOf('m', 'f'))))
     }
 
     @Test
@@ -682,7 +703,7 @@ class CharFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(listOf('m', 'f'))))
+            DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(listOf('m', 'f'))))
     }
 
     @Test
@@ -708,10 +729,10 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "gender",
-                        value = 'm',
-                        constraint = Less('k')))
+            DefaultConstraintViolation(
+                property = "gender",
+                value = 'm',
+                constraint = Less('k')))
     }
 
     @Test
@@ -723,10 +744,10 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "gender",
-                        value = 'm',
-                        constraint = Less('m')))
+            DefaultConstraintViolation(
+                property = "gender",
+                value = 'm',
+                constraint = Less('m')))
     }
 
     @Test
@@ -759,10 +780,10 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "gender",
-                        value = 'm',
-                        constraint = LessOrEqual('l')))
+            DefaultConstraintViolation(
+                property = "gender",
+                value = 'm',
+                constraint = LessOrEqual('l')))
     }
 
     @Test
@@ -788,10 +809,10 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "gender",
-                        value = 'm',
-                        constraint = Greater('n')))
+            DefaultConstraintViolation(
+                property = "gender",
+                value = 'm',
+                constraint = Greater('n')))
     }
 
     @Test
@@ -803,10 +824,10 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "gender",
-                        value = 'm',
-                        constraint = Greater('m')))
+            DefaultConstraintViolation(
+                property = "gender",
+                value = 'm',
+                constraint = Greater('m')))
     }
 
     @Test
@@ -839,10 +860,10 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "gender",
-                        value = 'm',
-                        constraint = GreaterOrEqual('n')))
+            DefaultConstraintViolation(
+                property = "gender",
+                value = 'm',
+                constraint = GreaterOrEqual('n')))
     }
 
     @Test
@@ -882,10 +903,10 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "gender",
-                        value = 'a',
-                        constraint = Between(start = 'b', end = 'd')))
+            DefaultConstraintViolation(
+                property = "gender",
+                value = 'a',
+                constraint = Between(start = 'b', end = 'd')))
     }
 
     @Test
@@ -897,10 +918,10 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "gender",
-                        value = 'e',
-                        constraint = Between(start = 'b', end = 'd')))
+            DefaultConstraintViolation(
+                property = "gender",
+                value = 'e',
+                constraint = Between(start = 'b', end = 'd')))
     }
 
     @Test
@@ -933,10 +954,10 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "gender",
-                        value = 'a',
-                        constraint = NotBetween(start = 'a', end = 'c')))
+            DefaultConstraintViolation(
+                property = "gender",
+                value = 'a',
+                constraint = NotBetween(start = 'a', end = 'c')))
     }
 
     @Test
@@ -948,10 +969,10 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "gender",
-                        value = 'c',
-                        constraint = NotBetween(start = 'a', end = 'c')))
+            DefaultConstraintViolation(
+                property = "gender",
+                value = 'c',
+                constraint = NotBetween(start = 'a', end = 'c')))
     }
 
     @Test
@@ -963,9 +984,9 @@ class CharFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "gender",
-                        value = 'b',
-                        constraint = NotBetween(start = 'a', end = 'c')))
+            DefaultConstraintViolation(
+                property = "gender",
+                value = 'b',
+                constraint = NotBetween(start = 'a', end = 'c')))
     }
 }

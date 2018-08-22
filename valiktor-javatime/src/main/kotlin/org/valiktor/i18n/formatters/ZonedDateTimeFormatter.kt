@@ -31,7 +31,7 @@ import java.time.format.FormatStyle
 object ZonedDateTimeFormatter : Formatter<ZonedDateTime> {
 
     override fun format(value: ZonedDateTime, messageBundle: MessageBundle): String =
-            value.format(DateTimeFormatter
-                    .ofLocalizedDateTime(FormatStyle.MEDIUM)
-                    .withLocale(messageBundle.locale))
+        value.format(DateTimeFormatter
+            .ofLocalizedDateTime(FormatStyle.MEDIUM)
+            .withLocale(messageBundle.locale))
 }

@@ -3,10 +3,22 @@ package org.valiktor.functions
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Between
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.Greater
+import org.valiktor.constraints.GreaterOrEqual
+import org.valiktor.constraints.In
+import org.valiktor.constraints.Less
+import org.valiktor.constraints.LessOrEqual
+import org.valiktor.constraints.NotBetween
+import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
+import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.Null
+import org.valiktor.constraints.Today
 import org.valiktor.functions.CalendarFunctionsFixture.Employee
 import org.valiktor.validate
-import java.util.*
+import java.util.Calendar
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
@@ -43,7 +55,7 @@ class CalendarFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = Null))
+            DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = Null))
     }
 
     @Test
@@ -61,7 +73,7 @@ class CalendarFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull))
+            DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull))
     }
 
     @Test
@@ -86,7 +98,7 @@ class CalendarFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = Equals(calendarFrom(NOW - 1))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = Equals(calendarFrom(NOW - 1))))
     }
 
     @Test
@@ -111,7 +123,7 @@ class CalendarFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = NotEquals(calendarFrom(NOW))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = NotEquals(calendarFrom(NOW))))
     }
 
     @Test
@@ -136,7 +148,7 @@ class CalendarFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = In(setOf(calendarFrom(NOW - 1), calendarFrom(NOW - 2)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = In(setOf(calendarFrom(NOW - 1), calendarFrom(NOW - 2)))))
     }
 
     @Test
@@ -161,7 +173,7 @@ class CalendarFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = In(listOf(calendarFrom(NOW - 1), calendarFrom(NOW - 2)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = In(listOf(calendarFrom(NOW - 1), calendarFrom(NOW - 2)))))
     }
 
     @Test
@@ -186,7 +198,7 @@ class CalendarFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = NotIn(setOf(calendarFrom(NOW), calendarFrom(NOW + 1)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = NotIn(setOf(calendarFrom(NOW), calendarFrom(NOW + 1)))))
     }
 
     @Test
@@ -211,7 +223,7 @@ class CalendarFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = NotIn(listOf(calendarFrom(NOW), calendarFrom(NOW + 1)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW), constraint = NotIn(listOf(calendarFrom(NOW), calendarFrom(NOW + 1)))))
     }
 
     @Test
@@ -262,7 +274,7 @@ class CalendarFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW - ONE_DAY), constraint = Today))
+            DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW - ONE_DAY), constraint = Today))
     }
 
     @Test
@@ -273,7 +285,7 @@ class CalendarFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW + ONE_DAY), constraint = Today))
+            DefaultConstraintViolation(property = "dateOfBirth", value = calendarFrom(NOW + ONE_DAY), constraint = Today))
     }
 
     @Test
@@ -299,10 +311,10 @@ class CalendarFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "dateOfBirth",
-                        value = calendarFrom(NOW),
-                        constraint = Less(calendarFrom(NOW - 1))))
+            DefaultConstraintViolation(
+                property = "dateOfBirth",
+                value = calendarFrom(NOW),
+                constraint = Less(calendarFrom(NOW - 1))))
     }
 
     @Test
@@ -314,10 +326,10 @@ class CalendarFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "dateOfBirth",
-                        value = calendarFrom(NOW),
-                        constraint = Less(calendarFrom(NOW))))
+            DefaultConstraintViolation(
+                property = "dateOfBirth",
+                value = calendarFrom(NOW),
+                constraint = Less(calendarFrom(NOW))))
     }
 
     @Test
@@ -350,10 +362,10 @@ class CalendarFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "dateOfBirth",
-                        value = calendarFrom(NOW),
-                        constraint = LessOrEqual(calendarFrom(NOW - 1))))
+            DefaultConstraintViolation(
+                property = "dateOfBirth",
+                value = calendarFrom(NOW),
+                constraint = LessOrEqual(calendarFrom(NOW - 1))))
     }
 
     @Test
@@ -379,10 +391,10 @@ class CalendarFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "dateOfBirth",
-                        value = calendarFrom(NOW),
-                        constraint = Greater(calendarFrom(NOW + 1))))
+            DefaultConstraintViolation(
+                property = "dateOfBirth",
+                value = calendarFrom(NOW),
+                constraint = Greater(calendarFrom(NOW + 1))))
     }
 
     @Test
@@ -394,10 +406,10 @@ class CalendarFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "dateOfBirth",
-                        value = calendarFrom(NOW),
-                        constraint = Greater(calendarFrom(NOW))))
+            DefaultConstraintViolation(
+                property = "dateOfBirth",
+                value = calendarFrom(NOW),
+                constraint = Greater(calendarFrom(NOW))))
     }
 
     @Test
@@ -430,10 +442,10 @@ class CalendarFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "dateOfBirth",
-                        value = calendarFrom(NOW),
-                        constraint = GreaterOrEqual(calendarFrom(NOW + 1))))
+            DefaultConstraintViolation(
+                property = "dateOfBirth",
+                value = calendarFrom(NOW),
+                constraint = GreaterOrEqual(calendarFrom(NOW + 1))))
     }
 
     @Test
@@ -473,10 +485,10 @@ class CalendarFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "dateOfBirth",
-                        value = calendarFrom(NOW),
-                        constraint = Between(start = calendarFrom(NOW + 1), end = calendarFrom(NOW + 3))))
+            DefaultConstraintViolation(
+                property = "dateOfBirth",
+                value = calendarFrom(NOW),
+                constraint = Between(start = calendarFrom(NOW + 1), end = calendarFrom(NOW + 3))))
     }
 
     @Test
@@ -488,10 +500,10 @@ class CalendarFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "dateOfBirth",
-                        value = calendarFrom(NOW + 4),
-                        constraint = Between(start = calendarFrom(NOW + 1), end = calendarFrom(NOW + 3))))
+            DefaultConstraintViolation(
+                property = "dateOfBirth",
+                value = calendarFrom(NOW + 4),
+                constraint = Between(start = calendarFrom(NOW + 1), end = calendarFrom(NOW + 3))))
     }
 
     @Test
@@ -524,10 +536,10 @@ class CalendarFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "dateOfBirth",
-                        value = calendarFrom(NOW),
-                        constraint = NotBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 1))))
+            DefaultConstraintViolation(
+                property = "dateOfBirth",
+                value = calendarFrom(NOW),
+                constraint = NotBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 1))))
     }
 
     @Test
@@ -539,10 +551,10 @@ class CalendarFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "dateOfBirth",
-                        value = calendarFrom(NOW + 1),
-                        constraint = NotBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 1))))
+            DefaultConstraintViolation(
+                property = "dateOfBirth",
+                value = calendarFrom(NOW + 1),
+                constraint = NotBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 1))))
     }
 
     @Test
@@ -554,9 +566,9 @@ class CalendarFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "dateOfBirth",
-                        value = calendarFrom(NOW + 1),
-                        constraint = NotBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 2))))
+            DefaultConstraintViolation(
+                property = "dateOfBirth",
+                value = calendarFrom(NOW + 1),
+                constraint = NotBetween(start = calendarFrom(NOW), end = calendarFrom(NOW + 2))))
     }
 }

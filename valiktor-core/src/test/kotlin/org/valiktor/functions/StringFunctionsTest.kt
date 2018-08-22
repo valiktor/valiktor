@@ -3,7 +3,32 @@ package org.valiktor.functions
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Blank
+import org.valiktor.constraints.Contains
+import org.valiktor.constraints.ContainsAll
+import org.valiktor.constraints.ContainsAny
+import org.valiktor.constraints.ContainsRegex
+import org.valiktor.constraints.Email
+import org.valiktor.constraints.Empty
+import org.valiktor.constraints.EndsWith
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.In
+import org.valiktor.constraints.Matches
+import org.valiktor.constraints.NotBlank
+import org.valiktor.constraints.NotContain
+import org.valiktor.constraints.NotContainAll
+import org.valiktor.constraints.NotContainAny
+import org.valiktor.constraints.NotContainRegex
+import org.valiktor.constraints.NotEmpty
+import org.valiktor.constraints.NotEndWith
+import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
+import org.valiktor.constraints.NotMatch
+import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.NotStartWith
+import org.valiktor.constraints.Null
+import org.valiktor.constraints.Size
+import org.valiktor.constraints.StartsWith
 import org.valiktor.functions.StringFunctionsFixture.Employee
 import org.valiktor.validate
 import kotlin.test.Test
@@ -31,7 +56,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "test", constraint = Null))
+            DefaultConstraintViolation(property = "name", value = "test", constraint = Null))
     }
 
     @Test
@@ -49,7 +74,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", constraint = NotNull))
+            DefaultConstraintViolation(property = "name", constraint = NotNull))
     }
 
     @Test
@@ -74,7 +99,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "test", constraint = Equals("test1")))
+            DefaultConstraintViolation(property = "name", value = "test", constraint = Equals("test1")))
     }
 
     @Test
@@ -85,7 +110,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "test", constraint = Equals("TEST")))
+            DefaultConstraintViolation(property = "name", value = "test", constraint = Equals("TEST")))
     }
 
     @Test
@@ -117,7 +142,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "test", constraint = NotEquals("test")))
+            DefaultConstraintViolation(property = "name", value = "test", constraint = NotEquals("test")))
     }
 
     @Test
@@ -142,7 +167,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "test1", constraint = In(setOf("test0", "test2", "test3"))))
+            DefaultConstraintViolation(property = "name", value = "test1", constraint = In(setOf("test0", "test2", "test3"))))
     }
 
     @Test
@@ -153,7 +178,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "test1", constraint = In(setOf("TEST1", "test2", "test3"))))
+            DefaultConstraintViolation(property = "name", value = "test1", constraint = In(setOf("TEST1", "test2", "test3"))))
     }
 
     @Test
@@ -178,7 +203,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "test1", constraint = In(listOf("test0", "test2", "test3"))))
+            DefaultConstraintViolation(property = "name", value = "test1", constraint = In(listOf("test0", "test2", "test3"))))
     }
 
     @Test
@@ -189,7 +214,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "test1", constraint = In(listOf("TEST1", "test2", "test3"))))
+            DefaultConstraintViolation(property = "name", value = "test1", constraint = In(listOf("TEST1", "test2", "test3"))))
     }
 
     @Test
@@ -221,7 +246,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "test1", constraint = NotIn(setOf("test1", "test2", "test3"))))
+            DefaultConstraintViolation(property = "name", value = "test1", constraint = NotIn(setOf("test1", "test2", "test3"))))
     }
 
     @Test
@@ -253,7 +278,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "test1", constraint = NotIn(listOf("test1", "test2", "test3"))))
+            DefaultConstraintViolation(property = "name", value = "test1", constraint = NotIn(listOf("test1", "test2", "test3"))))
     }
 
     @Test
@@ -279,7 +304,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = " ", constraint = Empty))
+            DefaultConstraintViolation(property = "name", value = " ", constraint = Empty))
     }
 
     @Test
@@ -305,7 +330,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "", constraint = NotEmpty))
+            DefaultConstraintViolation(property = "name", value = "", constraint = NotEmpty))
     }
 
     @Test
@@ -338,7 +363,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "a", constraint = Blank))
+            DefaultConstraintViolation(property = "name", value = "a", constraint = Blank))
     }
 
     @Test
@@ -365,8 +390,8 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "email", value = "", constraint = NotBlank),
-                DefaultConstraintViolation(property = "username", value = " ", constraint = NotBlank))
+            DefaultConstraintViolation(property = "email", value = "", constraint = NotBlank),
+            DefaultConstraintViolation(property = "username", value = " ", constraint = NotBlank))
     }
 
     @Test
@@ -391,7 +416,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "a", constraint = Equals("b")))
+            DefaultConstraintViolation(property = "name", value = "a", constraint = Equals("b")))
     }
 
     @Test
@@ -416,7 +441,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "a", constraint = NotEquals("A")))
+            DefaultConstraintViolation(property = "name", value = "a", constraint = NotEquals("A")))
     }
 
     @Test
@@ -441,7 +466,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "a", constraint = In(setOf("b", "c"))))
+            DefaultConstraintViolation(property = "name", value = "a", constraint = In(setOf("b", "c"))))
     }
 
     @Test
@@ -466,7 +491,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "a", constraint = In(listOf("b", "c"))))
+            DefaultConstraintViolation(property = "name", value = "a", constraint = In(listOf("b", "c"))))
     }
 
     @Test
@@ -491,7 +516,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c"))))
+            DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c"))))
     }
 
     @Test
@@ -516,7 +541,7 @@ class StringFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c"))))
+            DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c"))))
     }
 
     @Test
@@ -565,9 +590,9 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = Size(min = 5)),
-                DefaultConstraintViolation(property = "email", value = "john@company.com", constraint = Size(max = 15)),
-                DefaultConstraintViolation(property = "username", value = "john", constraint = Size(min = 5, max = 3)))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = Size(min = 5)),
+            DefaultConstraintViolation(property = "email", value = "john@company.com", constraint = Size(max = 15)),
+            DefaultConstraintViolation(property = "username", value = "john", constraint = Size(min = 5, max = 3)))
     }
 
     @Test
@@ -593,7 +618,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = Contains("j")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = Contains("j")))
     }
 
     @Test
@@ -619,7 +644,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = Contains("g")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = Contains("g")))
     }
 
     @Test
@@ -645,7 +670,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n"))))
     }
 
     @Test
@@ -671,7 +696,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n"))))
     }
 
     @Test
@@ -697,7 +722,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n", "k"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n", "k"))))
     }
 
     @Test
@@ -723,7 +748,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n", "k"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n", "k"))))
     }
 
     @Test
@@ -749,7 +774,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("j", "w", "x", "e"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("j", "w", "x", "e"))))
     }
 
     @Test
@@ -775,7 +800,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("j", "w", "x", "e"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("j", "w", "x", "e"))))
     }
 
     @Test
@@ -801,7 +826,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("w", "x", "e"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("w", "x", "e"))))
     }
 
     @Test
@@ -827,7 +852,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("w", "x", "e"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("w", "x", "e"))))
     }
 
     @Test
@@ -853,7 +878,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotContain("J")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotContain("J")))
     }
 
     @Test
@@ -879,7 +904,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotContain("j")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotContain("j")))
     }
 
     @Test
@@ -905,7 +930,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "o", "h", "n"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "o", "h", "n"))))
     }
 
     @Test
@@ -931,7 +956,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "o", "h", "n"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "o", "h", "n"))))
     }
 
     @Test
@@ -957,7 +982,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "O", "H", "N"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "O", "H", "N"))))
     }
 
     @Test
@@ -983,7 +1008,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "O", "H", "N"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "O", "H", "N"))))
     }
 
     @Test
@@ -1009,7 +1034,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("J", "w", "x", "e"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("J", "w", "x", "e"))))
     }
 
     @Test
@@ -1035,7 +1060,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("J", "w", "x", "e"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("J", "w", "x", "e"))))
     }
 
     @Test
@@ -1061,7 +1086,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("j", "w", "x", "e"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("j", "w", "x", "e"))))
     }
 
     @Test
@@ -1087,7 +1112,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("j", "w", "x", "e"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("j", "w", "x", "e"))))
     }
 
     @Test
@@ -1113,7 +1138,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = Matches(Regex("^[0-9]*\$"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = Matches(Regex("^[0-9]*\$"))))
     }
 
     @Test
@@ -1139,7 +1164,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "0123456789", constraint = NotMatch(Regex("^[0-9]*\$"))))
+            DefaultConstraintViolation(property = "name", value = "0123456789", constraint = NotMatch(Regex("^[0-9]*\$"))))
     }
 
     @Test
@@ -1165,7 +1190,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsRegex(Regex("a([bc]+)d?"))))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsRegex(Regex("a([bc]+)d?"))))
     }
 
     @Test
@@ -1191,7 +1216,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?"))))
+            DefaultConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?"))))
     }
 
     @Test
@@ -1217,7 +1242,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = StartsWith("j")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = StartsWith("j")))
     }
 
     @Test
@@ -1243,7 +1268,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = StartsWith("g")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = StartsWith("g")))
     }
 
     @Test
@@ -1269,7 +1294,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotStartWith("J")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotStartWith("J")))
     }
 
     @Test
@@ -1295,7 +1320,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotStartWith("j")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotStartWith("j")))
     }
 
     @Test
@@ -1321,7 +1346,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = EndsWith("N")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = EndsWith("N")))
     }
 
     @Test
@@ -1347,7 +1372,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = EndsWith("o")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = EndsWith("o")))
     }
 
     @Test
@@ -1373,7 +1398,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotEndWith("n")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotEndWith("n")))
     }
 
     @Test
@@ -1399,7 +1424,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N")))
+            DefaultConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N")))
     }
 
     @Test
@@ -1412,10 +1437,10 @@ class StringFunctionsTest {
     @Test
     fun `isEmail with valid value should be valid`() {
         setOf("test.test@test.com",
-                "test_test@test.com",
-                "test-test@test.com",
-                "test@test.com",
-                "test@test.test").forEach {
+            "test_test@test.com",
+            "test-test@test.com",
+            "test@test.com",
+            "test@test.test").forEach {
             validate(Employee(email = it)) {
                 validate(Employee::email).isEmail()
             }
@@ -1431,6 +1456,6 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "email", value = "test.test", constraint = Email))
+            DefaultConstraintViolation(property = "email", value = "test.test", constraint = Email))
     }
 }

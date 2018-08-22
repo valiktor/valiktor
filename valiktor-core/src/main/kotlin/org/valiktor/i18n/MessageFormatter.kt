@@ -16,8 +16,15 @@
 
 package org.valiktor.i18n
 
-import org.valiktor.i18n.formatters.*
-import java.util.*
+import org.valiktor.i18n.formatters.AnyFormatter
+import org.valiktor.i18n.formatters.ArrayFormatter
+import org.valiktor.i18n.formatters.CalendarFormatter
+import org.valiktor.i18n.formatters.DateFormatter
+import org.valiktor.i18n.formatters.IterableFormatter
+import org.valiktor.i18n.formatters.NumberFormatter
+import java.util.Calendar
+import java.util.Date
+import java.util.ServiceLoader
 import kotlin.reflect.KClass
 import kotlin.reflect.full.superclasses
 
@@ -68,12 +75,12 @@ object Formatters {
      * Map containing the classes and their respective formatters
      */
     private var formatters: Map<KClass<*>, Formatter<*>> = mapOf(
-            Any::class to AnyFormatter,
-            Number::class to NumberFormatter,
-            Date::class to DateFormatter,
-            Calendar::class to CalendarFormatter,
-            Iterable::class to IterableFormatter,
-            Array<Any>::class to ArrayFormatter
+        Any::class to AnyFormatter,
+        Number::class to NumberFormatter,
+        Date::class to DateFormatter,
+        Calendar::class to CalendarFormatter,
+        Iterable::class to IterableFormatter,
+        Array<Any>::class to ArrayFormatter
     ) + ServiceLoader.load(FormatterSpi::class.java).flatMap { it.formatters }
 
     /**
@@ -84,21 +91,21 @@ object Formatters {
      */
     @Suppress("UNCHECKED_CAST")
     operator fun <T : Any> get(type: KClass<T>): Formatter<T> =
-            formatters.getOrElse(type) {
-                val superclass = type.superclasses.firstOrNull { formatters.containsKey(it) } ?: Any::class
-                if (superclass != Any::class) {
-                    return formatters.getValue(superclass) as Formatter<T>
-                }
+        formatters.getOrElse(type) {
+            val superclass = type.superclasses.firstOrNull { formatters.containsKey(it) } ?: Any::class
+            if (superclass != Any::class) {
+                return formatters.getValue(superclass) as Formatter<T>
+            }
 
-                type.superclasses.forEach {
-                    val formatter = get(it)
-                    if (formatter != AnyFormatter) {
-                        return formatter as Formatter<T>
-                    }
+            type.superclasses.forEach {
+                val formatter = get(it)
+                if (formatter != AnyFormatter) {
+                    return formatter as Formatter<T>
                 }
+            }
 
-                return AnyFormatter
-            } as Formatter<T>
+            return AnyFormatter
+        } as Formatter<T>
 
     /**
      * Adds a custom formatter for a class

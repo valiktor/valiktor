@@ -3,7 +3,19 @@ package org.valiktor.functions
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Between
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.Greater
+import org.valiktor.constraints.GreaterOrEqual
+import org.valiktor.constraints.In
+import org.valiktor.constraints.IntegerDigits
+import org.valiktor.constraints.Less
+import org.valiktor.constraints.LessOrEqual
+import org.valiktor.constraints.NotBetween
+import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
+import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.Null
 import org.valiktor.functions.BigIntegerFunctionsFixture.Employee
 import org.valiktor.validate
 import java.math.BigInteger
@@ -32,7 +44,7 @@ class BigIntegerFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = Null))
+            DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = Null))
     }
 
     @Test
@@ -50,7 +62,7 @@ class BigIntegerFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", constraint = NotNull))
+            DefaultConstraintViolation(property = "id", constraint = NotNull))
     }
 
     @Test
@@ -75,7 +87,7 @@ class BigIntegerFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 2.toBigInteger(), constraint = Equals(1.toBigInteger())))
+            DefaultConstraintViolation(property = "id", value = 2.toBigInteger(), constraint = Equals(1.toBigInteger())))
     }
 
     @Test
@@ -100,7 +112,7 @@ class BigIntegerFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = NotEquals(1.toBigInteger())))
+            DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = NotEquals(1.toBigInteger())))
     }
 
     @Test
@@ -125,7 +137,7 @@ class BigIntegerFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = In(setOf(0.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))))
+            DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = In(setOf(0.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))))
     }
 
     @Test
@@ -150,7 +162,7 @@ class BigIntegerFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = In(listOf(0.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))))
+            DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = In(listOf(0.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))))
     }
 
     @Test
@@ -175,7 +187,7 @@ class BigIntegerFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = NotIn(setOf(1.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))))
+            DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = NotIn(setOf(1.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))))
     }
 
     @Test
@@ -200,7 +212,7 @@ class BigIntegerFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = NotIn(listOf(1.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))))
+            DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = NotIn(listOf(1.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))))
     }
 
     @Test
@@ -226,10 +238,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 1.toBigInteger(),
-                        constraint = Equals(0.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 1.toBigInteger(),
+                constraint = Equals(0.toBigInteger())))
     }
 
     @Test
@@ -255,10 +267,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0.toBigInteger(),
-                        constraint = NotEquals(0.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0.toBigInteger(),
+                constraint = NotEquals(0.toBigInteger())))
     }
 
     @Test
@@ -284,10 +296,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0.toBigInteger(),
-                        constraint = Equals(1.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0.toBigInteger(),
+                constraint = Equals(1.toBigInteger())))
     }
 
     @Test
@@ -313,10 +325,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 1.toBigInteger(),
-                        constraint = NotEquals(1.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 1.toBigInteger(),
+                constraint = NotEquals(1.toBigInteger())))
     }
 
     @Test
@@ -342,10 +354,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0.toBigInteger(),
-                        constraint = Greater(0.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0.toBigInteger(),
+                constraint = Greater(0.toBigInteger())))
     }
 
     @Test
@@ -357,10 +369,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 98765.unaryMinus().toBigInteger(),
-                        constraint = Greater(0.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 98765.unaryMinus().toBigInteger(),
+                constraint = Greater(0.toBigInteger())))
     }
 
     @Test
@@ -393,10 +405,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 1.toBigInteger(),
-                        constraint = LessOrEqual(0.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 1.toBigInteger(),
+                constraint = LessOrEqual(0.toBigInteger())))
     }
 
     @Test
@@ -422,10 +434,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0.toBigInteger(),
-                        constraint = Less(0.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0.toBigInteger(),
+                constraint = Less(0.toBigInteger())))
     }
 
     @Test
@@ -437,10 +449,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 1.toBigInteger(),
-                        constraint = Less(0.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 1.toBigInteger(),
+                constraint = Less(0.toBigInteger())))
     }
 
     @Test
@@ -473,10 +485,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 98765.unaryMinus().toBigInteger(),
-                        constraint = GreaterOrEqual(0.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 98765.unaryMinus().toBigInteger(),
+                constraint = GreaterOrEqual(0.toBigInteger())))
     }
 
     @Test
@@ -509,10 +521,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 50.toBigInteger(),
-                        constraint = Less(49.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 50.toBigInteger(),
+                constraint = Less(49.toBigInteger())))
     }
 
     @Test
@@ -524,10 +536,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 50.unaryMinus().toBigInteger(),
-                        constraint = Less(51.unaryMinus().toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 50.unaryMinus().toBigInteger(),
+                constraint = Less(51.unaryMinus().toBigInteger())))
     }
 
     @Test
@@ -539,10 +551,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0.toBigInteger(),
-                        constraint = Less(0.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0.toBigInteger(),
+                constraint = Less(0.toBigInteger())))
     }
 
     @Test
@@ -582,10 +594,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 56789.toBigInteger(),
-                        constraint = LessOrEqual(57.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 56789.toBigInteger(),
+                constraint = LessOrEqual(57.toBigInteger())))
     }
 
     @Test
@@ -597,10 +609,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 96.unaryMinus().toBigInteger(),
-                        constraint = LessOrEqual(97.unaryMinus().toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 96.unaryMinus().toBigInteger(),
+                constraint = LessOrEqual(97.unaryMinus().toBigInteger())))
     }
 
     @Test
@@ -633,10 +645,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 10.toBigInteger(),
-                        constraint = Greater(11.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 10.toBigInteger(),
+                constraint = Greater(11.toBigInteger())))
     }
 
     @Test
@@ -648,10 +660,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 189.unaryMinus().toBigInteger(),
-                        constraint = Greater(180.unaryMinus().toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 189.unaryMinus().toBigInteger(),
+                constraint = Greater(180.unaryMinus().toBigInteger())))
     }
 
     @Test
@@ -663,10 +675,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0.toBigInteger(),
-                        constraint = Greater(0.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0.toBigInteger(),
+                constraint = Greater(0.toBigInteger())))
     }
 
     @Test
@@ -706,10 +718,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 57.toBigInteger(),
-                        constraint = GreaterOrEqual(56789.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 57.toBigInteger(),
+                constraint = GreaterOrEqual(56789.toBigInteger())))
     }
 
     @Test
@@ -721,10 +733,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 97.unaryMinus().toBigInteger(),
-                        constraint = GreaterOrEqual(96.unaryMinus().toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 97.unaryMinus().toBigInteger(),
+                constraint = GreaterOrEqual(96.unaryMinus().toBigInteger())))
     }
 
     @Test
@@ -785,10 +797,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 10.toBigInteger(),
-                        constraint = Between(start = 11.toBigInteger(), end = 12.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 10.toBigInteger(),
+                constraint = Between(start = 11.toBigInteger(), end = 12.toBigInteger())))
     }
 
     @Test
@@ -800,10 +812,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 12.toBigInteger(),
-                        constraint = Between(start = 10.toBigInteger(), end = 11.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 12.toBigInteger(),
+                constraint = Between(start = 10.toBigInteger(), end = 11.toBigInteger())))
     }
 
     @Test
@@ -815,10 +827,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 10.unaryMinus().toBigInteger(),
-                        constraint = Between(start = 9.unaryMinus().toBigInteger(), end = 8.unaryMinus().toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 10.unaryMinus().toBigInteger(),
+                constraint = Between(start = 9.unaryMinus().toBigInteger(), end = 8.unaryMinus().toBigInteger())))
     }
 
     @Test
@@ -830,10 +842,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 12.unaryMinus().toBigInteger(),
-                        constraint = Between(start = 14.unaryMinus().toBigInteger(), end = 13.unaryMinus().toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 12.unaryMinus().toBigInteger(),
+                constraint = Between(start = 14.unaryMinus().toBigInteger(), end = 13.unaryMinus().toBigInteger())))
     }
 
     @Test
@@ -880,10 +892,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0.toBigInteger(),
-                        constraint = NotBetween(start = 0.toBigInteger(), end = 1.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0.toBigInteger(),
+                constraint = NotBetween(start = 0.toBigInteger(), end = 1.toBigInteger())))
     }
 
     @Test
@@ -895,10 +907,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 1.toBigInteger(),
-                        constraint = NotBetween(start = 0.toBigInteger(), end = 1.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 1.toBigInteger(),
+                constraint = NotBetween(start = 0.toBigInteger(), end = 1.toBigInteger())))
     }
 
     @Test
@@ -910,10 +922,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 2.unaryMinus().toBigInteger(),
-                        constraint = NotBetween(start = 2.unaryMinus().toBigInteger(), end = 1.unaryMinus().toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 2.unaryMinus().toBigInteger(),
+                constraint = NotBetween(start = 2.unaryMinus().toBigInteger(), end = 1.unaryMinus().toBigInteger())))
     }
 
     @Test
@@ -925,10 +937,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 1.unaryMinus().toBigInteger(),
-                        constraint = NotBetween(start = 2.unaryMinus().toBigInteger(), end = 1.unaryMinus().toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 1.unaryMinus().toBigInteger(),
+                constraint = NotBetween(start = 2.unaryMinus().toBigInteger(), end = 1.unaryMinus().toBigInteger())))
     }
 
     @Test
@@ -940,10 +952,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 5.toBigInteger(),
-                        constraint = NotBetween(start = 0.toBigInteger(), end = 10.toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 5.toBigInteger(),
+                constraint = NotBetween(start = 0.toBigInteger(), end = 10.toBigInteger())))
     }
 
     @Test
@@ -955,10 +967,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 15.unaryMinus().toBigInteger(),
-                        constraint = NotBetween(start = 20.unaryMinus().toBigInteger(), end = 10.unaryMinus().toBigInteger())))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 15.unaryMinus().toBigInteger(),
+                constraint = NotBetween(start = 20.unaryMinus().toBigInteger(), end = 10.unaryMinus().toBigInteger())))
     }
 
     @Test
@@ -1026,10 +1038,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 748536.toBigInteger(),
-                        constraint = IntegerDigits(min = 7)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 748536.toBigInteger(),
+                constraint = IntegerDigits(min = 7)))
     }
 
     @Test
@@ -1041,10 +1053,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 748536.toBigInteger(),
-                        constraint = IntegerDigits(max = 5)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 748536.toBigInteger(),
+                constraint = IntegerDigits(max = 5)))
     }
 
     @Test
@@ -1056,10 +1068,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 748536.toBigInteger(),
-                        constraint = IntegerDigits(min = 7, max = 5)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 748536.toBigInteger(),
+                constraint = IntegerDigits(min = 7, max = 5)))
     }
 
     @Test
@@ -1071,10 +1083,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 748536.unaryMinus().toBigInteger(),
-                        constraint = IntegerDigits(min = 7)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 748536.unaryMinus().toBigInteger(),
+                constraint = IntegerDigits(min = 7)))
     }
 
     @Test
@@ -1086,10 +1098,10 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 748536.unaryMinus().toBigInteger(),
-                        constraint = IntegerDigits(max = 5)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 748536.unaryMinus().toBigInteger(),
+                constraint = IntegerDigits(max = 5)))
     }
 
     @Test
@@ -1101,9 +1113,9 @@ class BigIntegerFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 748536.unaryMinus().toBigInteger(),
-                        constraint = IntegerDigits(min = 7, max = 5)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 748536.unaryMinus().toBigInteger(),
+                constraint = IntegerDigits(min = 7, max = 5)))
     }
 }

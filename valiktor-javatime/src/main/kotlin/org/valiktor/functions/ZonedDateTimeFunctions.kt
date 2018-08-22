@@ -28,4 +28,4 @@ import java.time.ZonedDateTime
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<ZonedDateTime?>.isToday(): Validator<E>.Property<ZonedDateTime?> =
-        this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.zone) }
+    this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.zone) }

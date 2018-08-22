@@ -17,7 +17,7 @@
 package org.valiktor.springframework.config
 
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.ResourceBundle
 
 /**
  * Represents the Valiktor configuration for Spring Framework integration

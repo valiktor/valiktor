@@ -18,7 +18,7 @@ package org.valiktor.functions
 
 import org.valiktor.Validator
 import org.valiktor.constraints.Today
-import java.util.*
+import java.util.Calendar
 
 /**
  * Validates if the [Calendar] property is today

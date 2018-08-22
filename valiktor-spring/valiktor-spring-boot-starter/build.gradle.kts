@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 fun DependencyHandler.springBoot(module: String) = "org.springframework.boot:spring-boot-$module:1.5.15.RELEASE"
 
 plugins {

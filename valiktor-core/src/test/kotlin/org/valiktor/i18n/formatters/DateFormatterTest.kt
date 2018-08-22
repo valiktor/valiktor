@@ -5,7 +5,8 @@ import org.assertj.core.api.Assertions.entry
 import org.valiktor.i18n.Formatters
 import org.valiktor.i18n.SupportedLocales
 import org.valiktor.i18n.formatAllSupportedLocales
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 import kotlin.test.Test
 
 class DateFormatterTest {
@@ -16,9 +17,9 @@ class DateFormatterTest {
         calendar.set(2018, Calendar.DECEMBER, 31, 0, 0, 0)
 
         assertThat(Formatters[Date::class].formatAllSupportedLocales(calendar.time)).containsExactly(
-                entry(SupportedLocales.DEFAULT, "Dec 31, 2018"),
-                entry(SupportedLocales.EN, "Dec 31, 2018"),
-                entry(SupportedLocales.PT_BR, "31/12/2018"))
+            entry(SupportedLocales.DEFAULT, "Dec 31, 2018"),
+            entry(SupportedLocales.EN, "Dec 31, 2018"),
+            entry(SupportedLocales.PT_BR, "31/12/2018"))
     }
 
     @Test
@@ -27,8 +28,8 @@ class DateFormatterTest {
         calendar.set(2018, Calendar.DECEMBER, 31, 23, 58, 59)
 
         assertThat(Formatters[Date::class].formatAllSupportedLocales(calendar.time)).containsExactly(
-                entry(SupportedLocales.DEFAULT, "Dec 31, 2018 11:58:59 PM"),
-                entry(SupportedLocales.EN, "Dec 31, 2018 11:58:59 PM"),
-                entry(SupportedLocales.PT_BR, "31/12/2018 23:58:59"))
+            entry(SupportedLocales.DEFAULT, "Dec 31, 2018 11:58:59 PM"),
+            entry(SupportedLocales.EN, "Dec 31, 2018 11:58:59 PM"),
+            entry(SupportedLocales.PT_BR, "31/12/2018 23:58:59"))
     }
 }

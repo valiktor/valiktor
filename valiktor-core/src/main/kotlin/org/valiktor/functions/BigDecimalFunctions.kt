@@ -17,7 +17,16 @@
 package org.valiktor.functions
 
 import org.valiktor.Validator
-import org.valiktor.constraints.*
+import org.valiktor.constraints.DecimalDigits
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.Greater
+import org.valiktor.constraints.GreaterOrEqual
+import org.valiktor.constraints.In
+import org.valiktor.constraints.IntegerDigits
+import org.valiktor.constraints.Less
+import org.valiktor.constraints.LessOrEqual
+import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
 import java.math.BigDecimal
 
 /**
@@ -28,7 +37,7 @@ import java.math.BigDecimal
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isEqualTo(value: BigDecimal): Validator<E>.Property<BigDecimal?> =
-        this.validate(Equals(value)) { it == null || it.compareTo(value) == 0 }
+    this.validate(Equals(value)) { it == null || it.compareTo(value) == 0 }
 
 /**
  * Validates if the [BigDecimal] property value isn't equal to another value
@@ -38,7 +47,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isEqualTo(value: BigDecimal): Validat
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isNotEqualTo(value: BigDecimal): Validator<E>.Property<BigDecimal?> =
-        this.validate(NotEquals(value)) { it == null || it.compareTo(value) != 0 }
+    this.validate(NotEquals(value)) { it == null || it.compareTo(value) != 0 }
 
 /**
  * Validates if the [BigDecimal] property value is equal to one of the values
@@ -48,7 +57,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isNotEqualTo(value: BigDecimal): Vali
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isIn(vararg values: BigDecimal): Validator<E>.Property<BigDecimal?> =
-        this.validate(In(values.toSet())) { it == null || values.any { e -> it.compareTo(e) == 0 } }
+    this.validate(In(values.toSet())) { it == null || values.any { e -> it.compareTo(e) == 0 } }
 
 /**
  * Validates if the [BigDecimal] property value is equal to one of the values
@@ -58,7 +67,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isIn(vararg values: BigDecimal): Vali
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isIn(values: Iterable<BigDecimal>): Validator<E>.Property<BigDecimal?> =
-        this.validate(In(values)) { it == null || values.any { e -> it.compareTo(e) == 0 } }
+    this.validate(In(values)) { it == null || values.any { e -> it.compareTo(e) == 0 } }
 
 /**
  * Validates if the [BigDecimal] property value isn't equal to any value
@@ -68,7 +77,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isIn(values: Iterable<BigDecimal>): V
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isNotIn(vararg values: BigDecimal): Validator<E>.Property<BigDecimal?> =
-        this.validate(NotIn(values.toSet())) { it == null || !values.any { e -> it.compareTo(e) == 0 } }
+    this.validate(NotIn(values.toSet())) { it == null || !values.any { e -> it.compareTo(e) == 0 } }
 
 /**
  * Validates if the [BigDecimal] property value isn't equal to any value
@@ -78,7 +87,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isNotIn(vararg values: BigDecimal): V
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isNotIn(values: Iterable<BigDecimal>): Validator<E>.Property<BigDecimal?> =
-        this.validate(NotIn(values)) { it == null || !values.any { e -> it.compareTo(e) == 0 } }
+    this.validate(NotIn(values)) { it == null || !values.any { e -> it.compareTo(e) == 0 } }
 
 /**
  * Validates if the [BigDecimal] property is equal to zero
@@ -87,7 +96,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isNotIn(values: Iterable<BigDecimal>)
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isZero(): Validator<E>.Property<BigDecimal?> =
-        this.validate(Equals(BigDecimal.ZERO)) { it == null || it.compareTo(BigDecimal.ZERO) == 0 }
+    this.validate(Equals(BigDecimal.ZERO)) { it == null || it.compareTo(BigDecimal.ZERO) == 0 }
 
 /**
  * Validates if the [BigDecimal] property is not equal to zero
@@ -96,7 +105,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isZero(): Validator<E>.Property<BigDe
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isNotZero(): Validator<E>.Property<BigDecimal?> =
-        this.validate(NotEquals(BigDecimal.ZERO)) { it == null || it.compareTo(BigDecimal.ZERO) != 0 }
+    this.validate(NotEquals(BigDecimal.ZERO)) { it == null || it.compareTo(BigDecimal.ZERO) != 0 }
 
 /**
  * Validates if the [BigDecimal] property is equal to one
@@ -105,7 +114,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isNotZero(): Validator<E>.Property<Bi
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isOne(): Validator<E>.Property<BigDecimal?> =
-        this.validate(Equals(BigDecimal.ONE)) { it == null || it.compareTo(BigDecimal.ONE) == 0 }
+    this.validate(Equals(BigDecimal.ONE)) { it == null || it.compareTo(BigDecimal.ONE) == 0 }
 
 /**
  * Validates if the [BigDecimal] property is not equal to one
@@ -114,7 +123,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isOne(): Validator<E>.Property<BigDec
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isNotOne(): Validator<E>.Property<BigDecimal?> =
-        this.validate(NotEquals(BigDecimal.ONE)) { it == null || it.compareTo(BigDecimal.ONE) != 0 }
+    this.validate(NotEquals(BigDecimal.ONE)) { it == null || it.compareTo(BigDecimal.ONE) != 0 }
 
 /**
  * Validates if the [BigDecimal] property is positive
@@ -123,7 +132,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isNotOne(): Validator<E>.Property<Big
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isPositive(): Validator<E>.Property<BigDecimal?> =
-        this.validate(Greater(BigDecimal.ZERO)) { it == null || it > BigDecimal.ZERO }
+    this.validate(Greater(BigDecimal.ZERO)) { it == null || it > BigDecimal.ZERO }
 
 /**
  * Validates if the [BigDecimal] property isn't negative
@@ -132,7 +141,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isPositive(): Validator<E>.Property<B
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isPositiveOrZero(): Validator<E>.Property<BigDecimal?> =
-        this.validate(GreaterOrEqual(BigDecimal.ZERO)) { it == null || it >= BigDecimal.ZERO }
+    this.validate(GreaterOrEqual(BigDecimal.ZERO)) { it == null || it >= BigDecimal.ZERO }
 
 /**
  * Validates if the [BigDecimal] property is negative
@@ -141,7 +150,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isPositiveOrZero(): Validator<E>.Prop
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isNegative(): Validator<E>.Property<BigDecimal?> =
-        this.validate(Less(BigDecimal.ZERO)) { it == null || it < BigDecimal.ZERO }
+    this.validate(Less(BigDecimal.ZERO)) { it == null || it < BigDecimal.ZERO }
 
 /**
  * Validates if the [BigDecimal] property isn't positive
@@ -150,7 +159,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isNegative(): Validator<E>.Property<B
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.isNegativeOrZero(): Validator<E>.Property<BigDecimal?> =
-        this.validate(LessOrEqual(BigDecimal.ZERO)) { it == null || it <= BigDecimal.ZERO }
+    this.validate(LessOrEqual(BigDecimal.ZERO)) { it == null || it <= BigDecimal.ZERO }
 
 /**
  * Validates if the [BigDecimal] integer digits (before decimal separator) is within the limits (min and max)
@@ -162,7 +171,7 @@ fun <E> Validator<E>.Property<BigDecimal?>.isNegativeOrZero(): Validator<E>.Prop
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<BigDecimal?> =
-        this.validate(IntegerDigits(min, max)) { it == null || it.precision() - it.scale() in min.rangeTo(max) }
+    this.validate(IntegerDigits(min, max)) { it == null || it.precision() - it.scale() in min.rangeTo(max) }
 
 /**
  * Validates if the [BigDecimal] decimal digits (after decimal separator) is within the limits (min and max)
@@ -174,4 +183,4 @@ fun <E> Validator<E>.Property<BigDecimal?>.hasIntegerDigits(min: Int = Int.MIN_V
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<BigDecimal?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<BigDecimal?> =
-        this.validate(DecimalDigits(min, max)) { it == null || (if (it.scale() < 0) 0 else it.scale()) in min.rangeTo(max) }
+    this.validate(DecimalDigits(min, max)) { it == null || (if (it.scale() < 0) 0 else it.scale()) in min.rangeTo(max) }

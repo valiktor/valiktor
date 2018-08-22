@@ -20,19 +20,25 @@ import java.time.LocalDate
 import java.time.LocalTime
 import javax.money.MonetaryAmount
 
-data class Employee(val id: Int,
-                    val firstName: String,
-                    val lastName: String,
-                    val email: String,
-                    val dateOfBirth: LocalDate,
-                    val salary: MonetaryAmount,
-                    val startTime: LocalTime,
-                    val endTime: LocalTime,
-                    val company: Company,
-                    val dependents: List<Dependent>)
+data class Employee(
+    val id: Int,
+    val firstName: String,
+    val lastName: String,
+    val email: String,
+    val dateOfBirth: LocalDate,
+    val salary: MonetaryAmount,
+    val startTime: LocalTime,
+    val endTime: LocalTime,
+    val company: Company,
+    val dependents: List<Dependent>
+)
 
-data class Company(val name: String,
-                   val foundedDate: LocalDate)
+data class Company(
+    val name: String,
+    val foundedDate: LocalDate
+)
 
-data class Dependent(val name: String,
-                     val age: Int)
+data class Dependent(
+    val name: String,
+    val age: Int
+)

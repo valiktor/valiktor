@@ -29,22 +29,25 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Month
 import java.time.ZoneId
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import javax.servlet.http.HttpServletRequest
 
-data class Employee(val id: Int,
-                    val name: String,
-                    val email: String,
-                    val salary: BigDecimal,
-                    val dateOfBirth: Date)
+data class Employee(
+    val id: Int,
+    val name: String,
+    val email: String,
+    val salary: BigDecimal,
+    val dateOfBirth: Date
+)
 
 @RestController
 @RequestMapping("/")
 class ValiktorTestController {
 
     @PostMapping("/employees",
-            consumes = [APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE],
-            produces = [APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE])
+        consumes = [APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE],
+        produces = [APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE])
     fun test(@RequestBody employee: Employee): ResponseEntity<Void> {
         validate(employee) {
             validate(Employee::id).isEqualTo(1)
@@ -52,7 +55,7 @@ class ValiktorTestController {
             validate(Employee::email).isEmail()
             validate(Employee::salary).isBetween(start = "999.99".toBigDecimal(), end = "9999.99".toBigDecimal())
             validate(Employee::dateOfBirth).isEqualTo(Date.from(LocalDate.of(2001, Month.JANUARY, 1)
-                    .atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .atStartOfDay(ZoneId.systemDefault()).toInstant()))
         }
 
         val location = fromCurrentRequestUri().path("/{id}").buildAndExpand(employee.id).toUri()
@@ -63,31 +66,31 @@ class ValiktorTestController {
 object ValiktorExceptionHandlerFixture {
 
     private val jsonMapper: ObjectMapper = ObjectMapper()
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-            .setDateFormat(SimpleDateFormat("yyyy-MM-dd"))
-            .registerModule(KotlinModule())
+        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .setDateFormat(SimpleDateFormat("yyyy-MM-dd"))
+        .registerModule(KotlinModule())
 
     private val xmlMapper: ObjectMapper = XmlMapper()
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-            .setDateFormat(SimpleDateFormat("yyyy-MM-dd"))
-            .registerModule(KotlinModule())
+        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .setDateFormat(SimpleDateFormat("yyyy-MM-dd"))
+        .registerModule(KotlinModule())
 
     private val valiktorExceptionHandler = ValiktorExceptionHandler(config = ValiktorConfiguration())
     private val valiktorJacksonExceptionHandler = ValiktorJacksonExceptionHandler(valiktorExceptionHandler = valiktorExceptionHandler)
 
     val mockMvc: MockMvc = MockMvcBuilders
-            .standaloneSetup(ValiktorTestController())
-            .setControllerAdvice(valiktorExceptionHandler, valiktorJacksonExceptionHandler)
-            .setMessageConverters(
-                    MappingJackson2HttpMessageConverter().also { it.objectMapper = this.jsonMapper },
-                    MappingJackson2XmlHttpMessageConverter().also { it.objectMapper = this.xmlMapper })
-            .setLocaleResolver(object : AcceptHeaderLocaleResolver() {
-                override fun resolveLocale(req: HttpServletRequest): Locale =
-                        Locale.lookup(
-                                Locale.LanguageRange.parse(req.getHeader(ACCEPT_LANGUAGE)),
-                                listOf(Locale.ENGLISH, Locale("pt", "BR")))
-            })
-            .build()
+        .standaloneSetup(ValiktorTestController())
+        .setControllerAdvice(valiktorExceptionHandler, valiktorJacksonExceptionHandler)
+        .setMessageConverters(
+            MappingJackson2HttpMessageConverter().also { it.objectMapper = this.jsonMapper },
+            MappingJackson2XmlHttpMessageConverter().also { it.objectMapper = this.xmlMapper })
+        .setLocaleResolver(object : AcceptHeaderLocaleResolver() {
+            override fun resolveLocale(req: HttpServletRequest): Locale =
+                Locale.lookup(
+                    Locale.LanguageRange.parse(req.getHeader(ACCEPT_LANGUAGE)),
+                    listOf(Locale.ENGLISH, Locale("pt", "BR")))
+        })
+        .build()
 
     object JSON {
 

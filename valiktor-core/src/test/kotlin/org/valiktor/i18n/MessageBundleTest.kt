@@ -1,6 +1,6 @@
 package org.valiktor.i18n
 
-import java.util.*
+import java.util.Locale
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -11,10 +11,10 @@ class MessageBundleTest {
     @Test
     fun `should get message from baseName, language and country`() {
         val messageBundle = MessageBundle(
-                baseName = "testMessages",
-                locale = Locale.US,
-                fallbackBaseName = FALLBACK_BASENAME,
-                fallbackLocale = SupportedLocales.PT_BR)
+            baseName = "testMessages",
+            locale = Locale.US,
+            fallbackBaseName = FALLBACK_BASENAME,
+            fallbackLocale = SupportedLocales.PT_BR)
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, Locale.US)
@@ -24,10 +24,10 @@ class MessageBundleTest {
     @Test
     fun `should get message from fallbackBaseName, language and country`() {
         val messageBundle = MessageBundle(
-                baseName = "testMessages",
-                locale = SupportedLocales.PT_BR,
-                fallbackBaseName = FALLBACK_BASENAME,
-                fallbackLocale = SupportedLocales.EN)
+            baseName = "testMessages",
+            locale = SupportedLocales.PT_BR,
+            fallbackBaseName = FALLBACK_BASENAME,
+            fallbackLocale = SupportedLocales.EN)
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, SupportedLocales.PT_BR)
@@ -37,10 +37,10 @@ class MessageBundleTest {
     @Test
     fun `should get message from baseName and language`() {
         val messageBundle = MessageBundle(
-                baseName = "testMessages",
-                locale = Locale.US,
-                fallbackBaseName = FALLBACK_BASENAME,
-                fallbackLocale = SupportedLocales.PT_BR)
+            baseName = "testMessages",
+            locale = Locale.US,
+            fallbackBaseName = FALLBACK_BASENAME,
+            fallbackLocale = SupportedLocales.PT_BR)
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, Locale.US)
@@ -50,10 +50,10 @@ class MessageBundleTest {
     @Test
     fun `should get message from fallbackBaseName and language`() {
         val messageBundle = MessageBundle(
-                baseName = "testMessages",
-                locale = Locale.US,
-                fallbackBaseName = FALLBACK_BASENAME,
-                fallbackLocale = SupportedLocales.PT_BR)
+            baseName = "testMessages",
+            locale = Locale.US,
+            fallbackBaseName = FALLBACK_BASENAME,
+            fallbackLocale = SupportedLocales.PT_BR)
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, Locale.US)
@@ -63,10 +63,10 @@ class MessageBundleTest {
     @Test
     fun `should get message from baseName, default language and default country`() {
         val messageBundle = MessageBundle(
-                baseName = "testMessages",
-                locale = INVALID_LOCALE,
-                fallbackBaseName = FALLBACK_BASENAME,
-                fallbackLocale = SupportedLocales.PT_BR)
+            baseName = "testMessages",
+            locale = INVALID_LOCALE,
+            fallbackBaseName = FALLBACK_BASENAME,
+            fallbackLocale = SupportedLocales.PT_BR)
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)
@@ -76,10 +76,10 @@ class MessageBundleTest {
     @Test
     fun `should get message from fallbackBaseName, default language and default country`() {
         val messageBundle = MessageBundle(
-                baseName = "testMessages",
-                locale = INVALID_LOCALE,
-                fallbackBaseName = FALLBACK_BASENAME,
-                fallbackLocale = SupportedLocales.PT_BR)
+            baseName = "testMessages",
+            locale = INVALID_LOCALE,
+            fallbackBaseName = FALLBACK_BASENAME,
+            fallbackLocale = SupportedLocales.PT_BR)
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)
@@ -89,10 +89,10 @@ class MessageBundleTest {
     @Test
     fun `should get message from baseName and default language`() {
         val messageBundle = MessageBundle(
-                baseName = "testMessages",
-                locale = INVALID_LOCALE,
-                fallbackBaseName = FALLBACK_BASENAME,
-                fallbackLocale = Locale.US)
+            baseName = "testMessages",
+            locale = INVALID_LOCALE,
+            fallbackBaseName = FALLBACK_BASENAME,
+            fallbackLocale = Locale.US)
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)
@@ -102,10 +102,10 @@ class MessageBundleTest {
     @Test
     fun `should get message from fallbackBaseName and default language`() {
         val messageBundle = MessageBundle(
-                baseName = "testMessages",
-                locale = INVALID_LOCALE,
-                fallbackBaseName = FALLBACK_BASENAME,
-                fallbackLocale = Locale.US)
+            baseName = "testMessages",
+            locale = INVALID_LOCALE,
+            fallbackBaseName = FALLBACK_BASENAME,
+            fallbackLocale = Locale.US)
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)
@@ -115,10 +115,10 @@ class MessageBundleTest {
     @Test
     fun `should get message from baseName`() {
         val messageBundle = MessageBundle(
-                baseName = "testMessages",
-                locale = INVALID_LOCALE,
-                fallbackBaseName = FALLBACK_BASENAME,
-                fallbackLocale = INVALID_LOCALE)
+            baseName = "testMessages",
+            locale = INVALID_LOCALE,
+            fallbackBaseName = FALLBACK_BASENAME,
+            fallbackLocale = INVALID_LOCALE)
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)
@@ -128,10 +128,10 @@ class MessageBundleTest {
     @Test
     fun `should get message from fallbackBaseName`() {
         val messageBundle = MessageBundle(
-                baseName = "testMessages",
-                locale = INVALID_LOCALE,
-                fallbackBaseName = FALLBACK_BASENAME,
-                fallbackLocale = INVALID_LOCALE)
+            baseName = "testMessages",
+            locale = INVALID_LOCALE,
+            fallbackBaseName = FALLBACK_BASENAME,
+            fallbackLocale = INVALID_LOCALE)
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)

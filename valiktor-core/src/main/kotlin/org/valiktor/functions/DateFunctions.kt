@@ -18,7 +18,8 @@ package org.valiktor.functions
 
 import org.valiktor.Validator
 import org.valiktor.constraints.Today
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 /**
  * Validates if the [Date] property is today

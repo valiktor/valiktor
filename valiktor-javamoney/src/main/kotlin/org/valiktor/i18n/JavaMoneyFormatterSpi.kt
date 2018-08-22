@@ -30,6 +30,6 @@ import javax.money.MonetaryAmount
 class JavaMoneyFormatterSpi : FormatterSpi {
 
     override val formatters = setOf(
-            MonetaryAmount::class to MonetaryAmountFormatter
+        MonetaryAmount::class to MonetaryAmountFormatter
     )
 }

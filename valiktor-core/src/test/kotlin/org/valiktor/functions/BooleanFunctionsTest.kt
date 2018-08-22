@@ -3,7 +3,14 @@ package org.valiktor.functions
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.False
+import org.valiktor.constraints.In
+import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
+import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.Null
+import org.valiktor.constraints.True
 import org.valiktor.functions.BooleanFunctionsFixture.Employee
 import org.valiktor.validate
 import kotlin.test.Test
@@ -31,7 +38,7 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "active", value = true, constraint = Null))
+            DefaultConstraintViolation(property = "active", value = true, constraint = Null))
     }
 
     @Test
@@ -49,7 +56,7 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "active", constraint = NotNull))
+            DefaultConstraintViolation(property = "active", constraint = NotNull))
     }
 
     @Test
@@ -74,7 +81,7 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "active", value = true, constraint = Equals(false)))
+            DefaultConstraintViolation(property = "active", value = true, constraint = Equals(false)))
     }
 
     @Test
@@ -99,7 +106,7 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "active", value = false, constraint = NotEquals(false)))
+            DefaultConstraintViolation(property = "active", value = false, constraint = NotEquals(false)))
     }
 
     @Test
@@ -124,7 +131,7 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "active", value = true, constraint = In(setOf(false))))
+            DefaultConstraintViolation(property = "active", value = true, constraint = In(setOf(false))))
     }
 
     @Test
@@ -149,7 +156,7 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "active", value = true, constraint = In(listOf(false))))
+            DefaultConstraintViolation(property = "active", value = true, constraint = In(listOf(false))))
     }
 
     @Test
@@ -174,7 +181,7 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(setOf(true, false))))
+            DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(setOf(true, false))))
     }
 
     @Test
@@ -199,7 +206,7 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(listOf(true, false))))
+            DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(listOf(true, false))))
     }
 
     @Test
@@ -225,10 +232,10 @@ class BooleanFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "active",
-                        value = false,
-                        constraint = True))
+            DefaultConstraintViolation(
+                property = "active",
+                value = false,
+                constraint = True))
     }
 
     @Test
@@ -254,9 +261,9 @@ class BooleanFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "active",
-                        value = true,
-                        constraint = False))
+            DefaultConstraintViolation(
+                property = "active",
+                value = true,
+                constraint = False))
     }
 }

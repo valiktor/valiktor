@@ -29,8 +29,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromC
 class EmployeeController(val employeeService: EmployeeService) {
 
     @PostMapping(
-            consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
-            produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
+        consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
     fun createEmployee(@RequestBody employee: Employee): ResponseEntity<Void> {
         employeeService.createEmployee(employee)
         return ResponseEntity.created(fromCurrentRequestUri().path("/{id}").buildAndExpand(employee.id).toUri()).build()

@@ -24,7 +24,7 @@ import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.NotNull
 import org.valiktor.springframework.web.payload.UnprocessableEntity
-import java.util.*
+import java.util.Locale
 
 /**
  * Represents the REST controller that handle [MissingKotlinParameterException] and returns an appropriate HTTP response.
@@ -49,14 +49,13 @@ class ValiktorJacksonExceptionHandler(private val valiktorExceptionHandler: Vali
      * @return the ResponseEntity with 422 status code and the constraint violations
      */
     @ExceptionHandler(MissingKotlinParameterException::class)
-    fun handleMissingKotlinParameterException(ex: MissingKotlinParameterException,
-                                              locale: Locale): ResponseEntity<UnprocessableEntity> =
-            valiktorExceptionHandler.handleConstraintViolationException(
-                    ConstraintViolationException(constraintViolations = setOf(
-                            DefaultConstraintViolation(
-                                    property = ex.path.fold("") { jsonPath, it ->
-                                        (jsonPath + if (it.index > -1) "[${it.index}]" else ".${it.fieldName}").removePrefix(".")
-                                    },
-                                    constraint = NotNull)
-                    )), locale)
+    fun handleMissingKotlinParameterException(ex: MissingKotlinParameterException, locale: Locale): ResponseEntity<UnprocessableEntity> =
+        valiktorExceptionHandler.handleConstraintViolationException(
+            ConstraintViolationException(constraintViolations = setOf(
+                DefaultConstraintViolation(
+                    property = ex.path.fold("") { jsonPath, it ->
+                        (jsonPath + if (it.index > -1) "[${it.index}]" else ".${it.fieldName}").removePrefix(".")
+                    },
+                    constraint = NotNull)
+            )), locale)
 }

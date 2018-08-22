@@ -20,7 +20,7 @@ import org.valiktor.i18n.Formatter
 import org.valiktor.i18n.MessageBundle
 import java.math.BigDecimal
 import java.text.NumberFormat
-import java.util.*
+import java.util.Currency
 import javax.money.MonetaryAmount
 
 /**
@@ -35,8 +35,8 @@ object MonetaryAmountFormatter : Formatter<MonetaryAmount> {
         val bigNum = value.number.numberValueExact(BigDecimal::class.java).stripTrailingZeros()
         val integerDigits = (bigNum.precision() - bigNum.scale()).let { if (it <= 0) 1 else it }
         val fractionDigits = bigNum.scale()
-                .let { if (it < 0) 0 else it }
-                .let { if (it < value.currency.defaultFractionDigits) value.currency.defaultFractionDigits else it }
+            .let { if (it < 0) 0 else it }
+            .let { if (it < value.currency.defaultFractionDigits) value.currency.defaultFractionDigits else it }
 
         val numberFormat = NumberFormat.getCurrencyInstance(messageBundle.locale)
         numberFormat.currency = Currency.getInstance(value.currency.currencyCode)

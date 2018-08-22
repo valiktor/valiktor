@@ -3,7 +3,13 @@ package org.valiktor.functions
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.In
+import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
+import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.Null
+import org.valiktor.constraints.Valid
 import org.valiktor.functions.AnyFunctionsFixture.Address
 import org.valiktor.functions.AnyFunctionsFixture.City
 import org.valiktor.functions.AnyFunctionsFixture.Company
@@ -41,10 +47,10 @@ class AnyFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 1),
-                        constraint = Null))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 1),
+                constraint = Null))
     }
 
     @Test
@@ -62,9 +68,9 @@ class AnyFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        constraint = NotNull))
+            DefaultConstraintViolation(
+                property = "company",
+                constraint = NotNull))
     }
 
     @Test
@@ -89,10 +95,10 @@ class AnyFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 2),
-                        constraint = Equals(Company(id = 1))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 2),
+                constraint = Equals(Company(id = 1))))
     }
 
     @Test
@@ -117,10 +123,10 @@ class AnyFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 1),
-                        constraint = NotEquals(Company(id = 1))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 1),
+                constraint = NotEquals(Company(id = 1))))
     }
 
     @Test
@@ -145,10 +151,10 @@ class AnyFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 1),
-                        constraint = In(setOf(Company(id = 0), Company(id = 2), Company(id = 3)))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 1),
+                constraint = In(setOf(Company(id = 0), Company(id = 2), Company(id = 3)))))
     }
 
     @Test
@@ -173,10 +179,10 @@ class AnyFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 1),
-                        constraint = In(listOf(Company(id = 0), Company(id = 2), Company(id = 3)))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 1),
+                constraint = In(listOf(Company(id = 0), Company(id = 2), Company(id = 3)))))
     }
 
     @Test
@@ -201,10 +207,10 @@ class AnyFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 1),
-                        constraint = NotIn(setOf(Company(id = 1), Company(id = 2), Company(id = 3)))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 1),
+                constraint = NotIn(setOf(Company(id = 1), Company(id = 2), Company(id = 3)))))
     }
 
     @Test
@@ -229,10 +235,10 @@ class AnyFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 1),
-                        constraint = NotIn(listOf(Company(id = 1), Company(id = 2), Company(id = 3)))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 1),
+                constraint = NotIn(listOf(Company(id = 1), Company(id = 2), Company(id = 3)))))
     }
 
     @Test
@@ -257,10 +263,10 @@ class AnyFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 2),
-                        constraint = Valid))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 2),
+                constraint = Valid))
     }
 
     @Test
@@ -334,12 +340,12 @@ class AnyFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", constraint = NotNull),
-                DefaultConstraintViolation(property = "company.id", constraint = NotNull),
-                DefaultConstraintViolation(property = "address.id", constraint = NotNull),
-                DefaultConstraintViolation(property = "address.city.id", constraint = NotNull),
-                DefaultConstraintViolation(property = "address.city.state.id", constraint = NotNull),
-                DefaultConstraintViolation(property = "address.city.state.country.id", constraint = NotNull))
+            DefaultConstraintViolation(property = "id", constraint = NotNull),
+            DefaultConstraintViolation(property = "company.id", constraint = NotNull),
+            DefaultConstraintViolation(property = "address.id", constraint = NotNull),
+            DefaultConstraintViolation(property = "address.city.id", constraint = NotNull),
+            DefaultConstraintViolation(property = "address.city.state.id", constraint = NotNull),
+            DefaultConstraintViolation(property = "address.city.state.country.id", constraint = NotNull))
     }
 
     @Test
@@ -352,7 +358,7 @@ class AnyFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", constraint = NotNull),
-                DefaultConstraintViolation(property = "name", constraint = NotNull))
+            DefaultConstraintViolation(property = "id", constraint = NotNull),
+            DefaultConstraintViolation(property = "name", constraint = NotNull))
     }
 }

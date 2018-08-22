@@ -3,7 +3,18 @@ package org.valiktor.functions
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Between
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.Greater
+import org.valiktor.constraints.GreaterOrEqual
+import org.valiktor.constraints.In
+import org.valiktor.constraints.Less
+import org.valiktor.constraints.LessOrEqual
+import org.valiktor.constraints.NotBetween
+import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
+import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.Null
 import org.valiktor.functions.LocalTimeFunctionsFixture.Employee
 import org.valiktor.validate
 import java.time.LocalTime
@@ -34,7 +45,7 @@ class LocalTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = Null))
+            DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = Null))
     }
 
     @Test
@@ -52,7 +63,7 @@ class LocalTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "startTime", constraint = NotNull))
+            DefaultConstraintViolation(property = "startTime", constraint = NotNull))
     }
 
     @Test
@@ -77,7 +88,7 @@ class LocalTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = Equals(dateTime.minusSeconds(1))))
+            DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = Equals(dateTime.minusSeconds(1))))
     }
 
     @Test
@@ -102,7 +113,7 @@ class LocalTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = NotEquals(dateTime)))
+            DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = NotEquals(dateTime)))
     }
 
     @Test
@@ -127,7 +138,7 @@ class LocalTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = In(setOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2)))))
+            DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = In(setOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2)))))
     }
 
     @Test
@@ -152,7 +163,7 @@ class LocalTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = In(listOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2)))))
+            DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = In(listOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2)))))
     }
 
     @Test
@@ -177,7 +188,7 @@ class LocalTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = NotIn(setOf(dateTime, dateTime.plusSeconds(1)))))
+            DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = NotIn(setOf(dateTime, dateTime.plusSeconds(1)))))
     }
 
     @Test
@@ -202,7 +213,7 @@ class LocalTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = NotIn(listOf(dateTime, dateTime.plusSeconds(1)))))
+            DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = NotIn(listOf(dateTime, dateTime.plusSeconds(1)))))
     }
 
     @Test
@@ -228,10 +239,10 @@ class LocalTimeFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "startTime",
-                        value = dateTime,
-                        constraint = Less(dateTime.minusSeconds(1))))
+            DefaultConstraintViolation(
+                property = "startTime",
+                value = dateTime,
+                constraint = Less(dateTime.minusSeconds(1))))
     }
 
     @Test
@@ -243,10 +254,10 @@ class LocalTimeFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "startTime",
-                        value = dateTime,
-                        constraint = Less(dateTime)))
+            DefaultConstraintViolation(
+                property = "startTime",
+                value = dateTime,
+                constraint = Less(dateTime)))
     }
 
     @Test
@@ -279,10 +290,10 @@ class LocalTimeFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "startTime",
-                        value = dateTime,
-                        constraint = LessOrEqual(dateTime.minusSeconds(1))))
+            DefaultConstraintViolation(
+                property = "startTime",
+                value = dateTime,
+                constraint = LessOrEqual(dateTime.minusSeconds(1))))
     }
 
     @Test
@@ -308,10 +319,10 @@ class LocalTimeFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "startTime",
-                        value = dateTime,
-                        constraint = Greater(dateTime.plusSeconds(1))))
+            DefaultConstraintViolation(
+                property = "startTime",
+                value = dateTime,
+                constraint = Greater(dateTime.plusSeconds(1))))
     }
 
     @Test
@@ -323,10 +334,10 @@ class LocalTimeFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "startTime",
-                        value = dateTime,
-                        constraint = Greater(dateTime)))
+            DefaultConstraintViolation(
+                property = "startTime",
+                value = dateTime,
+                constraint = Greater(dateTime)))
     }
 
     @Test
@@ -359,10 +370,10 @@ class LocalTimeFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "startTime",
-                        value = dateTime,
-                        constraint = GreaterOrEqual(dateTime.plusSeconds(1))))
+            DefaultConstraintViolation(
+                property = "startTime",
+                value = dateTime,
+                constraint = GreaterOrEqual(dateTime.plusSeconds(1))))
     }
 
     @Test
@@ -402,10 +413,10 @@ class LocalTimeFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "startTime",
-                        value = dateTime,
-                        constraint = Between(start = dateTime.plusSeconds(1), end = dateTime.plusSeconds(3))))
+            DefaultConstraintViolation(
+                property = "startTime",
+                value = dateTime,
+                constraint = Between(start = dateTime.plusSeconds(1), end = dateTime.plusSeconds(3))))
     }
 
     @Test
@@ -417,10 +428,10 @@ class LocalTimeFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "startTime",
-                        value = dateTime.plusSeconds(4),
-                        constraint = Between(start = dateTime.plusSeconds(1), end = dateTime.plusSeconds(3))))
+            DefaultConstraintViolation(
+                property = "startTime",
+                value = dateTime.plusSeconds(4),
+                constraint = Between(start = dateTime.plusSeconds(1), end = dateTime.plusSeconds(3))))
     }
 
     @Test
@@ -453,10 +464,10 @@ class LocalTimeFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "startTime",
-                        value = dateTime,
-                        constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(1))))
+            DefaultConstraintViolation(
+                property = "startTime",
+                value = dateTime,
+                constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(1))))
     }
 
     @Test
@@ -468,10 +479,10 @@ class LocalTimeFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "startTime",
-                        value = dateTime.plusSeconds(1),
-                        constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(1))))
+            DefaultConstraintViolation(
+                property = "startTime",
+                value = dateTime.plusSeconds(1),
+                constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(1))))
     }
 
     @Test
@@ -483,9 +494,9 @@ class LocalTimeFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "startTime",
-                        value = dateTime.plusSeconds(1),
-                        constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(2))))
+            DefaultConstraintViolation(
+                property = "startTime",
+                value = dateTime.plusSeconds(1),
+                constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(2))))
     }
 }

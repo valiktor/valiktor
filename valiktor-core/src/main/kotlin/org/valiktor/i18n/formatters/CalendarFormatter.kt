@@ -19,7 +19,7 @@ package org.valiktor.i18n.formatters
 import org.valiktor.i18n.Formatter
 import org.valiktor.i18n.MessageBundle
 import java.text.DateFormat
-import java.util.*
+import java.util.Calendar
 
 /**
  * Represents the formatter for [Calendar] values
@@ -30,11 +30,11 @@ import java.util.*
 object CalendarFormatter : Formatter<Calendar> {
 
     override fun format(value: Calendar, messageBundle: MessageBundle): String =
-            (if (value.hasTime())
-                DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, messageBundle.locale)
-            else
-                DateFormat.getDateInstance(DateFormat.MEDIUM, messageBundle.locale))
-                    .format(value.time)
+        (if (value.hasTime())
+            DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, messageBundle.locale)
+        else
+            DateFormat.getDateInstance(DateFormat.MEDIUM, messageBundle.locale))
+            .format(value.time)
 
     private fun Calendar.hasTime(): Boolean {
         val hours = this.get(Calendar.HOUR_OF_DAY)

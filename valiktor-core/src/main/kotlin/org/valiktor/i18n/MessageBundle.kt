@@ -16,7 +16,9 @@
 
 package org.valiktor.i18n
 
-import java.util.*
+import java.util.Locale
+import java.util.MissingResourceException
+import java.util.ResourceBundle
 import java.util.ResourceBundle.Control.FORMAT_PROPERTIES
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
@@ -25,10 +27,12 @@ private const val PREFIX_KEY = "org.valiktor"
 private const val DEFAULT_BASE_NAME = "org/valiktor/messages"
 private const val INITIAL_CACHE_SIZE = 48
 
-private data class CacheKey(val baseName: String,
-                            val locale: Locale,
-                            val fallbackBaseName: String,
-                            val fallbackLocale: Locale)
+private data class CacheKey(
+    val baseName: String,
+    val locale: Locale,
+    val fallbackBaseName: String,
+    val fallbackLocale: Locale
+)
 
 private val cachedMessages: ConcurrentMap<CacheKey, Map<String, String>> = ConcurrentHashMap(INITIAL_CACHE_SIZE)
 
@@ -46,54 +50,56 @@ private val cachedMessages: ConcurrentMap<CacheKey, Map<String, String>> = Concu
  * @see Locale
  * @since 0.1.0
  */
-class MessageBundle(val baseName: String,
-                    val locale: Locale,
-                    fallbackBaseName: String,
-                    fallbackLocale: Locale) {
+class MessageBundle(
+    val baseName: String,
+    val locale: Locale,
+    fallbackBaseName: String,
+    fallbackLocale: Locale
+) {
 
     private val messages: Map<String, String> = cachedMessages.getOrPut(
-            CacheKey(baseName, locale, fallbackBaseName, fallbackLocale)) {
+        CacheKey(baseName, locale, fallbackBaseName, fallbackLocale)) {
         val control = ResourceBundle.Control.getControl(FORMAT_PROPERTIES)
 
         if (locale == Locale(""))
             getMessages(DEFAULT_BASE_NAME, locale)
-                    .plus(getMessages(fallbackBaseName, locale))
-                    .plus(getMessages(baseName, locale))
-                    .toMap()
+                .plus(getMessages(fallbackBaseName, locale))
+                .plus(getMessages(baseName, locale))
+                .toMap()
         else
             control.getCandidateLocales(baseName, locale)
-                    .asSequence()
-                    .filter { it != Locale("") }
-                    .plus(control.getCandidateLocales(baseName, fallbackLocale))
-                    .asIterable()
-                    .reversed()
-                    .asSequence()
-                    .flatMap {
-                        getMessages(DEFAULT_BASE_NAME, locale)
-                                .plus(getMessages(fallbackBaseName, it))
-                                .plus(getMessages(baseName, it))
-                    }
-                    .toMap()
+                .asSequence()
+                .filter { it != Locale("") }
+                .plus(control.getCandidateLocales(baseName, fallbackLocale))
+                .asIterable()
+                .reversed()
+                .asSequence()
+                .flatMap {
+                    getMessages(DEFAULT_BASE_NAME, locale)
+                        .plus(getMessages(fallbackBaseName, it))
+                        .plus(getMessages(baseName, it))
+                }
+                .toMap()
     }
 
     private fun getMessages(baseName: String, locale: Locale): Sequence<Pair<String, String>> =
-            try {
-                ResourceBundle.getBundle(baseName, locale,
-                        object : ResourceBundle.Control() {
-                            override fun getFormats(baseName: String?): List<String> = FORMAT_PROPERTIES
-                            override fun getFallbackLocale(baseName: String?, locale: Locale?): Locale? = null
-                            override fun getCandidateLocales(baseName: String, locale: Locale): List<Locale> = listOf(locale)
-                        })
-                        .let { bundle ->
-                            bundle.keySet()
-                                    .asSequence()
-                                    .filter { it.startsWith(PREFIX_KEY) }
-                                    .map { it to bundle.getString(it) }
-                                    .filter { it.second.isNotBlank() }
-                        }
-            } catch (ex: MissingResourceException) {
-                emptySequence()
-            }
+        try {
+            ResourceBundle.getBundle(baseName, locale,
+                object : ResourceBundle.Control() {
+                    override fun getFormats(baseName: String?): List<String> = FORMAT_PROPERTIES
+                    override fun getFallbackLocale(baseName: String?, locale: Locale?): Locale? = null
+                    override fun getCandidateLocales(baseName: String, locale: Locale): List<Locale> = listOf(locale)
+                })
+                .let { bundle ->
+                    bundle.keySet()
+                        .asSequence()
+                        .filter { it.startsWith(PREFIX_KEY) }
+                        .map { it to bundle.getString(it) }
+                        .filter { it.second.isNotBlank() }
+                }
+        } catch (ex: MissingResourceException) {
+            emptySequence()
+        }
 
     /**
      * Gets a message from the bundle.

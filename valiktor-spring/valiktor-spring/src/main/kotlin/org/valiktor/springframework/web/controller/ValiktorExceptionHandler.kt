@@ -26,7 +26,7 @@ import org.valiktor.springframework.web.payload.UnprocessableEntity
 import org.valiktor.springframework.web.payload.ValidationConstraint
 import org.valiktor.springframework.web.payload.ValidationError
 import org.valiktor.springframework.web.payload.ValidationParam
-import java.util.*
+import java.util.Locale
 
 /**
  * Represents the REST controller that handle [ConstraintViolationException] and returns an appropriate HTTP response.
@@ -50,31 +50,30 @@ class ValiktorExceptionHandler(private val config: ValiktorConfiguration) {
      * @return the ResponseEntity with 422 status code and the constraint violations
      */
     @ExceptionHandler(ConstraintViolationException::class)
-    fun handleConstraintViolationException(ex: ConstraintViolationException,
-                                           locale: Locale): ResponseEntity<UnprocessableEntity> =
-            ResponseEntity
-                    .unprocessableEntity()
-                    .body(UnprocessableEntity(errors = ex.constraintViolations
-                            .asSequence()
-                            .mapToMessage(baseName = config.baseBundleName, locale = locale)
-                            .map {
-                                ValidationError(
-                                        property = it.property,
-                                        value = it.value,
-                                        message = it.message,
-                                        constraint = ValidationConstraint(
-                                                name = it.constraint.name,
-                                                params = it.constraint.messageParams
-                                                        .asSequence()
-                                                        .map {
-                                                            ValidationParam(
-                                                                    name = it.key,
-                                                                    value = it.value
-                                                            )
-                                                        }
-                                                        .toSet()
-                                        )
-                                )
-                            }
-                            .toSet()))
+    fun handleConstraintViolationException(ex: ConstraintViolationException, locale: Locale): ResponseEntity<UnprocessableEntity> =
+        ResponseEntity
+            .unprocessableEntity()
+            .body(UnprocessableEntity(errors = ex.constraintViolations
+                .asSequence()
+                .mapToMessage(baseName = config.baseBundleName, locale = locale)
+                .map {
+                    ValidationError(
+                        property = it.property,
+                        value = it.value,
+                        message = it.message,
+                        constraint = ValidationConstraint(
+                            name = it.constraint.name,
+                            params = it.constraint.messageParams
+                                .asSequence()
+                                .map {
+                                    ValidationParam(
+                                        name = it.key,
+                                        value = it.value
+                                    )
+                                }
+                                .toSet()
+                        )
+                    )
+                }
+                .toSet()))
 }

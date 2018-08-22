@@ -3,7 +3,12 @@ package org.valiktor.functions
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.In
+import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
+import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.Null
 import org.valiktor.functions.EnumFunctionsFixture.Employee
 import org.valiktor.functions.EnumFunctionsFixture.Gender.FEMALE
 import org.valiktor.functions.EnumFunctionsFixture.Gender.MALE
@@ -34,7 +39,7 @@ class EnumFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = MALE, constraint = Null))
+            DefaultConstraintViolation(property = "gender", value = MALE, constraint = Null))
     }
 
     @Test
@@ -52,7 +57,7 @@ class EnumFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", constraint = NotNull))
+            DefaultConstraintViolation(property = "gender", constraint = NotNull))
     }
 
     @Test
@@ -77,7 +82,7 @@ class EnumFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = MALE, constraint = Equals(FEMALE)))
+            DefaultConstraintViolation(property = "gender", value = MALE, constraint = Equals(FEMALE)))
     }
 
     @Test
@@ -102,7 +107,7 @@ class EnumFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = MALE, constraint = NotEquals(MALE)))
+            DefaultConstraintViolation(property = "gender", value = MALE, constraint = NotEquals(MALE)))
     }
 
     @Test
@@ -127,7 +132,7 @@ class EnumFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = MALE, constraint = In(setOf(FEMALE))))
+            DefaultConstraintViolation(property = "gender", value = MALE, constraint = In(setOf(FEMALE))))
     }
 
     @Test
@@ -152,7 +157,7 @@ class EnumFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = MALE, constraint = In(listOf(FEMALE))))
+            DefaultConstraintViolation(property = "gender", value = MALE, constraint = In(listOf(FEMALE))))
     }
 
     @Test
@@ -177,7 +182,7 @@ class EnumFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = MALE, constraint = NotIn(setOf(MALE, FEMALE))))
+            DefaultConstraintViolation(property = "gender", value = MALE, constraint = NotIn(setOf(MALE, FEMALE))))
     }
 
     @Test
@@ -202,6 +207,6 @@ class EnumFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "gender", value = MALE, constraint = NotIn(listOf(MALE, FEMALE))))
+            DefaultConstraintViolation(property = "gender", value = MALE, constraint = NotIn(listOf(MALE, FEMALE))))
     }
 }

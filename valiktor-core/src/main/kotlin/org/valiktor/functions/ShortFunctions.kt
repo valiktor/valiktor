@@ -17,7 +17,13 @@
 package org.valiktor.functions
 
 import org.valiktor.Validator
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.Greater
+import org.valiktor.constraints.GreaterOrEqual
+import org.valiktor.constraints.IntegerDigits
+import org.valiktor.constraints.Less
+import org.valiktor.constraints.LessOrEqual
+import org.valiktor.constraints.NotEquals
 
 /**
  * Validates if the [Short] property is equal to zero
@@ -26,7 +32,7 @@ import org.valiktor.constraints.*
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Short?>.isZero(): Validator<E>.Property<Short?> =
-        this.validate(Equals<Short>(0)) { it == null || it == 0.toShort() }
+    this.validate(Equals<Short>(0)) { it == null || it == 0.toShort() }
 
 /**
  * Validates if the [Short] property is not equal to zero
@@ -35,7 +41,7 @@ fun <E> Validator<E>.Property<Short?>.isZero(): Validator<E>.Property<Short?> =
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Short?>.isNotZero(): Validator<E>.Property<Short?> =
-        this.validate(NotEquals<Short>(0)) { it == null || it != 0.toShort() }
+    this.validate(NotEquals<Short>(0)) { it == null || it != 0.toShort() }
 
 /**
  * Validates if the [Short] property is equal to one
@@ -44,7 +50,7 @@ fun <E> Validator<E>.Property<Short?>.isNotZero(): Validator<E>.Property<Short?>
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Short?>.isOne(): Validator<E>.Property<Short?> =
-        this.validate(Equals<Short>(1)) { it == null || it == 1.toShort() }
+    this.validate(Equals<Short>(1)) { it == null || it == 1.toShort() }
 
 /**
  * Validates if the [Short] property is not equal to one
@@ -53,7 +59,7 @@ fun <E> Validator<E>.Property<Short?>.isOne(): Validator<E>.Property<Short?> =
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Short?>.isNotOne(): Validator<E>.Property<Short?> =
-        this.validate(NotEquals<Short>(1)) { it == null || it != 1.toShort() }
+    this.validate(NotEquals<Short>(1)) { it == null || it != 1.toShort() }
 
 /**
  * Validates if the [Short] property is positive
@@ -62,7 +68,7 @@ fun <E> Validator<E>.Property<Short?>.isNotOne(): Validator<E>.Property<Short?> 
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Short?>.isPositive(): Validator<E>.Property<Short?> =
-        this.validate(Greater<Short>(0)) { it == null || it > 0.toShort() }
+    this.validate(Greater<Short>(0)) { it == null || it > 0.toShort() }
 
 /**
  * Validates if the [Short] property isn't negative
@@ -71,7 +77,7 @@ fun <E> Validator<E>.Property<Short?>.isPositive(): Validator<E>.Property<Short?
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Short?>.isPositiveOrZero(): Validator<E>.Property<Short?> =
-        this.validate(GreaterOrEqual<Short>(0)) { it == null || it >= 0.toShort() }
+    this.validate(GreaterOrEqual<Short>(0)) { it == null || it >= 0.toShort() }
 
 /**
  * Validates if the [Short] property is negative
@@ -80,7 +86,7 @@ fun <E> Validator<E>.Property<Short?>.isPositiveOrZero(): Validator<E>.Property<
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Short?>.isNegative(): Validator<E>.Property<Short?> =
-        this.validate(Less<Short>(0)) { it == null || it < 0.toShort() }
+    this.validate(Less<Short>(0)) { it == null || it < 0.toShort() }
 
 /**
  * Validates if the [Short] property isn't positive
@@ -89,7 +95,7 @@ fun <E> Validator<E>.Property<Short?>.isNegative(): Validator<E>.Property<Short?
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Short?>.isNegativeOrZero(): Validator<E>.Property<Short?> =
-        this.validate(LessOrEqual<Short>(0)) { it == null || it <= 0.toShort() }
+    this.validate(LessOrEqual<Short>(0)) { it == null || it <= 0.toShort() }
 
 /**
  * Validates if the [Short] property digits is within the limits (min and max)
@@ -101,4 +107,4 @@ fun <E> Validator<E>.Property<Short?>.isNegativeOrZero(): Validator<E>.Property<
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Short?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Short?> =
-        this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) }
+    this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) }

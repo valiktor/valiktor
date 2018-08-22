@@ -28,4 +28,4 @@ import java.time.LocalDateTime
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<LocalDateTime?>.isToday(): Validator<E>.Property<LocalDateTime?> =
-        this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now() }
+    this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now() }

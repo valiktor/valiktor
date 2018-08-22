@@ -3,7 +3,19 @@ package org.valiktor.functions
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Between
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.Greater
+import org.valiktor.constraints.GreaterOrEqual
+import org.valiktor.constraints.In
+import org.valiktor.constraints.IntegerDigits
+import org.valiktor.constraints.Less
+import org.valiktor.constraints.LessOrEqual
+import org.valiktor.constraints.NotBetween
+import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
+import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.Null
 import org.valiktor.functions.IntFunctionsFixture.Employee
 import org.valiktor.validate
 import kotlin.test.Test
@@ -31,7 +43,7 @@ class IntFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1, constraint = Null))
+            DefaultConstraintViolation(property = "id", value = 1, constraint = Null))
     }
 
     @Test
@@ -49,7 +61,7 @@ class IntFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", constraint = NotNull))
+            DefaultConstraintViolation(property = "id", constraint = NotNull))
     }
 
     @Test
@@ -74,7 +86,7 @@ class IntFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 2, constraint = Equals(1)))
+            DefaultConstraintViolation(property = "id", value = 2, constraint = Equals(1)))
     }
 
     @Test
@@ -99,7 +111,7 @@ class IntFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1, constraint = NotEquals(1)))
+            DefaultConstraintViolation(property = "id", value = 1, constraint = NotEquals(1)))
     }
 
     @Test
@@ -124,7 +136,7 @@ class IntFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1, constraint = In(setOf(0, 2, 3))))
+            DefaultConstraintViolation(property = "id", value = 1, constraint = In(setOf(0, 2, 3))))
     }
 
     @Test
@@ -149,7 +161,7 @@ class IntFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1, constraint = In(listOf(0, 2, 3))))
+            DefaultConstraintViolation(property = "id", value = 1, constraint = In(listOf(0, 2, 3))))
     }
 
     @Test
@@ -174,7 +186,7 @@ class IntFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1, constraint = NotIn(setOf(1, 2, 3))))
+            DefaultConstraintViolation(property = "id", value = 1, constraint = NotIn(setOf(1, 2, 3))))
     }
 
     @Test
@@ -199,7 +211,7 @@ class IntFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "id", value = 1, constraint = NotIn(listOf(1, 2, 3))))
+            DefaultConstraintViolation(property = "id", value = 1, constraint = NotIn(listOf(1, 2, 3))))
     }
 
     @Test
@@ -225,10 +237,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 1,
-                        constraint = Equals(0)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 1,
+                constraint = Equals(0)))
     }
 
     @Test
@@ -254,10 +266,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0,
-                        constraint = NotEquals(0)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0,
+                constraint = NotEquals(0)))
     }
 
     @Test
@@ -283,10 +295,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0,
-                        constraint = Equals(1)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0,
+                constraint = Equals(1)))
     }
 
     @Test
@@ -312,10 +324,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 1,
-                        constraint = NotEquals(1)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 1,
+                constraint = NotEquals(1)))
     }
 
     @Test
@@ -341,10 +353,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0,
-                        constraint = Greater(0)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0,
+                constraint = Greater(0)))
     }
 
     @Test
@@ -356,10 +368,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -98765,
-                        constraint = Greater(0)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -98765,
+                constraint = Greater(0)))
     }
 
     @Test
@@ -392,10 +404,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 1,
-                        constraint = LessOrEqual(0)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 1,
+                constraint = LessOrEqual(0)))
     }
 
     @Test
@@ -421,10 +433,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0,
-                        constraint = Less(0)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0,
+                constraint = Less(0)))
     }
 
     @Test
@@ -436,10 +448,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 1,
-                        constraint = Less(0)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 1,
+                constraint = Less(0)))
     }
 
     @Test
@@ -472,10 +484,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -98765,
-                        constraint = GreaterOrEqual(0)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -98765,
+                constraint = GreaterOrEqual(0)))
     }
 
     @Test
@@ -508,10 +520,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 50,
-                        constraint = Less(49)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 50,
+                constraint = Less(49)))
     }
 
     @Test
@@ -523,10 +535,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -50,
-                        constraint = Less(-51)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -50,
+                constraint = Less(-51)))
     }
 
     @Test
@@ -538,10 +550,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0,
-                        constraint = Less(0)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0,
+                constraint = Less(0)))
     }
 
     @Test
@@ -581,10 +593,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 56789,
-                        constraint = LessOrEqual(57)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 56789,
+                constraint = LessOrEqual(57)))
     }
 
     @Test
@@ -596,10 +608,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -96,
-                        constraint = LessOrEqual(-97)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -96,
+                constraint = LessOrEqual(-97)))
     }
 
     @Test
@@ -632,10 +644,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 10,
-                        constraint = Greater(11)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 10,
+                constraint = Greater(11)))
     }
 
     @Test
@@ -647,10 +659,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -189,
-                        constraint = Greater(-180)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -189,
+                constraint = Greater(-180)))
     }
 
     @Test
@@ -662,10 +674,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0,
-                        constraint = Greater(0)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0,
+                constraint = Greater(0)))
     }
 
     @Test
@@ -705,10 +717,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 57,
-                        constraint = GreaterOrEqual(56789)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 57,
+                constraint = GreaterOrEqual(56789)))
     }
 
     @Test
@@ -720,10 +732,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -97,
-                        constraint = GreaterOrEqual(-96)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -97,
+                constraint = GreaterOrEqual(-96)))
     }
 
     @Test
@@ -784,10 +796,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 10,
-                        constraint = Between(start = 11, end = 12)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 10,
+                constraint = Between(start = 11, end = 12)))
     }
 
     @Test
@@ -799,10 +811,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 12,
-                        constraint = Between(start = 10, end = 11)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 12,
+                constraint = Between(start = 10, end = 11)))
     }
 
     @Test
@@ -814,10 +826,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -10,
-                        constraint = Between(start = -9, end = -8)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -10,
+                constraint = Between(start = -9, end = -8)))
     }
 
     @Test
@@ -829,10 +841,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -12,
-                        constraint = Between(start = -14, end = -13)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -12,
+                constraint = Between(start = -14, end = -13)))
     }
 
     @Test
@@ -879,10 +891,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 0,
-                        constraint = NotBetween(start = 0, end = 1)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 0,
+                constraint = NotBetween(start = 0, end = 1)))
     }
 
     @Test
@@ -894,10 +906,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 1,
-                        constraint = NotBetween(start = 0, end = 1)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 1,
+                constraint = NotBetween(start = 0, end = 1)))
     }
 
     @Test
@@ -909,10 +921,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -2,
-                        constraint = NotBetween(start = -2, end = -1)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -2,
+                constraint = NotBetween(start = -2, end = -1)))
     }
 
     @Test
@@ -924,10 +936,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -1,
-                        constraint = NotBetween(start = -2, end = -1)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -1,
+                constraint = NotBetween(start = -2, end = -1)))
     }
 
     @Test
@@ -939,10 +951,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 5,
-                        constraint = NotBetween(start = 0, end = 10)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 5,
+                constraint = NotBetween(start = 0, end = 10)))
     }
 
     @Test
@@ -954,10 +966,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -15,
-                        constraint = NotBetween(start = -20, end = -10)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -15,
+                constraint = NotBetween(start = -20, end = -10)))
     }
 
     @Test
@@ -1025,10 +1037,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 748536,
-                        constraint = IntegerDigits(min = 7)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 748536,
+                constraint = IntegerDigits(min = 7)))
     }
 
     @Test
@@ -1040,10 +1052,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 748536,
-                        constraint = IntegerDigits(max = 5)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 748536,
+                constraint = IntegerDigits(max = 5)))
     }
 
     @Test
@@ -1055,10 +1067,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = 748536,
-                        constraint = IntegerDigits(min = 7, max = 5)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = 748536,
+                constraint = IntegerDigits(min = 7, max = 5)))
     }
 
     @Test
@@ -1070,10 +1082,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -748536,
-                        constraint = IntegerDigits(min = 7)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -748536,
+                constraint = IntegerDigits(min = 7)))
     }
 
     @Test
@@ -1085,10 +1097,10 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -748536,
-                        constraint = IntegerDigits(max = 5)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -748536,
+                constraint = IntegerDigits(max = 5)))
     }
 
     @Test
@@ -1100,9 +1112,9 @@ class IntFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "id",
-                        value = -748536,
-                        constraint = IntegerDigits(min = 7, max = 5)))
+            DefaultConstraintViolation(
+                property = "id",
+                value = -748536,
+                constraint = IntegerDigits(min = 7, max = 5)))
     }
 }

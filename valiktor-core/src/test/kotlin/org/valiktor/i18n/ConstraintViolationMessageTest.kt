@@ -6,7 +6,7 @@ import org.valiktor.ConstraintViolation
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.NotEquals
 import org.valiktor.i18n.ConstraintViolationMessageFixture.EmptyConstraint
-import java.util.*
+import java.util.Locale
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -21,11 +21,11 @@ class ConstraintViolationMessageTest {
     @Test
     fun `should create ConstraintViolationMessage`() {
         val constraintViolationMessage: ConstraintViolationMessage =
-                DefaultConstraintViolationMessage(
-                        property = "name",
-                        value = "Test",
-                        constraint = EmptyConstraint,
-                        message = "some message")
+            DefaultConstraintViolationMessage(
+                property = "name",
+                value = "Test",
+                constraint = EmptyConstraint,
+                message = "some message")
 
         assertEquals(constraintViolationMessage.property, "name")
         assertEquals(constraintViolationMessage.value, "Test")
@@ -39,7 +39,7 @@ class ConstraintViolationMessageTest {
 class ConstraintViolationFunctionsTest {
 
     private fun createConstraintViolation(): ConstraintViolation =
-            DefaultConstraintViolation(property = "name", value = "Test", constraint = NotEquals("Test"))
+        DefaultConstraintViolation(property = "name", value = "Test", constraint = NotEquals("Test"))
 
     @BeforeTest
     fun setUp() {
@@ -49,7 +49,7 @@ class ConstraintViolationFunctionsTest {
     @Test
     fun `should convert to ConstraintViolationMessage with default params`() {
         val constraintViolationMessage = createConstraintViolation()
-                .toMessage()
+            .toMessage()
 
         assertEquals(constraintViolationMessage.property, "name")
         assertEquals(constraintViolationMessage.value, "Test")
@@ -60,7 +60,7 @@ class ConstraintViolationFunctionsTest {
     @Test
     fun `should convert to ConstraintViolationMessage with custom locale`() {
         val constraintViolationMessage = createConstraintViolation()
-                .toMessage(locale = SupportedLocales.PT_BR)
+            .toMessage(locale = SupportedLocales.PT_BR)
 
         assertEquals(constraintViolationMessage.property, "name")
         assertEquals(constraintViolationMessage.value, "Test")
@@ -73,7 +73,7 @@ class ConstraintViolationFunctionsTest {
         Locale.setDefault(SupportedLocales.DEFAULT)
 
         val constraintViolationMessage = createConstraintViolation()
-                .toMessage(baseName = "testMessages")
+            .toMessage(baseName = "testMessages")
 
         assertEquals(constraintViolationMessage.property, "name")
         assertEquals(constraintViolationMessage.value, "Test")
@@ -84,8 +84,8 @@ class ConstraintViolationFunctionsTest {
     @Test
     fun `should convert to ConstraintViolationMessage with custom locale and baseName`() {
         val constraintViolationMessage = createConstraintViolation()
-                .toMessage(locale = SupportedLocales.EN,
-                        baseName = "testMessages")
+            .toMessage(locale = SupportedLocales.EN,
+                baseName = "testMessages")
 
         assertEquals(constraintViolationMessage.property, "name")
         assertEquals(constraintViolationMessage.value, "Test")
@@ -97,9 +97,9 @@ class ConstraintViolationFunctionsTest {
 class ConstraintViolationIterableFunctionsTest {
 
     private fun createConstraintViolations(): Iterable<ConstraintViolation> = setOf(
-            DefaultConstraintViolation(property = "id", value = 1, constraint = NotEquals("1")),
-            DefaultConstraintViolation(property = "name", value = "Test", constraint = NotEquals("Test")),
-            DefaultConstraintViolation(property = "email", value = "test@test.com", constraint = NotEquals("test@test.com")))
+        DefaultConstraintViolation(property = "id", value = 1, constraint = NotEquals("1")),
+        DefaultConstraintViolation(property = "name", value = "Test", constraint = NotEquals("Test")),
+        DefaultConstraintViolation(property = "email", value = "test@test.com", constraint = NotEquals("test@test.com")))
 
     @BeforeTest
     fun setUp() {
@@ -109,47 +109,47 @@ class ConstraintViolationIterableFunctionsTest {
     @Test
     fun `should convert to List of ConstraintViolationMessage with default params`() {
         val constraintViolationMessages = createConstraintViolations()
-                .mapToMessage()
+            .mapToMessage()
 
         assertThat(constraintViolationMessages).containsExactly(
-                DefaultConstraintViolationMessage(
-                        property = "id",
-                        value = 1,
-                        constraint = NotEquals("1"),
-                        message = "Must not be equal to 1"),
-                DefaultConstraintViolationMessage(
-                        property = "name",
-                        value = "Test",
-                        constraint = NotEquals("Test"),
-                        message = "Must not be equal to Test"),
-                DefaultConstraintViolationMessage(
-                        property = "email",
-                        value = "test@test.com",
-                        constraint = NotEquals("test@test.com"),
-                        message = "Must not be equal to test@test.com"))
+            DefaultConstraintViolationMessage(
+                property = "id",
+                value = 1,
+                constraint = NotEquals("1"),
+                message = "Must not be equal to 1"),
+            DefaultConstraintViolationMessage(
+                property = "name",
+                value = "Test",
+                constraint = NotEquals("Test"),
+                message = "Must not be equal to Test"),
+            DefaultConstraintViolationMessage(
+                property = "email",
+                value = "test@test.com",
+                constraint = NotEquals("test@test.com"),
+                message = "Must not be equal to test@test.com"))
     }
 
     @Test
     fun `should convert to List of ConstraintViolationMessage with custom locale`() {
         val constraintViolationMessages = createConstraintViolations()
-                .mapToMessage(locale = SupportedLocales.PT_BR)
+            .mapToMessage(locale = SupportedLocales.PT_BR)
 
         assertThat(constraintViolationMessages).containsExactly(
-                DefaultConstraintViolationMessage(
-                        property = "id",
-                        value = 1,
-                        constraint = NotEquals("1"),
-                        message = "Não deve ser igual a 1"),
-                DefaultConstraintViolationMessage(
-                        property = "name",
-                        value = "Test",
-                        constraint = NotEquals("Test"),
-                        message = "Não deve ser igual a Test"),
-                DefaultConstraintViolationMessage(
-                        property = "email",
-                        value = "test@test.com",
-                        constraint = NotEquals("test@test.com"),
-                        message = "Não deve ser igual a test@test.com"))
+            DefaultConstraintViolationMessage(
+                property = "id",
+                value = 1,
+                constraint = NotEquals("1"),
+                message = "Não deve ser igual a 1"),
+            DefaultConstraintViolationMessage(
+                property = "name",
+                value = "Test",
+                constraint = NotEquals("Test"),
+                message = "Não deve ser igual a Test"),
+            DefaultConstraintViolationMessage(
+                property = "email",
+                value = "test@test.com",
+                constraint = NotEquals("test@test.com"),
+                message = "Não deve ser igual a test@test.com"))
     }
 
     @Test
@@ -157,57 +157,57 @@ class ConstraintViolationIterableFunctionsTest {
         Locale.setDefault(SupportedLocales.DEFAULT)
 
         val constraintViolationMessages = createConstraintViolations()
-                .mapToMessage(baseName = "testMessages")
+            .mapToMessage(baseName = "testMessages")
 
         assertThat(constraintViolationMessages).containsExactly(
-                DefaultConstraintViolationMessage(
-                        property = "id",
-                        value = 1,
-                        constraint = NotEquals("1"),
-                        message = "Should not be equal to 1"),
-                DefaultConstraintViolationMessage(
-                        property = "name",
-                        value = "Test",
-                        constraint = NotEquals("Test"),
-                        message = "Should not be equal to Test"),
-                DefaultConstraintViolationMessage(
-                        property = "email",
-                        value = "test@test.com",
-                        constraint = NotEquals("test@test.com"),
-                        message = "Should not be equal to test@test.com"))
+            DefaultConstraintViolationMessage(
+                property = "id",
+                value = 1,
+                constraint = NotEquals("1"),
+                message = "Should not be equal to 1"),
+            DefaultConstraintViolationMessage(
+                property = "name",
+                value = "Test",
+                constraint = NotEquals("Test"),
+                message = "Should not be equal to Test"),
+            DefaultConstraintViolationMessage(
+                property = "email",
+                value = "test@test.com",
+                constraint = NotEquals("test@test.com"),
+                message = "Should not be equal to test@test.com"))
     }
 
     @Test
     fun `should convert to List of ConstraintViolationMessage with custom locale and baseName`() {
         val constraintViolationMessages = createConstraintViolations()
-                .mapToMessage(locale = SupportedLocales.EN,
-                        baseName = "testMessages")
+            .mapToMessage(locale = SupportedLocales.EN,
+                baseName = "testMessages")
 
         assertThat(constraintViolationMessages).containsExactly(
-                DefaultConstraintViolationMessage(
-                        property = "id",
-                        value = 1,
-                        constraint = NotEquals("1"),
-                        message = "Cannot be equal to 1"),
-                DefaultConstraintViolationMessage(
-                        property = "name",
-                        value = "Test",
-                        constraint = NotEquals("Test"),
-                        message = "Cannot be equal to Test"),
-                DefaultConstraintViolationMessage(
-                        property = "email",
-                        value = "test@test.com",
-                        constraint = NotEquals("test@test.com"),
-                        message = "Cannot be equal to test@test.com"))
+            DefaultConstraintViolationMessage(
+                property = "id",
+                value = 1,
+                constraint = NotEquals("1"),
+                message = "Cannot be equal to 1"),
+            DefaultConstraintViolationMessage(
+                property = "name",
+                value = "Test",
+                constraint = NotEquals("Test"),
+                message = "Cannot be equal to Test"),
+            DefaultConstraintViolationMessage(
+                property = "email",
+                value = "test@test.com",
+                constraint = NotEquals("test@test.com"),
+                message = "Cannot be equal to test@test.com"))
     }
 }
 
 class ConstraintViolationSequenceFunctionsTest {
 
     private fun createConstraintViolations(): Sequence<ConstraintViolation> = sequenceOf(
-            DefaultConstraintViolation(property = "id", value = 1, constraint = NotEquals("1")),
-            DefaultConstraintViolation(property = "name", value = "Test", constraint = NotEquals("Test")),
-            DefaultConstraintViolation(property = "email", value = "test@test.com", constraint = NotEquals("test@test.com")))
+        DefaultConstraintViolation(property = "id", value = 1, constraint = NotEquals("1")),
+        DefaultConstraintViolation(property = "name", value = "Test", constraint = NotEquals("Test")),
+        DefaultConstraintViolation(property = "email", value = "test@test.com", constraint = NotEquals("test@test.com")))
 
     @BeforeTest
     fun setUp() {
@@ -217,49 +217,49 @@ class ConstraintViolationSequenceFunctionsTest {
     @Test
     fun `should convert to Sequence of ConstraintViolationMessage with default params`() {
         val constraintViolationMessages = createConstraintViolations()
-                .mapToMessage()
-                .toSet()
+            .mapToMessage()
+            .toSet()
 
         assertThat(constraintViolationMessages).containsExactly(
-                DefaultConstraintViolationMessage(
-                        property = "id",
-                        value = 1,
-                        constraint = NotEquals("1"),
-                        message = "Must not be equal to 1"),
-                DefaultConstraintViolationMessage(
-                        property = "name",
-                        value = "Test",
-                        constraint = NotEquals("Test"),
-                        message = "Must not be equal to Test"),
-                DefaultConstraintViolationMessage(
-                        property = "email",
-                        value = "test@test.com",
-                        constraint = NotEquals("test@test.com"),
-                        message = "Must not be equal to test@test.com"))
+            DefaultConstraintViolationMessage(
+                property = "id",
+                value = 1,
+                constraint = NotEquals("1"),
+                message = "Must not be equal to 1"),
+            DefaultConstraintViolationMessage(
+                property = "name",
+                value = "Test",
+                constraint = NotEquals("Test"),
+                message = "Must not be equal to Test"),
+            DefaultConstraintViolationMessage(
+                property = "email",
+                value = "test@test.com",
+                constraint = NotEquals("test@test.com"),
+                message = "Must not be equal to test@test.com"))
     }
 
     @Test
     fun `should convert to Sequence of ConstraintViolationMessage with custom locale`() {
         val constraintViolationMessages = createConstraintViolations()
-                .mapToMessage(locale = SupportedLocales.PT_BR)
-                .toSet()
+            .mapToMessage(locale = SupportedLocales.PT_BR)
+            .toSet()
 
         assertThat(constraintViolationMessages).containsExactly(
-                DefaultConstraintViolationMessage(
-                        property = "id",
-                        value = 1,
-                        constraint = NotEquals("1"),
-                        message = "Não deve ser igual a 1"),
-                DefaultConstraintViolationMessage(
-                        property = "name",
-                        value = "Test",
-                        constraint = NotEquals("Test"),
-                        message = "Não deve ser igual a Test"),
-                DefaultConstraintViolationMessage(
-                        property = "email",
-                        value = "test@test.com",
-                        constraint = NotEquals("test@test.com"),
-                        message = "Não deve ser igual a test@test.com"))
+            DefaultConstraintViolationMessage(
+                property = "id",
+                value = 1,
+                constraint = NotEquals("1"),
+                message = "Não deve ser igual a 1"),
+            DefaultConstraintViolationMessage(
+                property = "name",
+                value = "Test",
+                constraint = NotEquals("Test"),
+                message = "Não deve ser igual a Test"),
+            DefaultConstraintViolationMessage(
+                property = "email",
+                value = "test@test.com",
+                constraint = NotEquals("test@test.com"),
+                message = "Não deve ser igual a test@test.com"))
     }
 
     @Test
@@ -267,49 +267,49 @@ class ConstraintViolationSequenceFunctionsTest {
         Locale.setDefault(SupportedLocales.DEFAULT)
 
         val constraintViolationMessages = createConstraintViolations()
-                .mapToMessage(baseName = "testMessages")
-                .toSet()
+            .mapToMessage(baseName = "testMessages")
+            .toSet()
 
         assertThat(constraintViolationMessages).containsExactly(
-                DefaultConstraintViolationMessage(
-                        property = "id",
-                        value = 1,
-                        constraint = NotEquals("1"),
-                        message = "Should not be equal to 1"),
-                DefaultConstraintViolationMessage(
-                        property = "name",
-                        value = "Test",
-                        constraint = NotEquals("Test"),
-                        message = "Should not be equal to Test"),
-                DefaultConstraintViolationMessage(
-                        property = "email",
-                        value = "test@test.com",
-                        constraint = NotEquals("test@test.com"),
-                        message = "Should not be equal to test@test.com"))
+            DefaultConstraintViolationMessage(
+                property = "id",
+                value = 1,
+                constraint = NotEquals("1"),
+                message = "Should not be equal to 1"),
+            DefaultConstraintViolationMessage(
+                property = "name",
+                value = "Test",
+                constraint = NotEquals("Test"),
+                message = "Should not be equal to Test"),
+            DefaultConstraintViolationMessage(
+                property = "email",
+                value = "test@test.com",
+                constraint = NotEquals("test@test.com"),
+                message = "Should not be equal to test@test.com"))
     }
 
     @Test
     fun `should convert to Sequence of ConstraintViolationMessage with custom locale and baseName`() {
         val constraintViolationMessages = createConstraintViolations()
-                .mapToMessage(locale = SupportedLocales.EN,
-                        baseName = "testMessages")
-                .toSet()
+            .mapToMessage(locale = SupportedLocales.EN,
+                baseName = "testMessages")
+            .toSet()
 
         assertThat(constraintViolationMessages).containsExactly(
-                DefaultConstraintViolationMessage(
-                        property = "id",
-                        value = 1,
-                        constraint = NotEquals("1"),
-                        message = "Cannot be equal to 1"),
-                DefaultConstraintViolationMessage(
-                        property = "name",
-                        value = "Test",
-                        constraint = NotEquals("Test"),
-                        message = "Cannot be equal to Test"),
-                DefaultConstraintViolationMessage(
-                        property = "email",
-                        value = "test@test.com",
-                        constraint = NotEquals("test@test.com"),
-                        message = "Cannot be equal to test@test.com"))
+            DefaultConstraintViolationMessage(
+                property = "id",
+                value = 1,
+                constraint = NotEquals("1"),
+                message = "Cannot be equal to 1"),
+            DefaultConstraintViolationMessage(
+                property = "name",
+                value = "Test",
+                constraint = NotEquals("Test"),
+                message = "Cannot be equal to Test"),
+            DefaultConstraintViolationMessage(
+                property = "email",
+                value = "test@test.com",
+                constraint = NotEquals("test@test.com"),
+                message = "Cannot be equal to test@test.com"))
     }
 }

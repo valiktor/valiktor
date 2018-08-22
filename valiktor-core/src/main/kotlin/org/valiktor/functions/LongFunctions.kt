@@ -17,7 +17,13 @@
 package org.valiktor.functions
 
 import org.valiktor.Validator
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.Greater
+import org.valiktor.constraints.GreaterOrEqual
+import org.valiktor.constraints.IntegerDigits
+import org.valiktor.constraints.Less
+import org.valiktor.constraints.LessOrEqual
+import org.valiktor.constraints.NotEquals
 
 /**
  * Validates if the [Long] property is equal to zero
@@ -26,7 +32,7 @@ import org.valiktor.constraints.*
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.isZero(): Validator<E>.Property<Long?> =
-        this.validate(Equals(0L)) { it == null || it == 0L }
+    this.validate(Equals(0L)) { it == null || it == 0L }
 
 /**
  * Validates if the [Long] property is not equal to zero
@@ -35,7 +41,7 @@ fun <E> Validator<E>.Property<Long?>.isZero(): Validator<E>.Property<Long?> =
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.isNotZero(): Validator<E>.Property<Long?> =
-        this.validate(NotEquals(0L)) { it == null || it != 0L }
+    this.validate(NotEquals(0L)) { it == null || it != 0L }
 
 /**
  * Validates if the [Long] property is equal to one
@@ -44,7 +50,7 @@ fun <E> Validator<E>.Property<Long?>.isNotZero(): Validator<E>.Property<Long?> =
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.isOne(): Validator<E>.Property<Long?> =
-        this.validate(Equals(1L)) { it == null || it == 1L }
+    this.validate(Equals(1L)) { it == null || it == 1L }
 
 /**
  * Validates if the [Long] property is not equal to one
@@ -53,7 +59,7 @@ fun <E> Validator<E>.Property<Long?>.isOne(): Validator<E>.Property<Long?> =
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.isNotOne(): Validator<E>.Property<Long?> =
-        this.validate(NotEquals(1L)) { it == null || it != 1L }
+    this.validate(NotEquals(1L)) { it == null || it != 1L }
 
 /**
  * Validates if the [Long] property is positive
@@ -62,7 +68,7 @@ fun <E> Validator<E>.Property<Long?>.isNotOne(): Validator<E>.Property<Long?> =
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.isPositive(): Validator<E>.Property<Long?> =
-        this.validate(Greater(0L)) { it == null || it > 0L }
+    this.validate(Greater(0L)) { it == null || it > 0L }
 
 /**
  * Validates if the [Long] property isn't negative
@@ -71,7 +77,7 @@ fun <E> Validator<E>.Property<Long?>.isPositive(): Validator<E>.Property<Long?> 
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.isPositiveOrZero(): Validator<E>.Property<Long?> =
-        this.validate(GreaterOrEqual(0L)) { it == null || it >= 0L }
+    this.validate(GreaterOrEqual(0L)) { it == null || it >= 0L }
 
 /**
  * Validates if the [Long] property is negative
@@ -80,7 +86,7 @@ fun <E> Validator<E>.Property<Long?>.isPositiveOrZero(): Validator<E>.Property<L
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.isNegative(): Validator<E>.Property<Long?> =
-        this.validate(Less(0L)) { it == null || it < 0L }
+    this.validate(Less(0L)) { it == null || it < 0L }
 
 /**
  * Validates if the [Long] property isn't positive
@@ -89,7 +95,7 @@ fun <E> Validator<E>.Property<Long?>.isNegative(): Validator<E>.Property<Long?> 
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.isNegativeOrZero(): Validator<E>.Property<Long?> =
-        this.validate(LessOrEqual(0L)) { it == null || it <= 0L }
+    this.validate(LessOrEqual(0L)) { it == null || it <= 0L }
 
 /**
  * Validates if the [Long] property digits is within the limits (min and max)
@@ -101,4 +107,4 @@ fun <E> Validator<E>.Property<Long?>.isNegativeOrZero(): Validator<E>.Property<L
  * @return the same receiver property
  */
 fun <E> Validator<E>.Property<Long?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Long?> =
-        this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) }
+    this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) }

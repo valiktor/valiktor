@@ -3,10 +3,29 @@ package org.valiktor.functions
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Between
+import org.valiktor.constraints.CurrencyEquals
+import org.valiktor.constraints.CurrencyIn
+import org.valiktor.constraints.CurrencyNotEquals
+import org.valiktor.constraints.CurrencyNotIn
+import org.valiktor.constraints.DecimalDigits
+import org.valiktor.constraints.Equals
+import org.valiktor.constraints.Greater
+import org.valiktor.constraints.GreaterOrEqual
+import org.valiktor.constraints.In
+import org.valiktor.constraints.IntegerDigits
+import org.valiktor.constraints.Less
+import org.valiktor.constraints.LessOrEqual
+import org.valiktor.constraints.NotBetween
+import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
+import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.Null
 import org.valiktor.functions.MonetaryAmountFunctionsFixture.Employee
 import org.valiktor.validate
-import java.math.BigDecimal.*
+import java.math.BigDecimal.ONE
+import java.math.BigDecimal.TEN
+import java.math.BigDecimal.ZERO
 import javax.money.Monetary
 import javax.money.MonetaryAmount
 import kotlin.test.Test
@@ -21,12 +40,12 @@ private val REAL = Monetary.getCurrency("BRL")
 private val DOLLAR = Monetary.getCurrency("USD")
 
 private val ONE_NUMBERS = listOf<Number>(
-        1.toByte(), 1.toShort(), 1, 1.toLong(), 1.toBigInteger(),
-        1.toFloat(), 1.toDouble(), 1.toBigDecimal())
+    1.toByte(), 1.toShort(), 1, 1.toLong(), 1.toBigInteger(),
+    1.toFloat(), 1.toDouble(), 1.toBigDecimal())
 
 private val NEGATIVE_ONE_NUMBERS = listOf<Number>(
-        1.unaryMinus().toByte(), 1.unaryMinus().toShort(), 1.unaryMinus(), 1.unaryMinus().toLong(), 1.unaryMinus().toBigInteger(),
-        1.unaryMinus().toFloat(), 1.unaryMinus().toDouble(), 1.unaryMinus().toBigDecimal())
+    1.unaryMinus().toByte(), 1.unaryMinus().toShort(), 1.unaryMinus(), 1.unaryMinus().toLong(), 1.unaryMinus().toBigInteger(),
+    1.unaryMinus().toFloat(), 1.unaryMinus().toDouble(), 1.unaryMinus().toBigDecimal())
 
 class MonetaryAmountFunctionsTest {
 
@@ -45,7 +64,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(1000).setCurrency(REAL).create(), constraint = Null))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(1000).setCurrency(REAL).create(), constraint = Null))
     }
 
     @Test
@@ -63,7 +82,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", constraint = NotNull))
+            DefaultConstraintViolation(property = "salary", constraint = NotNull))
     }
 
     @Test
@@ -102,7 +121,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -113,7 +132,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
     }
 
     @Test
@@ -158,7 +177,7 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(property = "salary", value = salary, constraint = Equals(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = Equals(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -191,7 +210,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
     }
 
     @Test
@@ -202,7 +221,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -213,7 +232,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(1).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(1).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -247,7 +266,7 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -262,7 +281,7 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -302,7 +321,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = In(setOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = In(setOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
     }
 
     @Test
@@ -313,7 +332,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = In(setOf(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = In(setOf(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
     }
 
     @Test
@@ -358,9 +377,9 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(property = "salary", value = salary, constraint = In(setOf(
-                            salary.factory.setNumber(it).create(),
-                            salary.factory.setNumber(TEN).create()))))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = In(setOf(
+                    salary.factory.setNumber(it).create(),
+                    salary.factory.setNumber(TEN).create()))))
         }
     }
 
@@ -400,7 +419,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = In(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = In(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))))
     }
 
     @Test
@@ -411,7 +430,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = In(listOf(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = In(listOf(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))))
     }
 
     @Test
@@ -456,9 +475,9 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(property = "salary", value = salary, constraint = In(listOf(
-                            salary.factory.setNumber(it).create(),
-                            salary.factory.setNumber(TEN).create()))))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = In(listOf(
+                    salary.factory.setNumber(it).create(),
+                    salary.factory.setNumber(TEN).create()))))
         }
     }
 
@@ -491,7 +510,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(setOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(setOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
     }
 
     @Test
@@ -502,7 +521,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(setOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(setOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
     }
 
     @Test
@@ -513,7 +532,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(setOf(Monetary.getDefaultAmountFactory().setNumber(0L).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1L).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(10L).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(setOf(Monetary.getDefaultAmountFactory().setNumber(0L).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1L).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(10L).setCurrency(DOLLAR).create()))))
     }
 
     @Test
@@ -547,10 +566,10 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(setOf(
-                            salary.factory.setNumber(ZERO).create(),
-                            salary.factory.setNumber(it).create(),
-                            salary.factory.setNumber(TEN).create()))))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(setOf(
+                    salary.factory.setNumber(ZERO).create(),
+                    salary.factory.setNumber(it).create(),
+                    salary.factory.setNumber(TEN).create()))))
         }
     }
 
@@ -565,10 +584,10 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(setOf(
-                            salary.factory.setNumber(ZERO).create(),
-                            salary.factory.setNumber(it).create(),
-                            salary.factory.setNumber(TEN).create()))))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(setOf(
+                    salary.factory.setNumber(ZERO).create(),
+                    salary.factory.setNumber(it).create(),
+                    salary.factory.setNumber(TEN).create()))))
         }
     }
 
@@ -601,7 +620,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = NotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = NotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))))
     }
 
     @Test
@@ -612,7 +631,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
     }
 
     @Test
@@ -623,7 +642,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(0.0).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.0).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(10.0).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(0.0).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.0).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(10.0).setCurrency(DOLLAR).create()))))
     }
 
     @Test
@@ -657,10 +676,10 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(listOf(
-                            salary.factory.setNumber(ZERO).create(),
-                            salary.factory.setNumber(it).create(),
-                            salary.factory.setNumber(TEN).create()))))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(listOf(
+                    salary.factory.setNumber(ZERO).create(),
+                    salary.factory.setNumber(it).create(),
+                    salary.factory.setNumber(TEN).create()))))
         }
     }
 
@@ -675,10 +694,10 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(listOf(
-                            salary.factory.setNumber(ZERO).create(),
-                            salary.factory.setNumber(it).create(),
-                            salary.factory.setNumber(TEN).create()))))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(listOf(
+                    salary.factory.setNumber(ZERO).create(),
+                    salary.factory.setNumber(it).create(),
+                    salary.factory.setNumber(TEN).create()))))
         }
     }
 
@@ -712,10 +731,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(50.0.toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = Less(Monetary.getDefaultAmountFactory().setNumber(49.9.toBigDecimal()).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(50.0.toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = Less(Monetary.getDefaultAmountFactory().setNumber(49.9.toBigDecimal()).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -727,10 +746,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(50.9.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = Less(Monetary.getDefaultAmountFactory().setNumber(51.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(50.9.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
+                constraint = Less(Monetary.getDefaultAmountFactory().setNumber(51.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
     }
 
     @Test
@@ -742,10 +761,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
-                        constraint = Less(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
+                constraint = Less(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -791,10 +810,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = Less(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = Less(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -810,10 +829,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = Less(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = Less(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -829,10 +848,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = Less(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = Less(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -873,10 +892,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(56789.19.toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = LessOrEqual(Monetary.getDefaultAmountFactory().setNumber(57.0.toBigDecimal()).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(56789.19.toBigDecimal()).setCurrency(REAL).create(),
+                constraint = LessOrEqual(Monetary.getDefaultAmountFactory().setNumber(57.0.toBigDecimal()).setCurrency(REAL).create())))
     }
 
     @Test
@@ -888,10 +907,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(96.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = LessOrEqual(Monetary.getDefaultAmountFactory().setNumber(97.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(96.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = LessOrEqual(Monetary.getDefaultAmountFactory().setNumber(97.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -948,10 +967,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = LessOrEqual(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = LessOrEqual(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -967,10 +986,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = LessOrEqual(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = LessOrEqual(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1004,10 +1023,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -1019,10 +1038,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(189.20.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(180.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(189.20.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
+                constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(180.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
     }
 
     @Test
@@ -1034,10 +1053,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
-                        constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
+                constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -1083,10 +1102,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = Greater(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = Greater(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1102,10 +1121,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = Greater(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = Greater(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1121,10 +1140,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = Greater(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = Greater(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1165,10 +1184,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(57.0.toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = GreaterOrEqual(Monetary.getDefaultAmountFactory().setNumber(56789.19.toBigDecimal()).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(57.0.toBigDecimal()).setCurrency(REAL).create(),
+                constraint = GreaterOrEqual(Monetary.getDefaultAmountFactory().setNumber(56789.19.toBigDecimal()).setCurrency(REAL).create())))
     }
 
     @Test
@@ -1180,10 +1199,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(97.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = GreaterOrEqual(Monetary.getDefaultAmountFactory().setNumber(96.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(97.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = GreaterOrEqual(Monetary.getDefaultAmountFactory().setNumber(96.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -1240,10 +1259,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = GreaterOrEqual(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = GreaterOrEqual(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1259,10 +1278,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = GreaterOrEqual(salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = GreaterOrEqual(salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1324,10 +1343,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(10.1.toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(10.1.toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -1339,10 +1358,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(12.0.toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(10.1.toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(12.0.toBigDecimal()).setCurrency(REAL).create(),
+                constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(10.1.toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(REAL).create())))
     }
 
     @Test
@@ -1354,10 +1373,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(10.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(9.9.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(8.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(10.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(9.9.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(8.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -1369,10 +1388,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(12.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(13.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(12.9.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(12.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
+                constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(13.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(12.9.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
     }
 
     @Test
@@ -1462,10 +1481,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = Between(start = salary.factory.setNumber(0.1).create(), end = salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = Between(start = salary.factory.setNumber(0.1).create(), end = salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1481,10 +1500,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = Between(start = salary.factory.setNumber(0.5).create(), end = salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = Between(start = salary.factory.setNumber(0.5).create(), end = salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1500,10 +1519,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = Between(start = salary.factory.setNumber(it).create(), end = salary.factory.setNumber(0.5.unaryMinus()).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = Between(start = salary.factory.setNumber(it).create(), end = salary.factory.setNumber(0.5.unaryMinus()).create())))
         }
     }
 
@@ -1519,10 +1538,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = Between(start = salary.factory.setNumber(2.unaryMinus()).create(), end = salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = Between(start = salary.factory.setNumber(2.unaryMinus()).create(), end = salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1570,10 +1589,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(),
-                        constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(),
+                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
     }
 
     @Test
@@ -1585,10 +1604,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(),
-                        constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(),
+                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -1600,10 +1619,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
+                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
     }
 
     @Test
@@ -1615,10 +1634,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -1630,10 +1649,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(0.5.toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(0.5.toBigDecimal()).setCurrency(REAL).create(),
+                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
     }
 
     @Test
@@ -1645,10 +1664,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(1.5.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(1.5.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -1716,10 +1735,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = NotBetween(start = salary.factory.setNumber(it).create(), end = salary.factory.setNumber(2).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = NotBetween(start = salary.factory.setNumber(it).create(), end = salary.factory.setNumber(2).create())))
         }
     }
 
@@ -1735,10 +1754,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = NotBetween(start = salary.factory.setNumber(it).create(), end = salary.factory.setNumber(2).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = NotBetween(start = salary.factory.setNumber(it).create(), end = salary.factory.setNumber(2).create())))
         }
     }
 
@@ -1754,10 +1773,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = NotBetween(start = salary.factory.setNumber(-2).create(), end = salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = NotBetween(start = salary.factory.setNumber(-2).create(), end = salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1773,10 +1792,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = NotBetween(start = salary.factory.setNumber(-2).create(), end = salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = NotBetween(start = salary.factory.setNumber(-2).create(), end = salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1792,10 +1811,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = NotBetween(start = salary.factory.setNumber(ZERO).create(), end = salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = NotBetween(start = salary.factory.setNumber(ZERO).create(), end = salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1811,10 +1830,10 @@ class MonetaryAmountFunctionsTest {
             }
 
             assertThat(exception.constraintViolations).containsExactly(
-                    DefaultConstraintViolation(
-                            property = "salary",
-                            value = salary,
-                            constraint = NotBetween(start = salary.factory.setNumber(-2).create(), end = salary.factory.setNumber(it).create())))
+                DefaultConstraintViolation(
+                    property = "salary",
+                    value = salary,
+                    constraint = NotBetween(start = salary.factory.setNumber(-2).create(), end = salary.factory.setNumber(it).create())))
         }
     }
 
@@ -1840,7 +1859,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), constraint = CurrencyEquals(REAL)))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), constraint = CurrencyEquals(REAL)))
     }
 
     @Test
@@ -1865,7 +1884,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = CurrencyNotEquals(REAL)))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = CurrencyNotEquals(REAL)))
     }
 
     @Test
@@ -1890,7 +1909,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = CurrencyIn(setOf(REAL))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = CurrencyIn(setOf(REAL))))
     }
 
     @Test
@@ -1915,7 +1934,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = CurrencyIn(listOf(DOLLAR))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = CurrencyIn(listOf(DOLLAR))))
     }
 
     @Test
@@ -1940,7 +1959,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = CurrencyNotIn(setOf(DOLLAR, REAL))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = CurrencyNotIn(setOf(DOLLAR, REAL))))
     }
 
     @Test
@@ -1965,7 +1984,7 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = CurrencyNotIn(listOf(DOLLAR, REAL))))
+            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = CurrencyNotIn(listOf(DOLLAR, REAL))))
     }
 
     @Test
@@ -1998,10 +2017,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(),
-                        constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(),
+                constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
     }
 
     @Test
@@ -2027,10 +2046,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(),
-                        constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(),
+                constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
     }
 
     @Test
@@ -2042,10 +2061,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(0.00.toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(0.00.toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -2078,10 +2097,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(),
-                        constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(),
+                constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
     }
 
     @Test
@@ -2107,10 +2126,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(),
-                        constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(),
+                constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
     }
 
     @Test
@@ -2122,10 +2141,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -2151,10 +2170,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
-                        constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
+                constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -2166,10 +2185,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(98765.432.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(98765.432.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
+                constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
     }
 
     @Test
@@ -2202,10 +2221,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(),
-                        constraint = LessOrEqual(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(),
+                constraint = LessOrEqual(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -2231,10 +2250,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
-                        constraint = Less(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
+                constraint = Less(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -2246,10 +2265,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(),
-                        constraint = Less(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(),
+                constraint = Less(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
     }
 
     @Test
@@ -2282,10 +2301,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(98765.432.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = GreaterOrEqual(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(98765.432.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = GreaterOrEqual(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
     }
 
     @Test
@@ -2353,10 +2372,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = IntegerDigits(min = 7)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = IntegerDigits(min = 7)))
     }
 
     @Test
@@ -2368,10 +2387,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = IntegerDigits(max = 5)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(REAL).create(),
+                constraint = IntegerDigits(max = 5)))
     }
 
     @Test
@@ -2383,10 +2402,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = IntegerDigits(min = 7, max = 5)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = IntegerDigits(min = 7, max = 5)))
     }
 
     @Test
@@ -2398,10 +2417,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = IntegerDigits(min = 7)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
+                constraint = IntegerDigits(min = 7)))
     }
 
     @Test
@@ -2413,10 +2432,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = IntegerDigits(max = 5)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = IntegerDigits(max = 5)))
     }
 
     @Test
@@ -2428,10 +2447,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = IntegerDigits(min = 7, max = 5)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = IntegerDigits(min = 7, max = 5)))
     }
 
     @Test
@@ -2499,10 +2518,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = DecimalDigits(min = 7)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(REAL).create(),
+                constraint = DecimalDigits(min = 7)))
     }
 
     @Test
@@ -2514,10 +2533,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = DecimalDigits(max = 5)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = DecimalDigits(max = 5)))
     }
 
     @Test
@@ -2529,10 +2548,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = DecimalDigits(min = 7, max = 5)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(REAL).create(),
+                constraint = DecimalDigits(min = 7, max = 5)))
     }
 
     @Test
@@ -2544,10 +2563,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = DecimalDigits(min = 7)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
+                constraint = DecimalDigits(min = 7)))
     }
 
     @Test
@@ -2559,10 +2578,10 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                        constraint = DecimalDigits(max = 5)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                constraint = DecimalDigits(max = 5)))
     }
 
     @Test
@@ -2574,9 +2593,9 @@ class MonetaryAmountFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "salary",
-                        value = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                        constraint = DecimalDigits(min = 7, max = 5)))
+            DefaultConstraintViolation(
+                property = "salary",
+                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
+                constraint = DecimalDigits(min = 7, max = 5)))
     }
 }

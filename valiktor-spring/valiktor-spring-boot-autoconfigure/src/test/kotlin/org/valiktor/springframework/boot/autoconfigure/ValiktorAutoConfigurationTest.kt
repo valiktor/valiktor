@@ -8,7 +8,12 @@ import org.springframework.context.annotation.Configuration
 import org.valiktor.springframework.config.ValiktorConfiguration
 import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
 import org.valiktor.springframework.web.controller.ValiktorJacksonExceptionHandler
-import kotlin.test.*
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class ValiktorAutoConfigurationTest {
 
@@ -27,8 +32,8 @@ class ValiktorAutoConfigurationTest {
     @Test
     fun `should create with default properties`() {
         registerAndRefresh(listOf(
-                ValiktorAutoConfiguration::class.java,
-                PropertyPlaceholderAutoConfiguration::class.java))
+            ValiktorAutoConfiguration::class.java,
+            PropertyPlaceholderAutoConfiguration::class.java))
 
         val config = this.context.getBean(ValiktorConfiguration::class.java)
         val handler = this.context.getBean(ValiktorExceptionHandler::class.java)
@@ -44,8 +49,8 @@ class ValiktorAutoConfigurationTest {
         EnvironmentTestUtils.addEnvironment(this.context, "valiktor.baseBundleName:test")
 
         registerAndRefresh(listOf(
-                ValiktorAutoConfiguration::class.java,
-                PropertyPlaceholderAutoConfiguration::class.java))
+            ValiktorAutoConfiguration::class.java,
+            PropertyPlaceholderAutoConfiguration::class.java))
 
         val config = this.context.getBean(ValiktorConfiguration::class.java)
         val handler = this.context.getBean(ValiktorExceptionHandler::class.java)
@@ -61,9 +66,9 @@ class ValiktorAutoConfigurationTest {
         EnvironmentTestUtils.addEnvironment(this.context, "valiktor.baseBundleName:test")
 
         registerAndRefresh(listOf(
-                ValiktorConfigurationFactory::class.java,
-                ValiktorAutoConfiguration::class.java,
-                PropertyPlaceholderAutoConfiguration::class.java))
+            ValiktorConfigurationFactory::class.java,
+            ValiktorAutoConfiguration::class.java,
+            PropertyPlaceholderAutoConfiguration::class.java))
 
         val config = this.context.getBean(ValiktorConfiguration::class.java)
         val handler = this.context.getBean(ValiktorExceptionHandler::class.java)
@@ -85,5 +90,5 @@ class ValiktorConfigurationFactory {
 
     @Bean
     fun valiktorConfiguration(): ValiktorConfiguration =
-            ValiktorConfiguration(baseBundleName = "testMessages")
+        ValiktorConfiguration(baseBundleName = "testMessages")
 }

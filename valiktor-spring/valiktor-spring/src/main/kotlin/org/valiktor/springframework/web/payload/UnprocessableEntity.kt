@@ -30,9 +30,11 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
  * @since 0.1.0
  */
 @JacksonXmlRootElement(localName = "unprocessableEntity")
-data class UnprocessableEntity(@JacksonXmlProperty(localName = "error")
-                               @JacksonXmlElementWrapper(localName = "errors")
-                               val errors: Set<ValidationError>)
+data class UnprocessableEntity(
+    @JacksonXmlProperty(localName = "error")
+    @JacksonXmlElementWrapper(localName = "errors")
+    val errors: Set<ValidationError>
+)
 
 /**
  * Represents a validation error
@@ -46,10 +48,12 @@ data class UnprocessableEntity(@JacksonXmlProperty(localName = "error")
  * @see ValidationConstraint
  * @since 0.1.0
  */
-data class ValidationError(val property: String,
-                           val value: Any?,
-                           val message: String,
-                           val constraint: ValidationConstraint)
+data class ValidationError(
+    val property: String,
+    val value: Any?,
+    val message: String,
+    val constraint: ValidationConstraint
+)
 
 /**
  * Represents a validation constraint
@@ -61,10 +65,12 @@ data class ValidationError(val property: String,
  * @see ValidationParam
  * @since 0.1.0
  */
-data class ValidationConstraint(val name: String,
-                                @JacksonXmlProperty(localName = "param")
-                                @JacksonXmlElementWrapper(localName = "params")
-                                val params: Set<ValidationParam>)
+data class ValidationConstraint(
+    val name: String,
+    @JacksonXmlProperty(localName = "param")
+    @JacksonXmlElementWrapper(localName = "params")
+    val params: Set<ValidationParam>
+)
 
 /**
  * Represents a validation parameter
@@ -75,5 +81,7 @@ data class ValidationConstraint(val name: String,
  * @author Rodolpho S. Couto
  * @since 0.1.0
  */
-data class ValidationParam(val name: String,
-                           val value: Any?)
+data class ValidationParam(
+    val name: String,
+    val value: Any?
+)

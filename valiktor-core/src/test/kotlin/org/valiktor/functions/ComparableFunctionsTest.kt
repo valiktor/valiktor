@@ -3,7 +3,12 @@ package org.valiktor.functions
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.*
+import org.valiktor.constraints.Between
+import org.valiktor.constraints.Greater
+import org.valiktor.constraints.GreaterOrEqual
+import org.valiktor.constraints.Less
+import org.valiktor.constraints.LessOrEqual
+import org.valiktor.constraints.NotBetween
 import org.valiktor.functions.ComparableFunctionsFixture.Company
 import org.valiktor.functions.ComparableFunctionsFixture.Employee
 import org.valiktor.validate
@@ -51,10 +56,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 50),
-                        constraint = Less(Company(id = 49))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 50),
+                constraint = Less(Company(id = 49))))
     }
 
     @Test
@@ -66,10 +71,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = -50),
-                        constraint = Less(Company(id = -51))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = -50),
+                constraint = Less(Company(id = -51))))
     }
 
     @Test
@@ -81,10 +86,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 0),
-                        constraint = Less(Company(id = 0))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 0),
+                constraint = Less(Company(id = 0))))
     }
 
     @Test
@@ -124,10 +129,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 56789),
-                        constraint = LessOrEqual(Company(id = 57))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 56789),
+                constraint = LessOrEqual(Company(id = 57))))
     }
 
     @Test
@@ -139,10 +144,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = -96),
-                        constraint = LessOrEqual(Company(id = -97))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = -96),
+                constraint = LessOrEqual(Company(id = -97))))
     }
 
     @Test
@@ -175,10 +180,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 10),
-                        constraint = Greater(Company(id = 11))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 10),
+                constraint = Greater(Company(id = 11))))
     }
 
     @Test
@@ -190,10 +195,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = -189),
-                        constraint = Greater(Company(id = -180))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = -189),
+                constraint = Greater(Company(id = -180))))
     }
 
     @Test
@@ -205,10 +210,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 0),
-                        constraint = Greater(Company(id = 0))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 0),
+                constraint = Greater(Company(id = 0))))
     }
 
     @Test
@@ -248,10 +253,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 57),
-                        constraint = GreaterOrEqual(Company(id = 56789))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 57),
+                constraint = GreaterOrEqual(Company(id = 56789))))
     }
 
     @Test
@@ -263,10 +268,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = -97),
-                        constraint = GreaterOrEqual(Company(id = -96))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = -97),
+                constraint = GreaterOrEqual(Company(id = -96))))
     }
 
     @Test
@@ -327,10 +332,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 10),
-                        constraint = Between(start = Company(id = 11), end = Company(id = 12))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 10),
+                constraint = Between(start = Company(id = 11), end = Company(id = 12))))
     }
 
     @Test
@@ -342,10 +347,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 12),
-                        constraint = Between(start = Company(id = 10), end = Company(id = 11))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 12),
+                constraint = Between(start = Company(id = 10), end = Company(id = 11))))
     }
 
     @Test
@@ -357,10 +362,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = -10),
-                        constraint = Between(start = Company(id = -9), end = Company(id = -8))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = -10),
+                constraint = Between(start = Company(id = -9), end = Company(id = -8))))
     }
 
     @Test
@@ -372,10 +377,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = -12),
-                        constraint = Between(start = Company(id = -14), end = Company(id = -13))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = -12),
+                constraint = Between(start = Company(id = -14), end = Company(id = -13))))
     }
 
     @Test
@@ -422,10 +427,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 0),
-                        constraint = NotBetween(start = Company(id = 0), end = Company(id = 1))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 0),
+                constraint = NotBetween(start = Company(id = 0), end = Company(id = 1))))
     }
 
     @Test
@@ -437,10 +442,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 1),
-                        constraint = NotBetween(start = Company(id = 0), end = Company(id = 1))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 1),
+                constraint = NotBetween(start = Company(id = 0), end = Company(id = 1))))
     }
 
     @Test
@@ -452,10 +457,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = -2),
-                        constraint = NotBetween(start = Company(id = -2), end = Company(id = -1))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = -2),
+                constraint = NotBetween(start = Company(id = -2), end = Company(id = -1))))
     }
 
     @Test
@@ -467,10 +472,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = -1),
-                        constraint = NotBetween(start = Company(id = -2), end = Company(id = -1))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = -1),
+                constraint = NotBetween(start = Company(id = -2), end = Company(id = -1))))
     }
 
     @Test
@@ -482,10 +487,10 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = 5),
-                        constraint = NotBetween(start = Company(id = 0), end = Company(id = 10))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = 5),
+                constraint = NotBetween(start = Company(id = 0), end = Company(id = 10))))
     }
 
     @Test
@@ -497,9 +502,9 @@ class ComparableFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "company",
-                        value = Company(id = -15),
-                        constraint = NotBetween(start = Company(id = -20), end = Company(id = -10))))
+            DefaultConstraintViolation(
+                property = "company",
+                value = Company(id = -15),
+                constraint = NotBetween(start = Company(id = -20), end = Company(id = -10))))
     }
 }

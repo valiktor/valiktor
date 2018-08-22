@@ -48,7 +48,7 @@ class ValiktorAutoConfiguration(private val properties: ValiktorProperties) {
     @Bean
     @ConditionalOnMissingBean
     fun valiktorConfiguration() = ValiktorConfiguration(
-            baseBundleName = properties.baseBundleName)
+        baseBundleName = properties.baseBundleName)
 
     /**
      * Creates a [ValiktorExceptionHandler]
@@ -58,7 +58,7 @@ class ValiktorAutoConfiguration(private val properties: ValiktorProperties) {
     @Bean
     @ConditionalOnMissingBean
     fun valiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration): ValiktorExceptionHandler =
-            ValiktorExceptionHandler(valiktorConfiguration)
+        ValiktorExceptionHandler(valiktorConfiguration)
 
     /**
      * Creates a [ValiktorJacksonExceptionHandler]
@@ -69,5 +69,5 @@ class ValiktorAutoConfiguration(private val properties: ValiktorProperties) {
     @ConditionalOnMissingBean
     @ConditionalOnClass(name = ["com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException"])
     fun valiktorJacksonExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler): ValiktorJacksonExceptionHandler =
-            ValiktorJacksonExceptionHandler(valiktorExceptionHandler)
+        ValiktorJacksonExceptionHandler(valiktorExceptionHandler)
 }

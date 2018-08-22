@@ -30,10 +30,10 @@ import org.valiktor.Constraint
  */
 data class IntegerDigits(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VALUE) : Constraint {
     override val messageKey: String =
-            if (min != Int.MIN_VALUE && max != Int.MAX_VALUE) super.messageKey
-            else if (min != Int.MIN_VALUE) "${this.javaClass.name}.min.message"
-            else if (max != Int.MAX_VALUE) "${this.javaClass.name}.max.message"
-            else super.messageKey
+        if (min != Int.MIN_VALUE && max != Int.MAX_VALUE) super.messageKey
+        else if (min != Int.MIN_VALUE) "${this.javaClass.name}.min.message"
+        else if (max != Int.MAX_VALUE) "${this.javaClass.name}.max.message"
+        else super.messageKey
 
     override val messageParams: Map<String, *>
         get() = if (min != Int.MIN_VALUE && max != Int.MAX_VALUE)
@@ -58,10 +58,10 @@ data class IntegerDigits(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VA
  */
 data class DecimalDigits(val min: Int = Int.MIN_VALUE, val max: Int = Int.MAX_VALUE) : Constraint {
     override val messageKey: String =
-            if (min != Int.MIN_VALUE && max != Int.MAX_VALUE) super.messageKey
-            else if (min != Int.MIN_VALUE) "${this.javaClass.name}.min.message"
-            else if (max != Int.MAX_VALUE) "${this.javaClass.name}.max.message"
-            else super.messageKey
+        if (min != Int.MIN_VALUE && max != Int.MAX_VALUE) super.messageKey
+        else if (min != Int.MIN_VALUE) "${this.javaClass.name}.min.message"
+        else if (max != Int.MAX_VALUE) "${this.javaClass.name}.max.message"
+        else super.messageKey
 
     override val messageParams: Map<String, *>
         get() = if (min != Int.MIN_VALUE && max != Int.MAX_VALUE)
