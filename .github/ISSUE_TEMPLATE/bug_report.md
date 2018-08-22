@@ -4,12 +4,6 @@ about: Create a report to help us improve
 
 ---
 
----
-name: :warning: Bug Report
-about: If something isn't working as expected :thinking:
-
----
-
 ## Expected Behavior
 
 
