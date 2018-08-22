@@ -1,3 +1,9 @@
+# 0.2.0
+> Published Aug 22, 2018
+
+* Added NotToday constraint for Date, Calendar and JavaTime types.
+* Removed JAXB annotations for compatibility with JDK > 8.
+
 # 0.1.0
 > Published Aug 13, 2018
 
