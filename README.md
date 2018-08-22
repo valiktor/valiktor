@@ -78,6 +78,10 @@ Work in progress.
 | [valiktor-sample-spring-boot-1](valiktor-samples/valiktor-sample-spring-boot-1) | Spring Boot 1 Example |
 | [valiktor-sample-spring-boot-2](valiktor-samples/valiktor-sample-spring-boot-2) | Spring Boot 2 Example |
 
+## Changelog
+
+For latest updates see [CHANGELOG.md](CHANGELOG.md) file.
+
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/valiktor/valiktor/tags).
