@@ -9,6 +9,7 @@ plugins {
     id("signing")
     id("org.jetbrains.dokka") version "0.9.17"
     id("com.adarshr.test-logger") version "1.3.1"
+    id("org.jmailen.kotlinter") version "1.16.0"
 }
 
 subprojects {
@@ -22,6 +23,7 @@ subprojects {
         plugin("signing")
         plugin("org.jetbrains.dokka")
         plugin("com.adarshr.test-logger")
+        plugin("org.jmailen.kotlinter")
     }
 
     group = "org.valiktor"
