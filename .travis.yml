@@ -1,5 +1,10 @@
 language: java
 
+jdk:
+  - oraclejdk8
+  - oraclejdk9
+  - oraclejdk10
+
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -18,10 +23,6 @@ stages:
 jobs:
   include:
     - stage: build
-      jdk:
-        - oraclejdk8
-        - oraclejdk9
-        - oraclejdk10
       install:
         - ./gradlew -v
       script:
@@ -30,12 +31,11 @@ jobs:
         - bash <(curl -s https://codecov.io/bash)
 
     - stage: deploy
-      jdk:
-        - oraclejdk8
+      jdk: oraclejdk8
       install:
         - ./gradlew -v
       script:
-        - /gradlew clean build -x test -x check
+        - ./gradlew clean build -x test -x check
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_446ef87682bf_key -iv $encrypted_446ef87682bf_iv -in private-key.gpg.enc -out $SIGNING_FILE -d
       deploy:
