@@ -1,10 +1,5 @@
 language: java
 
-jdk:
-  - oraclejdk8
-  - oraclejdk9
-  - oraclejdk10
-
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -23,12 +18,27 @@ stages:
 jobs:
   include:
     - stage: build
+      jdk: oraclejdk8
       install:
         - ./gradlew -v
       script:
         - ./gradlew clean build
       after_success:
         - bash <(curl -s https://codecov.io/bash)
+
+    - stage: build
+      jdk: oraclejdk9
+      install:
+        - ./gradlew -v
+      script:
+        - ./gradlew clean build
+
+    - stage: build
+      jdk: oraclejdk10
+      install:
+        - ./gradlew -v
+      script:
+        - ./gradlew clean build
 
     - stage: deploy
       jdk: oraclejdk8
