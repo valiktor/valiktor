@@ -16,8 +16,10 @@
 
 package org.valiktor.sample
 
-import org.springframework.http.MediaType
+import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
+import org.springframework.http.MediaType.APPLICATION_XML_VALUE
 import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.created
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -26,13 +28,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromC
 
 @RestController
 @RequestMapping("/employees")
-class EmployeeController(val employeeService: EmployeeService) {
+class EmployeeController(val service: EmployeeService) {
 
     @PostMapping(
-        consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
-    fun createEmployee(@RequestBody employee: Employee): ResponseEntity<Void> {
-        employeeService.createEmployee(employee)
-        return ResponseEntity.created(fromCurrentRequestUri().path("/{id}").buildAndExpand(employee.id).toUri()).build()
+        consumes = [APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE],
+        produces = [APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE])
+    fun create(@RequestBody employee: Employee): ResponseEntity<Void> {
+        service.create(employee)
+        return created(fromCurrentRequestUri().path("/{id}").buildAndExpand(employee.id).toUri()).build()
     }
 }

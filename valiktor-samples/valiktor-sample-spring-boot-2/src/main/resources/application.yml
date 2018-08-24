@@ -7,3 +7,6 @@ spring:
 logging:
   level:
     root: INFO
+
+valiktor:
+  baseBundleName: customMessages
