@@ -42,9 +42,7 @@ Maven:
 import org.valiktor.validate
 import org.valiktor.functions.*
 
-data class Employee(val id: Int, 
-                    val name: String, 
-                    val email: String) {
+data class Employee(val id: Int, val name: String, val email: String) {
     init {
         validate(this) {
             validate(Employee::id).isPositive()
