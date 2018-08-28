@@ -9,4 +9,4 @@ logging:
     root: INFO
 
 valiktor:
-  baseBundleName: customMessages
+  base-bundle-name: customMessages
