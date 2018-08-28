@@ -47,13 +47,10 @@ class EmployeeService {
     fun create(employee: Employee) {
         validate(employee) {
             validate(Employee::id).hasDigits(max = 6).isPositive().isUnique()
-            validate(Employee::firstName).isNotBlank().hasSize(min = 3, max = 30)
-            validate(Employee::lastName).isNotBlank().hasSize(min = 3, max = 30)
+            validate(Employee::name).isNotBlank().hasSize(min = 3, max = 30)
             validate(Employee::email).isNotBlank().isEmail()
-            validate(Employee::dateOfBirth).isBetween(start = LocalDate.of(1950, Month.JANUARY, 1), end = LocalDate.now().minusYears(18))
+            validate(Employee::dateOfBirth).isGreaterThan(LocalDate.of(1950, Month.JANUARY, 1))
             validate(Employee::salary).hasIntegerDigits(min = 3, max = 5).hasDecimalDigits(max = 2).hasCurrencyEqualTo(DOLLAR)
-            validate(Employee::startTime).isLessThan(employee.endTime)
-            validate(Employee::endTime).isGreaterThan(employee.startTime)
 
             validate(Employee::company).validate {
                 validate(Company::name).isNotBlank().hasSize(min = 3, max = 50)
