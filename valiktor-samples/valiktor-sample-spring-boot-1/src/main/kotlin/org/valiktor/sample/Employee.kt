@@ -17,18 +17,14 @@
 package org.valiktor.sample
 
 import java.time.LocalDate
-import java.time.LocalTime
 import javax.money.MonetaryAmount
 
 data class Employee(
     val id: Int,
-    val firstName: String,
-    val lastName: String,
+    val name: String,
     val email: String,
     val dateOfBirth: LocalDate,
     val salary: MonetaryAmount,
-    val startTime: LocalTime,
-    val endTime: LocalTime,
     val company: Company,
     val dependents: List<Dependent>
 )

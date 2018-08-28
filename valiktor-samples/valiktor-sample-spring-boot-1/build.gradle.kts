@@ -7,6 +7,10 @@ apply {
     plugin("io.spring.dependency-management")
 }
 
+repositories {
+    maven(url = "https://jitpack.io")
+}
+
 dependencies {
     compile(kotlin("stdlib"))
     compile(kotlin("reflect"))
@@ -22,4 +26,6 @@ dependencies {
     runtime("org.javamoney:moneta:1.3")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    // for Spring Boot 1.x + JUnit 5 support
+    testCompile("com.github.sbrannen:spring-test-junit5:1.2.0")
 }
