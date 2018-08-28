@@ -54,7 +54,6 @@ class ValiktorExceptionHandler(private val config: ValiktorConfiguration) {
         ResponseEntity
             .unprocessableEntity()
             .body(UnprocessableEntity(errors = ex.constraintViolations
-                .asSequence()
                 .mapToMessage(baseName = config.baseBundleName, locale = locale)
                 .map {
                     ValidationError(
@@ -64,16 +63,13 @@ class ValiktorExceptionHandler(private val config: ValiktorConfiguration) {
                         constraint = ValidationConstraint(
                             name = it.constraint.name,
                             params = it.constraint.messageParams
-                                .asSequence()
                                 .map {
                                     ValidationParam(
                                         name = it.key,
                                         value = it.value
                                     )
                                 }
-                                .toSet()
                         )
                     )
-                }
-                .toSet()))
+                }))
 }

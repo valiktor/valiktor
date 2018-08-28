@@ -23,7 +23,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 /**
  * Represents the payload for responses with 422 (Unprocessable Entity) status code
  *
- * @property errors specifies the set of [ValidationError]
+ * @property errors specifies the list of [ValidationError]
  *
  * @author Rodolpho S. Couto
  * @see ValidationError
@@ -33,7 +33,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 data class UnprocessableEntity(
     @JacksonXmlProperty(localName = "error")
     @JacksonXmlElementWrapper(localName = "errors")
-    val errors: Set<ValidationError>
+    val errors: List<ValidationError>
 )
 
 /**
@@ -59,7 +59,7 @@ data class ValidationError(
  * Represents a validation constraint
  *
  * @property name specifies the name of the constraint
- * @property params specifies the set of validation parameters
+ * @property params specifies the list of validation parameters
  *
  * @author Rodolpho S. Couto
  * @see ValidationParam
@@ -69,7 +69,7 @@ data class ValidationConstraint(
     val name: String,
     @JacksonXmlProperty(localName = "param")
     @JacksonXmlElementWrapper(localName = "params")
-    val params: Set<ValidationParam>
+    val params: List<ValidationParam>
 )
 
 /**
