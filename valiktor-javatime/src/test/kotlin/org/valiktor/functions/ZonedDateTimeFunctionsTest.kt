@@ -22,7 +22,7 @@ import org.valiktor.validate
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
-import java.time.ZoneOffset
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
@@ -34,7 +34,7 @@ private object ZonedDateTimeFunctionsFixture {
 
 class ZonedDateTimeFunctionsTest {
 
-    private val dateTime = ZonedDateTime.of(LocalDateTime.of(2018, Month.JANUARY, 1, 13, 25, 57), ZoneOffset.UTC)
+    private val dateTime = ZonedDateTime.of(LocalDateTime.of(2018, Month.JANUARY, 1, 13, 25, 57), ZoneId.systemDefault())
 
     @Test
     fun `isNull with null value should be valid`() {
@@ -231,28 +231,28 @@ class ZonedDateTimeFunctionsTest {
 
     @Test
     fun `isToday with 00h00m00 should be valid`() {
-        validate(Employee(dateOfBirth = LocalDate.now().atStartOfDay().atZone(ZoneOffset.UTC))) {
+        validate(Employee(dateOfBirth = LocalDate.now(ZoneId.systemDefault()).atStartOfDay(ZoneId.systemDefault()))) {
             validate(Employee::dateOfBirth).isToday()
         }
     }
 
     @Test
     fun `isToday with 23h59m59 should be valid`() {
-        validate(Employee(dateOfBirth = LocalDate.now().atTime(23, 59, 59).atZone(ZoneOffset.UTC))) {
+        validate(Employee(dateOfBirth = LocalDate.now(ZoneId.systemDefault()).atTime(23, 59, 59).atZone(ZoneId.systemDefault()))) {
             validate(Employee::dateOfBirth).isToday()
         }
     }
 
     @Test
     fun `isToday with now should be valid`() {
-        validate(Employee(dateOfBirth = ZonedDateTime.now())) {
+        validate(Employee(dateOfBirth = ZonedDateTime.now(ZoneId.systemDefault()))) {
             validate(Employee::dateOfBirth).isToday()
         }
     }
 
     @Test
     fun `isToday with yesterday value should be invalid`() {
-        val dateTime = ZonedDateTime.now()
+        val dateTime = ZonedDateTime.now(ZoneId.systemDefault())
 
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(dateOfBirth = dateTime.minusDays(1))) {
@@ -265,7 +265,7 @@ class ZonedDateTimeFunctionsTest {
 
     @Test
     fun `isToday with tomorrow value should be invalid`() {
-        val dateTime = ZonedDateTime.now()
+        val dateTime = ZonedDateTime.now(ZoneId.systemDefault())
 
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(dateOfBirth = dateTime.plusDays(1))) {
@@ -286,28 +286,28 @@ class ZonedDateTimeFunctionsTest {
     @Test
     fun `isNotToday with 00h00m00 should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = LocalDate.now().atStartOfDay().atZone(ZoneOffset.UTC))) {
+            validate(Employee(dateOfBirth = LocalDate.now(ZoneId.systemDefault()).atStartOfDay(ZoneId.systemDefault()))) {
                 validate(Employee::dateOfBirth).isNotToday()
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now().atStartOfDay().atZone(ZoneOffset.UTC), constraint = NotToday))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(ZoneId.systemDefault()).atStartOfDay(ZoneId.systemDefault()), constraint = NotToday))
     }
 
     @Test
     fun `isNotToday with 23h59m59 should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dateOfBirth = LocalDate.now().atTime(23, 59, 59).atZone(ZoneOffset.UTC))) {
+            validate(Employee(dateOfBirth = LocalDate.now(ZoneId.systemDefault()).atTime(23, 59, 59).atZone(ZoneId.systemDefault()))) {
                 validate(Employee::dateOfBirth).isNotToday()
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now().atTime(23, 59, 59).atZone(ZoneOffset.UTC), constraint = NotToday))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(ZoneId.systemDefault()).atTime(23, 59, 59).atZone(ZoneId.systemDefault()), constraint = NotToday))
     }
 
     @Test
     fun `isNotToday with now should be invalid`() {
-        val now = ZonedDateTime.now()
+        val now = ZonedDateTime.now(ZoneId.systemDefault())
 
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(dateOfBirth = now)) {
@@ -320,14 +320,14 @@ class ZonedDateTimeFunctionsTest {
 
     @Test
     fun `isNotToday with yesterday value should be valid`() {
-        validate(Employee(dateOfBirth = LocalDateTime.now().minusDays(1).atZone(ZoneOffset.UTC))) {
+        validate(Employee(dateOfBirth = ZonedDateTime.now(ZoneId.systemDefault()).minusDays(1))) {
             validate(Employee::dateOfBirth).isNotToday()
         }
     }
 
     @Test
     fun `isNotToday with tomorrow value should be valid`() {
-        validate(Employee(dateOfBirth = LocalDateTime.now().plusDays(1).atZone(ZoneOffset.UTC))) {
+        validate(Employee(dateOfBirth = ZonedDateTime.now(ZoneId.systemDefault()).plusDays(1))) {
             validate(Employee::dateOfBirth).isNotToday()
         }
     }
