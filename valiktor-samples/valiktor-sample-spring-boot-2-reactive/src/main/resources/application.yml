@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: sample-service
+  main:
+    banner-mode: log
+
+logging:
+  level:
+    root: INFO
+
+valiktor:
+  base-bundle-name: customMessages
