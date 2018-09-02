@@ -72,10 +72,12 @@ Work in progress.
 
 ## Samples
 
-| Project                                                                         | Description           |
-| ------------------------------------------------------------------------------- | --------------------- |
-| [valiktor-sample-spring-boot-1](valiktor-samples/valiktor-sample-spring-boot-1) | Spring Boot 1 Example |
-| [valiktor-sample-spring-boot-2](valiktor-samples/valiktor-sample-spring-boot-2) | Spring Boot 2 Example |
+| Project                                                                                                   | Description                       |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| [valiktor-sample-spring-boot-1](valiktor-samples/valiktor-sample-spring-boot-1)                           | Spring Boot 1 Example             |
+| [valiktor-sample-spring-boot-2](valiktor-samples/valiktor-sample-spring-boot-2)                           | Spring Boot 2 Example             |
+| [valiktor-sample-spring-boot-2-reactive](valiktor-samples/valiktor-sample-spring-boot-2-reactive)         | Spring Boot 2 WebFlux Example     |
+| [valiktor-sample-spring-boot-2-reactive-dsl](valiktor-samples/valiktor-sample-spring-boot-2-reactive-dsl) | Spring Boot 2 WebFlux DSL Example |
 
 ## Changelog
 
