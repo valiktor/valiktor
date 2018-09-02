@@ -27,7 +27,7 @@ import org.valiktor.springframework.web.payload.UnprocessableEntity
 import java.util.Locale
 
 /**
- * Represents the REST controller that handle [MissingKotlinParameterException] and returns an appropriate HTTP response.
+ * Represents the REST controller that handles [MissingKotlinParameterException] and returns an appropriate HTTP response.
  *
  * @param valiktorExceptionHandler specifies the [ValiktorExceptionHandler]
  *

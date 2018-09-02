@@ -22,8 +22,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.valiktor.springframework.config.ValiktorConfiguration
-import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
-import org.valiktor.springframework.web.controller.ValiktorJacksonExceptionHandler
 
 /**
  * Represents the SpringBoot Auto Configuration for [ValiktorConfiguration]
@@ -36,7 +34,7 @@ import org.valiktor.springframework.web.controller.ValiktorJacksonExceptionHandl
  * @since 0.1.0
  */
 @Configuration
-@ConditionalOnClass(ValiktorConfiguration::class)
+@ConditionalOnClass(name = ["org.valiktor.springframework.config.ValiktorConfiguration"])
 @EnableConfigurationProperties(ValiktorProperties::class)
 class ValiktorAutoConfiguration(private val properties: ValiktorProperties) {
 
@@ -47,27 +45,5 @@ class ValiktorAutoConfiguration(private val properties: ValiktorProperties) {
      */
     @Bean
     @ConditionalOnMissingBean
-    fun valiktorConfiguration() = ValiktorConfiguration(
-        baseBundleName = properties.baseBundleName)
-
-    /**
-     * Creates a [ValiktorExceptionHandler]
-     *
-     * @return the respective [ValiktorExceptionHandler]
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    fun valiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration): ValiktorExceptionHandler =
-        ValiktorExceptionHandler(valiktorConfiguration)
-
-    /**
-     * Creates a [ValiktorJacksonExceptionHandler]
-     *
-     * @return the respective [ValiktorJacksonExceptionHandler]
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    @ConditionalOnClass(name = ["com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException"])
-    fun valiktorJacksonExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler): ValiktorJacksonExceptionHandler =
-        ValiktorJacksonExceptionHandler(valiktorExceptionHandler)
+    fun valiktorConfiguration() = ValiktorConfiguration(baseBundleName = properties.baseBundleName)
 }

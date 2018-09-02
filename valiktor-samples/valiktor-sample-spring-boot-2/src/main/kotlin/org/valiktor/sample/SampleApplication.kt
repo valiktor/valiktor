@@ -16,25 +16,20 @@
 
 package org.valiktor.sample
 
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.zalando.jackson.datatype.money.MoneyModule
 
 @SpringBootApplication
 class SampleApplication {
 
     @Bean
-    fun jacksonBuilder(): Jackson2ObjectMapperBuilder =
-        Jackson2ObjectMapperBuilder()
-            .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-            .modules(KotlinModule(),
-                MoneyModule(),
-                JavaTimeModule())
+    fun kotlinModule() = KotlinModule()
+
+    @Bean
+    fun moneyModule() = MoneyModule()
 }
 
 fun main(args: Array<String>) {

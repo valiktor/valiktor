@@ -29,7 +29,7 @@ import org.valiktor.springframework.web.payload.ValidationParam
 import java.util.Locale
 
 /**
- * Represents the REST controller that handle [ConstraintViolationException] and returns an appropriate HTTP response.
+ * Represents the REST controller that handles [ConstraintViolationException] and returns an appropriate HTTP response.
  *
  * @param config specifies the [ValiktorConfiguration]
  *

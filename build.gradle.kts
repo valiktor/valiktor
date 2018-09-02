@@ -78,7 +78,7 @@ subprojects {
             violationRules {
                 rule {
                     limit {
-                        minimum = BigDecimal.valueOf(0.4)
+                        minimum = BigDecimal.valueOf(0.3)
                     }
                 }
             }
