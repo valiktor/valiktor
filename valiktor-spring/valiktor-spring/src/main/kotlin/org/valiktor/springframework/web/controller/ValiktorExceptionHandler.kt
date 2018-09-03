@@ -20,12 +20,9 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.valiktor.ConstraintViolationException
-import org.valiktor.i18n.mapToMessage
 import org.valiktor.springframework.config.ValiktorConfiguration
 import org.valiktor.springframework.web.payload.UnprocessableEntity
-import org.valiktor.springframework.web.payload.ValidationConstraint
-import org.valiktor.springframework.web.payload.ValidationError
-import org.valiktor.springframework.web.payload.ValidationParam
+import org.valiktor.springframework.web.payload.toUnprocessableEntity
 import java.util.Locale
 
 /**
@@ -53,23 +50,8 @@ class ValiktorExceptionHandler(private val config: ValiktorConfiguration) {
     fun handleConstraintViolationException(ex: ConstraintViolationException, locale: Locale): ResponseEntity<UnprocessableEntity> =
         ResponseEntity
             .unprocessableEntity()
-            .body(UnprocessableEntity(errors = ex.constraintViolations
-                .mapToMessage(baseName = config.baseBundleName, locale = locale)
-                .map {
-                    ValidationError(
-                        property = it.property,
-                        value = it.value,
-                        message = it.message,
-                        constraint = ValidationConstraint(
-                            name = it.constraint.name,
-                            params = it.constraint.messageParams
-                                .map {
-                                    ValidationParam(
-                                        name = it.key,
-                                        value = it.value
-                                    )
-                                }
-                        )
-                    )
-                }))
+            .body(ex.toUnprocessableEntity(
+                baseBundleName = config.baseBundleName,
+                locale = locale
+            ))
 }

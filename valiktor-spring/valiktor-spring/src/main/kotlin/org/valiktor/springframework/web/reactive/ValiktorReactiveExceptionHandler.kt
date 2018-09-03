@@ -24,12 +24,8 @@ import org.springframework.web.reactive.result.view.ViewResolver
 import org.springframework.web.server.ServerWebExchange
 import org.springframework.web.server.WebExceptionHandler
 import org.valiktor.ConstraintViolationException
-import org.valiktor.i18n.mapToMessage
 import org.valiktor.springframework.config.ValiktorConfiguration
-import org.valiktor.springframework.web.payload.UnprocessableEntity
-import org.valiktor.springframework.web.payload.ValidationConstraint
-import org.valiktor.springframework.web.payload.ValidationError
-import org.valiktor.springframework.web.payload.ValidationParam
+import org.valiktor.springframework.web.payload.toUnprocessableEntity
 import reactor.core.publisher.Mono
 
 /**
@@ -65,25 +61,10 @@ class ValiktorReactiveExceptionHandler(
                 ServerResponse
                     .unprocessableEntity()
                     .body(BodyInserters.fromObject(
-                        UnprocessableEntity(errors = this.constraintViolations
-                            .mapToMessage(baseName = config.baseBundleName, locale = exchange.localeContext.locale)
-                            .map {
-                                ValidationError(
-                                    property = it.property,
-                                    value = it.value,
-                                    message = it.message,
-                                    constraint = ValidationConstraint(
-                                        name = it.constraint.name,
-                                        params = it.constraint.messageParams
-                                            .map {
-                                                ValidationParam(
-                                                    name = it.key,
-                                                    value = it.value
-                                                )
-                                            }
-                                    )
-                                )
-                            })))
+                        this.toUnprocessableEntity(
+                            baseBundleName = config.baseBundleName,
+                            locale = exchange.localeContext.locale
+                        )))
                     .flatMap {
                         it.writeTo(exchange, object : ServerResponse.Context {
                             override fun messageWriters() = codecConfigurer.writers

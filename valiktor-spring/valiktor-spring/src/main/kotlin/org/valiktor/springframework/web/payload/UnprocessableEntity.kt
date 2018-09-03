@@ -19,6 +19,30 @@ package org.valiktor.springframework.web.payload
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import org.valiktor.ConstraintViolationException
+import org.valiktor.i18n.mapToMessage
+import java.util.Locale
+
+internal fun ConstraintViolationException.toUnprocessableEntity(baseBundleName: String?, locale: Locale) =
+    UnprocessableEntity(errors = this.constraintViolations
+        .mapToMessage(baseName = baseBundleName, locale = locale)
+        .map {
+            ValidationError(
+                property = it.property,
+                value = it.value,
+                message = it.message,
+                constraint = ValidationConstraint(
+                    name = it.constraint.name,
+                    params = it.constraint.messageParams
+                        .map {
+                            ValidationParam(
+                                name = it.key,
+                                value = it.value
+                            )
+                        }
+                )
+            )
+        })
 
 /**
  * Represents the payload for responses with 422 (Unprocessable Entity) status code
