@@ -21,7 +21,6 @@ class ValiktorExceptionHandlerJsonTest {
         mockMvc
             .perform(post("/employees")
                 .accept(APPLICATION_JSON)
-                .header(ACCEPT_LANGUAGE, "en")
                 .contentType(APPLICATION_JSON)
                 .content(json.payloadEmployeeValid()))
             .andExpect(status().isCreated)

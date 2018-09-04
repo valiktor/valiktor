@@ -21,7 +21,6 @@ class ValiktorExceptionHandlerXmlTest {
         mockMvc
             .perform(post("/employees")
                 .accept(APPLICATION_XML)
-                .header(ACCEPT_LANGUAGE, "en")
                 .contentType(APPLICATION_XML)
                 .content(xml.payloadEmployeeValid()))
             .andExpect(status().isCreated)

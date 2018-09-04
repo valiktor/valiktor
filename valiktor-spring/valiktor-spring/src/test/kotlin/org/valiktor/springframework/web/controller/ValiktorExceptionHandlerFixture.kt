@@ -33,7 +33,7 @@ import java.util.Date
 import java.util.Locale
 import javax.servlet.http.HttpServletRequest
 
-data class Employee(
+private data class Employee(
     val id: Int,
     val name: String,
     val email: String,
@@ -43,11 +43,9 @@ data class Employee(
 
 @RestController
 @RequestMapping("/")
-class ValiktorTestController {
+private class ValiktorTestController {
 
-    @PostMapping("/employees",
-        consumes = [APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE],
-        produces = [APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE])
+    @PostMapping("/employees", consumes = [APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE])
     fun test(@RequestBody employee: Employee): ResponseEntity<Void> {
         validate(employee) {
             validate(Employee::id).isEqualTo(1)
