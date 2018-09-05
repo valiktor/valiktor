@@ -14,6 +14,8 @@ dependencies {
     annotationProcessor(springBoot("autoconfigure-processor"))
 
     testCompile(project(":valiktor-spring:valiktor-spring"))
+    testCompile(springBoot("starter-web"))
+    testCompile(springBoot("starter-webflux"))
     testCompile(springBoot("test"))
     testCompile(jacksonModule("kotlin"))
 }
