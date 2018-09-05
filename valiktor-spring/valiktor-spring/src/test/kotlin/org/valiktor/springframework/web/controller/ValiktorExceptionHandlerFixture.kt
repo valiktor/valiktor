@@ -83,9 +83,9 @@ object ValiktorExceptionHandlerFixture {
             MappingJackson2HttpMessageConverter().also { it.objectMapper = this.jsonMapper },
             MappingJackson2XmlHttpMessageConverter().also { it.objectMapper = this.xmlMapper })
         .setLocaleResolver(object : AcceptHeaderLocaleResolver() {
-            override fun resolveLocale(req: HttpServletRequest): Locale =
+            override fun resolveLocale(req: HttpServletRequest): Locale? =
                 Locale.lookup(
-                    Locale.LanguageRange.parse(req.getHeader(ACCEPT_LANGUAGE)),
+                    Locale.LanguageRange.parse(req.getHeader(ACCEPT_LANGUAGE) ?: "en"),
                     listOf(Locale.ENGLISH, Locale("pt", "BR")))
         })
         .build()

@@ -13,6 +13,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.web.reactive.function.BodyInserters
 import org.valiktor.springframework.web.payload.UnprocessableEntity
+import java.util.Locale
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @ExtendWith(SpringExtension::class)
@@ -37,8 +39,13 @@ class EmployeeControllerTest {
             .expectBody().isEmpty
     }
 
+    @BeforeTest
+    fun setUp() {
+        Locale.setDefault(Locale.ENGLISH)
+    }
+
     @Test
-    fun `should return 422 with locale en`() {
+    fun `should return 422 with default locale`() {
         createValidEmployee(id = 1)
 
         webClient
@@ -46,7 +53,6 @@ class EmployeeControllerTest {
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .header(HttpHeaders.ACCEPT_LANGUAGE, "en")
             .body(BodyInserters.fromObject(EmployeeControllerFixture.invalidEmployee(id = 1)))
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -55,7 +61,7 @@ class EmployeeControllerTest {
     }
 
     @Test
-    fun `should return 422 with locale pt_BR`() {
+    fun `should return 422 with locale en`() {
         createValidEmployee(id = 2)
 
         webClient
@@ -63,11 +69,28 @@ class EmployeeControllerTest {
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR")
+            .header(HttpHeaders.ACCEPT_LANGUAGE, "en")
             .body(BodyInserters.fromObject(EmployeeControllerFixture.invalidEmployee(id = 2)))
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
-            .expectBody(UnprocessableEntity::class.java).isEqualTo<Nothing>(EmployeeControllerFixture.unprocessableEntityPtBr(id = 2))
+            .expectBody(UnprocessableEntity::class.java).isEqualTo<Nothing>(EmployeeControllerFixture.unprocessableEntityEn(id = 2))
+    }
+
+    @Test
+    fun `should return 422 with locale pt_BR`() {
+        createValidEmployee(id = 3)
+
+        webClient
+            .post()
+            .uri("/employees")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR")
+            .body(BodyInserters.fromObject(EmployeeControllerFixture.invalidEmployee(id = 3)))
+            .exchange()
+            .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+            .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
+            .expectBody(UnprocessableEntity::class.java).isEqualTo<Nothing>(EmployeeControllerFixture.unprocessableEntityPtBr(id = 3))
     }
 }

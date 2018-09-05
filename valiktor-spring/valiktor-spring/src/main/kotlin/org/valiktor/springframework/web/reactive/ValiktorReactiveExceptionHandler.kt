@@ -27,6 +27,7 @@ import org.valiktor.ConstraintViolationException
 import org.valiktor.springframework.config.ValiktorConfiguration
 import org.valiktor.springframework.web.payload.toUnprocessableEntity
 import reactor.core.publisher.Mono
+import java.util.Locale
 
 /**
  * Represents the [WebExceptionHandler] that handles [ConstraintViolationException] and returns an appropriate HTTP response.
@@ -63,7 +64,7 @@ class ValiktorReactiveExceptionHandler(
                     .body(BodyInserters.fromObject(
                         this.toUnprocessableEntity(
                             baseBundleName = config.baseBundleName,
-                            locale = exchange.localeContext.locale
+                            locale = exchange.localeContext.locale ?: Locale.getDefault()
                         )))
                     .flatMap {
                         it.writeTo(exchange, object : ServerResponse.Context {

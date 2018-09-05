@@ -47,11 +47,11 @@ class ValiktorExceptionHandler(private val config: ValiktorConfiguration) {
      * @return the ResponseEntity with 422 status code and the constraint violations
      */
     @ExceptionHandler(ConstraintViolationException::class)
-    fun handleConstraintViolationException(ex: ConstraintViolationException, locale: Locale): ResponseEntity<UnprocessableEntity> =
+    fun handleConstraintViolationException(ex: ConstraintViolationException, locale: Locale?): ResponseEntity<UnprocessableEntity> =
         ResponseEntity
             .unprocessableEntity()
             .body(ex.toUnprocessableEntity(
                 baseBundleName = config.baseBundleName,
-                locale = locale
+                locale = locale ?: Locale.getDefault()
             ))
 }

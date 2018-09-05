@@ -49,7 +49,7 @@ class ValiktorJacksonExceptionHandler(private val valiktorExceptionHandler: Vali
      * @return the ResponseEntity with 422 status code and the constraint violations
      */
     @ExceptionHandler(MissingKotlinParameterException::class)
-    fun handleMissingKotlinParameterException(ex: MissingKotlinParameterException, locale: Locale): ResponseEntity<UnprocessableEntity> =
+    fun handleMissingKotlinParameterException(ex: MissingKotlinParameterException, locale: Locale?): ResponseEntity<UnprocessableEntity> =
         valiktorExceptionHandler.handleConstraintViolationException(
             ConstraintViolationException(constraintViolations = setOf(
                 DefaultConstraintViolation(

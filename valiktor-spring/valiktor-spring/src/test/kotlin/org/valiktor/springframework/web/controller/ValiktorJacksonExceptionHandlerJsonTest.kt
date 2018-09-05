@@ -9,12 +9,18 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.util.Locale
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class ValiktorJacksonExceptionHandlerJsonTest {
 
     private val mockMvc = ValiktorExceptionHandlerFixture.mockMvc
     private val json = ValiktorExceptionHandlerFixture.JSON
+
+    @BeforeTest
+    fun setUp() {
+        Locale.setDefault(Locale.ENGLISH)
+    }
 
     @Test
     fun `should return 201`() {
@@ -26,6 +32,19 @@ class ValiktorJacksonExceptionHandlerJsonTest {
             .andExpect(status().isCreated)
             .andExpect(header().string(LOCATION, "http://localhost/employees/1"))
             .andExpect(content().bytes(ByteArray(0)))
+            .andDo(log())
+    }
+
+    @Test
+    fun `should return 422 with default locale`() {
+        mockMvc
+            .perform(post("/employees")
+                .accept(APPLICATION_JSON)
+                .contentType(APPLICATION_JSON)
+                .content(json.payloadEmployeeNullName()))
+            .andExpect(status().isUnprocessableEntity)
+            .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON))
+            .andExpect(content().json(json.payload422NullName(Locale.ENGLISH)))
             .andDo(log())
     }
 

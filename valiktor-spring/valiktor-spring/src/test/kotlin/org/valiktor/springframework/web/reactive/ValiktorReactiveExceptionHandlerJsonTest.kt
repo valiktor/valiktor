@@ -6,12 +6,18 @@ import org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.web.reactive.function.BodyInserters
 import java.util.Locale
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class ValiktorReactiveExceptionHandlerJsonTest {
 
     private val json = ValiktorReactiveExceptionHandlerFixture.JSON
     private val webClient = ValiktorReactiveExceptionHandlerFixture.webClient
+
+    @BeforeTest
+    fun setUp() {
+        Locale.setDefault(Locale.ENGLISH)
+    }
 
     @Test
     fun `should return 201`() {
@@ -25,6 +31,20 @@ class ValiktorReactiveExceptionHandlerJsonTest {
             .expectStatus().isCreated
             .expectHeader().valueEquals(LOCATION, "/employees/1")
             .expectBody().isEmpty
+    }
+
+    @Test
+    fun `should return 422 with default locale`() {
+        webClient
+            .post()
+            .uri("/employees")
+            .accept(APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
+            .body(BodyInserters.fromObject(json.payloadEmployeeInvalid()))
+            .exchange()
+            .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
+            .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
+            .expectBody().json(json.payload422(Locale.ENGLISH))
     }
 
     @Test
