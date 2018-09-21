@@ -53,7 +53,257 @@ data class Employee(val id: Int, val name: String, val email: String) {
 }
 ```
 
-* Validates the properties and throws a exception with constraint violations
+### How it works
+
+The main function `org.valiktor.validate` expects an object and a anonymous function that will validate it. Within this, it's possible to validate the object properties by calling `org.valiktor.validate` with the respective property as parameter. Thanks to Kotlin's powerful reflection, it's type safe and very easy, e.g.: `Employee::name`. There are many validation constraints (`org.valiktor.constraints.*`) and extended functions (`org.valiktor.functions.*`) for each data type. For example, to validate that the employee's name cannot be empty: `validate(Employee::name).isNotEmpty()`.
+
+All the `validate` functions are evaluated and if any constraint is violated, a `ConstraintViolationException` will be thrown with a set of `ConstraintViolation` containing the property, the invalid value and the violated constraint.
+
+For example, consider this data class:
+
+```kotlin
+data class Employee(val id: Int, val name: String)
+```
+
+And this invalid object:
+
+```kotlin
+val employee = Employee(id = 0, name = "")
+```
+
+Now, let's validate its `id` and `name` properties and handle the exception that will be thrown by printing the property name and the violated constraint:
+
+```kotlin
+try {
+    validate(employee) {
+        validate(Employee::id).isPositive()
+        validate(Employee::name).isNotEmpty()
+    }
+} catch (ex: ConstraintViolationException) {
+    ex.constraintViolations
+        .map { "${it.property}: ${it.constraint.name}" }
+        .forEach(::println)
+}
+```
+
+This code will return:
+
+```
+id: Greater
+name: NotEmpty
+```
+
+### Nested object properties
+
+Valiktor can also validate nested objects and properties recursively.
+
+For example, consider these data classes:
+
+```kotlin
+data class Employee(val company: Company)
+data class Company(val city: City)
+data class City(val name: String)
+```
+
+And this invalid object:
+
+```kotlin
+val employee = Employee(company = Company(city = City(name = "")))
+```
+
+Now, let's validate the property `name` of `City` object and handle the exception that will be thrown by printing the property name and the violated constraint:
+
+```kotlin
+try {
+    validate(employee) {
+        validate(Employee::company).validate {
+            validate(Company::city).validate {
+                validate(City::name).isNotEmpty()
+            }
+        }
+    }
+} catch (ex: ConstraintViolationException) {
+    ex.constraintViolations
+        .map { "${it.property}: ${it.constraint.name}" }
+        .forEach(::println)
+}
+```
+
+This code will return:
+
+```
+company.city.name: NotEmpty
+```
+
+### Array and collection properties
+
+Array and collection properties can also be validated, including its elements.
+
+For example, consider these data classes:
+
+```kotlin
+data class Employee(val dependents: List<Dependent>)
+data class Dependent(val name: String)
+```
+
+And this invalid object:
+
+```kotlin
+val employee = Employee(dependents = listOf(
+    Dependent(name = ""), 
+    Dependent(name = ""), 
+    Dependent(name = "")))
+```
+
+Now, let's validate the property `name` of all `Dependent` objects and handle the exception that will be thrown by printing the property name and the violated constraint:
+
+```kotlin
+try {
+    validate(employee) {
+        validate(Employee::dependents).validateForEach {
+            validate(Dependent::name).isNotEmpty()
+        }
+    }
+} catch (ex: ConstraintViolationException) {
+    ex.constraintViolations
+        .map { "${it.property}: ${it.constraint.name}" }
+        .forEach(::println)
+}
+```
+
+This code will return:
+
+```
+dependent[0].name: NotEmpty
+dependent[1].name: NotEmpty
+dependent[2].name: NotEmpty
+```
+
+### Internationalization
+
+Valiktor supports decoupled internationalization, this allows to maintain the validation logic in the core of the application and the internationalization in another layer, such as presentation or RESTful adapter. This guarantees some design principles proposed by Domain Driven Design or Clean Architecture, for example.
+
+The internationalization works by converting a collection of `ConstraintViolation` into a collection of `ConstraintViolationMessage` through the extended function `org.valiktor.i18n.mapToMessage` by passing the following parameters:
+
+* `baseName`: specifies the prefix name of the message properties, the default value is `org/valiktor/messages`.
+* `locale`: specifies the `java.util.Locale` of the message properties, the default value is the default locale of the application.
+
+For example:
+
+```kotlin
+try {
+    validate(employee) {
+        validate(Employee::id).isPositive()
+        validate(Employee::name).isNotEmpty()
+    }
+} catch (ex: ConstraintViolationException) {
+    ex.constraintViolations
+        .mapToMessage(baseName = "messages", locale = Locale.ENGLISH)
+        .map { "${it.property}: ${it.message}" }
+        .forEach(::println)
+}
+```
+
+This code will return:
+
+```
+id: Must be greater than 1
+name: Must not be empty
+```
+
+Currently the following locales are natively supported by Valiktor:
+
+* `en`
+* `pt_BR`
+
+#### Customizing a message
+
+Any constraint message of any language can be overwritten simply by adding the message key into your message bundle file. Generally the constraint key is the qualified class name plus `message` suffix, e.g.: `org.valiktor.constraints.NotEmpty.message`.
+
+#### Formatters
+
+Some constraints have parameters of many types and these parameters need to be interpolated with the message. The default behavior of Valiktor is to call the object `toString()` function, but some data types require specific formatting, such as date/time and monetary values. So for these cases, there are custom formatters (`org.valiktor.i18n.formatters.*`).
+
+For example:
+
+```kotlin
+try {
+    validate(employee) {
+        validate(Employee::dateOfBirth).isGreaterThan(LocalDate.of(1950, 12, 31))
+    }
+} catch (ex: ConstraintViolationException) {
+    ex.constraintViolations
+        .mapToMessage(baseName = "messages")
+        .map { "${it.property}: ${it.message}" }
+        .forEach(::println)
+}
+```
+
+With `en` as the default locale, this code will return:
+
+```
+dateOfBirth: Must be greater than Dec 31, 1950
+```
+
+With `pt_BR` as the default locale, this code will return:
+
+```
+dateOfBirth: Must be greater than 31/12/1950
+```
+
+Currently the following types have a custom formatter supported by Valiktor:
+
+| Type                        | Formatter                                            | Module             |
+| --------------------------- | ---------------------------------------------------- | ------------------ |
+| kotlin.Any                  | org.valiktor.i18n.formatters.AnyFormatter            | valiktor-core      |
+| kotlin.Array                | org.valiktor.i18n.formatters.ArrayFormatter          | valiktor-core      |
+| kotlin.Number               | org.valiktor.i18n.formatters.NumberFormatter         | valiktor-core      |
+| kotlin.collections.Iterable | org.valiktor.i18n.formatters.IterableFormatter       | valiktor-core      |
+| java.util.Calendar          | org.valiktor.i18n.formatters.CalendarFormatter       | valiktor-core      |
+| java.util.Date              | org.valiktor.i18n.formatters.DateFormatter           | valiktor-core      |
+| java.time.LocalDate         | org.valiktor.i18n.formatters.LocalDateFormatter      | valiktor-javatime  |
+| java.time.LocalTime         | org.valiktor.i18n.formatters.LocalTimeFormatter      | valiktor-javatime  |
+| java.time.LocalDateTime     | org.valiktor.i18n.formatters.LocalDateTimeFormatter  | valiktor-javatime  |
+| java.time.OffsetTime        | org.valiktor.i18n.formatters.OffsetTimeFormatter     | valiktor-javatime  |
+| java.time.OffsetDateTime    | org.valiktor.i18n.formatters.OffsetDateTimeFormatter | valiktor-javatime  |
+| java.time.ZonedDateTime     | org.valiktor.i18n.formatters.ZonedDateTimeFormatter  | valiktor-javatime  |
+| javax.money.MonetaryAmount  | org.valiktor.i18n.formatters.MonetaryAmountFormatter | valiktor-javamoney |
+
+#### Creating a custom formatter
+
+Creating a custom formatter is very simple, just implement the interface `org.valiktor.i18n.Formatter`, like this:
+
+```kotlin
+object CustomFormatter : Formatter<Custom> {
+    
+    override fun format(value: Custom, messageBundle: MessageBundle): String {
+        return value.toString()
+    }
+}
+```
+
+Then add it to the list of formatters (`org.valiktor.i18n.Formatters`):
+
+```kotlin
+Formatters[Custom::class] = CustomFormatter
+```
+
+It's also possible to use a SPI (Service Provider Interface) provided by Valiktor using the `java.util.ServiceLoader` to discover the formatters automatically without adding to the list programmatically. For this approach, it's necessary to implement the interface `org.valiktor.i18n.FormatterSpi`, like this:
+
+```kotlin
+class CustomFormatterSpi : FormatterSpi {
+
+    override val formatters = setOf(
+        Custom::class to CustomFormatter
+    )
+}
+```
+
+Then create a file `org.valiktor.i18n.FormatterSpi` within the directory `META-INF.services` with the content:
+
+```
+com.company.CustomFormatterSpi
+```
 
 ## Documentation
 
