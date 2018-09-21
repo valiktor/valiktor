@@ -288,7 +288,7 @@ Then add it to the list of formatters (`org.valiktor.i18n.Formatters`):
 Formatters[Custom::class] = CustomFormatter
 ```
 
-It's also possible to use a SPI (Service Provider Interface) provided by Valiktor using the `java.util.ServiceLoader` to discover the formatters automatically without adding to the list programmatically. For this approach, it's necessary to implement the interface `org.valiktor.i18n.FormatterSpi`, like this:
+It's also possible to use the SPI (Service Provider Interface) provided by Valiktor using the `java.util.ServiceLoader` to discover the formatters automatically without adding to the list programmatically. For this approach, it's necessary to implement the interface `org.valiktor.i18n.FormatterSpi`, like this:
 
 ```kotlin
 class CustomFormatterSpi : FormatterSpi {
@@ -304,10 +304,6 @@ Then create a file `org.valiktor.i18n.FormatterSpi` within the directory `META-I
 ```
 com.company.CustomFormatterSpi
 ```
-
-## Documentation
-
-Work in progress.
 
 ## Modules
 
@@ -336,10 +332,6 @@ For latest updates see [CHANGELOG.md](CHANGELOG.md) file.
 ## Contributing 
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for more details, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/valiktor/valiktor/tags).
 
 ## Authors
 
