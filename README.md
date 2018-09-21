@@ -253,21 +253,21 @@ dateOfBirth: Must be greater than 31/12/1950
 
 Currently the following types have a custom formatter supported by Valiktor:
 
-| Type                        | Formatter                                            | Module             |
-| --------------------------- | ---------------------------------------------------- | ------------------ |
-| kotlin.Any                  | org.valiktor.i18n.formatters.AnyFormatter            | valiktor-core      |
-| kotlin.Array                | org.valiktor.i18n.formatters.ArrayFormatter          | valiktor-core      |
-| kotlin.Number               | org.valiktor.i18n.formatters.NumberFormatter         | valiktor-core      |
-| kotlin.collections.Iterable | org.valiktor.i18n.formatters.IterableFormatter       | valiktor-core      |
-| java.util.Calendar          | org.valiktor.i18n.formatters.CalendarFormatter       | valiktor-core      |
-| java.util.Date              | org.valiktor.i18n.formatters.DateFormatter           | valiktor-core      |
-| java.time.LocalDate         | org.valiktor.i18n.formatters.LocalDateFormatter      | valiktor-javatime  |
-| java.time.LocalTime         | org.valiktor.i18n.formatters.LocalTimeFormatter      | valiktor-javatime  |
-| java.time.LocalDateTime     | org.valiktor.i18n.formatters.LocalDateTimeFormatter  | valiktor-javatime  |
-| java.time.OffsetTime        | org.valiktor.i18n.formatters.OffsetTimeFormatter     | valiktor-javatime  |
-| java.time.OffsetDateTime    | org.valiktor.i18n.formatters.OffsetDateTimeFormatter | valiktor-javatime  |
-| java.time.ZonedDateTime     | org.valiktor.i18n.formatters.ZonedDateTimeFormatter  | valiktor-javatime  |
-| javax.money.MonetaryAmount  | org.valiktor.i18n.formatters.MonetaryAmountFormatter | valiktor-javamoney |
+| Type                          | Formatter                                              | Module                                   |
+| ----------------------------- | ------------------------------------------------------ | ---------------------------------------- |
+| `kotlin.Any`                  | `org.valiktor.i18n.formatters.AnyFormatter`            | [valiktor-core](valiktor-core)           |
+| `kotlin.Array`                | `org.valiktor.i18n.formatters.ArrayFormatter`          | [valiktor-core](valiktor-core)           |
+| `kotlin.Number`               | `org.valiktor.i18n.formatters.NumberFormatter`         | [valiktor-core](valiktor-core)           |
+| `kotlin.collections.Iterable` | `org.valiktor.i18n.formatters.IterableFormatter`       | [valiktor-core](valiktor-core)           |
+| `java.util.Calendar`          | `org.valiktor.i18n.formatters.CalendarFormatter`       | [valiktor-core](valiktor-core)           |
+| `java.util.Date`              | `org.valiktor.i18n.formatters.DateFormatter`           | [valiktor-core](valiktor-core)           |
+| `java.time.LocalDate`         | `org.valiktor.i18n.formatters.LocalDateFormatter`      | [valiktor-javatime](valiktor-javatime)   |
+| `java.time.LocalTime`         | `org.valiktor.i18n.formatters.LocalTimeFormatter`      | [valiktor-javatime](valiktor-javatime)   |
+| `java.time.LocalDateTime`     | `org.valiktor.i18n.formatters.LocalDateTimeFormatter`  | [valiktor-javatime](valiktor-javatime)   |
+| `java.time.OffsetTime`        | `org.valiktor.i18n.formatters.OffsetTimeFormatter`     | [valiktor-javatime](valiktor-javatime)   |
+| `java.time.OffsetDateTime`    | `org.valiktor.i18n.formatters.OffsetDateTimeFormatter` | [valiktor-javatime](valiktor-javatime)   |
+| `java.time.ZonedDateTime`     | `org.valiktor.i18n.formatters.ZonedDateTimeFormatter`  | [valiktor-javatime](valiktor-javatime)   |
+| `javax.money.MonetaryAmount`  | `org.valiktor.i18n.formatters.MonetaryAmountFormatter` | [valiktor-javamoney](valiktor-javamoney) |
 
 #### Creating a custom formatter
 
