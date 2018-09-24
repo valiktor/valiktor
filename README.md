@@ -55,7 +55,7 @@ data class Employee(val id: Int, val name: String, val email: String) {
 
 ### How it works
 
-The main function `org.valiktor.validate` expects an object and a anonymous function that will validate it. Within this, it's possible to validate the object properties by calling `org.valiktor.validate` with the respective property as parameter. Thanks to Kotlin's powerful reflection, it's type safe and very easy, e.g.: `Employee::name`. There are many validation constraints (`org.valiktor.constraints.*`) and extended functions (`org.valiktor.functions.*`) for each data type. For example, to validate that the employee's name cannot be empty: `validate(Employee::name).isNotEmpty()`.
+The main function `org.valiktor.validate` expects an object and an anonymous function that will validate it. Within this, it's possible to validate the object properties by calling `org.valiktor.validate` with the respective property as parameter. Thanks to Kotlin's powerful reflection, it's type safe and very easy, e.g.: `Employee::name`. There are many validation constraints (`org.valiktor.constraints.*`) and extension functions (`org.valiktor.functions.*`) for each data type. For example, to validate that the employee's name cannot be empty: `validate(Employee::name).isNotEmpty()`.
 
 All the `validate` functions are evaluated and if any constraint is violated, a `ConstraintViolationException` will be thrown with a set of `ConstraintViolation` containing the property, the invalid value and the violated constraint.
 
@@ -183,7 +183,7 @@ dependent[2].name: NotEmpty
 
 Valiktor supports decoupled internationalization, this allows to maintain the validation logic in the core of the application and the internationalization in another layer, such as presentation or RESTful adapter. This guarantees some design principles proposed by Domain Driven Design or Clean Architecture, for example.
 
-The internationalization works by converting a collection of `ConstraintViolation` into a collection of `ConstraintViolationMessage` through the extended function `org.valiktor.i18n.mapToMessage` by passing the following parameters:
+The internationalization works by converting a collection of `ConstraintViolation` into a collection of `ConstraintViolationMessage` through the extension function `org.valiktor.i18n.mapToMessage` by passing the following parameters:
 
 * `baseName`: specifies the prefix name of the message properties, the default value is `org/valiktor/messages`.
 * `locale`: specifies the `java.util.Locale` of the message properties, the default value is the default locale of the application.
@@ -220,7 +220,7 @@ Currently the following locales are natively supported by Valiktor:
 
 Any constraint message of any language can be overwritten simply by adding the message key into your message bundle file. Generally the constraint key is the qualified class name plus `message` suffix, e.g.: `org.valiktor.constraints.NotEmpty.message`.
 
-#### Formatters
+#### Message formatters
 
 Some constraints have parameters of many types and these parameters need to be interpolated with the message. The default behavior of Valiktor is to call the object `toString()` function, but some data types require specific formatting, such as date/time and monetary values. So for these cases, there are custom formatters (`org.valiktor.i18n.formatters.*`).
 
@@ -305,23 +305,79 @@ Then create a file `org.valiktor.i18n.FormatterSpi` within the directory `META-I
 com.company.CustomFormatterSpi
 ```
 
+### Creating a custom validation
+
+Valiktor provides a lot of constraints and validation functions for the most common types, but in some cases this is not enough to meet all needs.
+
+It's possible to create custom validations in three steps:
+
+#### 1. Create the constraint 
+
+To create a custom constraint, it's necessary to implement the interface `org.valiktor.Constraint`, which has these properties:
+
+* `name`: specifies the name of the constraint, the default value is the class name, e.g.: `Between`.
+* `messageBundle`: specifies the base name of the default message properties file, the default value is `org/valiktor/messages`.
+* `messageKey`: specifies the name of the key in the message properties file, the default value is the qualified class name plus `message` suffix, e.g.: `org.valiktor.constraints.Between.message`.
+* `messageParams`: specifies a `Map<String, *>` containing the parameters to be replaced in the message, the default value is all class properties, obtained through reflection.
+
+For example:
+
+```kotlin
+data class Between<T>(val start: T, val end: T) : Constraint
+```
+
+#### 2. Create the extension function
+
+The validation logic must be within a extension function of `org.valiktor.Validator<E>.Property<T>`, where `E` represents the object and `T` represents the property to be validated.
+
+There is an auxiliary function named `validate` that expects a `Constraint` and a validation function as parameters.
+
+For example:
+
+```kotlin
+fun <E> Validator<E>.Property<Int?>.isBetween(start: Int, end: Int): Validator<E>.Property<Int?> =
+    this.validate(Between(start, end)) { it == null || it in start.rangeTo(end) }
+```
+
+Note: null properties are valid (`it == null || ...`), this is the default behavior for all Valiktor functions. If the property is nullable and cannot be null, the function `isNotNull()` should be used.
+
+#### 3. Create the internationalization messages
+
+Add internationalization support for the custom constraint is very simple. Just add a message to each message bundle file.
+
+For example:
+
+* `en` (e.g.: `messages_en.properties`):
+
+```
+org.valiktor.constraints.Between.message=Must be between {start} and {end}
+```
+
+* `pt_BR` (e.g.: `messages_pt_BR.properties`):
+
+```
+org.valiktor.constraints.Between.message=Deve estar entre {start} e {end}
+```
+
+Note: the variables `start` and `end` are extracted through the function `messageParams` of the constraint `Between` and will be formatted in the message using the [Message formatters](#message-formatters). If you need a custom formatter, see [Creating a custom formatter](#creating-a-custom-formatter).
+
 ## Modules
 
 | Module                                                                                   | Description                              | Artifacts                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| ---------------------------------------------------------------------------------------- | --------------------------------------   | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [valiktor-core](valiktor-core)                                                           | Core module with engine and i18n support | [![jar](https://img.shields.io/badge/jar-v0.3.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.3.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.3.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.3.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.3.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.3.0/sources)                                                                |
 | [valiktor-javamoney](valiktor-javamoney)                                                 | JavaMoney API support                    | [![jar](https://img.shields.io/badge/jar-v0.3.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.3.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.3.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.3.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.3.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.3.0/sources)                                                 |
 | [valiktor-javatime](valiktor-javatime)                                                   | JavaTime API support                     | [![jar](https://img.shields.io/badge/jar-v0.3.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.3.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.3.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.3.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.3.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.3.0/sources)                                                    |
-| [valiktor-spring](valiktor-spring/valiktor-spring)                                       | SpringMVC support                        | [![jar](https://img.shields.io/badge/jar-v0.3.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.3.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.3.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.3.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.3.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.3.0/sources)                                                          |
-| [valiktor-spring-boot-autoconfigure](valiktor-spring/valiktor-spring-boot-autoconfigure) | Spring Boot Auto Configuration support   | [![jar](https://img.shields.io/badge/jar-v0.3.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.3.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.3.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.3.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.3.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.3.0/sources) |
+| [valiktor-spring](valiktor-spring/valiktor-spring)                                       | Spring WebMvc and WebFlux support        | [![jar](https://img.shields.io/badge/jar-v0.3.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.3.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.3.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.3.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.3.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.3.0/sources)                                                          |
+| [valiktor-spring-boot-autoconfigure](valiktor-spring/valiktor-spring-boot-autoconfigure) | Spring Boot AutoConfiguration support    | [![jar](https://img.shields.io/badge/jar-v0.3.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.3.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.3.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.3.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.3.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.3.0/sources) |
 | [valiktor-spring-boot-starter](valiktor-spring/valiktor-spring-boot-starter)             | Spring Boot Starter support              | [![jar](https://img.shields.io/badge/jar-v0.3.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.3.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.3.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.3.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.3.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.3.0/sources)                   |
 
 ## Samples
 
 | Project                                                                                                   | Description                       |
 | --------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| [valiktor-sample-spring-boot-1](valiktor-samples/valiktor-sample-spring-boot-1)                           | Spring Boot 1 Example             |
-| [valiktor-sample-spring-boot-2](valiktor-samples/valiktor-sample-spring-boot-2)                           | Spring Boot 2 Example             |
+| [valiktor-sample-spring-boot-1](valiktor-samples/valiktor-sample-spring-boot-1)                           | Spring Boot 1 WebMvc Example      |
+| [valiktor-sample-spring-boot-2](valiktor-samples/valiktor-sample-spring-boot-2)                           | Spring Boot 2 WebMvc Example      |
 | [valiktor-sample-spring-boot-2-reactive](valiktor-samples/valiktor-sample-spring-boot-2-reactive)         | Spring Boot 2 WebFlux Example     |
 | [valiktor-sample-spring-boot-2-reactive-dsl](valiktor-samples/valiktor-sample-spring-boot-2-reactive-dsl) | Spring Boot 2 WebFlux DSL Example |
 
