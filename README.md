@@ -367,7 +367,7 @@ org.valiktor.constraints.Between.message=Must be between {start} and {end}
 org.valiktor.constraints.Between.message=Deve estar entre {start} e {end}
 ```
 
-Note: the variables `start` and `end` are extracted through the function `messageParams` of the constraint `Between` and will be formatted in the message using the [Message formatters](#message-formatters). If you need a custom formatter, see [Creating a custom formatter](#creating-a-custom-formatter).
+Note: the variables `start` and `end` are extracted through the property `messageParams` of the constraint `Between` and will be formatted in the message using the [Message formatters](#message-formatters). If you need a custom formatter, see [Creating a custom formatter](#creating-a-custom-formatter).
 
 ## Modules
 
