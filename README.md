@@ -339,6 +339,14 @@ fun <E> Validator<E>.Property<Int?>.isBetween(start: Int, end: Int): Validator<E
     this.validate(Between(start, end)) { it == null || it in start.rangeTo(end) }
 ```
 
+And to use it:
+
+```kotlin
+validate(employee) {
+    validate(Employee::age).isBetween(start = 1, end = 99)
+}
+```
+
 Note: null properties are valid (`it == null || ...`), this is the default behavior for all Valiktor functions. If the property is nullable and cannot be null, the function `isNotNull()` should be used.
 
 #### 3. Create the internationalization messages
