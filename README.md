@@ -311,7 +311,7 @@ Valiktor provides a lot of constraints and validation functions for the most com
 
 It's possible to create custom validations in three steps:
 
-#### 1. Create the constraint 
+#### 1. Define the constraint 
 
 To create a custom constraint, it's necessary to implement the interface `org.valiktor.Constraint`, which has these properties:
 
@@ -349,7 +349,7 @@ validate(employee) {
 
 Note: null properties are valid (`it == null || ...`), this is the default behavior for all Valiktor functions. If the property is nullable and cannot be null, the function `isNotNull()` should be used.
 
-#### 3. Create the internationalization messages
+#### 3. Add the internationalization messages
 
 Add internationalization support for the custom constraint is very simple. Just add a message to each message bundle file.
 
@@ -368,6 +368,302 @@ org.valiktor.constraints.Between.message=Deve estar entre {start} e {end}
 ```
 
 Note: the variables `start` and `end` are extracted through the property `messageParams` of the constraint `Between` and will be formatted in the message using the [Message formatters](#message-formatters). If you need a custom formatter, see [Creating a custom formatter](#creating-a-custom-formatter).
+
+### Validating RESTful APIs
+
+Implementing validation on REST APIs is not always so easy, so developers end up not doing it right. But the fact is that validations are extremely important to maintaining the integrity and consistency of the API, as well as maintaining the responses clear by helping the client to identify and fix the issues.
+
+#### Spring support
+
+Valiktor provides integration with Spring WebMvc and Spring WebFlux (reactive approach) to make this work easier. The module `valiktor-spring` has four exception handlers:
+
+Spring WebMvc:
+
+* `ValiktorExceptionHandler`: handles `ConstraintViolationException` from `valiktor-core`.
+* `ValiktorJacksonExceptionHandler`: handles `MissingKotlinParameterException` from `jackson-module-kotlin`.
+
+Spring WebFlux:
+
+* `ValiktorReactiveExceptionHandler`: handles `ConstraintViolationException` from `valiktor-core`.
+* `ValiktorJacksonReactiveExceptionHandler`: handles `MissingKotlinParameterException` from `jackson-module-kotlin`.
+
+All the exception handlers return the status code `422` ([Unprocessable Entity](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422)) with the violated constraints in the following payload format:
+
+```json
+{
+  "errors": [
+    {
+      "property": "the invalid property name",
+      "value": "the invalid value",
+      "message": "the internationalization message",
+      "constraint": {
+        "name": "the constraint name",
+        "params": [
+          {
+            "name": "the param name",
+            "value": "the param value"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+Valiktor also use the Spring Locale Resolver to determine the locale that will be used to translate the internationalization messages.
+
+By default, Spring resolves the locale by getting the HTTP header `Accept-Language`, e.g.: `Accept-Language: en`.
+
+#### Spring WebMvc example
+
+Consider this controller:
+
+```kotlin
+@RestController
+@RequestMapping("/employees")
+class EmployeeController {
+
+    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun create(@RequestBody employee: Employee): ResponseEntity<Void> {
+        validate(employee) {
+            validate(Employee::id).isPositive()
+            validate(Employee::name).isNotEmpty()
+        }
+        return ResponseEntity.created(...).build()
+    }
+}
+```
+
+Now, let's make two invalid requests with `cURL`:
+
+* with `Accept-Language: en`:
+
+```bash
+curl --header "Accept-Language: en" \
+  --header "Content-Type: application/json" \
+  --request POST \ 
+  --data '{"id":0,"name":""}' \
+  http://localhost:8080/employees
+```
+
+Response:
+
+```json
+{
+  "errors": [
+    {
+      "property": "id",
+      "value": 0,
+      "message": "Must be greater than 0",
+      "constraint": {
+        "name": "Greater",
+        "params": [
+          {
+            "name": "value",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "property": "name",
+      "value": "",
+      "message": "Must not be empty",
+      "constraint": {
+        "name": "NotEmpty",
+        "params": []
+      }
+    }
+  ]
+}
+```
+
+* with `Accept-Language: pt-BR`:
+
+```bash
+curl --header "Accept-Language: pt-BR" \
+  --header "Content-Type: application/json" \  
+  --request POST \ 
+  --data '{"id":0,"name":""}' \
+  http://localhost:8080/employees
+```
+
+Response:
+
+```json
+{
+  "errors": [
+    {
+      "property": "id",
+      "value": 0,
+      "message": "Deve ser maior que 0",
+      "constraint": {
+        "name": "Greater",
+        "params": [
+          {
+            "name": "value",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "property": "name",
+      "value": "",
+      "message": "Não deve ser vazio",
+      "constraint": {
+        "name": "NotEmpty",
+        "params": []
+      }
+    }
+  ]
+}
+```
+
+Samples: 
+
+* [valiktor-sample-spring-boot-1](valiktor-samples/valiktor-sample-spring-boot-1)
+* [valiktor-sample-spring-boot-2](valiktor-samples/valiktor-sample-spring-boot-2)
+
+#### Spring WebFlux example
+
+Consider this router using [Kotlin DSL](https://spring.io/blog/2017/08/01/spring-framework-5-kotlin-apis-the-functional-way#functional-routing-with-the-kotlin-dsl-for-spring-webflux):
+
+```kotlin
+@Bean
+fun router(): RouterFunction<*> = router {
+    accept(MediaType.APPLICATION_JSON).nest {
+        "/employees".nest {
+            POST("/") { req ->
+                req.bodyToMono(Employee::class.java)
+                    .map {
+                        validate(it) {
+                            validate(Employee::id).isPositive()
+                            validate(Employee::name).isNotEmpty()
+                        }
+                    }
+                    .flatMap {
+                        ServerResponse.created(...).build()
+                    }
+            }
+        }
+    }
+}
+```
+
+Now, let's make two invalid requests with `cURL`:
+
+* with `Accept-Language: en`:
+
+```bash
+curl --header "Accept-Language: en" \
+  --header "Content-Type: application/json" \
+  --request POST \ 
+  --data '{"id":0,"name":""}' \
+  http://localhost:8080/employees
+```
+
+Response:
+
+```json
+{
+  "errors": [
+    {
+      "property": "id",
+      "value": 0,
+      "message": "Must be greater than 0",
+      "constraint": {
+        "name": "Greater",
+        "params": [
+          {
+            "name": "value",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "property": "name",
+      "value": "",
+      "message": "Must not be empty",
+      "constraint": {
+        "name": "NotEmpty",
+        "params": []
+      }
+    }
+  ]
+}
+```
+
+* with `Accept-Language: pt-BR`:
+
+```bash
+curl --header "Accept-Language: pt-BR" \
+  --header "Content-Type: application/json" \  
+  --request POST \ 
+  --data '{"id":0,"name":""}' \
+  http://localhost:8080/employees
+```
+
+Response:
+
+```json
+{
+  "errors": [
+    {
+      "property": "id",
+      "value": 0,
+      "message": "Deve ser maior que 0",
+      "constraint": {
+        "name": "Greater",
+        "params": [
+          {
+            "name": "value",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "property": "name",
+      "value": "",
+      "message": "Não deve ser vazio",
+      "constraint": {
+        "name": "NotEmpty",
+        "params": []
+      }
+    }
+  ]
+}
+```
+
+Samples:
+
+* [valiktor-sample-spring-boot-2-reactive](valiktor-samples/valiktor-sample-spring-boot-2-reactive)
+* [valiktor-sample-spring-boot-2-reactive-dsl](valiktor-samples/valiktor-sample-spring-boot-2-reactive-dsl)
+
+#### Spring Boot support
+
+For Spring Boot applications, the module `valiktor-spring-boot-starter` provides auto-configuration support for the exception handlers and properties support for configuration.
+
+Currently the following properties can be configured:
+
+| Property                | Description                                         |
+| ------------------------| --------------------------------------------------- |
+| valiktor.baseBundleName | The base bundle name containing the custom messages |
+
+Example with `YAML` format:
+
+```yaml
+valiktor:
+  base-bundle-name: messages
+```
+
+Example with `Properties` format:
+
+```properties
+valiktor.baseBundleName=messages
+```
 
 ## Modules
 
