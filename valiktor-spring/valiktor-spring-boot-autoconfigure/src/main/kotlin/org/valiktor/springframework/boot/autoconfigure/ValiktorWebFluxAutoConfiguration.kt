@@ -34,7 +34,8 @@ import org.valiktor.springframework.web.reactive.ValiktorReactiveExceptionHandle
 @Configuration
 @ConditionalOnClass(name = [
     "org.valiktor.springframework.config.ValiktorConfiguration",
-    "org.springframework.web.reactive.DispatcherHandler"])
+    "org.springframework.web.reactive.DispatcherHandler",
+    "org.springframework.http.codec.CodecConfigurer"])
 class ValiktorWebFluxAutoConfiguration {
 
     /**

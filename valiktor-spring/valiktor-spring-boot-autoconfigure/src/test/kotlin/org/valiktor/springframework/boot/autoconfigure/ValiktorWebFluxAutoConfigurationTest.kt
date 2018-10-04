@@ -59,6 +59,15 @@ class ValiktorWebFluxAutoConfigurationTest {
     }
 
     @Test
+    fun `should not create ValiktorReactiveExceptionHandler without CodecConfigurer`() {
+        this.contextRunner
+            .withClassLoader(FilteredClassLoader(CodecConfigurer::class.java))
+            .run { context ->
+                assertThat(context).doesNotHaveBean(ValiktorReactiveExceptionHandler::class.java)
+            }
+    }
+
+    @Test
     fun `should not create ValiktorJacksonReactiveExceptionHandler without MissingKotlinParameterException`() {
         this.contextRunner
             .withClassLoader(FilteredClassLoader(MissingKotlinParameterException::class.java))
