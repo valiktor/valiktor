@@ -1,3 +1,8 @@
+# 0.3.1
+> Published 04 Oct 2018
+
+* Fixed `ValiktorWebFluxAutoConfiguration` to validate if the class `CodecConfigurer` exists on classpath.
+
 # 0.3.0
 > Published 05 Sep 2018
 
