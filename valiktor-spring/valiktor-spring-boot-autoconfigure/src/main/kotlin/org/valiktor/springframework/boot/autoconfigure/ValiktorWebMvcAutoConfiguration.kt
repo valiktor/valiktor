@@ -16,6 +16,7 @@
 
 package org.valiktor.springframework.boot.autoconfigure
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
@@ -31,9 +32,8 @@ import org.valiktor.springframework.web.controller.ValiktorJacksonExceptionHandl
  * @since 0.3.0
  */
 @Configuration
-@ConditionalOnClass(name = [
-    "org.valiktor.springframework.config.ValiktorConfiguration",
-    "org.springframework.web.servlet.DispatcherServlet"])
+@ConditionalOnClass(name = ["org.springframework.web.servlet.DispatcherServlet"])
+@ConditionalOnBean(type = ["org.valiktor.springframework.config.ValiktorConfiguration"])
 class ValiktorWebMvcAutoConfiguration {
 
     /**
