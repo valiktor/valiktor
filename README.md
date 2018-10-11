@@ -1,4 +1,4 @@
-# Valiktor
+![Valiktor](docs/logo.png)
 
 > Valiktor is a type-safe, powerful and extensible fluent DSL to validate objects in Kotlin.
 
