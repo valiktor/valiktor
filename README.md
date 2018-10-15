@@ -288,7 +288,7 @@ Then add it to the list of formatters (`org.valiktor.i18n.Formatters`):
 Formatters[Custom::class] = CustomFormatter
 ```
 
-It's also possible to use the SPI (Service Provider Interface) provided by Valiktor using the `java.util.ServiceLoader` to discover the formatters automatically without adding to the list programmatically. For this approach, it's necessary to implement the interface `org.valiktor.i18n.FormatterSpi`, like this:
+It's also possible to use the SPI (Service Provider Interface) provided by Valiktor using the `java.util.ServiceLoader` to discover the formatters automatically without adding them to the list programmatically. For this approach, it's necessary to implement the interface `org.valiktor.i18n.FormatterSpi`, like this:
 
 ```kotlin
 class CustomFormatterSpi : FormatterSpi {
@@ -316,9 +316,9 @@ It's possible to create custom validations in three steps:
 To create a custom constraint, it's necessary to implement the interface `org.valiktor.Constraint`, which has these properties:
 
 * `name`: specifies the name of the constraint, the default value is the class name, e.g.: `Between`.
-* `messageBundle`: specifies the base name of the default message properties file, the default value is `org/valiktor/messages`.
-* `messageKey`: specifies the name of the key in the message properties file, the default value is the qualified class name plus `message` suffix, e.g.: `org.valiktor.constraints.Between.message`.
-* `messageParams`: specifies a `Map<String, *>` containing the parameters to be replaced in the message, the default value is all class properties, obtained through reflection.
+* `messageBundle`: specifies the base name of the default message property file, the default value is `org/valiktor/messages`.
+* `messageKey`: specifies the name of the key in the message property file, the default value is the qualified class name plus `message` suffix, e.g.: `org.valiktor.constraints.Between.message`.
+* `messageParams`: specifies a `Map<String, *>` containing the parameters to be replaced in the message, the default values are all class properties, obtained through reflection.
 
 For example:
 
@@ -328,7 +328,7 @@ data class Between<T>(val start: T, val end: T) : Constraint
 
 #### 2. Create the extension function
 
-The validation logic must be within a extension function of `org.valiktor.Validator<E>.Property<T>`, where `E` represents the object and `T` represents the property to be validated.
+The validation logic must be within an extension function of `org.valiktor.Validator<E>.Property<T>`, where `E` represents the object and `T` represents the property to be validated.
 
 There is an auxiliary function named `validate` that expects a `Constraint` and a validation function as parameters.
 
@@ -371,11 +371,11 @@ Note: the variables `start` and `end` are extracted through the property `messag
 
 ### Validating RESTful APIs
 
-Implementing validation on REST APIs is not always so easy, so developers end up not doing it right. But the fact is that validations are extremely important to maintaining the integrity and consistency of the API, as well as maintaining the responses clear by helping the client to identify and fix the issues.
+Implementing validation on REST APIs is not always so easy, so developers end up not doing it right. But the fact is that validations are extremely important to maintaining the integrity and consistency of the API, as well as maintaining the responses clear by helping the client identifying and fixing the issues.
 
 #### Spring support
 
-Valiktor provides integration with Spring WebMvc and Spring WebFlux (reactive approach) to make this work easier. The module `valiktor-spring` has four exception handlers:
+Valiktor provides integration with Spring WebMvc and Spring WebFlux (reactive approach) to make validating easier. The module `valiktor-spring` has four exception handlers:
 
 Spring WebMvc:
 
@@ -644,7 +644,7 @@ Samples:
 
 #### Spring Boot support
 
-For Spring Boot applications, the module `valiktor-spring-boot-starter` provides auto-configuration support for the exception handlers and properties support for configuration.
+For Spring Boot applications, the module `valiktor-spring-boot-starter` provides auto-configuration support for the exception handlers and property support for configuration.
 
 Currently the following properties can be configured:
 
