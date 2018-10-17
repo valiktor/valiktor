@@ -248,7 +248,7 @@ dateOfBirth: Must be greater than Dec 31, 1950
 With `pt_BR` as the default locale, this code will return:
 
 ```
-dateOfBirth: Must be greater than 31/12/1950
+dateOfBirth: Deve ser maior que 31/12/1950
 ```
 
 Currently the following types have a custom formatter supported by Valiktor:
