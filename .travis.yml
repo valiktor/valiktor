@@ -18,7 +18,7 @@ stages:
 jobs:
   include:
     - stage: build
-      jdk: oraclejdk8
+      jdk: openjdk8
       install:
         - ./gradlew -v
       script:
@@ -27,21 +27,21 @@ jobs:
         - bash <(curl -s https://codecov.io/bash)
 
     - stage: build
-      jdk: oraclejdk9
+      jdk: openjdk9
       install:
         - ./gradlew -v
       script:
         - ./gradlew clean build
 
     - stage: build
-      jdk: oraclejdk10
+      jdk: openjdk10
       install:
         - ./gradlew -v
       script:
         - ./gradlew clean build
 
     - stage: deploy
-      jdk: oraclejdk8
+      jdk: openjdk8
       before_install:
         - openssl aes-256-cbc -K $encrypted_446ef87682bf_key -iv $encrypted_446ef87682bf_iv -in private-key.gpg.enc -out $SIGNING_FILE -d
       install:
