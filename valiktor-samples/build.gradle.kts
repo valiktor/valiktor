@@ -2,12 +2,32 @@ import org.jetbrains.dokka.gradle.DokkaTask
 
 allprojects {
     tasks {
-        withType<DokkaTask> {
+        dokka {
             enabled = false
         }
 
-        withType<AbstractPublishToMaven> {
+        publishMavenJavaPublicationToMavenLocal {
             enabled = false
+        }
+
+        publishMavenJavaPublicationToMavenRepository {
+            enabled = false
+        }
+    }
+}
+
+subprojects {
+    tasks {
+        compileKotlin {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
+
+        compileTestKotlin {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
         }
     }
 }
