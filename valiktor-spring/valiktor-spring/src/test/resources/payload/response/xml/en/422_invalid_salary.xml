@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unprocessableEntity>
+    <errors>
+        <error>
+            <property>salary</property>
+            <value>abc</value>
+            <message>Must be valid</message>
+            <constraint>
+                <name>Valid</name>
+                <params/>
+            </constraint>
+        </error>
+    </errors>
+</unprocessableEntity>

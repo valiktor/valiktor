@@ -16,6 +16,7 @@
 
 package org.valiktor.springframework.boot.autoconfigure
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.boot.autoconfigure.AutoConfigurations
@@ -27,6 +28,7 @@ import org.springframework.http.codec.CodecConfigurer
 import org.springframework.http.codec.support.DefaultServerCodecConfigurer
 import org.springframework.web.reactive.DispatcherHandler
 import org.valiktor.springframework.config.ValiktorConfiguration
+import org.valiktor.springframework.web.reactive.ReactiveInvalidFormatExceptionHandler
 import org.valiktor.springframework.web.reactive.ReactiveMissingKotlinParameterExceptionHandler
 import org.valiktor.springframework.web.reactive.ReactiveValiktorExceptionHandler
 import kotlin.test.Test
@@ -68,6 +70,16 @@ class ValiktorWebFluxAutoConfigurationTest {
     }
 
     @Test
+    fun `should not create ReactiveInvalidFormatExceptionHandler without InvalidFormatException`() {
+        this.contextRunner
+            .withClassLoader(FilteredClassLoader(InvalidFormatException::class.java))
+            .run { context ->
+                assertThat(context).hasSingleBean(ReactiveValiktorExceptionHandler::class.java)
+                assertThat(context).doesNotHaveBean(ReactiveInvalidFormatExceptionHandler::class.java)
+            }
+    }
+
+    @Test
     fun `should not create ReactiveMissingKotlinParameterExceptionHandler without MissingKotlinParameterException`() {
         this.contextRunner
             .withClassLoader(FilteredClassLoader(MissingKotlinParameterException::class.java))
@@ -99,6 +111,28 @@ class ValiktorWebFluxAutoConfigurationTest {
                             context.getBean(ValiktorConfiguration::class.java),
                             context.getBean(CodecConfigurer::class.java)
                         ))
+            }
+    }
+
+    @Test
+    fun `should create ReactiveInvalidFormatExceptionHandler`() {
+        this.contextRunner
+            .run { context ->
+                assertThat(context).hasSingleBean(ReactiveInvalidFormatExceptionHandler::class.java)
+            }
+    }
+
+    @Test
+    fun `should create ReactiveInvalidFormatExceptionHandler with custom bean`() {
+        this.contextRunner
+            .withUserConfiguration(
+                ValiktorWebFluxCustomConfiguration::class.java
+            )
+            .run { context ->
+                assertThat(context).hasSingleBean(ReactiveInvalidFormatExceptionHandler::class.java)
+                assertThat(context.getBean(ReactiveInvalidFormatExceptionHandler::class.java)).isSameAs(
+                    context.getBean(ValiktorWebFluxCustomConfiguration::class.java)
+                        .reactiveInvalidFormatExceptionHandler())
             }
     }
 
@@ -138,6 +172,9 @@ private class ValiktorWebFluxCustomConfiguration {
     @Bean
     fun reactiveValiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration, codecConfigurer: CodecConfigurer) =
         ReactiveValiktorExceptionHandler(valiktorConfiguration, codecConfigurer)
+
+    @Bean
+    fun reactiveInvalidFormatExceptionHandler() = ReactiveInvalidFormatExceptionHandler()
 
     @Bean
     fun reactiveMissingKotlinParameterExceptionHandler() = ReactiveMissingKotlinParameterExceptionHandler()

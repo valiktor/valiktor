@@ -16,6 +16,7 @@
 
 package org.valiktor.springframework.boot.autoconfigure
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.boot.autoconfigure.AutoConfigurations
@@ -25,8 +26,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.DispatcherServlet
 import org.valiktor.springframework.config.ValiktorConfiguration
-import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
+import org.valiktor.springframework.web.controller.InvalidFormatExceptionHandler
 import org.valiktor.springframework.web.controller.MissingKotlinParameterExceptionHandler
+import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
 import kotlin.test.Test
 
 class ValiktorWebMvcAutoConfigurationTest {
@@ -52,6 +54,16 @@ class ValiktorWebMvcAutoConfigurationTest {
             .withClassLoader(FilteredClassLoader(DispatcherServlet::class.java))
             .run { context ->
                 assertThat(context).doesNotHaveBean(ValiktorExceptionHandler::class.java)
+            }
+    }
+
+    @Test
+    fun `should not create InvalidFormatExceptionHandler without InvalidFormatException`() {
+        this.contextRunner
+            .withClassLoader(FilteredClassLoader(InvalidFormatException::class.java))
+            .run { context ->
+                assertThat(context).hasSingleBean(ValiktorExceptionHandler::class.java)
+                assertThat(context).doesNotHaveBean(InvalidFormatExceptionHandler::class.java)
             }
     }
 
@@ -88,6 +100,28 @@ class ValiktorWebMvcAutoConfigurationTest {
     }
 
     @Test
+    fun `should create InvalidFormatExceptionHandler`() {
+        this.contextRunner
+            .run { context ->
+                assertThat(context).hasSingleBean(InvalidFormatExceptionHandler::class.java)
+            }
+    }
+
+    @Test
+    fun `should create InvalidFormatExceptionHandler with custom bean`() {
+        this.contextRunner
+            .withUserConfiguration(
+                ValiktorWebMvcCustomConfiguration::class.java
+            )
+            .run { context ->
+                assertThat(context).hasSingleBean(InvalidFormatExceptionHandler::class.java)
+                assertThat(context.getBean(InvalidFormatExceptionHandler::class.java)).isSameAs(
+                    context.getBean(ValiktorWebMvcCustomConfiguration::class.java)
+                        .invalidFormatExceptionHandler(context.getBean(ValiktorExceptionHandler::class.java)))
+            }
+    }
+
+    @Test
     fun `should create MissingKotlinParameterExceptionHandler`() {
         this.contextRunner
             .run { context ->
@@ -116,6 +150,10 @@ private class ValiktorWebMvcCustomConfiguration {
     @Bean
     fun valiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration) =
         ValiktorExceptionHandler(valiktorConfiguration)
+
+    @Bean
+    fun invalidFormatExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler) =
+        InvalidFormatExceptionHandler(valiktorExceptionHandler)
 
     @Bean
     fun missingKotlinParameterExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler) =

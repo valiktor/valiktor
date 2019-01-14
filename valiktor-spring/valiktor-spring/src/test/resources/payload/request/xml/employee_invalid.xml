@@ -5,4 +5,5 @@
     <email>jon</email>
     <salary>10000</salary>
     <dateOfBirth>2001-01-02</dateOfBirth>
+    <status>ACTIVE</status>
 </employee>

@@ -1,0 +1,21 @@
+{
+  "errors": [
+    {
+      "property": "status",
+      "value": "PENDING",
+      "message": "Deve ser um desses: ACTIVE, INACTIVE",
+      "constraint": {
+        "name": "In",
+        "params": [
+          {
+            "name": "values",
+            "value": [
+              "ACTIVE",
+              "INACTIVE"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
