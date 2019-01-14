@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-fun DependencyHandler.springBoot(module: String) = "org.springframework.boot:spring-boot-$module:2.0.4.RELEASE"
-fun DependencyHandler.jacksonModule(module: String) = "com.fasterxml.jackson.module:jackson-module-$module:2.9.6"
+fun DependencyHandler.springBoot(module: String) = "org.springframework.boot:spring-boot-$module:2.1.2.RELEASE"
+fun DependencyHandler.jacksonModule(module: String) = "com.fasterxml.jackson.module:jackson-module-$module:2.9.8"
 
 plugins {
-    kotlin("plugin.spring") version "1.2.51"
+    kotlin("plugin.spring") version "1.3.11"
 }
 
 dependencies {
@@ -18,12 +18,4 @@ dependencies {
     testCompile(springBoot("starter-webflux"))
     testCompile(springBoot("test"))
     testCompile(jacksonModule("kotlin"))
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "1.8"
-        }
-    }
 }

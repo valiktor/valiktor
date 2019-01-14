@@ -4,32 +4,39 @@ import org.gradle.api.tasks.bundling.Jar
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
-    kotlin("jvm") version "1.2.51"
-    id("maven-publish")
+    kotlin("jvm") version "1.3.11"
+    id("jacoco")
     id("signing")
+    id("maven-publish")
     id("org.jetbrains.dokka") version "0.9.17"
-    id("com.adarshr.test-logger") version "1.3.1"
-    id("org.jmailen.kotlinter") version "1.16.0"
+    id("org.jmailen.kotlinter") version "1.20.1"
+    id("com.adarshr.test-logger") version "1.6.0"
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
 }
 
 subprojects {
-    fun DependencyHandler.assertj(module: String) = "org.assertj:assertj-$module:3.9.1"
+    fun DependencyHandler.assertj(module: String) = "org.assertj:assertj-$module:3.11.1"
     fun DependencyHandler.junit5(module: String) = "org.junit.jupiter:junit-jupiter-$module:5.0.0"
 
     apply {
         plugin("kotlin")
         plugin("jacoco")
-        plugin("maven-publish")
         plugin("signing")
+        plugin("maven-publish")
         plugin("org.jetbrains.dokka")
-        plugin("com.adarshr.test-logger")
         plugin("org.jmailen.kotlinter")
+        plugin("com.adarshr.test-logger")
     }
 
     group = "org.valiktor"
 
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -45,45 +52,47 @@ subprojects {
     }
 
     tasks {
-        withType<KotlinCompile> {
+        compileKotlin {
             kotlinOptions {
                 jvmTarget = "1.6"
             }
         }
 
-        withType<Test> {
+        compileTestKotlin {
+            kotlinOptions {
+                jvmTarget = "1.6"
+            }
+        }
+
+        test {
             useJUnitPlatform()
 
             // fix for JDK > 8 (see http://openjdk.java.net/jeps/252)
             systemProperty("java.locale.providers", "JRE,SPI")
         }
 
-        withType<DokkaTask> {
+        dokka {
             outputFormat = "javadoc"
             outputDirectory = "$buildDir/javadoc"
-            inputs.dir("src/main/kotlin")
         }
 
-        withType<JacocoReport> {
+        jacocoTestReport {
             reports {
                 xml.isEnabled = true
                 html.isEnabled = true
             }
-
-            val jacocoTestCoverageVerification by tasks
-            jacocoTestCoverageVerification.dependsOn(this)
         }
 
-        withType<JacocoCoverageVerification> {
+        jacocoTestCoverageVerification {
+            dependsOn(jacocoTestReport)
+
             violationRules {
-                rule {
-                    limit {
-                        minimum = BigDecimal.valueOf(0.3)
-                    }
-                }
+                rule { limit { minimum = 0.3.toBigDecimal() } }
             }
-            val check by tasks
-            check.dependsOn(this)
+        }
+
+        check {
+            dependsOn(jacocoTestCoverageVerification)
         }
     }
 
@@ -99,17 +108,17 @@ subprojects {
                 }
             }
         }
-        (publications) {
-            "mavenJava"(MavenPublication::class) {
+        publications {
+            create<MavenPublication>("mavenJava") {
                 val binaryJar = components["java"]
 
                 val sourcesJar by tasks.creating(Jar::class) {
-                    classifier = "sources"
-                    from(java.sourceSets["main"].allSource)
+                    archiveClassifier.set("sources")
+                    from(sourceSets["main"].allSource)
                 }
 
                 val javadocJar by tasks.creating(Jar::class) {
-                    classifier = "javadoc"
+                    archiveClassifier.set("javadoc")
                     from("$buildDir/javadoc")
                 }
 
