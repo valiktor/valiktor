@@ -3,5 +3,6 @@
   "name": "Jon",
   "email": "jon",
   "salary": 10000,
-  "dateOfBirth": "2001-01-02"
+  "dateOfBirth": "2001-01-02",
+  "status": "ACTIVE"
 }

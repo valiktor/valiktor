@@ -22,6 +22,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.valiktor.springframework.config.ValiktorConfiguration
+import org.valiktor.springframework.web.controller.InvalidFormatExceptionHandler
 import org.valiktor.springframework.web.controller.MissingKotlinParameterExceptionHandler
 import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
 
@@ -45,6 +46,17 @@ class ValiktorWebMvcAutoConfiguration {
     @ConditionalOnMissingBean
     fun valiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration) =
         ValiktorExceptionHandler(valiktorConfiguration)
+
+    /**
+     * Creates a [InvalidFormatExceptionHandler]
+     *
+     * @return the respective [InvalidFormatExceptionHandler]
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnClass(name = ["com.fasterxml.jackson.databind.exc.InvalidFormatException"])
+    fun invalidFormatExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler) =
+        InvalidFormatExceptionHandler(valiktorExceptionHandler)
 
     /**
      * Creates a [MissingKotlinParameterExceptionHandler]

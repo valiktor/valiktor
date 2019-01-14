@@ -49,12 +49,15 @@ import java.util.Date
 import java.util.Locale
 import javax.servlet.http.HttpServletRequest
 
+private enum class Status { ACTIVE, INACTIVE }
+
 private data class Employee(
     val id: Int,
     val name: String,
     val email: String,
     val salary: BigDecimal,
-    val dateOfBirth: Date
+    val dateOfBirth: Date,
+    val status: Status
 )
 
 @RestController
@@ -90,11 +93,16 @@ object ValiktorExceptionHandlerFixture {
         .registerModule(KotlinModule())
 
     private val valiktorExceptionHandler = ValiktorExceptionHandler(config = ValiktorConfiguration())
+    private val invalidFormatExceptionHandler = InvalidFormatExceptionHandler(valiktorExceptionHandler = valiktorExceptionHandler)
     private val missingKotlinParameterExceptionHandler = MissingKotlinParameterExceptionHandler(valiktorExceptionHandler = valiktorExceptionHandler)
 
     val mockMvc: MockMvc = MockMvcBuilders
         .standaloneSetup(ValiktorTestController())
-        .setControllerAdvice(valiktorExceptionHandler, missingKotlinParameterExceptionHandler)
+        .setControllerAdvice(
+            valiktorExceptionHandler,
+            invalidFormatExceptionHandler,
+            missingKotlinParameterExceptionHandler
+        )
         .setMessageConverters(
             MappingJackson2HttpMessageConverter().also { it.objectMapper = this.jsonMapper },
             MappingJackson2XmlHttpMessageConverter().also { it.objectMapper = this.xmlMapper })
@@ -111,9 +119,13 @@ object ValiktorExceptionHandlerFixture {
         fun payloadEmployeeValid() = this.javaClass.classLoader.getResource("payload/request/json/employee_valid.json").readText()
         fun payloadEmployeeInvalid() = this.javaClass.classLoader.getResource("payload/request/json/employee_invalid.json").readText()
         fun payloadEmployeeNullName() = this.javaClass.classLoader.getResource("payload/request/json/employee_null_name.json").readText()
+        fun payloadEmployeeInvalidStatus() = this.javaClass.classLoader.getResource("payload/request/json/employee_invalid_status.json").readText()
+        fun payloadEmployeeInvalidSalary() = this.javaClass.classLoader.getResource("payload/request/json/employee_invalid_salary.json").readText()
 
         fun payload422(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/json/$locale/422.json").readText()
         fun payload422NullName(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/json/$locale/422_null_name.json").readText()
+        fun payload422InvalidStatus(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/json/$locale/422_invalid_status.json").readText()
+        fun payload422InvalidSalary(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/json/$locale/422_invalid_salary.json").readText()
     }
 
     object XML {
@@ -121,8 +133,12 @@ object ValiktorExceptionHandlerFixture {
         fun payloadEmployeeValid() = this.javaClass.classLoader.getResource("payload/request/xml/employee_valid.xml").readText()
         fun payloadEmployeeInvalid() = this.javaClass.classLoader.getResource("payload/request/xml/employee_invalid.xml").readText()
         fun payloadEmployeeNullName() = this.javaClass.classLoader.getResource("payload/request/xml/employee_null_name.xml").readText()
+        fun payloadEmployeeInvalidStatus() = this.javaClass.classLoader.getResource("payload/request/xml/employee_invalid_status.xml").readText()
+        fun payloadEmployeeInvalidSalary() = this.javaClass.classLoader.getResource("payload/request/xml/employee_invalid_salary.xml").readText()
 
         fun payload422(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/xml/$locale/422.xml").readText()
         fun payload422NullName(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/xml/$locale/422_null_name.xml").readText()
+        fun payload422InvalidStatus(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/xml/$locale/422_invalid_status.xml").readText()
+        fun payload422InvalidSalary(locale: Locale) = this.javaClass.classLoader.getResource("payload/response/xml/$locale/422_invalid_salary.xml").readText()
     }
 }

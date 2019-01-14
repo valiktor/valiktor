@@ -16,31 +16,32 @@
 
 package org.valiktor.springframework.web.reactive
 
-import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import org.springframework.core.annotation.Order
 import org.springframework.web.server.ServerWebExchange
 import org.springframework.web.server.WebExceptionHandler
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.NotNull
+import org.valiktor.constraints.In
+import org.valiktor.constraints.Valid
 import reactor.core.publisher.Mono
 
 /**
- * Represents the [WebExceptionHandler] that handles [MissingKotlinParameterException] and throws a [ConstraintViolationException].
+ * Represents the [WebExceptionHandler] that handles [InvalidFormatException] and throws a [ConstraintViolationException].
  *
  * @author Rodolpho S. Couto
- * @see MissingKotlinParameterException
+ * @see InvalidFormatException
  * @see WebExceptionHandler
  * @since 0.3.0
  */
-@Order(-30)
-class ReactiveMissingKotlinParameterExceptionHandler : WebExceptionHandler {
+@Order(-20)
+class ReactiveInvalidFormatExceptionHandler : WebExceptionHandler {
 
     /**
-     * Handle [MissingKotlinParameterException] and throws a [ConstraintViolationException]
+     * Handle [InvalidFormatException] and throws a [ConstraintViolationException]
      *
      * @param exchange specifies the current webflux request
-     * @param ex specifies the [MissingKotlinParameterException]
+     * @param ex specifies the [InvalidFormatException]
      * @return the [Mono] with error of type [ConstraintViolationException]
      */
     override fun handle(exchange: ServerWebExchange, ex: Throwable): Mono<Void> =
@@ -48,7 +49,7 @@ class ReactiveMissingKotlinParameterExceptionHandler : WebExceptionHandler {
 
     private fun Throwable.handle(exchange: ServerWebExchange): Mono<Void>? =
         when (this) {
-            is MissingKotlinParameterException ->
+            is InvalidFormatException ->
                 Mono.error(
                     ConstraintViolationException(
                         constraintViolations = setOf(
@@ -56,7 +57,9 @@ class ReactiveMissingKotlinParameterExceptionHandler : WebExceptionHandler {
                                 property = this.path.fold("") { jsonPath, it ->
                                     (jsonPath + if (it.index > -1) "[${it.index}]" else ".${it.fieldName}").removePrefix(".")
                                 },
-                                constraint = NotNull)
+                                constraint = if (this.targetType.isEnum) In(this.targetType.enumConstants.toSet()) else Valid,
+                                value = this.value
+                            )
                         )))
             else -> this.cause?.handle(exchange)
         }

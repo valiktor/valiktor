@@ -3,7 +3,7 @@
     <id>1</id>
     <name>John</name>
     <email>john@john.com</email>
-    <salary>1000</salary>
+    <salary>abc</salary>
     <dateOfBirth>2001-01-01</dateOfBirth>
     <status>ACTIVE</status>
 </employee>

@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.codec.CodecConfigurer
 import org.valiktor.springframework.config.ValiktorConfiguration
+import org.valiktor.springframework.web.reactive.ReactiveInvalidFormatExceptionHandler
 import org.valiktor.springframework.web.reactive.ReactiveMissingKotlinParameterExceptionHandler
 import org.valiktor.springframework.web.reactive.ReactiveValiktorExceptionHandler
 
@@ -49,6 +50,16 @@ class ValiktorWebFluxAutoConfiguration {
     @ConditionalOnMissingBean
     fun reactiveValiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration, codecConfigurer: CodecConfigurer) =
         ReactiveValiktorExceptionHandler(valiktorConfiguration, codecConfigurer)
+
+    /**
+     * Creates a [ReactiveInvalidFormatExceptionHandler]
+     *
+     * @return the respective [ReactiveInvalidFormatExceptionHandler]
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnClass(name = ["com.fasterxml.jackson.databind.exc.InvalidFormatException"])
+    fun reactiveInvalidFormatExceptionHandler() = ReactiveInvalidFormatExceptionHandler()
 
     /**
      * Creates a [ReactiveMissingKotlinParameterExceptionHandler]

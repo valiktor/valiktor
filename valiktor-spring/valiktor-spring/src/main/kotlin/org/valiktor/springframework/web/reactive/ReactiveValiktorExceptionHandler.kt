@@ -39,7 +39,7 @@ import java.util.Locale
  * @see WebExceptionHandler
  * @since 0.3.0
  */
-@Order(-2)
+@Order(-10)
 class ReactiveValiktorExceptionHandler(
     private val config: ValiktorConfiguration,
     private val codecConfigurer: CodecConfigurer
@@ -75,6 +75,6 @@ class ReactiveValiktorExceptionHandler(
                     .flatMap {
                         Mono.empty<Void>()
                     }
-            else -> this.cause?.let { it.handle(exchange) }
+            else -> this.cause?.handle(exchange)
         }
 }

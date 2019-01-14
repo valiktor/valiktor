@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unprocessableEntity>
+    <errors>
+        <error>
+            <property>status</property>
+            <value>PENDING</value>
+            <message>Must be in ACTIVE, INACTIVE</message>
+            <constraint>
+                <name>In</name>
+                <params>
+                    <param>
+                        <name>values</name>
+                        <value>ACTIVE</value>
+                        <value>INACTIVE</value>
+                    </param>
+                </params>
+            </constraint>
+        </error>
+    </errors>
+</unprocessableEntity>

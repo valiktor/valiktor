@@ -1,0 +1,13 @@
+{
+  "errors": [
+    {
+      "property": "salary",
+      "value": "abc",
+      "message": "Must be valid",
+      "constraint": {
+        "name": "Valid",
+        "params": []
+      }
+    }
+  ]
+}
