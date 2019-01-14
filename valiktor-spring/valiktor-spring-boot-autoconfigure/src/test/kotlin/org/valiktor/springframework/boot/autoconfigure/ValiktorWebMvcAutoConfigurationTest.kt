@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.DispatcherServlet
 import org.valiktor.springframework.config.ValiktorConfiguration
 import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
-import org.valiktor.springframework.web.controller.ValiktorJacksonExceptionHandler
+import org.valiktor.springframework.web.controller.MissingKotlinParameterExceptionHandler
 import kotlin.test.Test
 
 class ValiktorWebMvcAutoConfigurationTest {
@@ -56,12 +56,12 @@ class ValiktorWebMvcAutoConfigurationTest {
     }
 
     @Test
-    fun `should not create ValiktorJacksonExceptionHandler without MissingKotlinParameterException`() {
+    fun `should not create MissingKotlinParameterExceptionHandler without MissingKotlinParameterException`() {
         this.contextRunner
             .withClassLoader(FilteredClassLoader(MissingKotlinParameterException::class.java))
             .run { context ->
                 assertThat(context).hasSingleBean(ValiktorExceptionHandler::class.java)
-                assertThat(context).doesNotHaveBean(ValiktorJacksonExceptionHandler::class.java)
+                assertThat(context).doesNotHaveBean(MissingKotlinParameterExceptionHandler::class.java)
             }
     }
 
@@ -88,24 +88,24 @@ class ValiktorWebMvcAutoConfigurationTest {
     }
 
     @Test
-    fun `should create ValiktorJacksonExceptionHandler`() {
+    fun `should create MissingKotlinParameterExceptionHandler`() {
         this.contextRunner
             .run { context ->
-                assertThat(context).hasSingleBean(ValiktorJacksonExceptionHandler::class.java)
+                assertThat(context).hasSingleBean(MissingKotlinParameterExceptionHandler::class.java)
             }
     }
 
     @Test
-    fun `should create ValiktorJacksonExceptionHandler with custom bean`() {
+    fun `should create MissingKotlinParameterExceptionHandler with custom bean`() {
         this.contextRunner
             .withUserConfiguration(
                 ValiktorWebMvcCustomConfiguration::class.java
             )
             .run { context ->
-                assertThat(context).hasSingleBean(ValiktorJacksonExceptionHandler::class.java)
-                assertThat(context.getBean(ValiktorJacksonExceptionHandler::class.java)).isSameAs(
+                assertThat(context).hasSingleBean(MissingKotlinParameterExceptionHandler::class.java)
+                assertThat(context.getBean(MissingKotlinParameterExceptionHandler::class.java)).isSameAs(
                     context.getBean(ValiktorWebMvcCustomConfiguration::class.java)
-                        .valiktorJacksonExceptionHandler(context.getBean(ValiktorExceptionHandler::class.java)))
+                        .missingKotlinParameterExceptionHandler(context.getBean(ValiktorExceptionHandler::class.java)))
             }
     }
 }
@@ -118,6 +118,6 @@ private class ValiktorWebMvcCustomConfiguration {
         ValiktorExceptionHandler(valiktorConfiguration)
 
     @Bean
-    fun valiktorJacksonExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler) =
-        ValiktorJacksonExceptionHandler(valiktorExceptionHandler)
+    fun missingKotlinParameterExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler) =
+        MissingKotlinParameterExceptionHandler(valiktorExceptionHandler)
 }

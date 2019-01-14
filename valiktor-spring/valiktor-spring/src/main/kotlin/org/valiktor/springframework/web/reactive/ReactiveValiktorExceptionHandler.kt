@@ -40,7 +40,7 @@ import java.util.Locale
  * @since 0.3.0
  */
 @Order(-2)
-class ValiktorReactiveExceptionHandler(
+class ReactiveValiktorExceptionHandler(
     private val config: ValiktorConfiguration,
     private val codecConfigurer: CodecConfigurer
 ) : WebExceptionHandler {

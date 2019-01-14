@@ -90,11 +90,11 @@ object ValiktorExceptionHandlerFixture {
         .registerModule(KotlinModule())
 
     private val valiktorExceptionHandler = ValiktorExceptionHandler(config = ValiktorConfiguration())
-    private val valiktorJacksonExceptionHandler = ValiktorJacksonExceptionHandler(valiktorExceptionHandler = valiktorExceptionHandler)
+    private val missingKotlinParameterExceptionHandler = MissingKotlinParameterExceptionHandler(valiktorExceptionHandler = valiktorExceptionHandler)
 
     val mockMvc: MockMvc = MockMvcBuilders
         .standaloneSetup(ValiktorTestController())
-        .setControllerAdvice(valiktorExceptionHandler, valiktorJacksonExceptionHandler)
+        .setControllerAdvice(valiktorExceptionHandler, missingKotlinParameterExceptionHandler)
         .setMessageConverters(
             MappingJackson2HttpMessageConverter().also { it.objectMapper = this.jsonMapper },
             MappingJackson2XmlHttpMessageConverter().also { it.objectMapper = this.xmlMapper })
