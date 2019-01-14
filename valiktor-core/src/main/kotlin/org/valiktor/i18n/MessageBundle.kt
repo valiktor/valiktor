@@ -23,7 +23,6 @@ import java.util.ResourceBundle.Control.FORMAT_PROPERTIES
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
-private const val PREFIX_KEY = "org.valiktor"
 private const val DEFAULT_BASE_NAME = "org/valiktor/messages"
 private const val INITIAL_CACHE_SIZE = 48
 
@@ -93,7 +92,6 @@ class MessageBundle(
                 .let { bundle ->
                     bundle.keySet()
                         .asSequence()
-                        .filter { it.startsWith(PREFIX_KEY) }
                         .map { it to bundle.getString(it) }
                         .filter { it.second.isNotBlank() }
                 }
