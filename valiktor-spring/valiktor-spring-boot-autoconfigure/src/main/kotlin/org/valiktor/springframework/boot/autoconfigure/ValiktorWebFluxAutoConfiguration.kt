@@ -23,8 +23,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.codec.CodecConfigurer
 import org.valiktor.springframework.config.ValiktorConfiguration
-import org.valiktor.springframework.web.reactive.ValiktorJacksonReactiveExceptionHandler
-import org.valiktor.springframework.web.reactive.ValiktorReactiveExceptionHandler
+import org.valiktor.springframework.web.reactive.ReactiveMissingKotlinParameterExceptionHandler
+import org.valiktor.springframework.web.reactive.ReactiveValiktorExceptionHandler
 
 /**
  * Represents the SpringBoot Auto Configuration for Spring WebMvc exception handlers
@@ -41,22 +41,22 @@ import org.valiktor.springframework.web.reactive.ValiktorReactiveExceptionHandle
 class ValiktorWebFluxAutoConfiguration {
 
     /**
-     * Creates a [ValiktorReactiveExceptionHandler]
+     * Creates a [ReactiveValiktorExceptionHandler]
      *
-     * @return the respective [ValiktorReactiveExceptionHandler]
+     * @return the respective [ReactiveValiktorExceptionHandler]
      */
     @Bean
     @ConditionalOnMissingBean
-    fun valiktorReactiveExceptionHandler(valiktorConfiguration: ValiktorConfiguration, codecConfigurer: CodecConfigurer) =
-        ValiktorReactiveExceptionHandler(valiktorConfiguration, codecConfigurer)
+    fun reactiveValiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration, codecConfigurer: CodecConfigurer) =
+        ReactiveValiktorExceptionHandler(valiktorConfiguration, codecConfigurer)
 
     /**
-     * Creates a [ValiktorJacksonReactiveExceptionHandler]
+     * Creates a [ReactiveMissingKotlinParameterExceptionHandler]
      *
-     * @return the respective [ValiktorJacksonReactiveExceptionHandler]
+     * @return the respective [ReactiveMissingKotlinParameterExceptionHandler]
      */
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnClass(name = ["com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException"])
-    fun valiktorJacksonReactiveExceptionHandler() = ValiktorJacksonReactiveExceptionHandler()
+    fun reactiveMissingKotlinParameterExceptionHandler() = ReactiveMissingKotlinParameterExceptionHandler()
 }

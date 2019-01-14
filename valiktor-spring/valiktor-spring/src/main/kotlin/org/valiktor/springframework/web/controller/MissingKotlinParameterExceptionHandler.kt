@@ -38,7 +38,7 @@ import java.util.Locale
  * @since 0.1.0
  */
 @RestControllerAdvice
-class ValiktorJacksonExceptionHandler(private val valiktorExceptionHandler: ValiktorExceptionHandler) {
+class MissingKotlinParameterExceptionHandler(private val valiktorExceptionHandler: ValiktorExceptionHandler) {
 
     /**
      * Handle [MissingKotlinParameterException] and returns 422 (Unprocessable Entity) status code

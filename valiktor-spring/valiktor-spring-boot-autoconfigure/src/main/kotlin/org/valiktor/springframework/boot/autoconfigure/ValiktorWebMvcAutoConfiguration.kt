@@ -22,8 +22,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.valiktor.springframework.config.ValiktorConfiguration
+import org.valiktor.springframework.web.controller.MissingKotlinParameterExceptionHandler
 import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
-import org.valiktor.springframework.web.controller.ValiktorJacksonExceptionHandler
 
 /**
  * Represents the SpringBoot Auto Configuration for Spring WebFlux exception handlers
@@ -47,13 +47,13 @@ class ValiktorWebMvcAutoConfiguration {
         ValiktorExceptionHandler(valiktorConfiguration)
 
     /**
-     * Creates a [ValiktorJacksonExceptionHandler]
+     * Creates a [MissingKotlinParameterExceptionHandler]
      *
-     * @return the respective [ValiktorJacksonExceptionHandler]
+     * @return the respective [MissingKotlinParameterExceptionHandler]
      */
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnClass(name = ["com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException"])
-    fun valiktorJacksonExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler) =
-        ValiktorJacksonExceptionHandler(valiktorExceptionHandler)
+    fun missingKotlinParameterExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler) =
+        MissingKotlinParameterExceptionHandler(valiktorExceptionHandler)
 }

@@ -34,7 +34,7 @@ import reactor.core.publisher.Mono
  * @since 0.3.0
  */
 @Order(-3)
-class ValiktorJacksonReactiveExceptionHandler : WebExceptionHandler {
+class ReactiveMissingKotlinParameterExceptionHandler : WebExceptionHandler {
 
     /**
      * Handle [MissingKotlinParameterException] and throws a [ConstraintViolationException]

@@ -25,10 +25,10 @@ import java.util.Locale
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-class ValiktorReactiveExceptionHandlerJsonTest {
+class ReactiveMissingKotlinParameterExceptionHandlerJsonTest {
 
-    private val json = ValiktorReactiveExceptionHandlerFixture.JSON
-    private val webClient = ValiktorReactiveExceptionHandlerFixture.webClient
+    private val json = ReactiveValiktorExceptionHandlerFixture.JSON
+    private val webClient = ReactiveValiktorExceptionHandlerFixture.webClient
 
     @BeforeTest
     fun setUp() {
@@ -56,11 +56,11 @@ class ValiktorReactiveExceptionHandlerJsonTest {
             .uri("/employees")
             .accept(APPLICATION_JSON)
             .contentType(APPLICATION_JSON)
-            .body(BodyInserters.fromObject(json.payloadEmployeeInvalid()))
+            .body(BodyInserters.fromObject(json.payloadEmployeeNullName()))
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
-            .expectBody().json(json.payload422(Locale.ENGLISH))
+            .expectBody().json(json.payload422NullName(Locale.ENGLISH))
     }
 
     @Test
@@ -71,11 +71,11 @@ class ValiktorReactiveExceptionHandlerJsonTest {
             .accept(APPLICATION_JSON)
             .header(ACCEPT_LANGUAGE, "en")
             .contentType(APPLICATION_JSON)
-            .body(BodyInserters.fromObject(json.payloadEmployeeInvalid()))
+            .body(BodyInserters.fromObject(json.payloadEmployeeNullName()))
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
-            .expectBody().json(json.payload422(Locale.ENGLISH))
+            .expectBody().json(json.payload422NullName(Locale.ENGLISH))
     }
 
     @Test
@@ -86,10 +86,10 @@ class ValiktorReactiveExceptionHandlerJsonTest {
             .accept(APPLICATION_JSON)
             .header(ACCEPT_LANGUAGE, "pt-BR")
             .contentType(APPLICATION_JSON)
-            .body(BodyInserters.fromObject(json.payloadEmployeeInvalid()))
+            .body(BodyInserters.fromObject(json.payloadEmployeeNullName()))
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
-            .expectBody().json(json.payload422(Locale("pt", "BR")))
+            .expectBody().json(json.payload422NullName(Locale("pt", "BR")))
     }
 }

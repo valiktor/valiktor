@@ -78,14 +78,14 @@ private class ValiktorTestController {
             }
 }
 
-object ValiktorReactiveExceptionHandlerFixture {
+object ReactiveValiktorExceptionHandlerFixture {
 
     private val jsonMapper: ObjectMapper = ObjectMapper()
         .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
         .setDateFormat(SimpleDateFormat("yyyy-MM-dd"))
         .registerModule(KotlinModule())
 
-    private val valiktorReactiveExceptionHandler = ValiktorReactiveExceptionHandler(
+    private val reactiveValiktorExceptionHandler = ReactiveValiktorExceptionHandler(
         config = ValiktorConfiguration(),
         codecConfigurer = DefaultServerCodecConfigurer().apply {
             this.defaultCodecs().jackson2JsonEncoder(Jackson2JsonEncoder(jsonMapper, MediaType.APPLICATION_JSON))
@@ -93,13 +93,13 @@ object ValiktorReactiveExceptionHandlerFixture {
         }
     )
 
-    private val valiktorJacksonReactiveExceptionHandler = ValiktorJacksonReactiveExceptionHandler()
+    private val reactiveMissingKotlinParameterExceptionHandler = ReactiveMissingKotlinParameterExceptionHandler()
 
     val webClient: WebTestClient = WebTestClient
         .bindToController(ValiktorTestController())
         .controllerAdvice(
-            valiktorReactiveExceptionHandler,
-            valiktorJacksonReactiveExceptionHandler
+            reactiveValiktorExceptionHandler,
+            reactiveMissingKotlinParameterExceptionHandler
         )
         .httpMessageCodecs {
             it.defaultCodecs().jackson2JsonEncoder(Jackson2JsonEncoder(jsonMapper, MediaType.APPLICATION_JSON))
