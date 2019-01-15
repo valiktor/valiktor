@@ -40,6 +40,13 @@ jobs:
       script:
         - ./gradlew clean build
 
+    - stage: build
+      jdk: openjdk11
+      install:
+        - ./gradlew -v
+      script:
+        - ./gradlew clean build
+
     - stage: deploy
       jdk: openjdk8
       before_install:
