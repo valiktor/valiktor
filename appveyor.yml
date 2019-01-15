@@ -1,12 +1,15 @@
+environment:
+  HOME: $(HOMEDRIVE)$(HOMEPATH)
+
 cache:
-  - C:\Users\appveyor\.gradle\caches\build-cache-1
-  - C:\Users\appveyor\.gradle\caches\jars-1
-  - C:\Users\appveyor\.gradle\caches\jars-2
-  - C:\Users\appveyor\.gradle\caches\jars-3
-  - C:\Users\appveyor\.gradle\caches\modules-2
-  - C:\Users\appveyor\.gradle\caches\transforms-1
-  - C:\Users\appveyor\.gradle\wrapper\dists
-  - C:\Users\appveyor\.m2\repository
+  - $(HOME)\.gradle\caches\build-cache-1
+  - $(HOME)\.gradle\caches\jars-1
+  - $(HOME)\.gradle\caches\jars-2
+  - $(HOME)\.gradle\caches\jars-3
+  - $(HOME)\.gradle\caches\modules-2
+  - $(HOME)\.gradle\caches\transforms-1
+  - $(HOME)\.gradle\wrapper\dists
+  - $(HOME)\.m2\repository
 
 configuration:
   - jdk1.8.0
@@ -21,3 +24,12 @@ install:
 
 build_script:
   - gradlew clean build
+
+on_finish:
+  - gradlew --stop # Fix "fileHashes.bin" being used by another process.
+  - ps: |
+      $url = "https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)"
+      $pattern = '**\build\test-results\**\TEST-*.xml'
+      foreach ($file in (Resolve-Path $pattern)) {
+        (New-Object 'System.Net.WebClient').UploadFile($url, $file)
+      }
