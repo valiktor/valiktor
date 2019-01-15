@@ -1,9 +1,3 @@
-configuration:
-  - Java8
-  - Java9
-  - Java10
-  - Java11
-
 cache:
   - C:\Users\appveyor\.gradle\caches\build-cache-1
   - C:\Users\appveyor\.gradle\caches\jars-1
@@ -14,8 +8,15 @@ cache:
   - C:\Users\appveyor\.gradle\wrapper\dists
   - C:\Users\appveyor\.m2\repository
 
+configuration:
+  - jdk1.8.0
+  - jdk9
+  - jdk10
+  - jdk11
+
 install:
-  - ./gradlew -v
+  - echo org.gradle.java.home=C:\Program Files\Java\%CONFIGURATION%>%HOME%\.gradle\gradle.properties
+  - gradlew -v
 
 build_script:
-  - ./gradlew clean build
+  - gradlew clean build

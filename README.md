@@ -174,9 +174,9 @@ try {
 This code will return:
 
 ```
-dependent[0].name: NotEmpty
-dependent[1].name: NotEmpty
-dependent[2].name: NotEmpty
+dependents[0].name: NotEmpty
+dependents[1].name: NotEmpty
+dependents[2].name: NotEmpty
 ```
 
 ### Internationalization
