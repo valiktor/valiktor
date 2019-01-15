@@ -25,10 +25,10 @@ import java.util.Locale
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-class ReactiveValiktorExceptionHandlerJsonTest {
+class ReactiveConstraintViolationExceptionHandlerJsonTest {
 
-    private val json = ReactiveValiktorExceptionHandlerFixture.JSON
-    private val webClient = ReactiveValiktorExceptionHandlerFixture.webClient
+    private val json = ReactiveExceptionHandlerFixture.JSON
+    private val webClient = ReactiveExceptionHandlerFixture.webClient
 
     @BeforeTest
     fun setUp() {

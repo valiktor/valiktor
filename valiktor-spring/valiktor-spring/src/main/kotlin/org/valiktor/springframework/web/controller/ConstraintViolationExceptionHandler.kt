@@ -36,7 +36,7 @@ import java.util.Locale
  * @since 0.1.0
  */
 @RestControllerAdvice
-class ValiktorExceptionHandler(private val config: ValiktorConfiguration) {
+class ConstraintViolationExceptionHandler(private val config: ValiktorConfiguration) {
 
     /**
      * Handle [ConstraintViolationException] and returns 422 (Unprocessable Entity) status code

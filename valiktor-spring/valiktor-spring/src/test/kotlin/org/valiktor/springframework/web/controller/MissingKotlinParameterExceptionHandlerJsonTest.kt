@@ -30,8 +30,8 @@ import kotlin.test.Test
 
 class MissingKotlinParameterExceptionHandlerJsonTest {
 
-    private val mockMvc = ValiktorExceptionHandlerFixture.mockMvc
-    private val json = ValiktorExceptionHandlerFixture.JSON
+    private val mockMvc = ExceptionHandlerFixture.mockMvc
+    private val json = ExceptionHandlerFixture.JSON
 
     @BeforeTest
     fun setUp() {

@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration
 import org.valiktor.springframework.config.ValiktorConfiguration
 import org.valiktor.springframework.web.controller.InvalidFormatExceptionHandler
 import org.valiktor.springframework.web.controller.MissingKotlinParameterExceptionHandler
-import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
+import org.valiktor.springframework.web.controller.ConstraintViolationExceptionHandler
 
 /**
  * Represents the SpringBoot Auto Configuration for Spring WebFlux exception handlers
@@ -38,14 +38,14 @@ import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
 class ValiktorWebMvcAutoConfiguration {
 
     /**
-     * Creates a [ValiktorExceptionHandler]
+     * Creates a [ConstraintViolationExceptionHandler]
      *
-     * @return the respective [ValiktorExceptionHandler]
+     * @return the respective [ConstraintViolationExceptionHandler]
      */
     @Bean
     @ConditionalOnMissingBean
-    fun valiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration) =
-        ValiktorExceptionHandler(valiktorConfiguration)
+    fun constraintViolationExceptionHandler(valiktorConfiguration: ValiktorConfiguration) =
+        ConstraintViolationExceptionHandler(valiktorConfiguration)
 
     /**
      * Creates a [InvalidFormatExceptionHandler]
@@ -55,8 +55,8 @@ class ValiktorWebMvcAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnClass(name = ["com.fasterxml.jackson.databind.exc.InvalidFormatException"])
-    fun invalidFormatExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler) =
-        InvalidFormatExceptionHandler(valiktorExceptionHandler)
+    fun invalidFormatExceptionHandler(constraintViolationExceptionHandler: ConstraintViolationExceptionHandler) =
+        InvalidFormatExceptionHandler(constraintViolationExceptionHandler)
 
     /**
      * Creates a [MissingKotlinParameterExceptionHandler]
@@ -66,6 +66,6 @@ class ValiktorWebMvcAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnClass(name = ["com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException"])
-    fun missingKotlinParameterExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler) =
-        MissingKotlinParameterExceptionHandler(valiktorExceptionHandler)
+    fun missingKotlinParameterExceptionHandler(constraintViolationExceptionHandler: ConstraintViolationExceptionHandler) =
+        MissingKotlinParameterExceptionHandler(constraintViolationExceptionHandler)
 }

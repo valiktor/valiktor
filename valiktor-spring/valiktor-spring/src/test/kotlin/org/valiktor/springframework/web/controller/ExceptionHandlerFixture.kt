@@ -80,7 +80,7 @@ private class ValiktorTestController {
     }
 }
 
-object ValiktorExceptionHandlerFixture {
+object ExceptionHandlerFixture {
 
     private val jsonMapper: ObjectMapper = ObjectMapper()
         .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
@@ -92,14 +92,14 @@ object ValiktorExceptionHandlerFixture {
         .setDateFormat(SimpleDateFormat("yyyy-MM-dd"))
         .registerModule(KotlinModule())
 
-    private val valiktorExceptionHandler = ValiktorExceptionHandler(config = ValiktorConfiguration())
-    private val invalidFormatExceptionHandler = InvalidFormatExceptionHandler(valiktorExceptionHandler = valiktorExceptionHandler)
-    private val missingKotlinParameterExceptionHandler = MissingKotlinParameterExceptionHandler(valiktorExceptionHandler = valiktorExceptionHandler)
+    private val constraintViolationExceptionHandler = ConstraintViolationExceptionHandler(config = ValiktorConfiguration())
+    private val invalidFormatExceptionHandler = InvalidFormatExceptionHandler(constraintViolationExceptionHandler = constraintViolationExceptionHandler)
+    private val missingKotlinParameterExceptionHandler = MissingKotlinParameterExceptionHandler(constraintViolationExceptionHandler = constraintViolationExceptionHandler)
 
     val mockMvc: MockMvc = MockMvcBuilders
         .standaloneSetup(ValiktorTestController())
         .setControllerAdvice(
-            valiktorExceptionHandler,
+            constraintViolationExceptionHandler,
             invalidFormatExceptionHandler,
             missingKotlinParameterExceptionHandler
         )

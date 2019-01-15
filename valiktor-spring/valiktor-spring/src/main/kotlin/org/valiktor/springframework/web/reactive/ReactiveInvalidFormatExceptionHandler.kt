@@ -32,7 +32,7 @@ import reactor.core.publisher.Mono
  * @author Rodolpho S. Couto
  * @see InvalidFormatException
  * @see WebExceptionHandler
- * @since 0.3.0
+ * @since 0.3.2
  */
 @Order(-20)
 class ReactiveInvalidFormatExceptionHandler : WebExceptionHandler {
