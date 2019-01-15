@@ -31,16 +31,16 @@ import java.util.Locale
 /**
  * Represents the REST controller that handles [InvalidFormatException] and returns an appropriate HTTP response.
  *
- * @param valiktorExceptionHandler specifies the [ValiktorExceptionHandler]
+ * @param constraintViolationExceptionHandler specifies the [ConstraintViolationExceptionHandler]
  *
  * @author Rodolpho S. Couto
  * @see ConstraintViolationException
- * @see ValiktorExceptionHandler
+ * @see ConstraintViolationExceptionHandler
  * @see ExceptionHandler
  * @since 0.3.2
  */
 @RestControllerAdvice
-class InvalidFormatExceptionHandler(private val valiktorExceptionHandler: ValiktorExceptionHandler) {
+class InvalidFormatExceptionHandler(private val constraintViolationExceptionHandler: ConstraintViolationExceptionHandler) {
 
     /**
      * Handle [InvalidFormatException] and returns 422 (Unprocessable Entity) status code
@@ -52,7 +52,7 @@ class InvalidFormatExceptionHandler(private val valiktorExceptionHandler: Valikt
      */
     @ExceptionHandler(InvalidFormatException::class)
     fun handleInvalidFormatException(ex: InvalidFormatException, locale: Locale?): ResponseEntity<UnprocessableEntity> =
-        valiktorExceptionHandler.handleConstraintViolationException(
+        constraintViolationExceptionHandler.handleConstraintViolationException(
             ConstraintViolationException(constraintViolations = setOf(
                 DefaultConstraintViolation(
                     property = ex.path.fold("") { jsonPath, it ->

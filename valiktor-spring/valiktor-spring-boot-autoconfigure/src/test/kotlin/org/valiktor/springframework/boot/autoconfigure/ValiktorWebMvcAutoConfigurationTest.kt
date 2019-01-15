@@ -28,7 +28,7 @@ import org.springframework.web.servlet.DispatcherServlet
 import org.valiktor.springframework.config.ValiktorConfiguration
 import org.valiktor.springframework.web.controller.InvalidFormatExceptionHandler
 import org.valiktor.springframework.web.controller.MissingKotlinParameterExceptionHandler
-import org.valiktor.springframework.web.controller.ValiktorExceptionHandler
+import org.valiktor.springframework.web.controller.ConstraintViolationExceptionHandler
 import kotlin.test.Test
 
 class ValiktorWebMvcAutoConfigurationTest {
@@ -40,20 +40,20 @@ class ValiktorWebMvcAutoConfigurationTest {
         ))
 
     @Test
-    fun `should not create ValiktorExceptionHandler without ValiktorConfiguration`() {
+    fun `should not create ConstraintViolationExceptionHandler without ValiktorConfiguration`() {
         this.contextRunner
             .withClassLoader(FilteredClassLoader(ValiktorConfiguration::class.java))
             .run { context ->
-                assertThat(context).doesNotHaveBean(ValiktorExceptionHandler::class.java)
+                assertThat(context).doesNotHaveBean(ConstraintViolationExceptionHandler::class.java)
             }
     }
 
     @Test
-    fun `should not create ValiktorExceptionHandler without DispatcherServlet`() {
+    fun `should not create ConstraintViolationExceptionHandler without DispatcherServlet`() {
         this.contextRunner
             .withClassLoader(FilteredClassLoader(DispatcherServlet::class.java))
             .run { context ->
-                assertThat(context).doesNotHaveBean(ValiktorExceptionHandler::class.java)
+                assertThat(context).doesNotHaveBean(ConstraintViolationExceptionHandler::class.java)
             }
     }
 
@@ -62,7 +62,7 @@ class ValiktorWebMvcAutoConfigurationTest {
         this.contextRunner
             .withClassLoader(FilteredClassLoader(InvalidFormatException::class.java))
             .run { context ->
-                assertThat(context).hasSingleBean(ValiktorExceptionHandler::class.java)
+                assertThat(context).hasSingleBean(ConstraintViolationExceptionHandler::class.java)
                 assertThat(context).doesNotHaveBean(InvalidFormatExceptionHandler::class.java)
             }
     }
@@ -72,30 +72,30 @@ class ValiktorWebMvcAutoConfigurationTest {
         this.contextRunner
             .withClassLoader(FilteredClassLoader(MissingKotlinParameterException::class.java))
             .run { context ->
-                assertThat(context).hasSingleBean(ValiktorExceptionHandler::class.java)
+                assertThat(context).hasSingleBean(ConstraintViolationExceptionHandler::class.java)
                 assertThat(context).doesNotHaveBean(MissingKotlinParameterExceptionHandler::class.java)
             }
     }
 
     @Test
-    fun `should create ValiktorExceptionHandler`() {
+    fun `should create ConstraintViolationExceptionHandler`() {
         this.contextRunner
             .run { context ->
-                assertThat(context).hasSingleBean(ValiktorExceptionHandler::class.java)
+                assertThat(context).hasSingleBean(ConstraintViolationExceptionHandler::class.java)
             }
     }
 
     @Test
-    fun `should create ValiktorExceptionHandler with custom bean`() {
+    fun `should create ConstraintViolationExceptionHandler with custom bean`() {
         this.contextRunner
             .withUserConfiguration(
                 ValiktorWebMvcCustomConfiguration::class.java
             )
             .run { context ->
-                assertThat(context).hasSingleBean(ValiktorExceptionHandler::class.java)
-                assertThat(context.getBean(ValiktorExceptionHandler::class.java)).isSameAs(
+                assertThat(context).hasSingleBean(ConstraintViolationExceptionHandler::class.java)
+                assertThat(context.getBean(ConstraintViolationExceptionHandler::class.java)).isSameAs(
                     context.getBean(ValiktorWebMvcCustomConfiguration::class.java)
-                        .valiktorExceptionHandler(context.getBean(ValiktorConfiguration::class.java)))
+                        .constraintViolationExceptionHandler(context.getBean(ValiktorConfiguration::class.java)))
             }
     }
 
@@ -117,7 +117,7 @@ class ValiktorWebMvcAutoConfigurationTest {
                 assertThat(context).hasSingleBean(InvalidFormatExceptionHandler::class.java)
                 assertThat(context.getBean(InvalidFormatExceptionHandler::class.java)).isSameAs(
                     context.getBean(ValiktorWebMvcCustomConfiguration::class.java)
-                        .invalidFormatExceptionHandler(context.getBean(ValiktorExceptionHandler::class.java)))
+                        .invalidFormatExceptionHandler(context.getBean(ConstraintViolationExceptionHandler::class.java)))
             }
     }
 
@@ -139,7 +139,7 @@ class ValiktorWebMvcAutoConfigurationTest {
                 assertThat(context).hasSingleBean(MissingKotlinParameterExceptionHandler::class.java)
                 assertThat(context.getBean(MissingKotlinParameterExceptionHandler::class.java)).isSameAs(
                     context.getBean(ValiktorWebMvcCustomConfiguration::class.java)
-                        .missingKotlinParameterExceptionHandler(context.getBean(ValiktorExceptionHandler::class.java)))
+                        .missingKotlinParameterExceptionHandler(context.getBean(ConstraintViolationExceptionHandler::class.java)))
             }
     }
 }
@@ -148,14 +148,14 @@ class ValiktorWebMvcAutoConfigurationTest {
 private class ValiktorWebMvcCustomConfiguration {
 
     @Bean
-    fun valiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration) =
-        ValiktorExceptionHandler(valiktorConfiguration)
+    fun constraintViolationExceptionHandler(valiktorConfiguration: ValiktorConfiguration) =
+        ConstraintViolationExceptionHandler(valiktorConfiguration)
 
     @Bean
-    fun invalidFormatExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler) =
-        InvalidFormatExceptionHandler(valiktorExceptionHandler)
+    fun invalidFormatExceptionHandler(constraintViolationExceptionHandler: ConstraintViolationExceptionHandler) =
+        InvalidFormatExceptionHandler(constraintViolationExceptionHandler)
 
     @Bean
-    fun missingKotlinParameterExceptionHandler(valiktorExceptionHandler: ValiktorExceptionHandler) =
-        MissingKotlinParameterExceptionHandler(valiktorExceptionHandler)
+    fun missingKotlinParameterExceptionHandler(constraintViolationExceptionHandler: ConstraintViolationExceptionHandler) =
+        MissingKotlinParameterExceptionHandler(constraintViolationExceptionHandler)
 }

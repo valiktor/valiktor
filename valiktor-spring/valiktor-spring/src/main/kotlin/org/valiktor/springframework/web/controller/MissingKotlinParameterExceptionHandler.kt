@@ -29,16 +29,16 @@ import java.util.Locale
 /**
  * Represents the REST controller that handles [MissingKotlinParameterException] and returns an appropriate HTTP response.
  *
- * @param valiktorExceptionHandler specifies the [ValiktorExceptionHandler]
+ * @param constraintViolationExceptionHandler specifies the [ConstraintViolationExceptionHandler]
  *
  * @author Rodolpho S. Couto
  * @see ConstraintViolationException
- * @see ValiktorExceptionHandler
+ * @see ConstraintViolationExceptionHandler
  * @see ExceptionHandler
  * @since 0.1.0
  */
 @RestControllerAdvice
-class MissingKotlinParameterExceptionHandler(private val valiktorExceptionHandler: ValiktorExceptionHandler) {
+class MissingKotlinParameterExceptionHandler(private val constraintViolationExceptionHandler: ConstraintViolationExceptionHandler) {
 
     /**
      * Handle [MissingKotlinParameterException] and returns 422 (Unprocessable Entity) status code
@@ -50,7 +50,7 @@ class MissingKotlinParameterExceptionHandler(private val valiktorExceptionHandle
      */
     @ExceptionHandler(MissingKotlinParameterException::class)
     fun handleMissingKotlinParameterException(ex: MissingKotlinParameterException, locale: Locale?): ResponseEntity<UnprocessableEntity> =
-        valiktorExceptionHandler.handleConstraintViolationException(
+        constraintViolationExceptionHandler.handleConstraintViolationException(
             ConstraintViolationException(constraintViolations = setOf(
                 DefaultConstraintViolation(
                     property = ex.path.fold("") { jsonPath, it ->

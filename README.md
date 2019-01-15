@@ -379,12 +379,14 @@ Valiktor provides integration with Spring WebMvc and Spring WebFlux (reactive ap
 
 Spring WebMvc:
 
-* `ValiktorExceptionHandler`: handles `ConstraintViolationException` from `valiktor-core`.
+* `ConstraintViolationExceptionHandler`: handles `ConstraintViolationException` from `valiktor-core`.
+* `InvalidFormatExceptionHandler`: handles `InvalidFormatException` from `jackson-databind`.
 * `MissingKotlinParameterExceptionHandler`: handles `MissingKotlinParameterException` from `jackson-module-kotlin`.
 
 Spring WebFlux:
 
-* `ReactiveValiktorExceptionHandler`: handles `ConstraintViolationException` from `valiktor-core`.
+* `ReactiveConstraintViolationExceptionHandler`: handles `ConstraintViolationException` from `valiktor-core`.
+* `ReactiveInvalidFormatExceptionHandler`: handles `InvalidFormatException` from `jackson-databind`.
 * `ReactiveMissingKotlinParameterExceptionHandler`: handles `MissingKotlinParameterException` from `jackson-module-kotlin`.
 
 All the exception handlers return the status code `422` ([Unprocessable Entity](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422)) with the violated constraints in the following payload format:

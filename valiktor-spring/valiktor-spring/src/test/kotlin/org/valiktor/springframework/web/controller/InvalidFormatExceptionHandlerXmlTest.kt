@@ -30,8 +30,8 @@ import kotlin.test.Test
 
 class InvalidFormatExceptionHandlerXmlTest {
 
-    private val mockMvc = ValiktorExceptionHandlerFixture.mockMvc
-    private val xml = ValiktorExceptionHandlerFixture.XML
+    private val mockMvc = ExceptionHandlerFixture.mockMvc
+    private val xml = ExceptionHandlerFixture.XML
 
     @BeforeTest
     fun setUp() {

@@ -25,7 +25,7 @@ import org.springframework.http.codec.CodecConfigurer
 import org.valiktor.springframework.config.ValiktorConfiguration
 import org.valiktor.springframework.web.reactive.ReactiveInvalidFormatExceptionHandler
 import org.valiktor.springframework.web.reactive.ReactiveMissingKotlinParameterExceptionHandler
-import org.valiktor.springframework.web.reactive.ReactiveValiktorExceptionHandler
+import org.valiktor.springframework.web.reactive.ReactiveConstraintViolationExceptionHandler
 
 /**
  * Represents the SpringBoot Auto Configuration for Spring WebMvc exception handlers
@@ -42,14 +42,14 @@ import org.valiktor.springframework.web.reactive.ReactiveValiktorExceptionHandle
 class ValiktorWebFluxAutoConfiguration {
 
     /**
-     * Creates a [ReactiveValiktorExceptionHandler]
+     * Creates a [ReactiveConstraintViolationExceptionHandler]
      *
-     * @return the respective [ReactiveValiktorExceptionHandler]
+     * @return the respective [ReactiveConstraintViolationExceptionHandler]
      */
     @Bean
     @ConditionalOnMissingBean
-    fun reactiveValiktorExceptionHandler(valiktorConfiguration: ValiktorConfiguration, codecConfigurer: CodecConfigurer) =
-        ReactiveValiktorExceptionHandler(valiktorConfiguration, codecConfigurer)
+    fun reactiveConstraintViolationExceptionHandler(valiktorConfiguration: ValiktorConfiguration, codecConfigurer: CodecConfigurer) =
+        ReactiveConstraintViolationExceptionHandler(valiktorConfiguration, codecConfigurer)
 
     /**
      * Creates a [ReactiveInvalidFormatExceptionHandler]
