@@ -37,7 +37,7 @@ import java.util.Locale
  * @see ConstraintViolationException
  * @see ConstraintViolationExceptionHandler
  * @see ExceptionHandler
- * @since 0.3.2
+ * @since 0.4.0
  */
 @RestControllerAdvice
 class InvalidFormatExceptionHandler(private val constraintViolationExceptionHandler: ConstraintViolationExceptionHandler) {

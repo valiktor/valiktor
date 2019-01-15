@@ -1,3 +1,11 @@
+# 0.4.0
+> Published 15 Jan 2019
+
+* Added exception handler for `InvalidFormatException`.
+* Renamed `ValiktorExceptionHandler` to `ConstraintViolationExceptionHander`.
+* Renamed `ValiktorJacksonExceptionHandler` to `MissingKotlinParameterExceptionHandler`.
+* Removed message key prefix restriction in favor of custom constraints.
+
 # 0.3.1
 > Published 05 Oct 2018
 
