@@ -19,7 +19,7 @@ configuration:
 
 install:
   - if not exist %HOME%\.gradle mkdir %HOME%\.gradle
-  - echo org.gradle.java.home=C:/Program Files/Java/%CONFIGURATION% > %HOME%\.gradle\gradle.properties
+  - echo org.gradle.java.home=C:/Program Files/Java/%CONFIGURATION%>%HOME%\.gradle\gradle.properties
   - gradlew -v
 
 build_script:
