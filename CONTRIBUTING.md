@@ -52,6 +52,7 @@ Both tools build the project and run all the tests for these Java environments:
 * JDK 8
 * JDK 9
 * JDK 10
+* JDK 11
 
 ## License
 By contributing to Valiktor, you agree that your contributions will be licensed under its [Apache License, Version 2.0](LICENSE).

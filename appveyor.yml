@@ -2,6 +2,7 @@ configuration:
   - Java8
   - Java9
   - Java10
+  - Java11
 
 cache:
   - C:\Users\appveyor\.gradle\caches\build-cache-1
