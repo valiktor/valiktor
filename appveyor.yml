@@ -15,7 +15,7 @@ configuration:
   - jdk11
 
 install:
-  - echo org.gradle.java.home=C:\Program Files\Java\%CONFIGURATION%>%HOME%\.gradle\gradle.properties
+  - echo org.gradle.java.home=C:/Program Files/Java/%CONFIGURATION%>%HOME%\.gradle\gradle.properties
   - gradlew -v
 
 build_script:
