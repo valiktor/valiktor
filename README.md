@@ -15,13 +15,13 @@
 ![Gradle](docs/gradle.png)
 
 ```groovy
-compile 'org.valiktor:valiktor-core:0.4.0'
+implementation 'org.valiktor:valiktor-core:0.4.0'
 ```
 
 ![Gradle](docs/gradle.png) (Kotlin DSL)
 
 ```kotlin
-compile("org.valiktor:valiktor-core:0.4.0")
+implementation("org.valiktor:valiktor-core:0.4.0")
 ```
 
 ![Maven](docs/maven.png) 
