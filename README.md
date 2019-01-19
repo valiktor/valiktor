@@ -12,19 +12,19 @@
 
 ## Installation
 
-Gradle (Groovy):
+![Gradle](docs/gradle.png)
 
 ```groovy
 compile 'org.valiktor:valiktor-core:0.4.0'
 ```
 
-Gradle (Kotlin DSL):
+![Gradle](docs/gradle.png) (Kotlin DSL)
 
-```groovy
+```kotlin
 compile("org.valiktor:valiktor-core:0.4.0")
 ```
 
-Maven:
+![Maven](docs/maven.png) 
 
 ```xml
 <dependency>
