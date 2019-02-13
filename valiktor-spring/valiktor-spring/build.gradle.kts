@@ -9,7 +9,7 @@ fun DependencyHandler.jsonAssert() = "org.skyscreamer:jsonassert:1.5.0"
 fun DependencyHandler.xmlUnit() = "org.xmlunit:xmlunit-core:2.6.2"
 
 plugins {
-    kotlin("plugin.spring") version "1.3.11"
+    kotlin("plugin.spring") version "1.3.21"
 }
 
 dependencies {

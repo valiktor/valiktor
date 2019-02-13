@@ -1,5 +1,5 @@
 plugins {
-    kotlin("plugin.spring") version "1.3.11"
+    kotlin("plugin.spring") version "1.3.21"
     id("org.springframework.boot") version "1.5.19.RELEASE"
 }
 

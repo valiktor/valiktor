@@ -4,12 +4,12 @@ import org.gradle.api.tasks.bundling.Jar
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
-    kotlin("jvm") version "1.3.11"
+    kotlin("jvm") version "1.3.21"
     id("jacoco")
     id("signing")
     id("maven-publish")
     id("org.jetbrains.dokka") version "0.9.17"
-    id("org.jmailen.kotlinter") version "1.20.1"
+    id("org.jmailen.kotlinter") version "1.21.0"
     id("com.adarshr.test-logger") version "1.6.0"
 }
 

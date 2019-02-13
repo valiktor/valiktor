@@ -4,7 +4,7 @@ fun DependencyHandler.springBoot(module: String) = "org.springframework.boot:spr
 fun DependencyHandler.jacksonModule(module: String) = "com.fasterxml.jackson.module:jackson-module-$module:2.9.8"
 
 plugins {
-    kotlin("plugin.spring") version "1.3.11"
+    kotlin("plugin.spring") version "1.3.21"
 }
 
 dependencies {
