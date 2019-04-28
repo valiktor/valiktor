@@ -95,6 +95,15 @@ class ArrayFunctionsTest {
     }
 
     @Test
+    fun `should receive the current index and value as function parameter`() {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3)))) {
+            validate(Employee::dependents).validateForEachIndexed { index, dependent ->
+                assertEquals(dependent, Dependent(id = index + 1))
+            }
+        }
+    }
+
+    @Test
     fun `isNull with null value should be valid`() {
         validate(Employee()) {
             validate(Employee::dependents).isNull()

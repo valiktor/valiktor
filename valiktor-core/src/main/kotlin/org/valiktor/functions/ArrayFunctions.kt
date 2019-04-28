@@ -53,6 +53,26 @@ fun <E, T> Validator<E>.Property<Array<T>?>.validateForEach(block: Validator<T>.
 }
 
 /**
+ * Validates the array property initializing another DSL function recursively with index
+ *
+ * @param block specifies the function DSL
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+@JvmName("validateForEachIndexedArray")
+fun <E, T> Validator<E>.Property<Array<T>?>.validateForEachIndexed(block: Validator<T>.(Int, T) -> Unit): Validator<E>.Property<Array<T>?> {
+    this.property.get(obj)?.forEachIndexed { index, value ->
+        this.addConstraintViolations(Validator(value).apply { block(index, value) }.constraintViolations.map {
+            DefaultConstraintViolation(
+                property = "${this.property.name}[$index].${it.property}",
+                value = it.value,
+                constraint = it.constraint)
+        })
+    }
+    return this
+}
+
+/**
  * Validates if the array property value is equal to another value
  *
  * @param value specifies the value that should be equal

@@ -128,6 +128,20 @@ class IterableFunctionsTest {
     }
 
     @Test
+    fun `should receive the current index and value as function parameter`() {
+        validate(Employee(company = Company(addresses = listOf(
+            Address(city = City(id = 1)),
+            Address(city = City(id = 2)),
+            Address(city = City(id = 3)))))) {
+            validate(Employee::company).validate {
+                validate(Company::addresses).validateForEachIndexed { index, address ->
+                    assertEquals(address, Address(city = City(id = index + 1)))
+                }
+            }
+        }
+    }
+
+    @Test
     fun `isNull with null value should be valid`() {
         validate(Company()) {
             validate(Company::addresses).isNull()
