@@ -1,6 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-fun DependencyHandler.springBoot(module: String) = "org.springframework.boot:spring-boot-$module:2.1.2.RELEASE"
+fun DependencyHandler.springBoot(module: String) = "org.springframework.boot:spring-boot-$module:2.1.4.RELEASE"
 fun DependencyHandler.jacksonModule(module: String) = "com.fasterxml.jackson.module:jackson-module-$module:2.9.8"
 
 plugins {

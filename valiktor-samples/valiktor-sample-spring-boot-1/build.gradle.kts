@@ -1,6 +1,6 @@
 plugins {
     kotlin("plugin.spring") version "1.3.21"
-    id("org.springframework.boot") version "1.5.19.RELEASE"
+    id("org.springframework.boot") version "1.5.20.RELEASE"
 }
 
 apply {
@@ -21,11 +21,11 @@ dependencies {
     compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8")
     compile("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.8")
-    compile("org.zalando:jackson-datatype-money:1.1.0")
+    compile("org.zalando:jackson-datatype-money:1.1.1")
     compile("javax.money:money-api:1.0.3")
     runtime("org.javamoney:moneta:1.3")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
     // for Spring Boot 1.x + JUnit 5 support
-    testCompile("com.github.sbrannen:spring-test-junit5:1.3.2")
+    testCompile("com.github.sbrannen:spring-test-junit5:1.4.0")
 }

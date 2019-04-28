@@ -1,6 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-fun DependencyHandler.spring(module: String) = "org.springframework:spring-$module:5.1.4.RELEASE"
+fun DependencyHandler.spring(module: String) = "org.springframework:spring-$module:5.1.6.RELEASE"
 fun DependencyHandler.servlet(module: String) = "javax.servlet:javax.servlet-$module:4.0.1"
 fun DependencyHandler.jacksonCore(module: String) = "com.fasterxml.jackson.core:jackson-$module:2.9.8"
 fun DependencyHandler.jacksonModule(module: String) = "com.fasterxml.jackson.module:jackson-module-$module:2.9.8"

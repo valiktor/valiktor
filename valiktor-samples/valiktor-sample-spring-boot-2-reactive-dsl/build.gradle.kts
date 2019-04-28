@@ -1,8 +1,6 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("plugin.spring") version "1.3.21"
-    id("org.springframework.boot") version "2.1.2.RELEASE"
+    id("org.springframework.boot") version "2.1.4.RELEASE"
 }
 
 apply {
@@ -18,7 +16,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-webflux")
     compile("com.fasterxml.jackson.module:jackson-module-kotlin")
     compile("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
-    compile("org.zalando:jackson-datatype-money:1.1.0")
+    compile("org.zalando:jackson-datatype-money:1.1.1")
     compile("javax.money:money-api:1.0.3")
     runtime("org.javamoney:moneta:1.3")
 

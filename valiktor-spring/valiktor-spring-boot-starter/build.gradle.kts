@@ -1,6 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-fun DependencyHandler.springBoot(module: String) = "org.springframework.boot:spring-boot-$module:2.1.2.RELEASE"
+fun DependencyHandler.springBoot(module: String) = "org.springframework.boot:spring-boot-$module:2.1.4.RELEASE"
 
 plugins {
     kotlin("plugin.spring") version "1.3.21"

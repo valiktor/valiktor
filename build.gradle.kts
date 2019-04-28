@@ -1,15 +1,10 @@
-import org.gradle.kotlin.dsl.kotlin
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.gradle.api.tasks.bundling.Jar
-import org.jetbrains.dokka.gradle.DokkaTask
-
 plugins {
     kotlin("jvm") version "1.3.21"
     id("jacoco")
     id("signing")
     id("maven-publish")
-    id("org.jetbrains.dokka") version "0.9.17"
-    id("org.jmailen.kotlinter") version "1.21.0"
+    id("org.jetbrains.dokka") version "0.9.18"
+    id("org.jmailen.kotlinter") version "1.23.1"
     id("com.adarshr.test-logger") version "1.6.0"
 }
 
@@ -19,7 +14,7 @@ repositories {
 }
 
 subprojects {
-    fun DependencyHandler.assertj(module: String) = "org.assertj:assertj-$module:3.11.1"
+    fun DependencyHandler.assertj(module: String) = "org.assertj:assertj-$module:3.12.2"
     fun DependencyHandler.junit5(module: String) = "org.junit.jupiter:junit-jupiter-$module:5.0.0"
 
     apply {
