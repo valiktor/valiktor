@@ -1,4 +1,5 @@
 language: java
+dist: xenial
 
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -34,14 +35,14 @@ jobs:
         - ./gradlew clean build
 
     - stage: build
-      jdk: oraclejdk10
+      jdk: openjdk10
       install:
         - ./gradlew -v
       script:
         - ./gradlew clean build
 
     - stage: build
-      jdk: oraclejdk11
+      jdk: openjdk11
       install:
         - ./gradlew -v
       script:
