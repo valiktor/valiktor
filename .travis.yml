@@ -2,14 +2,14 @@ language: java
 dist: xenial
 
 before_cache:
-- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
 cache:
   directories:
-  - $HOME/.gradle/caches/
-  - $HOME/.gradle/wrapper/
-  - $HOME/.m2/repository/
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.m2/repository/
 
 stages:
   - name: build
@@ -27,12 +27,12 @@ jobs:
       after_success:
         - bash <(curl -s https://codecov.io/bash)
 
-    - stage: build
-      jdk: oraclejdk9
-      install:
-        - ./gradlew -v
-      script:
-        - ./gradlew clean build
+    #    - stage: build
+    #      jdk: openjdk9
+    #      install:
+    #        - ./gradlew -v
+    #      script:
+    #        - ./gradlew clean build
 
     - stage: build
       jdk: openjdk10
@@ -56,13 +56,13 @@ jobs:
         - ./gradlew -v
       script:
         - ./gradlew clean build dokka publish -x test -x check
-            -Psigning.keyId="$SIGNING_KEYID"
-            -Psigning.password="$SIGNING_PASSWORD"
-            -Psigning.secretKeyRingFile="$TRAVIS_BUILD_DIR/$SIGNING_FILE"
-            -PossrhUsername="$OSSRH_USERNAME"
-            -PossrhPassword="$OSSRH_PASSWORD"
-            -Dorg.gradle.internal.http.socketTimeout=600000
-            -Dorg.gradle.internal.http.connectionTimeout=600000
+          -Psigning.keyId="$SIGNING_KEYID"
+          -Psigning.password="$SIGNING_PASSWORD"
+          -Psigning.secretKeyRingFile="$TRAVIS_BUILD_DIR/$SIGNING_FILE"
+          -PossrhUsername="$OSSRH_USERNAME"
+          -PossrhPassword="$OSSRH_PASSWORD"
+          -Dorg.gradle.internal.http.socketTimeout=600000
+          -Dorg.gradle.internal.http.connectionTimeout=600000
       env:
         - secure: xuyde7Sn6xtyS0UbdWBHzd6gM4SaXLWmZSlUooY0Z4A15QYRWwrXLmmrLTiArvvoAt+Y+UJdSaFtLklNsW0ho2XKra/FabZJ01nBN9WmTQIgXkFHWud1HcQU0qVoHvGauB87k5HcFJQBmNLCTXux5ls5IEj8KWORfFNItw2edyhocPM0RnsBMf2sKMGFbysLTsc5W9+mdeu1dJxC+8myd7KeRv4vQIg3vkOkNPBL2B5cpq5oH0ALrlR2o9SStwmdNRP907V3QnaX2pCA7ZJLwlAAVB8NIB0AR33efUWYHyZwZ9EKrctbD1r/Zh+bKrfhsZ8CCVHQAluTlEM/aTnJlTJAEjsYnfg8jukdjeSjZsVUgA2/qey5TRRr+1rO7vp8+BYUbdaJuFVaIAjNZi24BrnOjXLyf6VzzEO2wXsPEB7mfPR56GKmpZRvMkr+5gNBSFl5fBJKIEunaZts8c1gAp2NCwQa4LwV0yhR1hwo+ONyRBle8iR5fnjF+vo5jtPGlJhYOh4f2roRL6sPb8ETezAOPNzdYpW0QJsSmiWqkRE1e10cq0/eRu2ru/O4LNZOmwMaOc/a4/Cyq5s/5V3bGxnpL9ADLFLku81B49tpBvKAzcMoDmVOzcoV4Ei/d1NbjiwRphdDcyGEjc6xNcMTpJsDNQ04Ksl8e8OCw/Kb84g=
         - secure: UpBGjhWTVD8HamgjOuACjwQY8tnNEjL47YdRw2t07lm/G7wc0jlnQaOJdw3oGZcEMYnQD6mjuy++JHBNNvXJL50CcpXr3KIOmPlxkCDTWlmmMjECfBGqQs17odj6ed8Kp7IFst+4ay/yb2UydlAcFvJgZGXD2m1cCbfLO6zs9rtBVX1aRyPl+peifGP9V2jSl57SIC5BVvOCdInm0IixkKQl8Ot6TXpPrKK2iVvOoqlfESvUIpEFGkB+2mVTW5W49YhlVNXzHUEX2Gy2H3vuBOapR9bZxq15GyCI1NbGF/GvXV/4J7/LyfxhmGoK03NuPIbgGPrxOmjxRdpJNCkBKHGDcbAl0JsMurpM3AF8OmSuBR40Vl4RXMXMUHpNnZ2ZVVVPzWzG5XlkQvD6jlYbo2r15RjVGCzb+EsfsfjpPM6E86XPfoIXYL0hk26024Pm7wPGKQmENuhAEjNqSJiV09K3OfP5NBPmGVwF9UfyfWacA/Sk56ocXQrqLjDIBIKEW15B26z5H1UZPKDmCfyeDiMGFwZ/EpWxVTETHz/kloNZB4lkBSCrJqhKTZPlCuD+KvGthbF/prvwtpwa4lbpRKJoXG6Cygg1lyrLHOL/EtTgBGDqNnpkNcnCE0XIT7eQ/fMZ+z3MS4lypznFQiCjqGzEWzO7xgF9gB4gt98gOgI=
