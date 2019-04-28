@@ -33,10 +33,10 @@ import org.valiktor.constraints.Valid
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<T?>.validate(block: Validator<T>.() -> Unit): Validator<E>.Property<T?> {
+fun <E, T> Validator<E>.Property<T?>.validate(block: Validator<T>.(T) -> Unit): Validator<E>.Property<T?> {
     val value = this.property.get(obj)
     if (value != null) {
-        this.addConstraintViolations(Validator(value).apply(block).constraintViolations.map {
+        this.addConstraintViolations(Validator(value).apply { block(value) }.constraintViolations.map {
             DefaultConstraintViolation(
                 property = "${this.property.name}.${it.property}",
                 value = it.value,

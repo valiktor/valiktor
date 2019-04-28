@@ -32,8 +32,8 @@ import kotlin.reflect.KProperty1
  * @author Rodolpho S. Couto
  * @since 0.1.0
  */
-fun <E> validate(obj: E, block: Validator<E>.() -> Unit): E {
-    val validator = Validator(obj).apply(block)
+fun <E> validate(obj: E, block: Validator<E>.(E) -> Unit): E {
+    val validator = Validator(obj).apply { block(obj) }
     if (validator.constraintViolations.isNotEmpty()) {
         throw ConstraintViolationException(validator.constraintViolations)
     }

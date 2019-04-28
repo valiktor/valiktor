@@ -34,6 +34,7 @@ import org.valiktor.functions.AnyFunctionsFixture.Employee
 import org.valiktor.functions.AnyFunctionsFixture.State
 import org.valiktor.validate
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 private object AnyFunctionsFixture {
@@ -376,5 +377,29 @@ class AnyFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(property = "id", constraint = NotNull),
             DefaultConstraintViolation(property = "name", constraint = NotNull))
+    }
+
+    @Test
+    fun `should receive the property value as function parameter`() {
+        val obj = Employee(company = Company(), address = Address(city = City(state = State(country = Country()))))
+
+        validate(obj) { employee ->
+            assertEquals(employee, obj)
+            validate(Employee::company).validate { company ->
+                assertEquals(company, employee.company)
+            }
+            validate(Employee::address).validate { address ->
+                assertEquals(address, employee.address)
+                validate(Address::city).validate { city ->
+                    assertEquals(city, employee.address?.city)
+                    validate(City::state).validate { state ->
+                        assertEquals(state, employee.address?.city?.state)
+                        validate(State::country).validate { country ->
+                            assertEquals(country, employee.address?.city?.state?.country)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
