@@ -40,9 +40,9 @@ import org.valiktor.constraints.Size
  * @return the same receiver property
  */
 @JvmName("validateForEachArray")
-fun <E, T> Validator<E>.Property<Array<T>?>.validateForEach(block: Validator<T>.() -> Unit): Validator<E>.Property<Array<T>?> {
+fun <E, T> Validator<E>.Property<Array<T>?>.validateForEach(block: Validator<T>.(T) -> Unit): Validator<E>.Property<Array<T>?> {
     this.property.get(obj)?.forEachIndexed { index, value ->
-        this.addConstraintViolations(Validator(value).apply(block).constraintViolations.map {
+        this.addConstraintViolations(Validator(value).apply { block(value) }.constraintViolations.map {
             DefaultConstraintViolation(
                 property = "${this.property.name}[$index].${it.property}",
                 value = it.value,

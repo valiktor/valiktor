@@ -38,6 +38,7 @@ import org.valiktor.functions.ArrayFunctionsFixture.Dependent
 import org.valiktor.functions.ArrayFunctionsFixture.Employee
 import org.valiktor.validate
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 private object ArrayFunctionsFixture {
@@ -59,10 +60,7 @@ class ArrayFunctionsTest {
 
     @Test
     fun `inner array properties should be valid`() {
-        validate(Employee(dependents = arrayOf(
-            Dependent(id = 1),
-            Dependent(id = 1),
-            Dependent(id = 1)))) {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 1), Dependent(id = 1)))) {
             validate(Employee::dependents).validateForEach {
                 validate(Dependent::id).isNotNull()
             }
@@ -72,10 +70,7 @@ class ArrayFunctionsTest {
     @Test
     fun `inner array properties should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(dependents = arrayOf(
-                Dependent(),
-                Dependent(),
-                Dependent()))) {
+            validate(Employee(dependents = arrayOf(Dependent(), Dependent(), Dependent()))) {
                 validate(Employee::dependents).validateForEach {
                     validate(Dependent::id).isNotNull()
                 }
@@ -86,6 +81,17 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(property = "dependents[0].id", constraint = NotNull),
             DefaultConstraintViolation(property = "dependents[1].id", constraint = NotNull),
             DefaultConstraintViolation(property = "dependents[2].id", constraint = NotNull))
+    }
+
+    @Test
+    fun `should receive the current value as function parameter`() {
+        validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 2), Dependent(id = 3)))) {
+            var id = 1
+            validate(Employee::dependents).validateForEach { dependent ->
+                assertEquals(dependent, Dependent(id = id))
+                id++
+            }
+        }
     }
 
     @Test

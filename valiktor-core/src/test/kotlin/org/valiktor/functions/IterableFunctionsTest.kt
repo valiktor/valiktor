@@ -40,6 +40,7 @@ import org.valiktor.functions.IterableFunctionsFixture.Company
 import org.valiktor.functions.IterableFunctionsFixture.Employee
 import org.valiktor.validate
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 private object IterableFunctionsFixture {
@@ -108,6 +109,22 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull),
             DefaultConstraintViolation(property = "company.addresses[2].id", constraint = NotNull),
             DefaultConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull))
+    }
+
+    @Test
+    fun `should receive the current value as function parameter`() {
+        validate(Employee(company = Company(addresses = listOf(
+            Address(city = City(id = 1)),
+            Address(city = City(id = 2)),
+            Address(city = City(id = 3)))))) {
+            validate(Employee::company).validate {
+                var id = 1
+                validate(Company::addresses).validateForEach { address ->
+                    assertEquals(address, Address(city = City(id = id)))
+                    id++
+                }
+            }
+        }
     }
 
     @Test
