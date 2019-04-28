@@ -1,3 +1,14 @@
+# 0.5.0
+> Published 28 Apr 2019
+
+#### Improvements:
+
+* [#10](https://github.com/valiktor/valiktor/issues/10) Added property value as parameter in nested and collection validation functions
+
+#### Features:
+
+* [#15](https://github.com/valiktor/valiktor/issues/15) Added `validateForEachIndexed` function for collections and arrays
+
 # 0.4.0
 > Published 16 Jan 2019
 
