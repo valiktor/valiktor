@@ -46,8 +46,8 @@ data class Employee(val id: Int, val name: String, val email: String) {
     init {
         validate(this) {
             validate(Employee::id).isPositive()
-            validate(Employee::name).isNotBlank().hasSize(min = 1, max = 80)
-            validate(Employee::email).isNotBlank().hasSize(min = 1, max = 50).isEmail()
+            validate(Employee::name).hasSize(min = 3, max = 80)
+            validate(Employee::email).isNotBlank().isEmail()
         }
     }
 }
@@ -682,6 +682,7 @@ valiktor.baseBundleName=messages
 
 | Project                                                                                                   | Description                       |
 | --------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| [valiktor-sample-hello-world](valiktor-samples/valiktor-sample-hello-world)                               | Hello World Example               |
 | [valiktor-sample-spring-boot-1](valiktor-samples/valiktor-sample-spring-boot-1)                           | Spring Boot 1 WebMvc Example      |
 | [valiktor-sample-spring-boot-2](valiktor-samples/valiktor-sample-spring-boot-2)                           | Spring Boot 2 WebMvc Example      |
 | [valiktor-sample-spring-boot-2-reactive](valiktor-samples/valiktor-sample-spring-boot-2-reactive)         | Spring Boot 2 WebFlux Example     |
