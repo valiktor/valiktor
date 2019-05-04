@@ -34,10 +34,10 @@ class SampleApplicationTest {
         }
 
         assertEquals(out,
-            "id: Must be greater than 0\n" +
-                "name: Size must be between 3 and 30\n" +
-                "email: Must be a valid email address\n" +
-                "salary: Decimal digits must be less than or equal to 2\n"
+            "id: Must be greater than 0${System.lineSeparator()}" +
+                "name: Size must be between 3 and 30${System.lineSeparator()}" +
+                "email: Must be a valid email address${System.lineSeparator()}" +
+                "salary: Decimal digits must be less than or equal to 2${System.lineSeparator()}"
         )
     }
 }
