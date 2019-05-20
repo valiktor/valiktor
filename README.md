@@ -524,8 +524,8 @@ Response:
 
 Samples: 
 
-* [valiktor-sample-spring-boot-1](valiktor-samples/valiktor-sample-spring-boot-1)
-* [valiktor-sample-spring-boot-2](valiktor-samples/valiktor-sample-spring-boot-2)
+* [valiktor-sample-spring-boot-1-webmvc](valiktor-samples/valiktor-sample-spring-boot-1-webmvc)
+* [valiktor-sample-spring-boot-2-webmvc](valiktor-samples/valiktor-sample-spring-boot-2-webmvc)
 
 #### Spring WebFlux example
 
@@ -641,8 +641,8 @@ Response:
 
 Samples:
 
-* [valiktor-sample-spring-boot-2-reactive](valiktor-samples/valiktor-sample-spring-boot-2-reactive)
-* [valiktor-sample-spring-boot-2-reactive-dsl](valiktor-samples/valiktor-sample-spring-boot-2-reactive-dsl)
+* [valiktor-sample-spring-boot-2-webflux-controller](valiktor-samples/valiktor-sample-spring-boot-2-webflux-controller)
+* [valiktor-sample-spring-boot-2-webflux-functional](valiktor-samples/valiktor-sample-spring-boot-2-webflux-functional)
 
 #### Spring Boot support
 
@@ -680,13 +680,13 @@ valiktor.baseBundleName=messages
 
 ## Samples
 
-| Project                                                                                                   | Description                       |
-| --------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| [valiktor-sample-hello-world](valiktor-samples/valiktor-sample-hello-world)                               | Hello World Example               |
-| [valiktor-sample-spring-boot-1](valiktor-samples/valiktor-sample-spring-boot-1)                           | Spring Boot 1 WebMvc Example      |
-| [valiktor-sample-spring-boot-2](valiktor-samples/valiktor-sample-spring-boot-2)                           | Spring Boot 2 WebMvc Example      |
-| [valiktor-sample-spring-boot-2-reactive](valiktor-samples/valiktor-sample-spring-boot-2-reactive)         | Spring Boot 2 WebFlux Example     |
-| [valiktor-sample-spring-boot-2-reactive-dsl](valiktor-samples/valiktor-sample-spring-boot-2-reactive-dsl) | Spring Boot 2 WebFlux DSL Example |
+| Project                                                                                                               | Description                       |
+| --------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| [valiktor-sample-hello-world](valiktor-samples/valiktor-sample-hello-world)                                           | Hello World Example               |
+| [valiktor-sample-spring-boot-1-webmvc](valiktor-samples/valiktor-sample-spring-boot-1-webmvc)                         | Spring Boot 1 WebMvc Example      |
+| [valiktor-sample-spring-boot-2-webmvc](valiktor-samples/valiktor-sample-spring-boot-2-webmvc)                         | Spring Boot 2 WebMvc Example      |
+| [valiktor-sample-spring-boot-2-webflux-controller](valiktor-samples/valiktor-sample-spring-boot-2-webflux-controller) | Spring Boot 2 WebFlux Example     |
+| [valiktor-sample-spring-boot-2-webflux-functional](valiktor-samples/valiktor-sample-spring-boot-2-webflux-functional) | Spring Boot 2 WebFlux DSL Example |
 
 ## Changelog
 
