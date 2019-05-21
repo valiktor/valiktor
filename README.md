@@ -39,9 +39,6 @@ implementation("org.valiktor:valiktor-core:0.5.0")
 ## Getting Started
 
 ```kotlin
-import org.valiktor.validate
-import org.valiktor.functions.*
-
 data class Employee(val id: Int, val name: String, val email: String) {
     init {
         validate(this) {
@@ -93,6 +90,8 @@ id: Greater
 name: NotEmpty
 ```
 
+See the [sample](valiktor-samples/valiktor-sample-hello-world)
+
 ### Nested object properties
 
 Valiktor can also validate nested objects and properties recursively.
@@ -135,6 +134,8 @@ This code will return:
 company.city.name: NotEmpty
 ```
 
+See the [sample](valiktor-samples/valiktor-sample-nested-properties)
+
 ### Array and collection properties
 
 Array and collection properties can also be validated, including its elements.
@@ -149,10 +150,13 @@ data class Dependent(val name: String)
 And this invalid object:
 
 ```kotlin
-val employee = Employee(dependents = listOf(
-    Dependent(name = ""), 
-    Dependent(name = ""), 
-    Dependent(name = "")))
+val employee = Employee(
+    dependents = listOf(
+        Dependent(name = ""), 
+        Dependent(name = ""), 
+        Dependent(name = "")
+    )
+)
 ```
 
 Now, let's validate the property `name` of all `Dependent` objects and handle the exception that will be thrown by printing the property name and the violated constraint:
@@ -178,6 +182,8 @@ dependents[0].name: NotEmpty
 dependents[1].name: NotEmpty
 dependents[2].name: NotEmpty
 ```
+
+See the [sample](valiktor-samples/valiktor-sample-collections)
 
 ### Internationalization
 
@@ -253,21 +259,21 @@ dateOfBirth: Deve ser maior que 31/12/1950
 
 Currently the following types have a custom formatter supported by Valiktor:
 
-| Type                          | Formatter                                              | Module                                   |
-| ----------------------------- | ------------------------------------------------------ | ---------------------------------------- |
-| `kotlin.Any`                  | `org.valiktor.i18n.formatters.AnyFormatter`            | [valiktor-core](valiktor-core)           |
-| `kotlin.Array`                | `org.valiktor.i18n.formatters.ArrayFormatter`          | [valiktor-core](valiktor-core)           |
-| `kotlin.Number`               | `org.valiktor.i18n.formatters.NumberFormatter`         | [valiktor-core](valiktor-core)           |
-| `kotlin.collections.Iterable` | `org.valiktor.i18n.formatters.IterableFormatter`       | [valiktor-core](valiktor-core)           |
-| `java.util.Calendar`          | `org.valiktor.i18n.formatters.CalendarFormatter`       | [valiktor-core](valiktor-core)           |
-| `java.util.Date`              | `org.valiktor.i18n.formatters.DateFormatter`           | [valiktor-core](valiktor-core)           |
-| `java.time.LocalDate`         | `org.valiktor.i18n.formatters.LocalDateFormatter`      | [valiktor-javatime](valiktor-javatime)   |
-| `java.time.LocalTime`         | `org.valiktor.i18n.formatters.LocalTimeFormatter`      | [valiktor-javatime](valiktor-javatime)   |
-| `java.time.LocalDateTime`     | `org.valiktor.i18n.formatters.LocalDateTimeFormatter`  | [valiktor-javatime](valiktor-javatime)   |
-| `java.time.OffsetTime`        | `org.valiktor.i18n.formatters.OffsetTimeFormatter`     | [valiktor-javatime](valiktor-javatime)   |
-| `java.time.OffsetDateTime`    | `org.valiktor.i18n.formatters.OffsetDateTimeFormatter` | [valiktor-javatime](valiktor-javatime)   |
-| `java.time.ZonedDateTime`     | `org.valiktor.i18n.formatters.ZonedDateTimeFormatter`  | [valiktor-javatime](valiktor-javatime)   |
-| `javax.money.MonetaryAmount`  | `org.valiktor.i18n.formatters.MonetaryAmountFormatter` | [valiktor-javamoney](valiktor-javamoney) |
+| Type                          | Formatter                                                |
+| ----------------------------- | -------------------------------------------------------- |
+| `kotlin.Any`                  | [org.valiktor.i18n.formatters.AnyFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/AnyFormatter.kt)                       |
+| `kotlin.Array`                | [org.valiktor.i18n.formatters.ArrayFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/ArrayFormatter.kt)                   |
+| `kotlin.Number`               | [org.valiktor.i18n.formatters.NumberFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/NumberFormatter.kt)                 |
+| `kotlin.collections.Iterable` | [org.valiktor.i18n.formatters.IterableFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/IterableFormatter.kt)             |
+| `java.util.Calendar`          | [org.valiktor.i18n.formatters.CalendarFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/CalendarFormatter.kt)             |
+| `java.util.Date`              | [org.valiktor.i18n.formatters.DateFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/DateFormatter.kt)                     |
+| `java.time.LocalDate`         | [org.valiktor.i18n.formatters.LocalDateFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/LocalDateFormatter.kt)           |
+| `java.time.LocalTime`         | [org.valiktor.i18n.formatters.LocalTimeFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/LocalTimeFormatter.kt)           |
+| `java.time.LocalDateTime`     | [org.valiktor.i18n.formatters.LocalDateTimeFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/LocalDateTimeFormatter.kt)   |
+| `java.time.OffsetTime`        | [org.valiktor.i18n.formatters.OffsetTimeFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/OffsetTimeFormatter.kt)         |
+| `java.time.OffsetDateTime`    | [org.valiktor.i18n.formatters.OffsetDateTimeFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/OffsetDateTimeFormatter.kt) |
+| `java.time.ZonedDateTime`     | [org.valiktor.i18n.formatters.ZonedDateTimeFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/ZonedDateTimeFormatter.kt)   |
+| `javax.money.MonetaryAmount`  | [org.valiktor.i18n.formatters.MonetaryAmountFormatter](valiktor-core/src/main/kotlin/org/valiktor/i18n/formatters/MonetaryAmountFormatter.kt) |
 
 #### Creating a custom formatter
 
@@ -275,10 +281,7 @@ Creating a custom formatter is very simple, just implement the interface `org.va
 
 ```kotlin
 object CustomFormatter : Formatter<Custom> {
-    
-    override fun format(value: Custom, messageBundle: MessageBundle): String {
-        return value.toString()
-    }
+    override fun format(value: Custom, messageBundle: MessageBundle) = value.toString()
 }
 ```
 
@@ -304,6 +307,8 @@ Then create a file `org.valiktor.i18n.FormatterSpi` within the directory `META-I
 ```
 com.company.CustomFormatterSpi
 ```
+
+See the [sample](valiktor-samples/valiktor-sample-custom-formatter)
 
 ### Creating a custom validation
 
@@ -335,7 +340,7 @@ There is an auxiliary function named `validate` that expects a `Constraint` and 
 For example:
 
 ```kotlin
-fun <E> Validator<E>.Property<Int?>.isBetween(start: Int, end: Int): Validator<E>.Property<Int?> =
+fun <E> Validator<E>.Property<Int?>.isBetween(start: Int, end: Int) = 
     this.validate(Between(start, end)) { it == null || it in start.rangeTo(end) }
 ```
 
@@ -368,6 +373,8 @@ org.valiktor.constraints.Between.message=Deve estar entre {start} e {end}
 ```
 
 Note: the variables `start` and `end` are extracted through the property `messageParams` of the constraint `Between` and will be formatted in the message using the [Message formatters](#message-formatters). If you need a custom formatter, see [Creating a custom formatter](#creating-a-custom-formatter).
+
+See the [sample](valiktor-samples/valiktor-sample-custom-constraint)
 
 ### Validating RESTful APIs
 
@@ -533,7 +540,7 @@ Consider this router using [Kotlin DSL](https://spring.io/blog/2017/08/01/spring
 
 ```kotlin
 @Bean
-fun router(): RouterFunction<*> = router {
+fun router() = router {
     accept(MediaType.APPLICATION_JSON).nest {
         "/employees".nest {
             POST("/") { req ->
@@ -669,24 +676,69 @@ valiktor.baseBundleName=messages
 
 ## Modules
 
-| Module                                                                                   | Description                              | Artifacts                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [valiktor-core](valiktor-core)                                                           | Core module with engine and i18n support | [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.5.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.5.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.5.0/sources)                                                                |
-| [valiktor-javamoney](valiktor-javamoney)                                                 | JavaMoney API support                    | [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.5.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.5.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.5.0/sources)                                                 |
-| [valiktor-javatime](valiktor-javatime)                                                   | JavaTime API support                     | [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.5.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.5.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.5.0/sources)                                                    |
-| [valiktor-spring](valiktor-spring/valiktor-spring)                                       | Spring WebMvc and WebFlux support        | [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.5.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.5.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.5.0/sources)                                                          |
-| [valiktor-spring-boot-autoconfigure](valiktor-spring/valiktor-spring-boot-autoconfigure) | Spring Boot AutoConfiguration support    | [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.5.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.5.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.5.0/sources) |
-| [valiktor-spring-boot-starter](valiktor-spring/valiktor-spring-boot-starter)             | Spring Boot Starter support              | [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.5.0/jar) [![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.5.0/javadoc) [![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.5.0/sources)                   |
+There are a number of modules in Valiktor, here is a quick overview:
+
+### valiktor-core
+
+[![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.5.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.5.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.5.0/sources)
+
+Core module with engine and i18n support
+
+### valiktor-javamoney
+
+[![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.5.0/jar) 
+[![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.5.0/javadoc) 
+[![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.5.0/sources)
+
+JavaMoney API support
+
+### valiktor-javatime
+
+[![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.5.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.5.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.5.0/sources)
+
+JavaTime API support
+
+### valiktor-spring
+
+[![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.5.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.5.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.5.0/sources)
+
+Spring WebMvc and WebFlux integration
+
+### valiktor-spring-boot-autoconfigure
+
+[![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.5.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.5.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.5.0/sources)
+
+Spring Boot AutoConfiguration support
+
+### valiktor-spring-boot-starter
+
+[![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.5.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.5.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.5.0/sources)
+
+Spring Boot Starter support
 
 ## Samples
 
-| Project                                                                                                               | Description                       |
-| --------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| [valiktor-sample-hello-world](valiktor-samples/valiktor-sample-hello-world)                                           | Hello World Example               |
-| [valiktor-sample-spring-boot-1-webmvc](valiktor-samples/valiktor-sample-spring-boot-1-webmvc)                         | Spring Boot 1 WebMvc Example      |
-| [valiktor-sample-spring-boot-2-webmvc](valiktor-samples/valiktor-sample-spring-boot-2-webmvc)                         | Spring Boot 2 WebMvc Example      |
-| [valiktor-sample-spring-boot-2-webflux-controller](valiktor-samples/valiktor-sample-spring-boot-2-webflux-controller) | Spring Boot 2 WebFlux Example     |
-| [valiktor-sample-spring-boot-2-webflux-functional](valiktor-samples/valiktor-sample-spring-boot-2-webflux-functional) | Spring Boot 2 WebFlux DSL Example |
+* [valiktor-sample-hello-world](valiktor-samples/valiktor-sample-hello-world)
+* [valiktor-sample-nested-properties](valiktor-samples/valiktor-sample-nested-properties)
+* [valiktor-sample-collections](valiktor-samples/valiktor-sample-collections)
+* [valiktor-sample-javamoney](valiktor-samples/valiktor-sample-javamoney)
+* [valiktor-sample-javatime](valiktor-samples/valiktor-sample-javatime)
+* [valiktor-sample-custom-constraint](valiktor-samples/valiktor-sample-custom-constraint)
+* [valiktor-sample-custom-formatter](valiktor-samples/valiktor-sample-custom-formatter)
+* [valiktor-sample-spring-boot-1-webmvc](valiktor-samples/valiktor-sample-spring-boot-1-webmvc)
+* [valiktor-sample-spring-boot-2-webmvc](valiktor-samples/valiktor-sample-spring-boot-2-webmvc)
+* [valiktor-sample-spring-boot-2-webflux-controller](valiktor-samples/valiktor-sample-spring-boot-2-webflux-controller)
+* [valiktor-sample-spring-boot-2-webflux-functional](valiktor-samples/valiktor-sample-spring-boot-2-webflux-functional)
 
 ## Changelog
 
@@ -695,10 +747,6 @@ For latest updates see [CHANGELOG.md](CHANGELOG.md) file.
 ## Contributing 
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for more details, and the process for submitting pull requests to us.
-
-## Authors
-
-* **[Rodolpho S. Couto](https://github.com/rodolphocouto)**
 
 ## License
 
