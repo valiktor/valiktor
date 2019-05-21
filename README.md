@@ -187,7 +187,7 @@ See the [sample](valiktor-samples/valiktor-sample-collections)
 
 ### Internationalization
 
-Valiktor supports decoupled internationalization, this allows to maintain the validation logic in the core of the application and the internationalization in another layer, such as presentation or RESTful adapter. This guarantees some design principles proposed by Domain Driven Design or Clean Architecture, for example.
+Valiktor supports decoupled internationalization, this allows to maintain the validation logic in the core of the application and the internationalization in another layer, such as presentation or RESTful adapter. This guarantees some design principles proposed by Domain-Driven Design or Clean Architecture, for example.
 
 The internationalization works by converting a collection of `ConstraintViolation` into a collection of `ConstraintViolationMessage` through the extension function `org.valiktor.i18n.mapToMessage` by passing the following parameters:
 
@@ -686,6 +686,28 @@ There are a number of modules in Valiktor, here is a quick overview:
 
 Core module with engine and i18n support
 
+![Gradle](docs/gradle.png)
+
+```groovy
+implementation 'org.valiktor:valiktor-core:0.5.0'
+```
+
+![Gradle](docs/gradle.png) (Kotlin DSL)
+
+```kotlin
+implementation("org.valiktor:valiktor-core:0.5.0")
+```
+
+![Maven](docs/maven.png) 
+
+```xml
+<dependency>
+  <groupId>org.valiktor</groupId>
+  <artifactId>valiktor-core</artifactId>
+  <version>0.5.0</version>
+</dependency>
+```
+
 ### valiktor-javamoney
 
 [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.5.0/jar) 
@@ -693,6 +715,28 @@ Core module with engine and i18n support
 [![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.5.0/sources)
 
 JavaMoney API support
+
+![Gradle](docs/gradle.png)
+
+```groovy
+implementation 'org.valiktor:valiktor-javamoney:0.5.0'
+```
+
+![Gradle](docs/gradle.png) (Kotlin DSL)
+
+```kotlin
+implementation("org.valiktor:valiktor-javamoney:0.5.0")
+```
+
+![Maven](docs/maven.png) 
+
+```xml
+<dependency>
+  <groupId>org.valiktor</groupId>
+  <artifactId>valiktor-javamoney</artifactId>
+  <version>0.5.0</version>
+</dependency>
+```
 
 ### valiktor-javatime
 
@@ -702,6 +746,28 @@ JavaMoney API support
 
 JavaTime API support
 
+![Gradle](docs/gradle.png)
+
+```groovy
+implementation 'org.valiktor:valiktor-javatime:0.5.0'
+```
+
+![Gradle](docs/gradle.png) (Kotlin DSL)
+
+```kotlin
+implementation("org.valiktor:valiktor-javatime:0.5.0")
+```
+
+![Maven](docs/maven.png) 
+
+```xml
+<dependency>
+  <groupId>org.valiktor</groupId>
+  <artifactId>valiktor-javatime</artifactId>
+  <version>0.5.0</version>
+</dependency>
+```
+
 ### valiktor-spring
 
 [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.5.0/jar)
@@ -709,6 +775,28 @@ JavaTime API support
 [![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.5.0/sources)
 
 Spring WebMvc and WebFlux integration
+
+![Gradle](docs/gradle.png)
+
+```groovy
+implementation 'org.valiktor:valiktor-spring:0.5.0'
+```
+
+![Gradle](docs/gradle.png) (Kotlin DSL)
+
+```kotlin
+implementation("org.valiktor:valiktor-spring:0.5.0")
+```
+
+![Maven](docs/maven.png) 
+
+```xml
+<dependency>
+  <groupId>org.valiktor</groupId>
+  <artifactId>valiktor-spring</artifactId>
+  <version>0.5.0</version>
+</dependency>
+```
 
 ### valiktor-spring-boot-autoconfigure
 
@@ -718,6 +806,28 @@ Spring WebMvc and WebFlux integration
 
 Spring Boot AutoConfiguration support
 
+![Gradle](docs/gradle.png)
+
+```groovy
+implementation 'org.valiktor:valiktor-spring-boot-autoconfigure:0.5.0'
+```
+
+![Gradle](docs/gradle.png) (Kotlin DSL)
+
+```kotlin
+implementation("org.valiktor:valiktor-spring-boot-autoconfigure:0.5.0")
+```
+
+![Maven](docs/maven.png) 
+
+```xml
+<dependency>
+  <groupId>org.valiktor</groupId>
+  <artifactId>valiktor-spring-boot-autoconfigure</artifactId>
+  <version>0.5.0</version>
+</dependency>
+```
+
 ### valiktor-spring-boot-starter
 
 [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.5.0/jar)
@@ -725,6 +835,28 @@ Spring Boot AutoConfiguration support
 [![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.5.0/sources)
 
 Spring Boot Starter support
+
+![Gradle](docs/gradle.png)
+
+```groovy
+implementation 'org.valiktor:valiktor-spring-boot-starter:0.5.0'
+```
+
+![Gradle](docs/gradle.png) (Kotlin DSL)
+
+```kotlin
+implementation("org.valiktor:valiktor-spring-boot-starter:0.5.0")
+```
+
+![Maven](docs/maven.png) 
+
+```xml
+<dependency>
+  <groupId>org.valiktor</groupId>
+  <artifactId>valiktor-spring-boot-starter</artifactId>
+  <version>0.5.0</version>
+</dependency>
+```
 
 ## Samples
 
