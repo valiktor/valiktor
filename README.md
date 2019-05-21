@@ -691,30 +691,6 @@ The main library providing the validation engine, including:
 * Internationalization support
 * Default formatters for array, collection, date and number types
 
-#### Installation:
-
-![Gradle](docs/gradle.png)
-
-```groovy
-implementation 'org.valiktor:valiktor-core:0.5.0'
-```
-
-![Gradle](docs/gradle.png) (Kotlin DSL)
-
-```kotlin
-implementation("org.valiktor:valiktor-core:0.5.0")
-```
-
-![Maven](docs/maven.png) 
-
-```xml
-<dependency>
-  <groupId>org.valiktor</groupId>
-  <artifactId>valiktor-core</artifactId>
-  <version>0.5.0</version>
-</dependency>
-```
-
 ### valiktor-javamoney
 
 [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.5.0/jar) 
@@ -726,30 +702,6 @@ This module provides support for JavaMoney API types, including:
 * Validation constraints and functions for `MonetaryAmount`
 * Default formatter for `MonetaryAmount`
 
-#### Installation:
-
-![Gradle](docs/gradle.png)
-
-```groovy
-implementation 'org.valiktor:valiktor-javamoney:0.5.0'
-```
-
-![Gradle](docs/gradle.png) (Kotlin DSL)
-
-```kotlin
-implementation("org.valiktor:valiktor-javamoney:0.5.0")
-```
-
-![Maven](docs/maven.png) 
-
-```xml
-<dependency>
-  <groupId>org.valiktor</groupId>
-  <artifactId>valiktor-javamoney</artifactId>
-  <version>0.5.0</version>
-</dependency>
-```
-
 ### valiktor-javatime
 
 [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.5.0/jar)
@@ -760,30 +712,6 @@ This module provides support for JavaTime API types, including:
 
 * Validation constraints and functions for `LocalDate`, `LocalDateTime`, `OffsetDateTime` and `ZonedDateTime`
 * Default formatter for all `LocalDate`, `LocalDateTime`, `LocalTime`, `OffsetDateTime`, `OffsetTime` and `ZonedDateTime`
-
-#### Installation:
-
-![Gradle](docs/gradle.png)
-
-```groovy
-implementation 'org.valiktor:valiktor-javatime:0.5.0'
-```
-
-![Gradle](docs/gradle.png) (Kotlin DSL)
-
-```kotlin
-implementation("org.valiktor:valiktor-javatime:0.5.0")
-```
-
-![Maven](docs/maven.png) 
-
-```xml
-<dependency>
-  <groupId>org.valiktor</groupId>
-  <artifactId>valiktor-javatime</artifactId>
-  <version>0.5.0</version>
-</dependency>
-```
 
 ### valiktor-spring
 
@@ -797,30 +725,6 @@ Spring WebMvc and WebFlux integration, including:
 * Exception handler for `ConstraintViolationException` from Valiktor
 * Exception handlers for `InvalidFormatException` and `MissingKotlinParameterException` from Jackson
 
-#### Installation:
-
-![Gradle](docs/gradle.png)
-
-```groovy
-implementation 'org.valiktor:valiktor-spring:0.5.0'
-```
-
-![Gradle](docs/gradle.png) (Kotlin DSL)
-
-```kotlin
-implementation("org.valiktor:valiktor-spring:0.5.0")
-```
-
-![Maven](docs/maven.png) 
-
-```xml
-<dependency>
-  <groupId>org.valiktor</groupId>
-  <artifactId>valiktor-spring</artifactId>
-  <version>0.5.0</version>
-</dependency>
-```
-
 ### valiktor-spring-boot-autoconfigure
 
 [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.5.0/jar)
@@ -833,30 +737,6 @@ Provides auto-configuration support for [valiktor-spring](#valiktor-spring), inc
 * Spring WebMvc exception handlers
 * Spring WebFlux exception handlers
 
-#### Installation:
-
-![Gradle](docs/gradle.png)
-
-```groovy
-implementation 'org.valiktor:valiktor-spring-boot-autoconfigure:0.5.0'
-```
-
-![Gradle](docs/gradle.png) (Kotlin DSL)
-
-```kotlin
-implementation("org.valiktor:valiktor-spring-boot-autoconfigure:0.5.0")
-```
-
-![Maven](docs/maven.png) 
-
-```xml
-<dependency>
-  <groupId>org.valiktor</groupId>
-  <artifactId>valiktor-spring-boot-autoconfigure</artifactId>
-  <version>0.5.0</version>
-</dependency>
-```
-
 ### valiktor-spring-boot-starter
 
 [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.5.0/jar)
@@ -864,30 +744,6 @@ implementation("org.valiktor:valiktor-spring-boot-autoconfigure:0.5.0")
 [![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.5.0/sources)
 
 Spring Boot Starter library including the modules [valiktor-spring](#valiktor-spring) and [valiktor-spring-boot-autoconfigure](#valiktor-spring-boot-autoconfigure)
-
-#### Installation:
-
-![Gradle](docs/gradle.png)
-
-```groovy
-implementation 'org.valiktor:valiktor-spring-boot-starter:0.5.0'
-```
-
-![Gradle](docs/gradle.png) (Kotlin DSL)
-
-```kotlin
-implementation("org.valiktor:valiktor-spring-boot-starter:0.5.0")
-```
-
-![Maven](docs/maven.png) 
-
-```xml
-<dependency>
-  <groupId>org.valiktor</groupId>
-  <artifactId>valiktor-spring-boot-starter</artifactId>
-  <version>0.5.0</version>
-</dependency>
-```
 
 ## Samples
 
