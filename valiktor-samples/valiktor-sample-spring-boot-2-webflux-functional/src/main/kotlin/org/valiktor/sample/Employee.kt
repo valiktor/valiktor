@@ -19,22 +19,16 @@ package org.valiktor.sample
 import java.time.LocalDate
 import javax.money.MonetaryAmount
 
+data class Company(val name: String, val foundationDate: LocalDate)
+
+data class Dependent(val name: String, val age: Int)
+
 data class Employee(
-    val id: Int,
+    val documentNumber: String,
     val name: String,
     val email: String,
     val dateOfBirth: LocalDate,
     val salary: MonetaryAmount,
     val company: Company,
     val dependents: List<Dependent>
-)
-
-data class Company(
-    val name: String,
-    val foundedDate: LocalDate
-)
-
-data class Dependent(
-    val name: String,
-    val age: Int
 )

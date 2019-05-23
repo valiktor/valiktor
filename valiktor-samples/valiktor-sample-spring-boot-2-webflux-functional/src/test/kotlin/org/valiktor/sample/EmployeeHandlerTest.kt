@@ -24,9 +24,9 @@ import org.springframework.core.env.Environment
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
-import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBody
 import org.springframework.web.reactive.function.BodyInserters
 import org.valiktor.springframework.web.payload.UnprocessableEntity
 import java.util.Locale
@@ -35,7 +35,7 @@ import kotlin.test.Test
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-class EmployeeControllerTest {
+class EmployeeHandlerTest {
 
     @Autowired
     private lateinit var env: Environment
@@ -43,71 +43,65 @@ class EmployeeControllerTest {
     @Autowired
     private lateinit var webClient: WebTestClient
 
-    private fun createValidEmployee(id: Int) {
-        webClient
-            .post()
-            .uri("/employees")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromObject(EmployeeControllerFixture.validEmployee(id = id)))
-            .exchange()
-            .expectStatus().isCreated
-            .expectHeader().valueEquals(HttpHeaders.LOCATION, "http://localhost:${env.getProperty("local.server.port")}/employees/$id")
-            .expectBody().isEmpty
-    }
-
     @BeforeTest
     fun setUp() {
         Locale.setDefault(Locale.ENGLISH)
     }
 
     @Test
-    fun `should return 422 with default locale`() {
-        createValidEmployee(id = 1)
+    fun `should return 201 with location`() {
+        webClient
+            .post()
+            .uri("/employees")
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(BodyInserters.fromObject(EmployeeHandlerFixture.validEmployee))
+            .exchange()
+            .expectStatus().isCreated
+            .expectHeader().valueEquals(HttpHeaders.LOCATION, "http://localhost:${env.getProperty("local.server.port")}/employees/111.111.111-11")
+            .expectBody().isEmpty
+    }
 
+    @Test
+    fun `should return 422 with default locale`() {
         webClient
             .post()
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromObject(EmployeeControllerFixture.invalidEmployee(id = 1)))
+            .body(BodyInserters.fromObject(EmployeeHandlerFixture.invalidEmployee))
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
-            .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
-            .expectBody(UnprocessableEntity::class.java).isEqualTo<Nothing>(EmployeeControllerFixture.unprocessableEntityEn(id = 1))
+            .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
+            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeHandlerFixture.unprocessableEntity.getValue(Locale.ENGLISH))
     }
 
     @Test
     fun `should return 422 with locale en`() {
-        createValidEmployee(id = 2)
-
         webClient
             .post()
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .header(HttpHeaders.ACCEPT_LANGUAGE, "en")
-            .body(BodyInserters.fromObject(EmployeeControllerFixture.invalidEmployee(id = 2)))
+            .body(BodyInserters.fromObject(EmployeeHandlerFixture.invalidEmployee))
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
-            .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
-            .expectBody(UnprocessableEntity::class.java).isEqualTo<Nothing>(EmployeeControllerFixture.unprocessableEntityEn(id = 2))
+            .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
+            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeHandlerFixture.unprocessableEntity.getValue(Locale.ENGLISH))
     }
 
     @Test
     fun `should return 422 with locale pt_BR`() {
-        createValidEmployee(id = 3)
-
         webClient
             .post()
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR")
-            .body(BodyInserters.fromObject(EmployeeControllerFixture.invalidEmployee(id = 3)))
+            .body(BodyInserters.fromObject(EmployeeHandlerFixture.invalidEmployee))
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
-            .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
-            .expectBody(UnprocessableEntity::class.java).isEqualTo<Nothing>(EmployeeControllerFixture.unprocessableEntityPtBr(id = 3))
+            .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
+            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeHandlerFixture.unprocessableEntity.getValue(Locale("pt", "BR")))
     }
 }

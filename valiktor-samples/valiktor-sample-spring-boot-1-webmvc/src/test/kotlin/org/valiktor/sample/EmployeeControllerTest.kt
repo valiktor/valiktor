@@ -42,67 +42,66 @@ class EmployeeControllerTest {
     @Autowired
     private lateinit var restTemplate: TestRestTemplate
 
-    private fun createValidEmployee(id: Int) {
-        val entity = HttpEntity(EmployeeControllerFixture.validEmployee(id = id))
-        val response = restTemplate.exchange("/employees", HttpMethod.POST, entity, Void::class.java)
-
-        assertEquals(response.statusCode, HttpStatus.CREATED)
-        assertTrue(response.headers[HttpHeaders.LOCATION]!![0].endsWith("/employees/$id"))
-        assertFalse(response.hasBody())
-    }
-
     @BeforeTest
     fun setUp() {
         Locale.setDefault(Locale.ENGLISH)
     }
 
     @Test
-    fun `should return 422 with default locale`() {
-        createValidEmployee(id = 1)
-
+    fun `should return 201 with location`() {
         val headers = HttpHeaders()
         headers[HttpHeaders.CONTENT_TYPE] = APPLICATION_JSON_VALUE
         headers[HttpHeaders.ACCEPT] = APPLICATION_JSON_VALUE
 
-        val entity = HttpEntity(EmployeeControllerFixture.invalidEmployee(id = 1), headers)
+        val entity = HttpEntity(EmployeeControllerFixture.validEmployee, headers)
+        val response = restTemplate.exchange("/employees", HttpMethod.POST, entity, Void::class.java)
+
+        assertEquals(response.statusCode, HttpStatus.CREATED)
+        assertTrue(response.headers[HttpHeaders.LOCATION]!![0].endsWith("/employees/111.111.111-11"))
+        assertFalse(response.hasBody())
+    }
+
+    @Test
+    fun `should return 422 with default locale`() {
+        val headers = HttpHeaders()
+        headers[HttpHeaders.CONTENT_TYPE] = APPLICATION_JSON_VALUE
+        headers[HttpHeaders.ACCEPT] = APPLICATION_JSON_VALUE
+
+        val entity = HttpEntity(EmployeeControllerFixture.invalidEmployee, headers)
         val response = restTemplate.exchange("/employees", HttpMethod.POST, entity, UnprocessableEntity::class.java)
 
         assertEquals(response.statusCode, HttpStatus.UNPROCESSABLE_ENTITY)
         assertTrue(response.headers[HttpHeaders.CONTENT_TYPE]!![0].startsWith(APPLICATION_JSON_VALUE))
-        assertEquals(response.body, EmployeeControllerFixture.unprocessableEntityEn(id = 1))
+        assertEquals(response.body, EmployeeControllerFixture.unprocessableEntity.getValue(Locale.ENGLISH))
     }
 
     @Test
     fun `should return 422 with locale en`() {
-        createValidEmployee(id = 2)
-
         val headers = HttpHeaders()
         headers[HttpHeaders.CONTENT_TYPE] = APPLICATION_JSON_VALUE
         headers[HttpHeaders.ACCEPT] = APPLICATION_JSON_VALUE
         headers[HttpHeaders.ACCEPT_LANGUAGE] = "en"
 
-        val entity = HttpEntity(EmployeeControllerFixture.invalidEmployee(id = 2), headers)
+        val entity = HttpEntity(EmployeeControllerFixture.invalidEmployee, headers)
         val response = restTemplate.exchange("/employees", HttpMethod.POST, entity, UnprocessableEntity::class.java)
 
         assertEquals(response.statusCode, HttpStatus.UNPROCESSABLE_ENTITY)
         assertTrue(response.headers[HttpHeaders.CONTENT_TYPE]!![0].startsWith(APPLICATION_JSON_VALUE))
-        assertEquals(response.body, EmployeeControllerFixture.unprocessableEntityEn(id = 2))
+        assertEquals(response.body, EmployeeControllerFixture.unprocessableEntity.getValue(Locale.ENGLISH))
     }
 
     @Test
     fun `should return 422 with locale pt_BR`() {
-        createValidEmployee(id = 3)
-
         val headers = HttpHeaders()
         headers[HttpHeaders.CONTENT_TYPE] = APPLICATION_JSON_VALUE
         headers[HttpHeaders.ACCEPT] = APPLICATION_JSON_VALUE
         headers[HttpHeaders.ACCEPT_LANGUAGE] = "pt-BR"
 
-        val entity = HttpEntity(EmployeeControllerFixture.invalidEmployee(id = 3), headers)
+        val entity = HttpEntity(EmployeeControllerFixture.invalidEmployee, headers)
         val response = restTemplate.exchange("/employees", HttpMethod.POST, entity, UnprocessableEntity::class.java)
 
         assertEquals(response.statusCode, HttpStatus.UNPROCESSABLE_ENTITY)
         assertTrue(response.headers[HttpHeaders.CONTENT_TYPE]!![0].startsWith(APPLICATION_JSON_VALUE))
-        assertEquals(response.body, EmployeeControllerFixture.unprocessableEntityPtBr(id = 3))
+        assertEquals(response.body, EmployeeControllerFixture.unprocessableEntity.getValue(Locale("pt", "BR")))
     }
 }
