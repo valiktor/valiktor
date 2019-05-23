@@ -1,5 +1,5 @@
-fun DependencyHandler.javaMoney(module: String) = "javax.money:money-$module:1.0.3"
-fun DependencyHandler.moneta(module: String) = "org.javamoney:$module:1.3"
+fun javaMoney(module: String) = "javax.money:money-$module:1.0.3"
+fun moneta(module: String) = "org.javamoney:$module:1.3"
 
 dependencies {
     compile(project(":valiktor-core"))

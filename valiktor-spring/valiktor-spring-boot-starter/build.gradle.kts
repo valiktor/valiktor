@@ -1,7 +1,7 @@
-fun DependencyHandler.springBoot(module: String) = "org.springframework.boot:spring-boot-$module:2.1.4.RELEASE"
+fun springBoot(module: String) = "org.springframework.boot:spring-boot-$module:2.1.5.RELEASE"
 
 plugins {
-    kotlin("plugin.spring") version "1.3.21"
+    kotlin("plugin.spring") version "1.3.31"
 }
 
 dependencies {
