@@ -32,9 +32,7 @@ class SampleApplication {
     fun jacksonBuilder(): Jackson2ObjectMapperBuilder =
         Jackson2ObjectMapperBuilder()
             .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-            .modules(KotlinModule(),
-                MoneyModule(),
-                JavaTimeModule())
+            .modules(KotlinModule(), MoneyModule(), JavaTimeModule())
 }
 
 fun main(args: Array<String>) {

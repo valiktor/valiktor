@@ -1,6 +1,6 @@
 spring:
   application:
-    name: sample-service
+    name: valiktor-sample
   main:
     banner-mode: log
 
@@ -9,4 +9,4 @@ logging:
     root: INFO
 
 valiktor:
-  base-bundle-name: customMessages
+  base-bundle-name: messages

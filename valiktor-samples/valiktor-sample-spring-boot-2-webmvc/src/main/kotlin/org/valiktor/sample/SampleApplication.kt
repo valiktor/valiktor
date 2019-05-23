@@ -17,8 +17,8 @@
 package org.valiktor.sample
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.zalando.jackson.datatype.money.MoneyModule
 
@@ -33,5 +33,5 @@ class SampleApplication {
 }
 
 fun main(args: Array<String>) {
-    SpringApplication.run(SampleApplication::class.java, *args)
+    runApplication<SampleApplication>(*args)
 }
