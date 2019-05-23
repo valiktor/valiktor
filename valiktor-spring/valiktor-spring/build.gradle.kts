@@ -1,13 +1,13 @@
-fun DependencyHandler.spring(module: String) = "org.springframework:spring-$module:5.1.6.RELEASE"
-fun DependencyHandler.servlet(module: String) = "javax.servlet:javax.servlet-$module:4.0.1"
-fun DependencyHandler.jacksonCore(module: String) = "com.fasterxml.jackson.core:jackson-$module:2.9.8"
-fun DependencyHandler.jacksonModule(module: String) = "com.fasterxml.jackson.module:jackson-module-$module:2.9.8"
-fun DependencyHandler.jacksonDataFormat(module: String) = "com.fasterxml.jackson.dataformat:jackson-dataformat-$module:2.9.8"
-fun DependencyHandler.jsonAssert() = "org.skyscreamer:jsonassert:1.5.0"
-fun DependencyHandler.xmlUnit() = "org.xmlunit:xmlunit-core:2.6.2"
+fun spring(module: String) = "org.springframework:spring-$module:5.1.7.RELEASE"
+fun servlet(module: String) = "javax.servlet:javax.servlet-$module:4.0.1"
+fun jacksonCore(module: String) = "com.fasterxml.jackson.core:jackson-$module:2.9.9"
+fun jacksonModule(module: String) = "com.fasterxml.jackson.module:jackson-module-$module:2.9.9"
+fun jacksonDataFormat(module: String) = "com.fasterxml.jackson.dataformat:jackson-dataformat-$module:2.9.9"
+fun jsonAssert() = "org.skyscreamer:jsonassert:1.5.0"
+fun xmlUnit() = "org.xmlunit:xmlunit-core:2.6.2"
 
 plugins {
-    kotlin("plugin.spring") version "1.3.21"
+    kotlin("plugin.spring") version "1.3.31"
 }
 
 dependencies {

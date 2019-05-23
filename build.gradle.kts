@@ -1,10 +1,10 @@
 plugins {
-    kotlin("jvm") version "1.3.21"
+    kotlin("jvm") version "1.3.31"
     id("jacoco")
     id("signing")
     id("maven-publish")
     id("org.jetbrains.dokka") version "0.9.18"
-    id("org.jmailen.kotlinter") version "1.23.1"
+    id("org.jmailen.kotlinter") version "1.25.2"
     id("com.adarshr.test-logger") version "1.6.0"
 }
 
@@ -14,8 +14,8 @@ repositories {
 }
 
 subprojects {
-    fun DependencyHandler.assertj(module: String) = "org.assertj:assertj-$module:3.12.2"
-    fun DependencyHandler.junit5(module: String) = "org.junit.jupiter:junit-jupiter-$module:5.0.0"
+    fun assertj(module: String) = "org.assertj:assertj-$module:3.12.2"
+    fun junit5(module: String) = "org.junit.jupiter:junit-jupiter-$module:5.3.2"
 
     apply {
         plugin("kotlin")
@@ -123,7 +123,7 @@ subprojects {
 
                 pom {
                     name.set("Valiktor")
-                    description.set("Valiktor is a type-safe, powerful and extensible fluent DSL to validate objects written in Kotlin.")
+                    description.set("Valiktor is a type-safe, powerful and extensible fluent DSL to validate objects in Kotlin.")
                     url.set("https://www.valiktor.org")
                     licenses {
                         license {
