@@ -17,7 +17,9 @@
 package org.valiktor.i18n
 
 import org.joda.money.BigMoney
+import org.joda.money.Money
 import org.valiktor.i18n.formatters.BigMoneyFormatter
+import org.valiktor.i18n.formatters.MoneyFormatter
 
 /**
  * Represents the implementation for service provider interface for JodaMoney formatters
@@ -30,6 +32,7 @@ import org.valiktor.i18n.formatters.BigMoneyFormatter
 class JodaMoneyFormatterSpi : FormatterSpi {
 
     override val formatters = setOf(
-        BigMoney::class to BigMoneyFormatter
+        BigMoney::class to BigMoneyFormatter,
+        Money::class to MoneyFormatter
     )
 }

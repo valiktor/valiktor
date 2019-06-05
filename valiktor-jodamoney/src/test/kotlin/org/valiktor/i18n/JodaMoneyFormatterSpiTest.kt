@@ -17,7 +17,9 @@
 package org.valiktor.i18n
 
 import org.joda.money.BigMoney
+import org.joda.money.Money
 import org.valiktor.i18n.formatters.BigMoneyFormatter
+import org.valiktor.i18n.formatters.MoneyFormatter
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -26,5 +28,6 @@ class JodaMoneyFormatterSpiTest {
     @Test
     fun `should get MoneyFormatter`() {
         assertEquals(Formatters[BigMoney::class], BigMoneyFormatter)
+        assertEquals(Formatters[Money::class], MoneyFormatter)
     }
 }
