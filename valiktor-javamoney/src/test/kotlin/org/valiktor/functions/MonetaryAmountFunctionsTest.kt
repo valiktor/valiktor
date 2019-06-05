@@ -42,6 +42,7 @@ import org.valiktor.validate
 import java.math.BigDecimal.ONE
 import java.math.BigDecimal.TEN
 import java.math.BigDecimal.ZERO
+import javax.money.CurrencyUnit
 import javax.money.Monetary
 import javax.money.MonetaryAmount
 import kotlin.test.Test
@@ -52,8 +53,11 @@ private object MonetaryAmountFunctionsFixture {
     data class Employee(val salary: MonetaryAmount? = null)
 }
 
-private val REAL = Monetary.getCurrency("BRL")
-private val DOLLAR = Monetary.getCurrency("USD")
+private val BRL = Monetary.getCurrency("BRL")
+private val USD = Monetary.getCurrency("USD")
+
+private fun <T : Number> moneyOf(currency: CurrencyUnit, number: T) =
+    Monetary.getDefaultAmountFactory().setCurrency(currency).setNumber(number).create()
 
 private val ONE_NUMBERS = listOf<Number>(
     1.toByte(), 1.toShort(), 1, 1.toLong(), 1.toBigInteger(),
@@ -75,17 +79,17 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `isNull with not null value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(1000).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, 1000))) {
                 validate(Employee::salary).isNull()
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(1000).setCurrency(REAL).create(), constraint = Null))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, 1000), constraint = Null))
     }
 
     @Test
     fun `isNotNull with not null value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, ZERO))) {
             validate(Employee::salary).isNotNull()
         }
     }
@@ -104,51 +108,51 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `isEqualTo with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isEqualTo(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())
+            validate(Employee::salary).isEqualTo(moneyOf(BRL, ONE))
         }
     }
 
     @Test
     fun `isEqualTo with same value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isEqualTo(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).isEqualTo(moneyOf(USD, ONE))
         }
     }
 
     @Test
     fun `isEqualTo with same value and 2 decimal digits should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-            validate(Employee::salary).isEqualTo(Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
+            validate(Employee::salary).isEqualTo(moneyOf(BRL, 1.00.toBigDecimal()))
         }
     }
 
     @Test
     fun `isEqualTo with same value and different type should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-            validate(Employee::salary).isEqualTo(Monetary.getDefaultAmountFactory().setNumber(1).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
+            validate(Employee::salary).isEqualTo(moneyOf(BRL, 1))
         }
     }
 
     @Test
     fun `isEqualTo with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isEqualTo(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, ZERO))) {
+                validate(Employee::salary).isEqualTo(moneyOf(USD, ONE))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = Equals(moneyOf(USD, ONE))))
     }
 
     @Test
     fun `isEqualTo with different currency should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isEqualTo(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())
+            validate(Employee(salary = moneyOf(USD, ZERO))) {
+                validate(Employee::salary).isEqualTo(moneyOf(BRL, ZERO))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = Equals(moneyOf(BRL, ZERO))))
     }
 
     @Test
@@ -162,7 +166,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isEqualTo Number with same value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ONE)
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -173,7 +177,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isEqualTo Number with same value and 2 decimal digits should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber("1.00".toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, "1.00".toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -184,7 +188,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isEqualTo Number with different value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ZERO)
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -193,62 +197,62 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = Equals(salary.factory.setNumber(one).create())))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = Equals(moneyOf(USD, one))))
         }
     }
 
     @Test
     fun `isNotEqualTo with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isNotEqualTo(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())
+            validate(Employee::salary).isNotEqualTo(moneyOf(BRL, ONE))
         }
     }
 
     @Test
     fun `isNotEqualTo with different value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isNotEqualTo(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).isNotEqualTo(moneyOf(USD, ZERO))
         }
     }
 
     @Test
     fun `isNotEqualTo with different currency should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isNotEqualTo(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).isNotEqualTo(moneyOf(BRL, ONE))
         }
     }
 
     @Test
     fun `isNotEqualTo with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-                validate(Employee::salary).isNotEqualTo(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())
+            validate(Employee(salary = moneyOf(BRL, ONE))) {
+                validate(Employee::salary).isNotEqualTo(moneyOf(BRL, ONE))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = NotEquals(moneyOf(BRL, ONE))))
     }
 
     @Test
     fun `isNotEqualTo with same value and 2 decimal digits should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isNotEqualTo(Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).isNotEqualTo(moneyOf(USD, 1.00.toBigDecimal()))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotEquals(moneyOf(USD, 1.00.toBigDecimal()))))
     }
 
     @Test
     fun `isNotEqualTo with same value and different type should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isNotEqualTo(Monetary.getDefaultAmountFactory().setNumber(1).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).isNotEqualTo(moneyOf(USD, 1))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(1).setCurrency(DOLLAR).create())))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotEquals(moneyOf(USD, 1))))
     }
 
     @Test
@@ -262,7 +266,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotEqualTo Number with different value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ZERO)
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -273,7 +277,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotEqualTo Number with same value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, ONE)
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -282,13 +286,13 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(salary.factory.setNumber(one).create())))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(moneyOf(BRL, one))))
         }
     }
 
     @Test
     fun `isNotEqualTo Number with same value and 2 decimal digits should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber("1.00".toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, "1.00".toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -297,58 +301,58 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(salary.factory.setNumber(one).create())))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(moneyOf(USD, one))))
         }
     }
 
     @Test
     fun `isIn vararg with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isIn(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create())
+            validate(Employee::salary).isIn(moneyOf(BRL, ZERO), moneyOf(BRL, ONE), moneyOf(BRL, TEN))
         }
     }
 
     @Test
     fun `isIn vararg with same value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isIn(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).isIn(moneyOf(USD, ZERO), moneyOf(USD, ONE), moneyOf(USD, TEN))
         }
     }
 
     @Test
     fun `isIn vararg with same value and 2 decimal digits should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-            validate(Employee::salary).isIn(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
+            validate(Employee::salary).isIn(moneyOf(BRL, ZERO), moneyOf(BRL, 1.00.toBigDecimal()), moneyOf(BRL, TEN))
         }
     }
 
     @Test
     fun `isIn vararg with same value and different type should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-            validate(Employee::salary).isIn(Monetary.getDefaultAmountFactory().setNumber(0).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(1).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(10).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
+            validate(Employee::salary).isIn(moneyOf(BRL, 0), moneyOf(BRL, 1), moneyOf(BRL, 10))
         }
     }
 
     @Test
     fun `isIn vararg with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isIn(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).isIn(moneyOf(USD, ZERO), moneyOf(USD, TEN))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = In(setOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = In(setOf(moneyOf(USD, ZERO), moneyOf(USD, TEN)))))
     }
 
     @Test
     fun `isIn vararg with different currency should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isIn(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).isIn(moneyOf(BRL, ONE), moneyOf(USD, TEN))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = In(setOf(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = In(setOf(moneyOf(BRL, ONE), moneyOf(USD, TEN)))))
     }
 
     @Test
@@ -362,7 +366,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isIn vararg Number with same value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ONE)
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -373,7 +377,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isIn vararg Number with same value and 2 decimal digits should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber("1.00".toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, "1.00".toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -384,7 +388,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isIn vararg Number with different value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ZERO)
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -394,59 +398,59 @@ class MonetaryAmountFunctionsTest {
             }
             assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "salary", value = salary, constraint = In(setOf(
-                    salary.factory.setNumber(one).create(),
-                    salary.factory.setNumber(TEN).create()))))
+                    moneyOf(USD, one),
+                    moneyOf(USD, TEN)))))
         }
     }
 
     @Test
     fun `isIn iterable with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))
+            validate(Employee::salary).isIn(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, ONE), moneyOf(BRL, TEN)))
         }
     }
 
     @Test
     fun `isIn iterable with same value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).isIn(listOf(moneyOf(USD, ZERO), moneyOf(USD, ONE), moneyOf(USD, TEN)))
         }
     }
 
     @Test
     fun `isIn iterable with same value and 2 decimal digits should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-            validate(Employee::salary).isIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
+            validate(Employee::salary).isIn(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, 1.00.toBigDecimal()), moneyOf(USD, TEN)))
         }
     }
 
     @Test
     fun `isIn iterable with same value and different type should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-            validate(Employee::salary).isIn(listOf(Monetary.getDefaultAmountFactory().setNumber(0).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(1).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(10).setCurrency(DOLLAR).create()))
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
+            validate(Employee::salary).isIn(listOf(moneyOf(BRL, 0), moneyOf(BRL, 1), moneyOf(USD, 10)))
         }
     }
 
     @Test
     fun `isIn iterable with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-                validate(Employee::salary).isIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))
+            validate(Employee(salary = moneyOf(BRL, ONE))) {
+                validate(Employee::salary).isIn(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, TEN)))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = In(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = In(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, TEN)))))
     }
 
     @Test
     fun `isIn iterable with different currency should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-                validate(Employee::salary).isIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))
+            validate(Employee(salary = moneyOf(BRL, ONE))) {
+                validate(Employee::salary).isIn(listOf(moneyOf(USD, ONE), moneyOf(BRL, TEN)))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = In(listOf(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = In(listOf(moneyOf(USD, ONE), moneyOf(BRL, TEN)))))
     }
 
     @Test
@@ -460,7 +464,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isIn iterable Number with same value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ONE)
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -471,7 +475,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isIn iterable Number with same value and 2 decimal digits should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber("1.00".toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, "1.00".toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -482,7 +486,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isIn iterable Number with different value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ZERO)
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -492,63 +496,63 @@ class MonetaryAmountFunctionsTest {
             }
             assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "salary", value = salary, constraint = In(listOf(
-                    salary.factory.setNumber(one).create(),
-                    salary.factory.setNumber(TEN).create()))))
+                    moneyOf(USD, one),
+                    moneyOf(USD, TEN)))))
         }
     }
 
     @Test
     fun `isNotIn vararg with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isNotIn(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create())
+            validate(Employee::salary).isNotIn(moneyOf(USD, ZERO), moneyOf(USD, ONE), moneyOf(USD, TEN))
         }
     }
 
     @Test
     fun `isNotIn vararg with different value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-            validate(Employee::salary).isNotIn(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
+            validate(Employee::salary).isNotIn(moneyOf(BRL, ZERO), moneyOf(BRL, TEN))
         }
     }
 
     @Test
     fun `isNotIn vararg with different currency should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-            validate(Employee::salary).isNotIn(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
+            validate(Employee::salary).isNotIn(moneyOf(USD, ONE), moneyOf(BRL, TEN))
         }
     }
 
     @Test
     fun `isNotIn vararg with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isNotIn(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).isNotIn(moneyOf(USD, ZERO), moneyOf(USD, ONE), moneyOf(USD, TEN))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(setOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, ZERO), moneyOf(USD, ONE), moneyOf(USD, TEN)))))
     }
 
     @Test
     fun `isNotIn vararg with same value and 2 decimal digits should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isNotIn(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).isNotIn(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(setOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN)))))
     }
 
     @Test
     fun `isNotIn vararg with same value and different type should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isNotIn(Monetary.getDefaultAmountFactory().setNumber(0L).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1L).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(10L).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).isNotIn(moneyOf(USD, 0L), moneyOf(USD, 1L), moneyOf(USD, 10L))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(setOf(Monetary.getDefaultAmountFactory().setNumber(0L).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1L).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(10L).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, 0L), moneyOf(USD, 1L), moneyOf(USD, 10L)))))
     }
 
     @Test
@@ -562,7 +566,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotIn vararg Number with different value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, ZERO)
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -573,7 +577,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotIn vararg Number with same value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ONE)
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -583,15 +587,15 @@ class MonetaryAmountFunctionsTest {
             }
             assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(setOf(
-                    salary.factory.setNumber(ZERO).create(),
-                    salary.factory.setNumber(one).create(),
-                    salary.factory.setNumber(TEN).create()))))
+                    moneyOf(USD, ZERO),
+                    moneyOf(USD, one),
+                    moneyOf(USD, TEN)))))
         }
     }
 
     @Test
     fun `isNotIn vararg Number with same value and 2 decimal digits should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber("1.00".toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, "1.00".toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -601,64 +605,64 @@ class MonetaryAmountFunctionsTest {
             }
             assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(setOf(
-                    salary.factory.setNumber(ZERO).create(),
-                    salary.factory.setNumber(one).create(),
-                    salary.factory.setNumber(TEN).create()))))
+                    moneyOf(USD, ZERO),
+                    moneyOf(USD, one),
+                    moneyOf(USD, TEN)))))
         }
     }
 
     @Test
     fun `isNotIn iterable with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isNotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))
+            validate(Employee::salary).isNotIn(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, ONE), moneyOf(BRL, TEN)))
         }
     }
 
     @Test
     fun `isNotIn iterable with different value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isNotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).isNotIn(listOf(moneyOf(USD, ZERO), moneyOf(USD, TEN)))
         }
     }
 
     @Test
     fun `isNotIn iterable with different currency should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isNotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).isNotIn(listOf(moneyOf(BRL, ONE), moneyOf(USD, TEN)))
         }
     }
 
     @Test
     fun `isNotIn iterable with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-                validate(Employee::salary).isNotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))
+            validate(Employee(salary = moneyOf(BRL, ONE))) {
+                validate(Employee::salary).isNotIn(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, ONE), moneyOf(BRL, TEN)))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = NotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(REAL).create()))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = NotIn(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, ONE), moneyOf(BRL, TEN)))))
     }
 
     @Test
     fun `isNotIn iterable with same value and 2 decimal digits should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isNotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).isNotIn(listOf(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN)))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(TEN).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(listOf(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN)))))
     }
 
     @Test
     fun `isNotIn iterable with same value and different type should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isNotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(0.0).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.00).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(10.00).setCurrency(DOLLAR).create()))
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).isNotIn(listOf(moneyOf(USD, 0.0), moneyOf(USD, 1.00), moneyOf(USD, 10.00)))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = NotIn(listOf(Monetary.getDefaultAmountFactory().setNumber(0.0).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(1.0).setCurrency(DOLLAR).create(), Monetary.getDefaultAmountFactory().setNumber(10.0).setCurrency(DOLLAR).create()))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(listOf(moneyOf(USD, 0.0), moneyOf(USD, 1.0), moneyOf(USD, 10.0)))))
     }
 
     @Test
@@ -672,7 +676,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotIn iterable Number with different value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, ZERO)
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -683,7 +687,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotIn iterable Number with same value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ONE)
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -693,15 +697,15 @@ class MonetaryAmountFunctionsTest {
             }
             assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(listOf(
-                    salary.factory.setNumber(ZERO).create(),
-                    salary.factory.setNumber(one).create(),
-                    salary.factory.setNumber(TEN).create()))))
+                    moneyOf(USD, ZERO),
+                    moneyOf(USD, one),
+                    moneyOf(USD, TEN)))))
         }
     }
 
     @Test
     fun `isNotIn iterable Number with same value and 2 decimal digits should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber("1.00".toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, "1.00".toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -711,76 +715,76 @@ class MonetaryAmountFunctionsTest {
             }
             assertThat(exception.constraintViolations).containsExactly(
                 DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(listOf(
-                    salary.factory.setNumber(ZERO).create(),
-                    salary.factory.setNumber(one).create(),
-                    salary.factory.setNumber(TEN).create()))))
+                    moneyOf(USD, ZERO),
+                    moneyOf(USD, one),
+                    moneyOf(USD, TEN)))))
         }
     }
 
     @Test
     fun `isLessThan with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isLessThan(Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee::salary).isLessThan(moneyOf(BRL, 10.0.toBigDecimal()))
         }
     }
 
     @Test
     fun `isLessThan with less value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(9999.99.toBigDecimal()).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isLessThan(Monetary.getDefaultAmountFactory().setNumber(10000.00.toBigDecimal()).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, 9999.99.toBigDecimal()))) {
+            validate(Employee::salary).isLessThan(moneyOf(USD, 10000.00.toBigDecimal()))
         }
     }
 
     @Test
     fun `isLessThan with negative less value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(0.38576.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
-            validate(Employee::salary).isLessThan(Monetary.getDefaultAmountFactory().setNumber(0.3.unaryMinus().toBigDecimal()).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, 0.38576.unaryMinus().toBigDecimal()))) {
+            validate(Employee::salary).isLessThan(moneyOf(BRL, 0.3.unaryMinus().toBigDecimal()))
         }
     }
 
     @Test
     fun `isLessThan with greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(50.0.toBigDecimal()).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isLessThan(Monetary.getDefaultAmountFactory().setNumber(49.9.toBigDecimal()).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, 50.0.toBigDecimal()))) {
+                validate(Employee::salary).isLessThan(moneyOf(USD, 49.9.toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(50.0.toBigDecimal()).setCurrency(DOLLAR).create(),
-                constraint = Less(Monetary.getDefaultAmountFactory().setNumber(49.9.toBigDecimal()).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, 50.0.toBigDecimal()),
+                constraint = Less(moneyOf(USD, 49.9.toBigDecimal()))))
     }
 
     @Test
     fun `isLessThan with negative greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(50.9.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
-                validate(Employee::salary).isLessThan(Monetary.getDefaultAmountFactory().setNumber(51.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee(salary = moneyOf(BRL, 50.9.unaryMinus().toBigDecimal()))) {
+                validate(Employee::salary).isLessThan(moneyOf(BRL, 51.0.unaryMinus().toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(50.9.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                constraint = Less(Monetary.getDefaultAmountFactory().setNumber(51.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
+                value = moneyOf(BRL, 50.9.unaryMinus().toBigDecimal()),
+                constraint = Less(moneyOf(BRL, 51.0.unaryMinus().toBigDecimal()))))
     }
 
     @Test
     fun `isLessThan with equal value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isLessThan(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, ZERO))) {
+                validate(Employee::salary).isLessThan(moneyOf(USD, ZERO))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
-                constraint = Less(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, ZERO),
+                constraint = Less(moneyOf(USD, ZERO))))
     }
 
     @Test
@@ -794,7 +798,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isLessThan Number with less value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.99.toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 0.99.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -805,7 +809,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isLessThan Number with negative less value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(1.1.unaryMinus().toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 1.1.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -816,7 +820,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isLessThan Number with greater value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2.0.toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 2.0.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -829,13 +833,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Less(salary.factory.setNumber(one).create())))
+                    constraint = Less(moneyOf(USD, one))))
         }
     }
 
     @Test
     fun `isLessThan Number with negative greater value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.5.unaryMinus().toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 0.5.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -848,13 +852,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Less(salary.factory.setNumber(one).create())))
+                    constraint = Less(moneyOf(BRL, one))))
         }
     }
 
     @Test
     fun `isLessThan Number with equal value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ONE)
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -867,66 +871,66 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Less(salary.factory.setNumber(one).create())))
+                    constraint = Less(moneyOf(USD, one))))
         }
     }
 
     @Test
     fun `isLessThanOrEqualTo with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isLessThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee::salary).isLessThanOrEqualTo(moneyOf(BRL, 10.0.toBigDecimal()))
         }
     }
 
     @Test
     fun `isLessThanOrEqualTo with less value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(9999.99.toBigDecimal()).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isLessThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(10000.00.toBigDecimal()).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, 9999.99.toBigDecimal()))) {
+            validate(Employee::salary).isLessThanOrEqualTo(moneyOf(USD, 10000.00.toBigDecimal()))
         }
     }
 
     @Test
     fun `isLessThanOrEqualTo with negative less value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(0.38576.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
-            validate(Employee::salary).isLessThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(0.3.unaryMinus().toBigDecimal()).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, 0.38576.unaryMinus().toBigDecimal()))) {
+            validate(Employee::salary).isLessThanOrEqualTo(moneyOf(BRL, 0.3.unaryMinus().toBigDecimal()))
         }
     }
 
     @Test
     fun `isLessThanOrEqualTo with equal value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isLessThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, ZERO))) {
+            validate(Employee::salary).isLessThanOrEqualTo(moneyOf(USD, ZERO))
         }
     }
 
     @Test
     fun `isLessThanOrEqualTo with greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(56789.19.toBigDecimal()).setCurrency(REAL).create())) {
-                validate(Employee::salary).isLessThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(57.0.toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee(salary = moneyOf(BRL, 56789.19.toBigDecimal()))) {
+                validate(Employee::salary).isLessThanOrEqualTo(moneyOf(BRL, 57.0.toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(56789.19.toBigDecimal()).setCurrency(REAL).create(),
-                constraint = LessOrEqual(Monetary.getDefaultAmountFactory().setNumber(57.0.toBigDecimal()).setCurrency(REAL).create())))
+                value = moneyOf(BRL, 56789.19.toBigDecimal()),
+                constraint = LessOrEqual(moneyOf(BRL, 57.0.toBigDecimal()))))
     }
 
     @Test
     fun `isLessThanOrEqualTo with negative greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(96.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isLessThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(97.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, 96.0.unaryMinus().toBigDecimal()))) {
+                validate(Employee::salary).isLessThanOrEqualTo(moneyOf(USD, 97.0.unaryMinus().toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(96.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                constraint = LessOrEqual(Monetary.getDefaultAmountFactory().setNumber(97.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, 96.0.unaryMinus().toBigDecimal()),
+                constraint = LessOrEqual(moneyOf(USD, 97.0.unaryMinus().toBigDecimal()))))
     }
 
     @Test
@@ -940,7 +944,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo Number with less value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.99.toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 0.99.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -951,7 +955,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo Number with negative less value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -962,7 +966,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo Number with equal value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ONE)
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -973,7 +977,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isLessThanOrEqualTo Number with greater value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2.0.toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 2.0.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -986,13 +990,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = LessOrEqual(salary.factory.setNumber(one).create())))
+                    constraint = LessOrEqual(moneyOf(BRL, one))))
         }
     }
 
     @Test
     fun `isLessThanOrEqualTo Number with negative greater value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.5.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 0.5.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1005,74 +1009,74 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = LessOrEqual(salary.factory.setNumber(one).create())))
+                    constraint = LessOrEqual(moneyOf(USD, one))))
         }
     }
 
     @Test
     fun `isGreaterThan with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isGreaterThan(Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee::salary).isGreaterThan(moneyOf(BRL, 10.0.toBigDecimal()))
         }
     }
 
     @Test
     fun `isGreaterThan with greater value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(10.1.toBigDecimal()).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isGreaterThan(Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, 10.1.toBigDecimal()))) {
+            validate(Employee::salary).isGreaterThan(moneyOf(USD, 10.0.toBigDecimal()))
         }
     }
 
     @Test
     fun `isGreaterThan with negative greater value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(88.88.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
-            validate(Employee::salary).isGreaterThan(Monetary.getDefaultAmountFactory().setNumber(89.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, 88.88.unaryMinus().toBigDecimal()))) {
+            validate(Employee::salary).isGreaterThan(moneyOf(BRL, 89.0.unaryMinus().toBigDecimal()))
         }
     }
 
     @Test
     fun `isGreaterThan with less value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isGreaterThan(Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, 10.0.toBigDecimal()))) {
+                validate(Employee::salary).isGreaterThan(moneyOf(USD, 11.0.toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(DOLLAR).create(),
-                constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, 10.0.toBigDecimal()),
+                constraint = Greater(moneyOf(USD, 11.0.toBigDecimal()))))
     }
 
     @Test
     fun `isGreaterThan with negative less value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(189.20.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
-                validate(Employee::salary).isGreaterThan(Monetary.getDefaultAmountFactory().setNumber(180.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee(salary = moneyOf(BRL, 189.20.unaryMinus().toBigDecimal()))) {
+                validate(Employee::salary).isGreaterThan(moneyOf(BRL, 180.0.unaryMinus().toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(189.20.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(180.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
+                value = moneyOf(BRL, 189.20.unaryMinus().toBigDecimal()),
+                constraint = Greater(moneyOf(BRL, 180.0.unaryMinus().toBigDecimal()))))
     }
 
     @Test
     fun `isGreaterThan with equal value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isGreaterThan(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, ZERO))) {
+                validate(Employee::salary).isGreaterThan(moneyOf(USD, ZERO))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
-                constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, ZERO),
+                constraint = Greater(moneyOf(USD, ZERO))))
     }
 
     @Test
@@ -1086,7 +1090,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isGreaterThan Number with greater value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2.0.toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 2.0.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1097,7 +1101,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isGreaterThan Number with negative greater value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.5.unaryMinus().toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 0.5.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1108,7 +1112,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isGreaterThan Number with less value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.5.toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 0.5.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1121,13 +1125,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Greater(salary.factory.setNumber(one).create())))
+                    constraint = Greater(moneyOf(USD, one))))
         }
     }
 
     @Test
     fun `isGreaterThan Number with negative less value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1140,13 +1144,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Greater(salary.factory.setNumber(one).create())))
+                    constraint = Greater(moneyOf(BRL, one))))
         }
     }
 
     @Test
     fun `isGreaterThan Number with equal value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ONE)
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1159,66 +1163,66 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Greater(salary.factory.setNumber(one).create())))
+                    constraint = Greater(moneyOf(USD, one))))
         }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isGreaterThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee::salary).isGreaterThanOrEqualTo(moneyOf(BRL, 10.0.toBigDecimal()))
         }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with greater value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(10000.0.toBigDecimal()).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isGreaterThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(9999.99.toBigDecimal()).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, 10000.0.toBigDecimal()))) {
+            validate(Employee::salary).isGreaterThanOrEqualTo(moneyOf(USD, 9999.99.toBigDecimal()))
         }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with negative greater value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(0.3.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
-            validate(Employee::salary).isGreaterThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(0.38576.unaryMinus().toBigDecimal()).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, 0.3.unaryMinus().toBigDecimal()))) {
+            validate(Employee::salary).isGreaterThanOrEqualTo(moneyOf(BRL, 0.38576.unaryMinus().toBigDecimal()))
         }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with equal value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isGreaterThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, ZERO))) {
+            validate(Employee::salary).isGreaterThanOrEqualTo(moneyOf(USD, ZERO))
         }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with less value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(57.0.toBigDecimal()).setCurrency(REAL).create())) {
-                validate(Employee::salary).isGreaterThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(56789.19.toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee(salary = moneyOf(BRL, 57.0.toBigDecimal()))) {
+                validate(Employee::salary).isGreaterThanOrEqualTo(moneyOf(BRL, 56789.19.toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(57.0.toBigDecimal()).setCurrency(REAL).create(),
-                constraint = GreaterOrEqual(Monetary.getDefaultAmountFactory().setNumber(56789.19.toBigDecimal()).setCurrency(REAL).create())))
+                value = moneyOf(BRL, 57.0.toBigDecimal()),
+                constraint = GreaterOrEqual(moneyOf(BRL, 56789.19.toBigDecimal()))))
     }
 
     @Test
     fun `isGreaterThanOrEqualTo with negative less value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(97.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isGreaterThanOrEqualTo(Monetary.getDefaultAmountFactory().setNumber(96.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, 97.0.unaryMinus().toBigDecimal()))) {
+                validate(Employee::salary).isGreaterThanOrEqualTo(moneyOf(USD, 96.0.unaryMinus().toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(97.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                constraint = GreaterOrEqual(Monetary.getDefaultAmountFactory().setNumber(96.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, 97.0.unaryMinus().toBigDecimal()),
+                constraint = GreaterOrEqual(moneyOf(USD, 96.0.unaryMinus().toBigDecimal()))))
     }
 
     @Test
@@ -1232,7 +1236,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo Number with greater value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2.0.toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 2.0.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1243,7 +1247,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo Number with negative greater value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.5.unaryMinus().toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 0.5.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1254,7 +1258,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo Number with equal value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ONE)
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1265,7 +1269,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isGreaterThanOrEqualTo Number with less value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.5.toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 0.5.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1278,13 +1282,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = GreaterOrEqual(salary.factory.setNumber(one).create())))
+                    constraint = GreaterOrEqual(moneyOf(BRL, one))))
         }
     }
 
     @Test
     fun `isGreaterThanOrEqualTo Number with negative less value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 2.0.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1297,117 +1301,117 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = GreaterOrEqual(salary.factory.setNumber(one).create())))
+                    constraint = GreaterOrEqual(moneyOf(USD, one))))
         }
     }
 
     @Test
     fun `isBetween with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isBetween(start = Monetary.getDefaultAmountFactory().setNumber(0.99.toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(9.99.toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee::salary).isBetween(start = moneyOf(BRL, 0.99.toBigDecimal()), end = moneyOf(BRL, 9.99.toBigDecimal()))
         }
     }
 
     @Test
     fun `isBetween with equal start value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, ZERO))) {
+            validate(Employee::salary).isBetween(start = moneyOf(USD, ZERO), end = moneyOf(USD, ONE))
         }
     }
 
     @Test
     fun `isBetween with equal end value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-            validate(Employee::salary).isBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
+            validate(Employee::salary).isBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, ONE))
         }
     }
 
     @Test
     fun `isBetween with within value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(0.5.toBigDecimal()).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, 0.5.toBigDecimal()))) {
+            validate(Employee::salary).isBetween(start = moneyOf(USD, ZERO), end = moneyOf(USD, ONE))
         }
     }
 
     @Test
     fun `isBetween with equal negative start value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
-            validate(Employee::salary).isBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal()))) {
+            validate(Employee::salary).isBetween(start = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(BRL, 1.0.unaryMinus().toBigDecimal()))
         }
     }
 
     @Test
     fun `isBetween with equal negative end value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()))) {
+            validate(Employee::salary).isBetween(start = moneyOf(USD, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()))
         }
     }
 
     @Test
     fun `isBetween with within negative value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(1.5.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
-            validate(Employee::salary).isBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, 1.5.unaryMinus().toBigDecimal()))) {
+            validate(Employee::salary).isBetween(start = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(BRL, 1.0.unaryMinus().toBigDecimal()))
         }
     }
 
     @Test
     fun `isBetween with less start value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isBetween(start = Monetary.getDefaultAmountFactory().setNumber(10.1.toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, 10.0.toBigDecimal()))) {
+                validate(Employee::salary).isBetween(start = moneyOf(USD, 10.1.toBigDecimal()), end = moneyOf(USD, 11.0.toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(DOLLAR).create(),
-                constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(10.1.toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, 10.0.toBigDecimal()),
+                constraint = Between(start = moneyOf(USD, 10.1.toBigDecimal()), end = moneyOf(USD, 11.0.toBigDecimal()))))
     }
 
     @Test
     fun `isBetween with greater end value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(12.0.toBigDecimal()).setCurrency(REAL).create())) {
-                validate(Employee::salary).isBetween(start = Monetary.getDefaultAmountFactory().setNumber(10.1.toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee(salary = moneyOf(BRL, 12.0.toBigDecimal()))) {
+                validate(Employee::salary).isBetween(start = moneyOf(BRL, 10.1.toBigDecimal()), end = moneyOf(BRL, 11.0.toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(12.0.toBigDecimal()).setCurrency(REAL).create(),
-                constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(10.1.toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(REAL).create())))
+                value = moneyOf(BRL, 12.0.toBigDecimal()),
+                constraint = Between(start = moneyOf(BRL, 10.1.toBigDecimal()), end = moneyOf(BRL, 11.0.toBigDecimal()))))
     }
 
     @Test
     fun `isBetween with less negative start value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(10.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isBetween(start = Monetary.getDefaultAmountFactory().setNumber(9.9.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(8.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, 10.0.unaryMinus().toBigDecimal()))) {
+                validate(Employee::salary).isBetween(start = moneyOf(USD, 9.9.unaryMinus().toBigDecimal()), end = moneyOf(USD, 8.0.unaryMinus().toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(10.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(9.9.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(8.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, 10.0.unaryMinus().toBigDecimal()),
+                constraint = Between(start = moneyOf(USD, 9.9.unaryMinus().toBigDecimal()), end = moneyOf(USD, 8.0.unaryMinus().toBigDecimal()))))
     }
 
     @Test
     fun `isBetween with greater negative end value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(12.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
-                validate(Employee::salary).isBetween(start = Monetary.getDefaultAmountFactory().setNumber(13.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(12.9.unaryMinus().toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee(salary = moneyOf(BRL, 12.0.unaryMinus().toBigDecimal()))) {
+                validate(Employee::salary).isBetween(start = moneyOf(BRL, 13.0.unaryMinus().toBigDecimal()), end = moneyOf(BRL, 12.9.unaryMinus().toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(12.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                constraint = Between(start = Monetary.getDefaultAmountFactory().setNumber(13.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(12.9.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
+                value = moneyOf(BRL, 12.0.unaryMinus().toBigDecimal()),
+                constraint = Between(start = moneyOf(BRL, 13.0.unaryMinus().toBigDecimal()), end = moneyOf(BRL, 12.9.unaryMinus().toBigDecimal()))))
     }
 
     @Test
@@ -1421,7 +1425,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isBetween Number with equal start value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ONE)
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1432,7 +1436,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isBetween Number with equal end value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 2)
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1443,7 +1447,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isBetween Number with within value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.5.toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 0.5.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1454,7 +1458,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isBetween Number with equal negative start value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(1.00.unaryMinus().toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 1.00.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1465,7 +1469,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isBetween Number with equal negative end value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.5.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 0.5.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1476,7 +1480,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isBetween Number with within negative value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(1.5.unaryMinus().toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 1.5.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1487,7 +1491,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isBetween Number with less start value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 0.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1500,13 +1504,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Between(start = salary.factory.setNumber(0.1).create(), end = salary.factory.setNumber(one).create())))
+                    constraint = Between(start = moneyOf(USD, 0.1), end = moneyOf(USD, one))))
         }
     }
 
     @Test
     fun `isBetween Number with greater end value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(1.8.toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 1.8.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1519,13 +1523,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Between(start = salary.factory.setNumber(0.5).create(), end = salary.factory.setNumber(one).create())))
+                    constraint = Between(start = moneyOf(BRL, 0.5), end = moneyOf(BRL, one))))
         }
     }
 
     @Test
     fun `isBetween Number with less negative start value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2.unaryMinus().toByte()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 2.unaryMinus().toByte())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1538,13 +1542,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Between(start = salary.factory.setNumber(one).create(), end = salary.factory.setNumber(0.5.unaryMinus()).create())))
+                    constraint = Between(start = moneyOf(USD, one), end = moneyOf(USD, 0.5.unaryMinus()))))
         }
     }
 
     @Test
     fun `isBetween Number with greater negative end value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, ZERO)
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1557,133 +1561,133 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Between(start = salary.factory.setNumber(2.unaryMinus()).create(), end = salary.factory.setNumber(one).create())))
+                    constraint = Between(start = moneyOf(BRL, 2.unaryMinus().toFloat()), end = moneyOf(BRL, one))))
         }
     }
 
     @Test
     fun `isNotBetween with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).isNotBetween(start = Monetary.getDefaultAmountFactory().setNumber(0.99.toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(9.99.toBigDecimal()).setCurrency(DOLLAR).create())
+            validate(Employee::salary).isNotBetween(start = moneyOf(USD, 0.99.toBigDecimal()), end = moneyOf(USD, 9.99.toBigDecimal()))
         }
     }
 
     @Test
     fun `isNotBetween with less start value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(10.0.toBigDecimal()).setCurrency(REAL).create())) {
-            validate(Employee::salary).isNotBetween(start = Monetary.getDefaultAmountFactory().setNumber(10.1.toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, 10.0.toBigDecimal()))) {
+            validate(Employee::salary).isNotBetween(start = moneyOf(BRL, 10.1.toBigDecimal()), end = moneyOf(BRL, 11.0.toBigDecimal()))
         }
     }
 
     @Test
     fun `isNotBetween with greater end value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(12.0.toBigDecimal()).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isNotBetween(start = Monetary.getDefaultAmountFactory().setNumber(10.1.toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(11.0.toBigDecimal()).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, 12.0.toBigDecimal()))) {
+            validate(Employee::salary).isNotBetween(start = moneyOf(USD, 10.1.toBigDecimal()), end = moneyOf(USD, 11.0.toBigDecimal()))
         }
     }
 
     @Test
     fun `isNotBetween with less negative start value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(10.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
-            validate(Employee::salary).isNotBetween(start = Monetary.getDefaultAmountFactory().setNumber(9.9.unaryMinus().toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(8.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())
+        validate(Employee(salary = moneyOf(BRL, 10.0.unaryMinus().toBigDecimal()))) {
+            validate(Employee::salary).isNotBetween(start = moneyOf(BRL, 9.9.unaryMinus().toBigDecimal()), end = moneyOf(BRL, 8.0.unaryMinus().toBigDecimal()))
         }
     }
 
     @Test
     fun `isNotBetween with greater negative end value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(12.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).isNotBetween(start = Monetary.getDefaultAmountFactory().setNumber(13.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(12.9.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())
+        validate(Employee(salary = moneyOf(USD, 12.0.unaryMinus().toBigDecimal()))) {
+            validate(Employee::salary).isNotBetween(start = moneyOf(USD, 13.0.unaryMinus().toBigDecimal()), end = moneyOf(USD, 12.9.unaryMinus().toBigDecimal()))
         }
     }
 
     @Test
     fun `isNotBetween with equal start value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())) {
-                validate(Employee::salary).isNotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())
+            validate(Employee(salary = moneyOf(BRL, ZERO))) {
+                validate(Employee::salary).isNotBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, ONE))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(),
-                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
+                value = moneyOf(BRL, ZERO),
+                constraint = NotBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, ONE))))
     }
 
     @Test
     fun `isNotBetween with equal end value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isNotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).isNotBetween(start = moneyOf(USD, ZERO), end = moneyOf(USD, ONE))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(),
-                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, ONE),
+                constraint = NotBetween(start = moneyOf(USD, ZERO), end = moneyOf(USD, ONE))))
     }
 
     @Test
     fun `isNotBetween with equal negative start value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
-                validate(Employee::salary).isNotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())
+            validate(Employee(salary = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal()))) {
+                validate(Employee::salary).isNotBetween(start = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(BRL, 1.0.unaryMinus().toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())))
+                value = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal()),
+                constraint = NotBetween(start = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(BRL, 1.0.unaryMinus().toBigDecimal()))))
     }
 
     @Test
     fun `isNotBetween with equal negative end value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isNotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()))) {
+                validate(Employee::salary).isNotBetween(start = moneyOf(USD, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()),
+                constraint = NotBetween(start = moneyOf(USD, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()))))
     }
 
     @Test
     fun `isNotBetween with within value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(0.5.toBigDecimal()).setCurrency(REAL).create())) {
-                validate(Employee::salary).isNotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())
+            validate(Employee(salary = moneyOf(BRL, 0.5.toBigDecimal()))) {
+                validate(Employee::salary).isNotBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, ONE))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(0.5.toBigDecimal()).setCurrency(REAL).create(),
-                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(), end = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
+                value = moneyOf(BRL, 0.5.toBigDecimal()),
+                constraint = NotBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, ONE))))
     }
 
     @Test
     fun `isNotBetween with within negative value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(1.5.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).isNotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())
+            validate(Employee(salary = moneyOf(USD, 1.5.unaryMinus().toBigDecimal()))) {
+                validate(Employee::salary).isNotBetween(start = moneyOf(USD, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()))
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(1.5.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                constraint = NotBetween(start = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(), end = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, 1.5.unaryMinus().toBigDecimal()),
+                constraint = NotBetween(start = moneyOf(USD, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()))))
     }
 
     @Test
@@ -1697,7 +1701,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotBetween Number with less start value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.5).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 0.5)
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1708,7 +1712,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotBetween Number with greater end value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2.5.toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 2.5.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1719,7 +1723,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotBetween Number with less negative start value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2.unaryMinus().toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 2.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1730,7 +1734,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotBetween Number with greater negative end value should be valid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, ONE)
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             validate(Employee(salary = salary)) {
@@ -1741,7 +1745,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotBetween Number with equal start value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, ONE)
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1754,13 +1758,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = salary.factory.setNumber(one).create(), end = salary.factory.setNumber(2).create())))
+                    constraint = NotBetween(start = moneyOf(BRL, one), end = moneyOf(BRL, 2))))
         }
     }
 
     @Test
     fun `isNotBetween Number with equal end value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 2)
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1773,13 +1777,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = salary.factory.setNumber(one).create(), end = salary.factory.setNumber(2).create())))
+                    constraint = NotBetween(start = moneyOf(USD, one), end = moneyOf(USD, 2))))
         }
     }
 
     @Test
     fun `isNotBetween Number with equal negative start value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(2.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1792,13 +1796,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = salary.factory.setNumber(-2).create(), end = salary.factory.setNumber(one).create())))
+                    constraint = NotBetween(start = moneyOf(BRL, -2), end = moneyOf(BRL, one))))
         }
     }
 
     @Test
     fun `isNotBetween Number with equal negative end value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 1.0.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1811,13 +1815,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = salary.factory.setNumber(-2).create(), end = salary.factory.setNumber(one).create())))
+                    constraint = NotBetween(start = moneyOf(USD, -2), end = moneyOf(USD, one))))
         }
     }
 
     @Test
     fun `isNotBetween Number with within value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(0.5.toBigDecimal()).setCurrency(REAL).create()
+        val salary = moneyOf(BRL, 0.5.toBigDecimal())
 
         ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1830,13 +1834,13 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = salary.factory.setNumber(ZERO).create(), end = salary.factory.setNumber(one).create())))
+                    constraint = NotBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, one))))
         }
     }
 
     @Test
     fun `isNotBetween Number with within negative value should be invalid`() {
-        val salary = Monetary.getDefaultAmountFactory().setNumber(1.5.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create()
+        val salary = moneyOf(USD, 1.5.unaryMinus().toBigDecimal())
 
         NEGATIVE_ONE_NUMBERS.forEach { one ->
             val exception = assertFailsWith<ConstraintViolationException> {
@@ -1849,158 +1853,158 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = salary.factory.setNumber(-2).create(), end = salary.factory.setNumber(one).create())))
+                    constraint = NotBetween(start = moneyOf(USD, -2), end = moneyOf(USD, one))))
         }
     }
 
     @Test
     fun `hasCurrencyEqualTo with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).hasCurrencyEqualTo(REAL)
+            validate(Employee::salary).hasCurrencyEqualTo(BRL)
         }
     }
 
     @Test
     fun `hasCurrencyEqualTo with same value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).hasCurrencyEqualTo(DOLLAR)
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).hasCurrencyEqualTo(USD)
         }
     }
 
     @Test
     fun `hasCurrencyEqualTo with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).hasCurrencyEqualTo(REAL)
+            validate(Employee(salary = moneyOf(USD, ZERO))) {
+                validate(Employee::salary).hasCurrencyEqualTo(BRL)
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(), constraint = CurrencyEquals(REAL)))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = CurrencyEquals(BRL)))
     }
 
     @Test
     fun `hasCurrencyNotEqualTo with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).hasCurrencyNotEqualTo(REAL)
+            validate(Employee::salary).hasCurrencyNotEqualTo(BRL)
         }
     }
 
     @Test
     fun `hasCurrencyNotEqualTo with different value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).hasCurrencyNotEqualTo(REAL)
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).hasCurrencyNotEqualTo(BRL)
         }
     }
 
     @Test
     fun `hasCurrencyNotEqualTo with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-                validate(Employee::salary).hasCurrencyNotEqualTo(REAL)
+            validate(Employee(salary = moneyOf(BRL, ONE))) {
+                validate(Employee::salary).hasCurrencyNotEqualTo(BRL)
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = CurrencyNotEquals(REAL)))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyNotEquals(BRL)))
     }
 
     @Test
     fun `hasCurrencyIn vararg with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).hasCurrencyIn(REAL, DOLLAR)
+            validate(Employee::salary).hasCurrencyIn(BRL, USD)
         }
     }
 
     @Test
     fun `hasCurrencyIn vararg with same value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).hasCurrencyIn(REAL, DOLLAR)
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).hasCurrencyIn(BRL, USD)
         }
     }
 
     @Test
     fun `hasCurrencyIn vararg with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).hasCurrencyIn(REAL)
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).hasCurrencyIn(BRL)
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = CurrencyIn(setOf(REAL))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = CurrencyIn(setOf(BRL))))
     }
 
     @Test
     fun `hasCurrencyIn iterable with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).hasCurrencyIn(listOf(REAL, DOLLAR))
+            validate(Employee::salary).hasCurrencyIn(listOf(BRL, USD))
         }
     }
 
     @Test
     fun `hasCurrencyIn iterable with same value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).hasCurrencyIn(listOf(REAL, DOLLAR))
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).hasCurrencyIn(listOf(BRL, USD))
         }
     }
 
     @Test
     fun `hasCurrencyIn iterable with different value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-                validate(Employee::salary).hasCurrencyIn(listOf(DOLLAR))
+            validate(Employee(salary = moneyOf(BRL, ONE))) {
+                validate(Employee::salary).hasCurrencyIn(listOf(USD))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = CurrencyIn(listOf(DOLLAR))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyIn(listOf(USD))))
     }
 
     @Test
     fun `hasCurrencyNotIn vararg with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).hasCurrencyNotIn(DOLLAR, REAL)
+            validate(Employee::salary).hasCurrencyNotIn(USD, BRL)
         }
     }
 
     @Test
     fun `hasCurrencyNotIn vararg with different value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-            validate(Employee::salary).hasCurrencyNotIn(DOLLAR)
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
+            validate(Employee::salary).hasCurrencyNotIn(USD)
         }
     }
 
     @Test
     fun `hasCurrencyNotIn vararg with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-                validate(Employee::salary).hasCurrencyNotIn(DOLLAR, REAL)
+            validate(Employee(salary = moneyOf(USD, ONE))) {
+                validate(Employee::salary).hasCurrencyNotIn(USD, BRL)
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(), constraint = CurrencyNotIn(setOf(DOLLAR, REAL))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = CurrencyNotIn(setOf(USD, BRL))))
     }
 
     @Test
     fun `hasCurrencyNotIn iterable with null value should be valid`() {
         validate(Employee()) {
-            validate(Employee::salary).hasCurrencyNotIn(listOf(DOLLAR, REAL))
+            validate(Employee::salary).hasCurrencyNotIn(listOf(USD, BRL))
         }
     }
 
     @Test
     fun `hasCurrencyNotIn iterable with different value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
-            validate(Employee::salary).hasCurrencyNotIn(listOf(REAL))
+        validate(Employee(salary = moneyOf(USD, ONE))) {
+            validate(Employee::salary).hasCurrencyNotIn(listOf(BRL))
         }
     }
 
     @Test
     fun `hasCurrencyNotIn iterable with same value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
-                validate(Employee::salary).hasCurrencyNotIn(listOf(DOLLAR, REAL))
+            validate(Employee(salary = moneyOf(BRL, ONE))) {
+                validate(Employee::salary).hasCurrencyNotIn(listOf(USD, BRL))
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(), constraint = CurrencyNotIn(listOf(DOLLAR, REAL))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyNotIn(listOf(USD, BRL))))
     }
 
     @Test
@@ -2012,14 +2016,14 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isZero with zero should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, ZERO))) {
             validate(Employee::salary).isZero()
         }
     }
 
     @Test
     fun `isZero with zero and 2 decimal digits should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(0.00.toBigDecimal()).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, 0.00.toBigDecimal()))) {
             validate(Employee::salary).isZero()
         }
     }
@@ -2027,7 +2031,7 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `isZero with one should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, ONE))) {
                 validate(Employee::salary).isZero()
             }
         }
@@ -2035,8 +2039,8 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(),
-                constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
+                value = moneyOf(BRL, ONE),
+                constraint = Equals(moneyOf(BRL, ZERO))))
     }
 
     @Test
@@ -2048,7 +2052,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotZero with one should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, ONE))) {
             validate(Employee::salary).isNotZero()
         }
     }
@@ -2056,7 +2060,7 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `isNotZero with zero should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, ZERO))) {
                 validate(Employee::salary).isNotZero()
             }
         }
@@ -2064,14 +2068,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(),
-                constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
+                value = moneyOf(BRL, ZERO),
+                constraint = NotEquals(moneyOf(BRL, ZERO))))
     }
 
     @Test
     fun `isNotZero with zero and 2 decimal digits should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(0.00.toBigDecimal()).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, 0.00.toBigDecimal()))) {
                 validate(Employee::salary).isNotZero()
             }
         }
@@ -2079,8 +2083,8 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(0.00.toBigDecimal()).setCurrency(DOLLAR).create(),
-                constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, 0.00.toBigDecimal()),
+                constraint = NotEquals(moneyOf(USD, ZERO))))
     }
 
     @Test
@@ -2092,14 +2096,14 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isOne with one should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
             validate(Employee::salary).isOne()
         }
     }
 
     @Test
     fun `isOne with one and 2 decimal digits should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, 1.00.toBigDecimal()))) {
             validate(Employee::salary).isOne()
         }
     }
@@ -2107,7 +2111,7 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `isOne with zero should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, ZERO))) {
                 validate(Employee::salary).isOne()
             }
         }
@@ -2115,8 +2119,8 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create(),
-                constraint = Equals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
+                value = moneyOf(BRL, ZERO),
+                constraint = Equals(moneyOf(BRL, ONE))))
     }
 
     @Test
@@ -2128,7 +2132,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNotOne with zero should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, ZERO))) {
             validate(Employee::salary).isNotOne()
         }
     }
@@ -2136,7 +2140,7 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `isNotOne with one should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, ONE))) {
                 validate(Employee::salary).isNotOne()
             }
         }
@@ -2144,14 +2148,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(),
-                constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())))
+                value = moneyOf(BRL, ONE),
+                constraint = NotEquals(moneyOf(BRL, ONE))))
     }
 
     @Test
     fun `isNotOne with one and 2 decimal digits should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, 1.00.toBigDecimal()))) {
                 validate(Employee::salary).isNotOne()
             }
         }
@@ -2159,8 +2163,8 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(1.00.toBigDecimal()).setCurrency(DOLLAR).create(),
-                constraint = NotEquals(Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, 1.00.toBigDecimal()),
+                constraint = NotEquals(moneyOf(USD, ONE))))
     }
 
     @Test
@@ -2172,7 +2176,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isPositive with positive value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
             validate(Employee::salary).isPositive()
         }
     }
@@ -2180,7 +2184,7 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `isPositive with zero should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, ZERO))) {
                 validate(Employee::salary).isPositive()
             }
         }
@@ -2188,14 +2192,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
-                constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, ZERO),
+                constraint = Greater(moneyOf(USD, ZERO))))
     }
 
     @Test
     fun `isPositive with negative value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(98765.432.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, 98765.432.unaryMinus().toBigDecimal()))) {
                 validate(Employee::salary).isPositive()
             }
         }
@@ -2203,8 +2207,8 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(98765.432.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
-                constraint = Greater(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
+                value = moneyOf(BRL, 98765.432.unaryMinus().toBigDecimal()),
+                constraint = Greater(moneyOf(BRL, ZERO))))
     }
 
     @Test
@@ -2216,14 +2220,14 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNegativeOrZero with zero should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, ZERO))) {
             validate(Employee::salary).isNegativeOrZero()
         }
     }
 
     @Test
     fun `isNegativeOrZero with negative value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(98765.432.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, 98765.432.unaryMinus().toBigDecimal()))) {
             validate(Employee::salary).isNegativeOrZero()
         }
     }
@@ -2231,7 +2235,7 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `isNegativeOrZero with positive value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, ONE))) {
                 validate(Employee::salary).isNegativeOrZero()
             }
         }
@@ -2239,8 +2243,8 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(DOLLAR).create(),
-                constraint = LessOrEqual(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, ONE),
+                constraint = LessOrEqual(moneyOf(USD, ZERO))))
     }
 
     @Test
@@ -2252,7 +2256,7 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isNegative with negative value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(1.0.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, 1.0.unaryMinus().toBigDecimal()))) {
             validate(Employee::salary).isNegative()
         }
     }
@@ -2260,7 +2264,7 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `isNegative with zero should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, ZERO))) {
                 validate(Employee::salary).isNegative()
             }
         }
@@ -2268,14 +2272,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create(),
-                constraint = Less(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, ZERO),
+                constraint = Less(moneyOf(USD, ZERO))))
     }
 
     @Test
     fun `isNegative with positive value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, ONE))) {
                 validate(Employee::salary).isNegative()
             }
         }
@@ -2283,8 +2287,8 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create(),
-                constraint = Less(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(REAL).create())))
+                value = moneyOf(BRL, ONE),
+                constraint = Less(moneyOf(BRL, ZERO))))
     }
 
     @Test
@@ -2296,14 +2300,14 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `isPositiveOrZero with zero should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, ZERO))) {
             validate(Employee::salary).isPositiveOrZero()
         }
     }
 
     @Test
     fun `isPositiveOrZero with positive value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(ONE).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, ONE))) {
             validate(Employee::salary).isPositiveOrZero()
         }
     }
@@ -2311,7 +2315,7 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `isPositiveOrZero with negative value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(98765.432.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, 98765.432.unaryMinus().toBigDecimal()))) {
                 validate(Employee::salary).isPositiveOrZero()
             }
         }
@@ -2319,8 +2323,8 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(98765.432.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
-                constraint = GreaterOrEqual(Monetary.getDefaultAmountFactory().setNumber(ZERO).setCurrency(DOLLAR).create())))
+                value = moneyOf(USD, 98765.432.unaryMinus().toBigDecimal()),
+                constraint = GreaterOrEqual(moneyOf(USD, ZERO))))
     }
 
     @Test
@@ -2332,49 +2336,49 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `hasIntegerDigits with valid min value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(9999.99.toBigDecimal()).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, 9999.99.toBigDecimal()))) {
             validate(Employee::salary).hasIntegerDigits(min = 4)
         }
     }
 
     @Test
     fun `hasIntegerDigits with valid max value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(9999.99.toBigDecimal()).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, 9999.99.toBigDecimal()))) {
             validate(Employee::salary).hasIntegerDigits(max = 4)
         }
     }
 
     @Test
     fun `hasIntegerDigits with valid min and max value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(9999.99.toBigDecimal()).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, 9999.99.toBigDecimal()))) {
             validate(Employee::salary).hasIntegerDigits(min = 4, max = 4)
         }
     }
 
     @Test
     fun `hasIntegerDigits with negative valid min value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(99999.99.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, 99999.99.unaryMinus().toBigDecimal()))) {
             validate(Employee::salary).hasIntegerDigits(min = 5)
         }
     }
 
     @Test
     fun `hasIntegerDigits with negative valid max value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(99999.99.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, 99999.99.unaryMinus().toBigDecimal()))) {
             validate(Employee::salary).hasIntegerDigits(max = 5)
         }
     }
 
     @Test
     fun `hasIntegerDigits with negative valid min and max value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(99999.99.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, 99999.99.unaryMinus().toBigDecimal()))) {
             validate(Employee::salary).hasIntegerDigits(min = 5, max = 5)
         }
     }
 
     @Test
     fun `hasIntegerDigits without min and max should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(9999.99.toBigDecimal()).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, 9999.99.toBigDecimal()))) {
             validate(Employee::salary).hasIntegerDigits()
         }
     }
@@ -2382,7 +2386,7 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `hasIntegerDigits with less min value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, 748536.78.toBigDecimal()))) {
                 validate(Employee::salary).hasIntegerDigits(min = 7)
             }
         }
@@ -2390,14 +2394,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(DOLLAR).create(),
+                value = moneyOf(USD, 748536.78.toBigDecimal()),
                 constraint = IntegerDigits(min = 7)))
     }
 
     @Test
     fun `hasIntegerDigits with greater max value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, 748536.78.toBigDecimal()))) {
                 validate(Employee::salary).hasIntegerDigits(max = 5)
             }
         }
@@ -2405,14 +2409,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(REAL).create(),
+                value = moneyOf(BRL, 748536.78.toBigDecimal()),
                 constraint = IntegerDigits(max = 5)))
     }
 
     @Test
     fun `hasIntegerDigits with less value and greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, 748536.78.toBigDecimal()))) {
                 validate(Employee::salary).hasIntegerDigits(min = 7, max = 5)
             }
         }
@@ -2420,14 +2424,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.toBigDecimal()).setCurrency(DOLLAR).create(),
+                value = moneyOf(USD, 748536.78.toBigDecimal()),
                 constraint = IntegerDigits(min = 7, max = 5)))
     }
 
     @Test
     fun `hasIntegerDigits with negative less min value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, 748536.78.unaryMinus().toBigDecimal()))) {
                 validate(Employee::salary).hasIntegerDigits(min = 7)
             }
         }
@@ -2435,14 +2439,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
+                value = moneyOf(BRL, 748536.78.unaryMinus().toBigDecimal()),
                 constraint = IntegerDigits(min = 7)))
     }
 
     @Test
     fun `hasIntegerDigits with negative greater max value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, 748536.78.unaryMinus().toBigDecimal()))) {
                 validate(Employee::salary).hasIntegerDigits(max = 5)
             }
         }
@@ -2450,14 +2454,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                value = moneyOf(USD, 748536.78.unaryMinus().toBigDecimal()),
                 constraint = IntegerDigits(max = 5)))
     }
 
     @Test
     fun `hasIntegerDigits with negative less value and negative greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, 748536.78.unaryMinus().toBigDecimal()))) {
                 validate(Employee::salary).hasIntegerDigits(min = 7, max = 5)
             }
         }
@@ -2465,7 +2469,7 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(748536.78.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                value = moneyOf(USD, 748536.78.unaryMinus().toBigDecimal()),
                 constraint = IntegerDigits(min = 7, max = 5)))
     }
 
@@ -2478,49 +2482,49 @@ class MonetaryAmountFunctionsTest {
 
     @Test
     fun `hasDecimalDigits with valid min value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(99.9999.toBigDecimal()).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, 99.9999.toBigDecimal()))) {
             validate(Employee::salary).hasDecimalDigits(min = 4)
         }
     }
 
     @Test
     fun `hasDecimalDigits with valid max value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(99.9999.toBigDecimal()).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, 99.9999.toBigDecimal()))) {
             validate(Employee::salary).hasDecimalDigits(max = 4)
         }
     }
 
     @Test
     fun `hasDecimalDigits with valid min and max value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(99.9999.toBigDecimal()).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, 99.9999.toBigDecimal()))) {
             validate(Employee::salary).hasDecimalDigits(min = 4, max = 4)
         }
     }
 
     @Test
     fun `hasDecimalDigits with negative valid min value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(99.99999.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, 99.99999.unaryMinus().toBigDecimal()))) {
             validate(Employee::salary).hasDecimalDigits(min = 5)
         }
     }
 
     @Test
     fun `hasDecimalDigits with negative valid max value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(99.99999.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, 99.99999.unaryMinus().toBigDecimal()))) {
             validate(Employee::salary).hasDecimalDigits(max = 5)
         }
     }
 
     @Test
     fun `hasDecimalDigits with negative valid min and max value should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(99.99999.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
+        validate(Employee(salary = moneyOf(BRL, 99.99999.unaryMinus().toBigDecimal()))) {
             validate(Employee::salary).hasDecimalDigits(min = 5, max = 5)
         }
     }
 
     @Test
     fun `hasDecimalDigits without min and max should be valid`() {
-        validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(99.9999.toBigDecimal()).setCurrency(DOLLAR).create())) {
+        validate(Employee(salary = moneyOf(USD, 99.9999.toBigDecimal()))) {
             validate(Employee::salary).hasDecimalDigits()
         }
     }
@@ -2528,7 +2532,7 @@ class MonetaryAmountFunctionsTest {
     @Test
     fun `hasDecimalDigits with less min value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, 78.748536.toBigDecimal()))) {
                 validate(Employee::salary).hasDecimalDigits(min = 7)
             }
         }
@@ -2536,14 +2540,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(REAL).create(),
+                value = moneyOf(BRL, 78.748536.toBigDecimal()),
                 constraint = DecimalDigits(min = 7)))
     }
 
     @Test
     fun `hasDecimalDigits with greater max value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, 78.748536.toBigDecimal()))) {
                 validate(Employee::salary).hasDecimalDigits(max = 5)
             }
         }
@@ -2551,14 +2555,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(DOLLAR).create(),
+                value = moneyOf(USD, 78.748536.toBigDecimal()),
                 constraint = DecimalDigits(max = 5)))
     }
 
     @Test
     fun `hasDecimalDigits with less value and greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, 78.748536.toBigDecimal()))) {
                 validate(Employee::salary).hasDecimalDigits(min = 7, max = 5)
             }
         }
@@ -2566,14 +2570,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.toBigDecimal()).setCurrency(REAL).create(),
+                value = moneyOf(BRL, 78.748536.toBigDecimal()),
                 constraint = DecimalDigits(min = 7, max = 5)))
     }
 
     @Test
     fun `hasDecimalDigits with negative less min value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, 78.748536.unaryMinus().toBigDecimal()))) {
                 validate(Employee::salary).hasDecimalDigits(min = 7)
             }
         }
@@ -2581,14 +2585,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
+                value = moneyOf(BRL, 78.748536.unaryMinus().toBigDecimal()),
                 constraint = DecimalDigits(min = 7)))
     }
 
     @Test
     fun `hasDecimalDigits with negative greater max value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create())) {
+            validate(Employee(salary = moneyOf(USD, 78.748536.unaryMinus().toBigDecimal()))) {
                 validate(Employee::salary).hasDecimalDigits(max = 5)
             }
         }
@@ -2596,14 +2600,14 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(DOLLAR).create(),
+                value = moneyOf(USD, 78.748536.unaryMinus().toBigDecimal()),
                 constraint = DecimalDigits(max = 5)))
     }
 
     @Test
     fun `hasDecimalDigits with negative less value and negative greater value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(salary = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(REAL).create())) {
+            validate(Employee(salary = moneyOf(BRL, 78.748536.unaryMinus().toBigDecimal()))) {
                 validate(Employee::salary).hasDecimalDigits(min = 7, max = 5)
             }
         }
@@ -2611,7 +2615,7 @@ class MonetaryAmountFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "salary",
-                value = Monetary.getDefaultAmountFactory().setNumber(78.748536.unaryMinus().toBigDecimal()).setCurrency(REAL).create(),
+                value = moneyOf(BRL, 78.748536.unaryMinus().toBigDecimal()),
                 constraint = DecimalDigits(min = 7, max = 5)))
     }
 }
