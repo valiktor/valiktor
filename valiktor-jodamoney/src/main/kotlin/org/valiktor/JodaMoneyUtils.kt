@@ -18,6 +18,7 @@ package org.valiktor
 
 import org.joda.money.BigMoney
 import org.joda.money.CurrencyMismatchException
+import org.joda.money.Money
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.concurrent.atomic.AtomicInteger
@@ -39,6 +40,13 @@ internal fun <T : Number> T.asBigDecimal() =
     }
 
 internal fun BigMoney.safelyEquals(value: BigMoney) =
+    try {
+        this.compareTo(value) == 0
+    } catch (ex: CurrencyMismatchException) {
+        false
+    }
+
+internal fun Money.safelyEquals(value: Money) =
     try {
         this.compareTo(value) == 0
     } catch (ex: CurrencyMismatchException) {
