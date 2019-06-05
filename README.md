@@ -273,11 +273,13 @@ Currently the following types have a custom formatter supported by Valiktor:
 | `java.time.OffsetTime`        | [org.valiktor.i18n.formatters.OffsetTimeFormatter](valiktor-javatime/src/main/kotlin/org/valiktor/i18n/formatters/OffsetTimeFormatter.kt)          |
 | `java.time.OffsetDateTime`    | [org.valiktor.i18n.formatters.OffsetDateTimeFormatter](valiktor-javatime/src/main/kotlin/org/valiktor/i18n/formatters/OffsetDateTimeFormatter.kt)  |
 | `java.time.ZonedDateTime`     | [org.valiktor.i18n.formatters.ZonedDateTimeFormatter](valiktor-javatime/src/main/kotlin/org/valiktor/i18n/formatters/ZonedDateTimeFormatter.kt)    |
+| `javax.money.MonetaryAmount`  | [org.valiktor.i18n.formatters.MonetaryAmountFormatter](valiktor-javamoney/src/main/kotlin/org/valiktor/i18n/formatters/MonetaryAmountFormatter.kt) |
 | `org.joda.time.DateTime`      | [org.valiktor.i18n.formatters.DateTimeFormatter](valiktor-jodatime/src/main/kotlin/org/valiktor/i18n/formatters/DateTimeFormatter.kt)              |
 | `org.joda.time.LocalDate`     | [org.valiktor.i18n.formatters.LocalDateFormatter](valiktor-jodatime/src/main/kotlin/org/valiktor/i18n/formatters/LocalDateFormatter.kt)            |
 | `org.joda.time.LocalTime`     | [org.valiktor.i18n.formatters.LocalTimeFormatter](valiktor-jodatime/src/main/kotlin/org/valiktor/i18n/formatters/LocalTimeFormatter.kt)            |
 | `org.joda.time.LocalDateTime` | [org.valiktor.i18n.formatters.LocalDateTimeFormatter](valiktor-jodatime/src/main/kotlin/org/valiktor/i18n/formatters/LocalDateTimeFormatter.kt)    |
-| `javax.money.MonetaryAmount`  | [org.valiktor.i18n.formatters.MonetaryAmountFormatter](valiktor-javamoney/src/main/kotlin/org/valiktor/i18n/formatters/MonetaryAmountFormatter.kt) |
+| `org.joda.money.Money`        | [org.valiktor.i18n.formatters.MoneyFormatter](valiktor-jodamoney/src/main/kotlin/org/valiktor/i18n/formatters/MoneyFormatter.kt)                   |
+| `org.joda.money.BigMoney`     | [org.valiktor.i18n.formatters.BigMoneyFormatter](valiktor-jodamoney/src/main/kotlin/org/valiktor/i18n/formatters/BigMoneyFormatter.kt)             |
 
 #### Creating a custom formatter
 
@@ -717,6 +719,17 @@ This module provides support for JavaTime API types, including:
 * Validation constraints and functions for `LocalDate`, `LocalDateTime`, `OffsetDateTime` and `ZonedDateTime`
 * Default formatter for all `LocalDate`, `LocalDateTime`, `LocalTime`, `OffsetDateTime`, `OffsetTime` and `ZonedDateTime`
 
+### valiktor-jodamoney
+
+[![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodamoney/0.5.0/jar) 
+[![javadoc](https://img.shields.io/badge/javadoc-v0.5.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodamoney/0.5.0/javadoc) 
+[![sources](https://img.shields.io/badge/sources-v0.5.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodamoney/0.5.0/sources)
+
+This module provides support for Joda-Money API types, including: 
+
+* Validation constraints and functions for `Money` and `BigMoney`
+* Default formatter for `Money` and `BigMoney`
+
 ### valiktor-jodatime
 
 [![jar](https://img.shields.io/badge/jar-v0.5.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodatime/0.5.0/jar)
@@ -767,6 +780,7 @@ Spring Boot Starter library including the modules [valiktor-spring](#valiktor-sp
 * [valiktor-sample-collections](valiktor-samples/valiktor-sample-collections)
 * [valiktor-sample-javamoney](valiktor-samples/valiktor-sample-javamoney)
 * [valiktor-sample-javatime](valiktor-samples/valiktor-sample-javatime)
+* [valiktor-sample-jodamoney](valiktor-samples/valiktor-sample-jodamoney)
 * [valiktor-sample-jodatime](valiktor-samples/valiktor-sample-jodatime)
 * [valiktor-sample-custom-constraint](valiktor-samples/valiktor-sample-custom-constraint)
 * [valiktor-sample-custom-formatter](valiktor-samples/valiktor-sample-custom-formatter)
