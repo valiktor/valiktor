@@ -1,3 +1,15 @@
+# 0.6.0
+> Published 06 Jun 2019
+
+#### Features:
+
+* [#8](https://github.com/valiktor/valiktor/issues/8) Added module `valiktor-jodatime`
+* [#9](https://github.com/valiktor/valiktor/issues/9) Added module `valiktor-jodamoney`
+
+#### Internal:
+
+* [#16](https://github.com/valiktor/valiktor/issues/16) Added more sample applications
+
 # 0.5.0
 > Published 28 Apr 2019
 
