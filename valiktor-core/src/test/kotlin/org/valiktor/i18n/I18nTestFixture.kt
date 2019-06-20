@@ -25,6 +25,7 @@ object SupportedLocales {
     val DEFAULT = Locale("")
     val EN = Locale("en")
     val PT_BR = Locale("pt", "BR")
+    val DE_DE = Locale("de", "DE")
 }
 
 val INVALID_LOCALE = Locale("INVALID")
