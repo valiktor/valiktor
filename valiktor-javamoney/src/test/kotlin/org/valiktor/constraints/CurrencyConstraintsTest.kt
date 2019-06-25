@@ -32,6 +32,7 @@ class CurrencyEqualsTest {
     fun `should validate messages`() {
         assertThat(CurrencyEquals(BRL).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Currency unit must be equal to BRL"),
+            entry(SupportedLocales.DE_DE, "Die Währungseinheit muss gleich BRL sein"),
             entry(SupportedLocales.EN, "Currency unit must be equal to BRL"),
             entry(SupportedLocales.PT_BR, "A unidade monetária deve ser igual a BRL"))
     }
@@ -43,6 +44,7 @@ class CurrencyNotEqualsTest {
     fun `should validate messages`() {
         assertThat(CurrencyNotEquals(BRL).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Currency unit must not be equal to BRL"),
+            entry(SupportedLocales.DE_DE, "Die Währungseinheit darf nicht gleich BRL sein"),
             entry(SupportedLocales.EN, "Currency unit must not be equal to BRL"),
             entry(SupportedLocales.PT_BR, "A unidade monetária não deve ser igual a BRL"))
     }
@@ -54,6 +56,7 @@ class CurrencyInTest {
     fun `should validate messages`() {
         assertThat(CurrencyIn(setOf(BRL, USD)).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Currency unit must be in BRL, USD"),
+            entry(SupportedLocales.DE_DE, "Die Währungseinheit muss in BRL, USD sein"),
             entry(SupportedLocales.EN, "Currency unit must be in BRL, USD"),
             entry(SupportedLocales.PT_BR, "A unidade monetária deve ser uma dessas: BRL, USD"))
     }
@@ -65,6 +68,7 @@ class CurrencyNotInTest {
     fun `should validate messages`() {
         assertThat(CurrencyNotIn(setOf(BRL, USD)).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Currency unit must not be in BRL, USD"),
+            entry(SupportedLocales.DE_DE, "Die Währungseinheit darf nicht in BRL, USD sein"),
             entry(SupportedLocales.EN, "Currency unit must not be in BRL, USD"),
             entry(SupportedLocales.PT_BR, "A unidade monetária não deve ser uma dessas: BRL, USD"))
     }
