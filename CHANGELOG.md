@@ -1,3 +1,10 @@
+# 0.7.0
+> Published 26 Jun 2019
+
+#### Features:
+
+* [#21](https://github.com/valiktor/valiktor/pull/21) Added german messages
+
 # 0.6.0
 > Published 06 Jun 2019
 

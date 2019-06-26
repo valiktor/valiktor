@@ -15,13 +15,13 @@
 ![Gradle](docs/gradle.png)
 
 ```groovy
-implementation 'org.valiktor:valiktor-core:0.6.0'
+implementation 'org.valiktor:valiktor-core:0.7.0'
 ```
 
 ![Gradle](docs/gradle.png) (Kotlin DSL)
 
 ```kotlin
-implementation("org.valiktor:valiktor-core:0.6.0")
+implementation("org.valiktor:valiktor-core:0.7.0")
 ```
 
 ![Maven](docs/maven.png) 
@@ -30,7 +30,7 @@ implementation("org.valiktor:valiktor-core:0.6.0")
 <dependency>
   <groupId>org.valiktor</groupId>
   <artifactId>valiktor-core</artifactId>
-  <version>0.6.0</version>
+  <version>0.7.0</version>
 </dependency>
 ```
 
@@ -689,9 +689,9 @@ There are a number of modules in Valiktor, here is a quick overview:
 
 ### valiktor-core
 
-[![jar](https://img.shields.io/badge/jar-v0.6.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.6.0/jar)
-[![javadoc](https://img.shields.io/badge/javadoc-v0.6.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.6.0/javadoc)
-[![sources](https://img.shields.io/badge/sources-v0.6.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.6.0/sources)
+[![jar](https://img.shields.io/badge/jar-v0.7.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.7.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.7.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.7.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.7.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-core/0.7.0/sources)
 
 The main library providing the validation engine, including:
 
@@ -702,9 +702,9 @@ The main library providing the validation engine, including:
 
 ### valiktor-javamoney
 
-[![jar](https://img.shields.io/badge/jar-v0.6.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.6.0/jar) 
-[![javadoc](https://img.shields.io/badge/javadoc-v0.6.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.6.0/javadoc) 
-[![sources](https://img.shields.io/badge/sources-v0.6.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.6.0/sources)
+[![jar](https://img.shields.io/badge/jar-v0.7.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.7.0/jar) 
+[![javadoc](https://img.shields.io/badge/javadoc-v0.7.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.7.0/javadoc) 
+[![sources](https://img.shields.io/badge/sources-v0.7.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javamoney/0.7.0/sources)
 
 This module provides support for JavaMoney API types, including: 
 
@@ -713,9 +713,9 @@ This module provides support for JavaMoney API types, including:
 
 ### valiktor-javatime
 
-[![jar](https://img.shields.io/badge/jar-v0.6.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.6.0/jar)
-[![javadoc](https://img.shields.io/badge/javadoc-v0.6.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.6.0/javadoc)
-[![sources](https://img.shields.io/badge/sources-v0.6.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.6.0/sources)
+[![jar](https://img.shields.io/badge/jar-v0.7.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.7.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.7.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.7.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.7.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-javatime/0.7.0/sources)
 
 This module provides support for JavaTime API types, including: 
 
@@ -724,9 +724,9 @@ This module provides support for JavaTime API types, including:
 
 ### valiktor-jodamoney
 
-[![jar](https://img.shields.io/badge/jar-v0.6.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodamoney/0.6.0/jar) 
-[![javadoc](https://img.shields.io/badge/javadoc-v0.6.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodamoney/0.6.0/javadoc) 
-[![sources](https://img.shields.io/badge/sources-v0.6.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodamoney/0.6.0/sources)
+[![jar](https://img.shields.io/badge/jar-v0.7.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodamoney/0.7.0/jar) 
+[![javadoc](https://img.shields.io/badge/javadoc-v0.7.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodamoney/0.7.0/javadoc) 
+[![sources](https://img.shields.io/badge/sources-v0.7.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodamoney/0.7.0/sources)
 
 This module provides support for Joda-Money API types, including: 
 
@@ -735,9 +735,9 @@ This module provides support for Joda-Money API types, including:
 
 ### valiktor-jodatime
 
-[![jar](https://img.shields.io/badge/jar-v0.6.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodatime/0.6.0/jar)
-[![javadoc](https://img.shields.io/badge/javadoc-v0.6.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodatime/0.6.0/javadoc)
-[![sources](https://img.shields.io/badge/sources-v0.6.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodatime/0.6.0/sources)
+[![jar](https://img.shields.io/badge/jar-v0.7.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodatime/0.7.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.7.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodatime/0.7.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.7.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-jodatime/0.7.0/sources)
 
 This module provides support for Joda-Time API types, including: 
 
@@ -746,9 +746,9 @@ This module provides support for Joda-Time API types, including:
 
 ### valiktor-spring
 
-[![jar](https://img.shields.io/badge/jar-v0.6.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.6.0/jar)
-[![javadoc](https://img.shields.io/badge/javadoc-v0.6.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.6.0/javadoc)
-[![sources](https://img.shields.io/badge/sources-v0.6.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.6.0/sources)
+[![jar](https://img.shields.io/badge/jar-v0.7.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.7.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.7.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.7.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.7.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring/0.7.0/sources)
 
 Spring WebMvc and WebFlux integration, including:
 
@@ -758,9 +758,9 @@ Spring WebMvc and WebFlux integration, including:
 
 ### valiktor-spring-boot-autoconfigure
 
-[![jar](https://img.shields.io/badge/jar-v0.6.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.6.0/jar)
-[![javadoc](https://img.shields.io/badge/javadoc-v0.6.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.6.0/javadoc)
-[![sources](https://img.shields.io/badge/sources-v0.6.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.6.0/sources)
+[![jar](https://img.shields.io/badge/jar-v0.7.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.7.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.7.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.7.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.7.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-autoconfigure/0.7.0/sources)
 
 Provides auto-configuration support for [valiktor-spring](#valiktor-spring), including:
  
@@ -770,9 +770,9 @@ Provides auto-configuration support for [valiktor-spring](#valiktor-spring), inc
 
 ### valiktor-spring-boot-starter
 
-[![jar](https://img.shields.io/badge/jar-v0.6.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.6.0/jar)
-[![javadoc](https://img.shields.io/badge/javadoc-v0.6.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.6.0/javadoc)
-[![sources](https://img.shields.io/badge/sources-v0.6.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.6.0/sources)
+[![jar](https://img.shields.io/badge/jar-v0.7.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.7.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.7.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.7.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.7.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.7.0/sources)
 
 Spring Boot Starter library including the modules [valiktor-spring](#valiktor-spring) and [valiktor-spring-boot-autoconfigure](#valiktor-spring-boot-autoconfigure)
 
