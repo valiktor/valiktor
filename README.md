@@ -217,10 +217,13 @@ id: Must be greater than 1
 name: Must not be empty
 ```
 
+#### Supported locales
+
 Currently the following locales are natively supported by Valiktor:
 
-* `en`
-* `pt_BR`
+* `de` (German)
+* `en` (English)
+* `pt_BR` (Portuguese/Brazil)
 
 #### Customizing a message
 
