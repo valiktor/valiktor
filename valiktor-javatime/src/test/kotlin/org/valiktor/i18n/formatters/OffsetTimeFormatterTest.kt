@@ -32,6 +32,7 @@ class OffsetTimeFormatterTest {
     fun `should format time`() {
         assertThat(Formatters[OffsetTime::class].formatAllSupportedLocales(OffsetTime.of(LocalTime.of(23, 58, 59), ZoneOffset.UTC))).containsExactly(
             entry(SupportedLocales.DEFAULT, "11:58:59 PM"),
+            entry(SupportedLocales.DE_DE, "23:58:59"),
             entry(SupportedLocales.EN, "11:58:59 PM"),
             entry(SupportedLocales.PT_BR, "23:58:59"))
     }

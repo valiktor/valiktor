@@ -23,9 +23,9 @@ import kotlin.reflect.full.declaredMemberProperties
 object SupportedLocales {
 
     val DEFAULT = Locale("")
+    val DE_DE = Locale("de", "DE")
     val EN = Locale("en")
     val PT_BR = Locale("pt", "BR")
-    val DE_DE = Locale("de", "DE")
 }
 
 private const val DEFAULT_BUNDLE = "org/valiktor/javaMoneyMessages"
@@ -33,6 +33,7 @@ private const val DEFAULT_BUNDLE = "org/valiktor/javaMoneyMessages"
 private val SUPPORTED_LOCALES: List<Locale> = SupportedLocales::class.declaredMemberProperties
     .map { it.get(SupportedLocales) }
     .map { it as Locale }
+    .sortedBy { it.toString() }
 
 fun Constraint.interpolatedMessages(): Map<Locale, String> =
     SUPPORTED_LOCALES

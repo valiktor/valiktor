@@ -22,6 +22,7 @@ import kotlin.reflect.full.declaredMemberProperties
 object SupportedLocales {
 
     val DEFAULT = Locale("")
+    val DE_DE = Locale("de", "DE")
     val EN = Locale("en")
     val PT_BR = Locale("pt", "BR")
 }
@@ -31,6 +32,7 @@ private const val DEFAULT_BUNDLE = "org/valiktor/messages"
 private val SUPPORTED_LOCALES: List<Locale> = SupportedLocales::class.declaredMemberProperties
     .map { it.get(SupportedLocales) }
     .map { it as Locale }
+    .sortedBy { it.toString() }
 
 fun <T : Any> Formatter<T>.formatAllSupportedLocales(value: T): Map<Locale, String> = SUPPORTED_LOCALES
     .map {
