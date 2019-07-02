@@ -16,37 +16,24 @@
 
 package org.valiktor.sample
 
-import org.assertj.core.api.Assertions.assertThat
-import org.valiktor.ConstraintViolationException
-import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.CurrencyIn
 import org.valiktor.constraints.DecimalDigits
+import org.valiktor.test.shouldFailValidation
 import javax.money.Monetary
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
 
 class SampleApplicationTest {
 
     @Test
     fun `should validate employee`() {
-        val exception = assertFailsWith<ConstraintViolationException> {
+        shouldFailValidation<Employee> {
             Employee(
                 grossSalary = Monetary.getDefaultAmountFactory().setNumber(1000).setCurrency(Monetary.getCurrency("EUR")).create(),
                 netSalary = Monetary.getDefaultAmountFactory().setNumber(999.999).setCurrency(Monetary.getCurrency("EUR")).create()
             )
+        }.verify {
+            expect(Employee::grossSalary, Monetary.getDefaultAmountFactory().setNumber(1000).setCurrency(Monetary.getCurrency("EUR")).create(), CurrencyIn(SUPPORTED_CURRENCIES))
+            expect(Employee::netSalary, Monetary.getDefaultAmountFactory().setNumber(999.999).setCurrency(Monetary.getCurrency("EUR")).create(), DecimalDigits(max = 2))
         }
-
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(
-                property = "grossSalary",
-                value = Monetary.getDefaultAmountFactory().setNumber(1000).setCurrency(Monetary.getCurrency("EUR")).create(),
-                constraint = CurrencyIn(SUPPORTED_CURRENCIES)
-            ),
-            DefaultConstraintViolation(
-                property = "netSalary",
-                value = Monetary.getDefaultAmountFactory().setNumber(999.999).setCurrency(Monetary.getCurrency("EUR")).create(),
-                constraint = DecimalDigits(max = 2)
-            )
-        )
     }
 }

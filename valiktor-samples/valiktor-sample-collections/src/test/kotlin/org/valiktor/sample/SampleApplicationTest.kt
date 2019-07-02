@@ -16,18 +16,15 @@
 
 package org.valiktor.sample
 
-import org.assertj.core.api.Assertions.assertThat
-import org.valiktor.ConstraintViolationException
-import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.NotBlank
+import org.valiktor.test.shouldFailValidation
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
 
 class SampleApplicationTest {
 
     @Test
     fun `should validate employee`() {
-        val exception = assertFailsWith<ConstraintViolationException> {
+        shouldFailValidation<Employee> {
             Employee(
                 dependents = listOf(
                     Dependent(name = ""),
@@ -35,12 +32,18 @@ class SampleApplicationTest {
                     Dependent(name = "  ")
                 )
             )
+        }.verify {
+            expectAll(Employee::dependents) {
+                expectElement {
+                    expect(Dependent::name, "", NotBlank)
+                }
+                expectElement {
+                    expect(Dependent::name, " ", NotBlank)
+                }
+                expectElement {
+                    expect(Dependent::name, "  ", NotBlank)
+                }
+            }
         }
-
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dependents[0].name", value = "", constraint = NotBlank),
-            DefaultConstraintViolation(property = "dependents[1].name", value = " ", constraint = NotBlank),
-            DefaultConstraintViolation(property = "dependents[2].name", value = "  ", constraint = NotBlank)
-        )
     }
 }

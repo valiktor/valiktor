@@ -4,4 +4,6 @@ dependencies {
     compile(project(":valiktor-core"))
     compile(project(":valiktor-jodatime"))
     compile("joda-time:joda-time:2.10.2")
+
+    testCompile(project(":valiktor-test"))
 }
