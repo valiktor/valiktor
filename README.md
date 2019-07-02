@@ -683,6 +683,55 @@ Example with `Properties` format:
 valiktor.baseBundleName=messages
 ```
 
+### Test Assertions
+
+Valiktor provides a [module](#valiktor-test) to build fluent assertions for validation tests, for example:
+
+```kotlin
+shouldFailValidation<Employee> {
+    // some code here
+}
+```
+
+The function `shouldFailValidation` asserts that a block fails with `ConstraintViolationException` being thrown.
+
+It's possible to verify the constraint violations using a fluent DSL:
+
+```kotlin
+shouldFailValidation<Employee> {
+    // some code here
+}.verify {
+    expect(Employee::name, " ", NotBlank)
+    expect(Employee::email, "john", Email)
+    expect(Employee::company) {
+        expect(Company::name, "co", Size(min = 3, max = 50))
+    }
+}
+```
+
+Collections and arrays are also supported:
+
+```kotlin
+shouldFailValidation<Employee> {
+    // some code here
+}.verify {
+    expectAll(Employee::dependents) {
+        expectElement {
+            expect(Dependent::name, " ", NotBlank)
+            expect(Dependent::age, 0, Between(1, 16))
+        }
+        expectElement {
+            expect(Dependent::name, " ", NotBlank)
+            expect(Dependent::age, 17, Between(1, 16))
+        }
+        expectElement {
+            expect(Dependent::name, " ", NotBlank)
+            expect(Dependent::age, 18, Between(1, 16))
+        }
+    }
+}
+```
+
 ## Modules
 
 There are a number of modules in Valiktor, here is a quick overview:
@@ -775,6 +824,14 @@ Provides auto-configuration support for [valiktor-spring](#valiktor-spring), inc
 [![sources](https://img.shields.io/badge/sources-v0.7.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-spring-boot-starter/0.7.0/sources)
 
 Spring Boot Starter library including the modules [valiktor-spring](#valiktor-spring) and [valiktor-spring-boot-autoconfigure](#valiktor-spring-boot-autoconfigure)
+
+### valiktor-test
+
+[![jar](https://img.shields.io/badge/jar-v0.7.0-green.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-test/0.7.0/jar)
+[![javadoc](https://img.shields.io/badge/javadoc-v0.7.0-blue.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-test/0.7.0/javadoc)
+[![sources](https://img.shields.io/badge/sources-v0.7.0-yellow.svg)](https://search.maven.org/artifact/org.valiktor/valiktor-test/0.7.0/sources)
+
+This module provides fluent assertions for validation tests
 
 ## Samples
 
