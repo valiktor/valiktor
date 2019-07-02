@@ -31,7 +31,7 @@ import org.valiktor.test.TestValidatorTestFixture.Country
 import org.valiktor.test.TestValidatorTestFixture.Dependent
 import org.valiktor.test.TestValidatorTestFixture.Employee
 import org.valiktor.test.TestValidatorTestFixture.State
-import java.nio.charset.Charset
+import java.lang.System.lineSeparator
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -183,6 +183,61 @@ class TestValidatorTest {
             }
         }
 
-        assertEquals(ex.message, this.javaClass.classLoader.getResource("exception_message.txt").readText(Charset.defaultCharset()))
+        assertEquals(ex.message,
+            "Expected:${lineSeparator()}${lineSeparator()}" +
+                "id                              | 1    | Greater(value = 1)${lineSeparator()}" +
+                "name                            |      | NotEmpty${lineSeparator()}" +
+                "email                           | john | Email${lineSeparator()}" +
+                "company.name                    | C    | Size(min = 2, max = 100)${lineSeparator()}" +
+                "address.street                  |      | NotBlank${lineSeparator()}" +
+                "address.number                  | foo  | Matches(pattern = ^[0-9]*\$)${lineSeparator()}" +
+                "address.neighborhood            |      | Size(min = 2, max = 50)${lineSeparator()}" +
+                "address.city.name               | C    | Size(min = 2, max = 60)${lineSeparator()}" +
+                "address.city.state.name         | SP   | Size(min = 3, max = 3)${lineSeparator()}" +
+                "address.city.state.country.name | BRA  | Size(min = 2, max = 2)${lineSeparator()}" +
+                "dependentsList[0].name          |      | NotEmpty${lineSeparator()}" +
+                "dependentsList[0].age           | -1   | Between(end = 15, start = 0)${lineSeparator()}" +
+                "dependentsList[1].name          |      | NotEmpty${lineSeparator()}" +
+                "dependentsList[1].age           | 16   | Between(end = 15, start = 0)${lineSeparator()}" +
+                "dependentsList[2].name          |      | NotEmpty${lineSeparator()}" +
+                "dependentsList[2].age           | 17   | Between(end = 15, start = 0)${lineSeparator()}" +
+                "dependentsList[3].name          |      | NotEmpty${lineSeparator()}" +
+                "dependentsList[3].age           | 18   | Between(end = 15, start = 0)${lineSeparator()}" +
+                "dependentsArray[0].name         |      | NotEmpty${lineSeparator()}" +
+                "dependentsArray[0].age          | -1   | Between(end = 17, start = 0)${lineSeparator()}" +
+                "dependentsArray[1].name         |      | NotEmpty${lineSeparator()}" +
+                "dependentsArray[1].age          | 18   | Between(end = 17, start = 0)${lineSeparator()}" +
+                "dependentsArray[2].name         |      | NotEmpty${lineSeparator()}" +
+                "dependentsArray[2].age          | 19   | Between(end = 17, start = 0)${lineSeparator()}" +
+                "dependentsArray[3].name         |      | NotEmpty${lineSeparator()}" +
+                "dependentsArray[3].age          | 20   | Between(end = 17, start = 0)${lineSeparator()}" +
+                "${lineSeparator()}but was:${lineSeparator()}${lineSeparator()}" +
+                "id                              | 0    | Greater(value = 0)${lineSeparator()}" +
+                "name                            |      | NotBlank${lineSeparator()}" +
+                "email                           | john | Email${lineSeparator()}" +
+                "company.name                    | Co   | Size(min = 3, max = 50)${lineSeparator()}" +
+                "address.street                  |      | NotEmpty${lineSeparator()}" +
+                "address.number                  | abc  | Matches(pattern = ^[0-9]*\$)${lineSeparator()}" +
+                "address.neighborhood            |      | Size(min = 1, max = 40)${lineSeparator()}" +
+                "address.city.name               | Ci   | Size(min = 3, max = 30)${lineSeparator()}" +
+                "address.city.state.name         | S    | Size(min = 2, max = 2)${lineSeparator()}" +
+                "address.city.state.country.name | BR   | Size(min = 3, max = 3)${lineSeparator()}" +
+                "dependentsList[0].name          |      | NotBlank${lineSeparator()}" +
+                "dependentsList[0].age           | 0    | Between(end = 16, start = 1)${lineSeparator()}" +
+                "dependentsList[1].name          |      | NotBlank${lineSeparator()}" +
+                "dependentsList[1].age           | 17   | Between(end = 16, start = 1)${lineSeparator()}" +
+                "dependentsList[2].name          |      | NotBlank${lineSeparator()}" +
+                "dependentsList[2].age           | 18   | Between(end = 16, start = 1)${lineSeparator()}" +
+                "dependentsList[3].name          |      | NotBlank${lineSeparator()}" +
+                "dependentsList[3].age           | 19   | Between(end = 16, start = 1)${lineSeparator()}" +
+                "dependentsArray[0].name         |      | NotBlank${lineSeparator()}" +
+                "dependentsArray[0].age          | 0    | Between(end = 18, start = 1)${lineSeparator()}" +
+                "dependentsArray[1].name         |      | NotBlank${lineSeparator()}" +
+                "dependentsArray[1].age          | 19   | Between(end = 18, start = 1)${lineSeparator()}" +
+                "dependentsArray[2].name         |      | NotBlank${lineSeparator()}" +
+                "dependentsArray[2].age          | 20   | Between(end = 18, start = 1)${lineSeparator()}" +
+                "dependentsArray[3].name         |      | NotBlank${lineSeparator()}" +
+                "dependentsArray[3].age          | 21   | Between(end = 18, start = 1)${lineSeparator()}"
+        )
     }
 }
