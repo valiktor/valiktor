@@ -16,44 +16,27 @@
 
 package org.valiktor.sample
 
-import org.assertj.core.api.Assertions.assertThat
 import org.joda.time.LocalDate
 import org.joda.time.LocalTime
-import org.valiktor.ConstraintViolationException
-import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.Between
 import org.valiktor.constraints.LessOrEqual
+import org.valiktor.test.shouldFailValidation
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
 
 class SampleApplicationTest {
 
     @Test
     fun `should validate employee`() {
-        val exception = assertFailsWith<ConstraintViolationException> {
+        shouldFailValidation<Employee> {
             Employee(
                 dateOfBirth = LocalDate.now(),
                 workStartTime = LocalTime(7, 0, 0),
                 workEndTime = LocalTime(21, 0, 0)
             )
+        }.verify {
+            expect(Employee::dateOfBirth, LocalDate.now(), LessOrEqual(LocalDate.now().minusYears(18)))
+            expect(Employee::workStartTime, LocalTime(7, 0, 0), Between(start = LocalTime(8, 0, 0), end = LocalTime(10, 0, 0)))
+            expect(Employee::workEndTime, LocalTime(21, 0, 0), Between(start = LocalTime(18, 0, 0), end = LocalTime(20, 0, 0)))
         }
-
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(
-                property = "dateOfBirth",
-                value = LocalDate.now(),
-                constraint = LessOrEqual(LocalDate.now().minusYears(18))
-            ),
-            DefaultConstraintViolation(
-                property = "workStartTime",
-                value = LocalTime(7, 0, 0),
-                constraint = Between(start = LocalTime(8, 0, 0), end = LocalTime(10, 0, 0))
-            ),
-            DefaultConstraintViolation(
-                property = "workEndTime",
-                value = LocalTime(21, 0, 0),
-                constraint = Between(start = LocalTime(18, 0, 0), end = LocalTime(20, 0, 0))
-            )
-        )
     }
 }

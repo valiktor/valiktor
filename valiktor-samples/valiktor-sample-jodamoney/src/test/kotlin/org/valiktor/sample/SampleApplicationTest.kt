@@ -16,39 +16,26 @@
 
 package org.valiktor.sample
 
-import org.assertj.core.api.Assertions.assertThat
 import org.joda.money.BigMoney
 import org.joda.money.CurrencyUnit
 import org.joda.money.Money
-import org.valiktor.ConstraintViolationException
-import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.CurrencyIn
 import org.valiktor.constraints.DecimalDigits
+import org.valiktor.test.shouldFailValidation
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
 
 class SampleApplicationTest {
 
     @Test
     fun `should validate employee`() {
-        val exception = assertFailsWith<ConstraintViolationException> {
+        shouldFailValidation<Employee> {
             Employee(
                 grossSalary = Money.of(CurrencyUnit.of("EUR"), 1000.0),
                 netSalary = BigMoney.of(CurrencyUnit.of("EUR"), 999.999)
             )
+        }.verify {
+            expect(Employee::grossSalary, Money.of(CurrencyUnit.of("EUR"), 1000.0), CurrencyIn(SUPPORTED_CURRENCIES))
+            expect(Employee::netSalary, BigMoney.of(CurrencyUnit.of("EUR"), 999.999), DecimalDigits(max = 2))
         }
-
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(
-                property = "grossSalary",
-                value = Money.of(CurrencyUnit.of("EUR"), 1000.0),
-                constraint = CurrencyIn(SUPPORTED_CURRENCIES)
-            ),
-            DefaultConstraintViolation(
-                property = "netSalary",
-                value = BigMoney.of(CurrencyUnit.of("EUR"), 999.999),
-                constraint = DecimalDigits(max = 2)
-            )
-        )
     }
 }

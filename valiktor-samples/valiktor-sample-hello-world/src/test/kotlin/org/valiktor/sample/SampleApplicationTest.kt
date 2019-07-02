@@ -16,34 +16,29 @@
 
 package org.valiktor.sample
 
-import org.assertj.core.api.Assertions.assertThat
-import org.valiktor.ConstraintViolationException
-import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.DecimalDigits
 import org.valiktor.constraints.Email
 import org.valiktor.constraints.Greater
 import org.valiktor.constraints.Size
+import org.valiktor.test.shouldFailValidation
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
 
 class SampleApplicationTest {
 
     @Test
     fun `should validate employee`() {
-        val exception = assertFailsWith<ConstraintViolationException> {
+        shouldFailValidation<Employee> {
             Employee(
                 id = -1,
                 name = "aa",
                 email = "aaa",
                 salary = 9999.999
             )
+        }.verify {
+            expect(Employee::id, -1, Greater(0))
+            expect(Employee::name, "aa", Size(min = 3, max = 30))
+            expect(Employee::email, "aaa", Email)
+            expect(Employee::salary, 9999.999, DecimalDigits(max = 2))
         }
-
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = -1, constraint = Greater(0)),
-            DefaultConstraintViolation(property = "name", value = "aa", constraint = Size(min = 3, max = 30)),
-            DefaultConstraintViolation(property = "email", value = "aaa", constraint = Email),
-            DefaultConstraintViolation(property = "salary", value = 9999.999, constraint = DecimalDigits(max = 2))
-        )
     }
 }

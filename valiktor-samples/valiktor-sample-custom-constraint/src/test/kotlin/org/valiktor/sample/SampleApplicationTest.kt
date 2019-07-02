@@ -16,22 +16,17 @@
 
 package org.valiktor.sample
 
-import org.assertj.core.api.Assertions.assertThat
-import org.valiktor.ConstraintViolationException
-import org.valiktor.DefaultConstraintViolation
+import org.valiktor.test.shouldFailValidation
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
 
 class SampleApplicationTest {
 
     @Test
     fun `should validate employee`() {
-        val exception = assertFailsWith<ConstraintViolationException> {
+        shouldFailValidation<Employee> {
             Employee(documentNumber = "0000")
+        }.verify {
+            expect(Employee::documentNumber, "0000", Document)
         }
-
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "documentNumber", value = "0000", constraint = Document)
-        )
     }
 }
