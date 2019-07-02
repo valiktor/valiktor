@@ -1,0 +1,57 @@
+Expected:
+
+id                              | 1    | Greater(value = 1)
+name                            |      | NotEmpty
+email                           | john | Email
+company.name                    | C    | Size(min = 2, max = 100)
+address.street                  |      | NotBlank
+address.number                  | foo  | Matches(pattern = ^[0-9]*$)
+address.neighborhood            |      | Size(min = 2, max = 50)
+address.city.name               | C    | Size(min = 2, max = 60)
+address.city.state.name         | SP   | Size(min = 3, max = 3)
+address.city.state.country.name | BRA  | Size(min = 2, max = 2)
+dependentsList[0].name          |      | NotEmpty
+dependentsList[0].age           | -1   | Between(end = 15, start = 0)
+dependentsList[1].name          |      | NotEmpty
+dependentsList[1].age           | 16   | Between(end = 15, start = 0)
+dependentsList[2].name          |      | NotEmpty
+dependentsList[2].age           | 17   | Between(end = 15, start = 0)
+dependentsList[3].name          |      | NotEmpty
+dependentsList[3].age           | 18   | Between(end = 15, start = 0)
+dependentsArray[0].name         |      | NotEmpty
+dependentsArray[0].age          | -1   | Between(end = 17, start = 0)
+dependentsArray[1].name         |      | NotEmpty
+dependentsArray[1].age          | 18   | Between(end = 17, start = 0)
+dependentsArray[2].name         |      | NotEmpty
+dependentsArray[2].age          | 19   | Between(end = 17, start = 0)
+dependentsArray[3].name         |      | NotEmpty
+dependentsArray[3].age          | 20   | Between(end = 17, start = 0)
+
+but was:
+
+id                              | 0    | Greater(value = 0)
+name                            |      | NotBlank
+email                           | john | Email
+company.name                    | Co   | Size(min = 3, max = 50)
+address.street                  |      | NotEmpty
+address.number                  | abc  | Matches(pattern = ^[0-9]*$)
+address.neighborhood            |      | Size(min = 1, max = 40)
+address.city.name               | Ci   | Size(min = 3, max = 30)
+address.city.state.name         | S    | Size(min = 2, max = 2)
+address.city.state.country.name | BR   | Size(min = 3, max = 3)
+dependentsList[0].name          |      | NotBlank
+dependentsList[0].age           | 0    | Between(end = 16, start = 1)
+dependentsList[1].name          |      | NotBlank
+dependentsList[1].age           | 17   | Between(end = 16, start = 1)
+dependentsList[2].name          |      | NotBlank
+dependentsList[2].age           | 18   | Between(end = 16, start = 1)
+dependentsList[3].name          |      | NotBlank
+dependentsList[3].age           | 19   | Between(end = 16, start = 1)
+dependentsArray[0].name         |      | NotBlank
+dependentsArray[0].age          | 0    | Between(end = 18, start = 1)
+dependentsArray[1].name         |      | NotBlank
+dependentsArray[1].age          | 19   | Between(end = 18, start = 1)
+dependentsArray[2].name         |      | NotBlank
+dependentsArray[2].age          | 20   | Between(end = 18, start = 1)
+dependentsArray[3].name         |      | NotBlank
+dependentsArray[3].age          | 21   | Between(end = 18, start = 1)
