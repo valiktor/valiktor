@@ -53,7 +53,7 @@ class EmployeeControllerTest {
         headers[HttpHeaders.CONTENT_TYPE] = APPLICATION_JSON_VALUE
         headers[HttpHeaders.ACCEPT] = APPLICATION_JSON_VALUE
 
-        val entity = HttpEntity(EmployeeControllerFixture.validEmployee, headers)
+        val entity = HttpEntity(EmployeeControllerTestFixture.validEmployee, headers)
         val response = restTemplate.exchange("/employees", HttpMethod.POST, entity, Void::class.java)
 
         assertEquals(response.statusCode, HttpStatus.CREATED)
@@ -67,12 +67,12 @@ class EmployeeControllerTest {
         headers[HttpHeaders.CONTENT_TYPE] = APPLICATION_JSON_VALUE
         headers[HttpHeaders.ACCEPT] = APPLICATION_JSON_VALUE
 
-        val entity = HttpEntity(EmployeeControllerFixture.invalidEmployee, headers)
+        val entity = HttpEntity(EmployeeControllerTestFixture.invalidEmployee, headers)
         val response = restTemplate.exchange("/employees", HttpMethod.POST, entity, UnprocessableEntity::class.java)
 
         assertEquals(response.statusCode, HttpStatus.UNPROCESSABLE_ENTITY)
         assertTrue(response.headers[HttpHeaders.CONTENT_TYPE]!![0].startsWith(APPLICATION_JSON_VALUE))
-        assertEquals(response.body, EmployeeControllerFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+        assertEquals(response.body, EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
     }
 
     @Test
@@ -82,12 +82,12 @@ class EmployeeControllerTest {
         headers[HttpHeaders.ACCEPT] = APPLICATION_JSON_VALUE
         headers[HttpHeaders.ACCEPT_LANGUAGE] = "en"
 
-        val entity = HttpEntity(EmployeeControllerFixture.invalidEmployee, headers)
+        val entity = HttpEntity(EmployeeControllerTestFixture.invalidEmployee, headers)
         val response = restTemplate.exchange("/employees", HttpMethod.POST, entity, UnprocessableEntity::class.java)
 
         assertEquals(response.statusCode, HttpStatus.UNPROCESSABLE_ENTITY)
         assertTrue(response.headers[HttpHeaders.CONTENT_TYPE]!![0].startsWith(APPLICATION_JSON_VALUE))
-        assertEquals(response.body, EmployeeControllerFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+        assertEquals(response.body, EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
     }
 
     @Test
@@ -97,11 +97,11 @@ class EmployeeControllerTest {
         headers[HttpHeaders.ACCEPT] = APPLICATION_JSON_VALUE
         headers[HttpHeaders.ACCEPT_LANGUAGE] = "pt-BR"
 
-        val entity = HttpEntity(EmployeeControllerFixture.invalidEmployee, headers)
+        val entity = HttpEntity(EmployeeControllerTestFixture.invalidEmployee, headers)
         val response = restTemplate.exchange("/employees", HttpMethod.POST, entity, UnprocessableEntity::class.java)
 
         assertEquals(response.statusCode, HttpStatus.UNPROCESSABLE_ENTITY)
         assertTrue(response.headers[HttpHeaders.CONTENT_TYPE]!![0].startsWith(APPLICATION_JSON_VALUE))
-        assertEquals(response.body, EmployeeControllerFixture.unprocessableEntity.getValue(Locale("pt", "BR")))
+        assertEquals(response.body, EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale("pt", "BR")))
     }
 }

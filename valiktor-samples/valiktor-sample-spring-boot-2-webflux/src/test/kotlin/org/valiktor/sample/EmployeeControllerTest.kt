@@ -35,7 +35,7 @@ import kotlin.test.Test
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-class EmployeeHandlerTest {
+class EmployeeControllerTest {
 
     @Autowired
     private lateinit var env: Environment
@@ -54,7 +54,7 @@ class EmployeeHandlerTest {
             .post()
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromObject(EmployeeHandlerFixture.validEmployee))
+            .body(BodyInserters.fromObject(EmployeeControllerTestFixture.validEmployee))
             .exchange()
             .expectStatus().isCreated
             .expectHeader().valueEquals(HttpHeaders.LOCATION, "http://localhost:${env.getProperty("local.server.port")}/employees/111.111.111-11")
@@ -68,11 +68,11 @@ class EmployeeHandlerTest {
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromObject(EmployeeHandlerFixture.invalidEmployee))
+            .body(BodyInserters.fromObject(EmployeeControllerTestFixture.invalidEmployee))
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeHandlerFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
     }
 
     @Test
@@ -83,11 +83,11 @@ class EmployeeHandlerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .header(HttpHeaders.ACCEPT_LANGUAGE, "en")
-            .body(BodyInserters.fromObject(EmployeeHandlerFixture.invalidEmployee))
+            .body(BodyInserters.fromObject(EmployeeControllerTestFixture.invalidEmployee))
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeHandlerFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
     }
 
     @Test
@@ -98,10 +98,10 @@ class EmployeeHandlerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR")
-            .body(BodyInserters.fromObject(EmployeeHandlerFixture.invalidEmployee))
+            .body(BodyInserters.fromObject(EmployeeControllerTestFixture.invalidEmployee))
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeHandlerFixture.unprocessableEntity.getValue(Locale("pt", "BR")))
+            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale("pt", "BR")))
     }
 }

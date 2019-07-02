@@ -657,8 +657,8 @@ Response:
 
 Samples:
 
-* [valiktor-sample-spring-boot-2-webflux-controller](valiktor-samples/valiktor-sample-spring-boot-2-webflux-controller)
-* [valiktor-sample-spring-boot-2-webflux-functional](valiktor-samples/valiktor-sample-spring-boot-2-webflux-functional)
+* [valiktor-sample-spring-boot-2-webflux](valiktor-samples/valiktor-sample-spring-boot-2-webflux)
+* [valiktor-sample-spring-boot-2-webflux-fn](valiktor-samples/valiktor-sample-spring-boot-2-webflux-fn)
 
 #### Spring Boot support
 
@@ -846,8 +846,8 @@ This module provides fluent assertions for validation tests
 * [valiktor-sample-custom-formatter](valiktor-samples/valiktor-sample-custom-formatter)
 * [valiktor-sample-spring-boot-1-webmvc](valiktor-samples/valiktor-sample-spring-boot-1-webmvc)
 * [valiktor-sample-spring-boot-2-webmvc](valiktor-samples/valiktor-sample-spring-boot-2-webmvc)
-* [valiktor-sample-spring-boot-2-webflux-controller](valiktor-samples/valiktor-sample-spring-boot-2-webflux-controller)
-* [valiktor-sample-spring-boot-2-webflux-functional](valiktor-samples/valiktor-sample-spring-boot-2-webflux-functional)
+* [valiktor-sample-spring-boot-2-webflux](valiktor-samples/valiktor-sample-spring-boot-2-webflux)
+* [valiktor-sample-spring-boot-2-webflux-fn](valiktor-samples/valiktor-sample-spring-boot-2-webflux-fn)
 
 ## Changelog
 
