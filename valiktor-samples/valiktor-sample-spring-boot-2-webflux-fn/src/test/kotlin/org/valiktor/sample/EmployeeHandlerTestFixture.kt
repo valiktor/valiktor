@@ -25,7 +25,7 @@ import java.time.Month
 import java.util.Locale
 import javax.money.Monetary
 
-object EmployeeHandlerFixture {
+object EmployeeHandlerTestFixture {
 
     val validEmployee = Employee(
         documentNumber = "111.111.111-11",
