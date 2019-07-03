@@ -1,3 +1,10 @@
+# 0.8.0
+> Published 02 Jul 2019
+
+#### Features:
+
+* [#13](https://github.com/valiktor/valiktor/issues/13) Added module `valiktor-test`
+
 # 0.7.0
 > Published 26 Jun 2019
 
