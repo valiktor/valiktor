@@ -221,8 +221,10 @@ name: Must not be empty
 
 Currently the following locales are natively supported by Valiktor:
 
+* `ca` (Catalan)
 * `de` (German)
 * `en` (English)
+* `es` (Spanish)
 * `pt_BR` (Portuguese/Brazil)
 
 #### Customizing a message
