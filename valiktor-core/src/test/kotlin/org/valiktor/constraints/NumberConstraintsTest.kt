@@ -28,7 +28,7 @@ class IntegerDigitsTest {
     fun `should validate messages with min`() {
         assertThat(IntegerDigits(min = 1).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Integer digits must be greater than or equal to 1"),
-            entry(SupportedLocales.DE_DE, "Ganzzahlstellen müssen größer oder gleich 1 sein"),
+            entry(SupportedLocales.DE, "Ganzzahlstellen müssen größer oder gleich 1 sein"),
             entry(SupportedLocales.EN, "Integer digits must be greater than or equal to 1"),
             entry(SupportedLocales.PT_BR, "A quantidade de dígitos inteiros deve ser maior ou igual a 1"))
     }
@@ -37,7 +37,7 @@ class IntegerDigitsTest {
     fun `should validate messages with max`() {
         assertThat(IntegerDigits(max = 5).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Integer digits must be less than or equal to 5"),
-            entry(SupportedLocales.DE_DE, "Ganzzahlstellen müssen kleiner oder gleich 5 sein"),
+            entry(SupportedLocales.DE, "Ganzzahlstellen müssen kleiner oder gleich 5 sein"),
             entry(SupportedLocales.EN, "Integer digits must be less than or equal to 5"),
             entry(SupportedLocales.PT_BR, "A quantidade de dígitos inteiros deve ser menor ou igual a 5"))
     }
@@ -46,7 +46,7 @@ class IntegerDigitsTest {
     fun `should validate messages with min and max`() {
         assertThat(IntegerDigits(min = 1, max = 5).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Integer digits must be between 1 and 5"),
-            entry(SupportedLocales.DE_DE, "Ganzzahlstellen müssen zwischen 1 und 5 sein"),
+            entry(SupportedLocales.DE, "Ganzzahlstellen müssen zwischen 1 und 5 sein"),
             entry(SupportedLocales.EN, "Integer digits must be between 1 and 5"),
             entry(SupportedLocales.PT_BR, "A quantidade de dígitos inteiros deve estar entre 1 e 5"))
     }
@@ -58,7 +58,7 @@ class DecimalDigitsTest {
     fun `should validate messages with min`() {
         assertThat(DecimalDigits(min = 1).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Decimal digits must be greater than or equal to 1"),
-            entry(SupportedLocales.DE_DE, "Dezimalstellen müssen größer oder gleich 1 sein"),
+            entry(SupportedLocales.DE, "Dezimalstellen müssen größer oder gleich 1 sein"),
             entry(SupportedLocales.EN, "Decimal digits must be greater than or equal to 1"),
             entry(SupportedLocales.PT_BR, "A quantidade de casas decimais deve ser maior ou igual a 1"))
     }
@@ -67,7 +67,7 @@ class DecimalDigitsTest {
     fun `should validate messages with max`() {
         assertThat(DecimalDigits(max = 5).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Decimal digits must be less than or equal to 5"),
-            entry(SupportedLocales.DE_DE, "Dezimalstellen müssen kleiner oder gleich 5 sein"),
+            entry(SupportedLocales.DE, "Dezimalstellen müssen kleiner oder gleich 5 sein"),
             entry(SupportedLocales.EN, "Decimal digits must be less than or equal to 5"),
             entry(SupportedLocales.PT_BR, "A quantidade de casas decimais deve ser menor ou igual a 5"))
     }
@@ -76,7 +76,7 @@ class DecimalDigitsTest {
     fun `should validate messages with min and max`() {
         assertThat(DecimalDigits(min = 1, max = 5).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Decimal digits must be between 1 and 5"),
-            entry(SupportedLocales.DE_DE, "Dezimalstellen müssen zwischen 1 und 5 sein"),
+            entry(SupportedLocales.DE, "Dezimalstellen müssen zwischen 1 und 5 sein"),
             entry(SupportedLocales.EN, "Decimal digits must be between 1 and 5"),
             entry(SupportedLocales.PT_BR, "A quantidade de casas decimais deve estar entre 1 e 5"))
     }

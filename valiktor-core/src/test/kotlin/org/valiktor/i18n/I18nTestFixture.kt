@@ -23,7 +23,7 @@ import kotlin.reflect.full.declaredMemberProperties
 object SupportedLocales {
 
     val DEFAULT = Locale("")
-    val DE_DE = Locale("de", "DE")
+    val DE = Locale("de")
     val EN = Locale("en")
     val PT_BR = Locale("pt", "BR")
 }

@@ -30,7 +30,7 @@ class LocalTimeFormatterTest {
     fun `should format time`() {
         assertThat(Formatters[LocalTime::class].formatAllSupportedLocales(LocalTime.of(23, 58, 59))).containsExactly(
             entry(SupportedLocales.DEFAULT, "11:58:59 PM"),
-            entry(SupportedLocales.DE_DE, "23:58:59"),
+            entry(SupportedLocales.DE, "23:58:59"),
             entry(SupportedLocales.EN, "11:58:59 PM"),
             entry(SupportedLocales.PT_BR, "23:58:59"))
     }

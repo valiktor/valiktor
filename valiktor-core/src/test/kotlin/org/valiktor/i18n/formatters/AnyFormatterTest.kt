@@ -37,7 +37,7 @@ class AnyFormatterTest {
     fun `should format Any value`() {
         assertThat(Formatters[AnyFormatterFixture.TestObject::class].formatAllSupportedLocales(AnyFormatterFixture.TestObject)).containsExactly(
             entry(SupportedLocales.DEFAULT, "TestObject"),
-            entry(SupportedLocales.DE_DE, "TestObject"),
+            entry(SupportedLocales.DE, "TestObject"),
             entry(SupportedLocales.EN, "TestObject"),
             entry(SupportedLocales.PT_BR, "TestObject"))
     }
@@ -46,7 +46,7 @@ class AnyFormatterTest {
     fun `should format Enum value`() {
         assertThat(Formatters[Enum::class].formatAllSupportedLocales(AnyFormatterFixture.TestEnum.E1)).containsExactly(
             entry(SupportedLocales.DEFAULT, "E1"),
-            entry(SupportedLocales.DE_DE, "E1"),
+            entry(SupportedLocales.DE, "E1"),
             entry(SupportedLocales.EN, "E1"),
             entry(SupportedLocales.PT_BR, "E1"))
     }
@@ -55,7 +55,7 @@ class AnyFormatterTest {
     fun `should format String value`() {
         assertThat(Formatters[String::class].formatAllSupportedLocales("test")).containsExactly(
             entry(SupportedLocales.DEFAULT, "test"),
-            entry(SupportedLocales.DE_DE, "test"),
+            entry(SupportedLocales.DE, "test"),
             entry(SupportedLocales.EN, "test"),
             entry(SupportedLocales.PT_BR, "test"))
     }
@@ -64,7 +64,7 @@ class AnyFormatterTest {
     fun `should format Char value`() {
         assertThat(Formatters[Char::class].formatAllSupportedLocales('A')).containsExactly(
             entry(SupportedLocales.DEFAULT, "A"),
-            entry(SupportedLocales.DE_DE, "A"),
+            entry(SupportedLocales.DE, "A"),
             entry(SupportedLocales.EN, "A"),
             entry(SupportedLocales.PT_BR, "A"))
     }
@@ -73,7 +73,7 @@ class AnyFormatterTest {
     fun `should format Boolean value`() {
         assertThat(Formatters[Boolean::class].formatAllSupportedLocales(true)).containsExactly(
             entry(SupportedLocales.DEFAULT, "true"),
-            entry(SupportedLocales.DE_DE, "true"),
+            entry(SupportedLocales.DE, "true"),
             entry(SupportedLocales.EN, "true"),
             entry(SupportedLocales.PT_BR, "true"))
     }
