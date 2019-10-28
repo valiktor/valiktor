@@ -3,9 +3,9 @@ plugins {
     id("jacoco")
     id("signing")
     id("maven-publish")
-    id("org.jetbrains.dokka") version "0.9.18"
+    id("org.jetbrains.dokka") version "0.10.0"
     id("org.jmailen.kotlinter") version "1.25.2"
-    id("com.adarshr.test-logger") version "1.6.0"
+    id("com.adarshr.test-logger") version "2.0.0"
 }
 
 repositories {
@@ -14,8 +14,8 @@ repositories {
 }
 
 subprojects {
-    val junitVersion = "5.3.2"
-    val assertjVersion = "3.12.2"
+    val junitVersion = "5.5.2"
+    val assertjVersion = "3.13.2"
 
     apply {
         plugin("kotlin")

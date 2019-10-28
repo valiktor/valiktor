@@ -27,7 +27,6 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
-import org.springframework.web.reactive.function.BodyInserters
 import org.valiktor.springframework.web.payload.UnprocessableEntity
 import java.util.Locale
 import kotlin.test.BeforeTest
@@ -54,7 +53,7 @@ class EmployeeHandlerTest {
             .post()
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromObject(EmployeeHandlerTestFixture.validEmployee))
+            .bodyValue(EmployeeHandlerTestFixture.validEmployee)
             .exchange()
             .expectStatus().isCreated
             .expectHeader().valueEquals(HttpHeaders.LOCATION, "http://localhost:${env.getProperty("local.server.port")}/employees/111.111.111-11")
@@ -68,7 +67,7 @@ class EmployeeHandlerTest {
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromObject(EmployeeHandlerTestFixture.invalidEmployee))
+            .bodyValue(EmployeeHandlerTestFixture.invalidEmployee)
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
@@ -83,7 +82,7 @@ class EmployeeHandlerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .header(HttpHeaders.ACCEPT_LANGUAGE, "en")
-            .body(BodyInserters.fromObject(EmployeeHandlerTestFixture.invalidEmployee))
+            .bodyValue(EmployeeHandlerTestFixture.invalidEmployee)
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
@@ -98,7 +97,7 @@ class EmployeeHandlerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR")
-            .body(BodyInserters.fromObject(EmployeeHandlerTestFixture.invalidEmployee))
+            .bodyValue(EmployeeHandlerTestFixture.invalidEmployee)
             .exchange()
             .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)

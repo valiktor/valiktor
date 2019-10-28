@@ -48,9 +48,9 @@ import java.time.ZoneId
 import java.util.Date
 import java.util.Locale
 
-private enum class Status { ACTIVE, INACTIVE }
+enum class Status { ACTIVE, INACTIVE }
 
-private data class Employee(
+data class Employee(
     val id: Int,
     val name: String,
     val email: String,
@@ -61,7 +61,7 @@ private data class Employee(
 
 @RestController
 @RequestMapping("/")
-private class ValiktorTestController {
+class ValiktorTestController {
 
     @PostMapping("/employees", consumes = [APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE])
     fun test(req: ServerHttpRequest, @RequestBody employee: Mono<Employee>): Mono<ResponseEntity<Void>> =

@@ -2,8 +2,8 @@ plugins {
     kotlin("plugin.spring") version "1.3.50"
 }
 
-val springBootVersion = "2.1.5.RELEASE"
-val jacksonVersion = "2.9.9"
+val springBootVersion = "2.2.0.RELEASE"
+val jacksonVersion = "2.10.0"
 
 dependencies {
     compileOnly(project(":valiktor-spring:valiktor-spring"))

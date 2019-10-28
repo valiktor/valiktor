@@ -20,7 +20,6 @@ import org.springframework.http.HttpHeaders.ACCEPT_LANGUAGE
 import org.springframework.http.HttpHeaders.LOCATION
 import org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 import org.springframework.http.MediaType.APPLICATION_JSON
-import org.springframework.web.reactive.function.BodyInserters
 import java.util.Locale
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -42,7 +41,7 @@ class ReactiveInvalidFormatExceptionHandlerJsonTest {
             .uri("/employees")
             .accept(APPLICATION_JSON)
             .contentType(APPLICATION_JSON)
-            .body(BodyInserters.fromObject(json.payloadEmployeeValid()))
+            .bodyValue(json.payloadEmployeeValid())
             .exchange()
             .expectStatus().isCreated
             .expectHeader().valueEquals(LOCATION, "/employees/1")
@@ -56,7 +55,7 @@ class ReactiveInvalidFormatExceptionHandlerJsonTest {
             .uri("/employees")
             .accept(APPLICATION_JSON)
             .contentType(APPLICATION_JSON)
-            .body(BodyInserters.fromObject(json.payloadEmployeeInvalidStatus()))
+            .bodyValue(json.payloadEmployeeInvalidStatus())
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
@@ -71,7 +70,7 @@ class ReactiveInvalidFormatExceptionHandlerJsonTest {
             .accept(APPLICATION_JSON)
             .header(ACCEPT_LANGUAGE, "en")
             .contentType(APPLICATION_JSON)
-            .body(BodyInserters.fromObject(json.payloadEmployeeInvalidStatus()))
+            .bodyValue(json.payloadEmployeeInvalidStatus())
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
@@ -86,7 +85,7 @@ class ReactiveInvalidFormatExceptionHandlerJsonTest {
             .accept(APPLICATION_JSON)
             .header(ACCEPT_LANGUAGE, "pt-BR")
             .contentType(APPLICATION_JSON)
-            .body(BodyInserters.fromObject(json.payloadEmployeeInvalidStatus()))
+            .bodyValue(json.payloadEmployeeInvalidStatus())
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
@@ -100,7 +99,7 @@ class ReactiveInvalidFormatExceptionHandlerJsonTest {
             .uri("/employees")
             .accept(APPLICATION_JSON)
             .contentType(APPLICATION_JSON)
-            .body(BodyInserters.fromObject(json.payloadEmployeeInvalidSalary()))
+            .bodyValue(json.payloadEmployeeInvalidSalary())
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
@@ -115,7 +114,7 @@ class ReactiveInvalidFormatExceptionHandlerJsonTest {
             .accept(APPLICATION_JSON)
             .header(ACCEPT_LANGUAGE, "en")
             .contentType(APPLICATION_JSON)
-            .body(BodyInserters.fromObject(json.payloadEmployeeInvalidSalary()))
+            .bodyValue(json.payloadEmployeeInvalidSalary())
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
@@ -130,7 +129,7 @@ class ReactiveInvalidFormatExceptionHandlerJsonTest {
             .accept(APPLICATION_JSON)
             .header(ACCEPT_LANGUAGE, "pt-BR")
             .contentType(APPLICATION_JSON)
-            .body(BodyInserters.fromObject(json.payloadEmployeeInvalidSalary()))
+            .bodyValue(json.payloadEmployeeInvalidSalary())
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)

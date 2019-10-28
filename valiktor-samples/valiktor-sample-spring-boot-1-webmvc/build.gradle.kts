@@ -1,17 +1,17 @@
 plugins {
     kotlin("plugin.spring") version "1.3.50"
-    id("org.springframework.boot") version "1.5.20.RELEASE"
+    id("org.springframework.boot") version "1.5.22.RELEASE"
 }
 
 apply {
     plugin("io.spring.dependency-management")
 }
 
-val jacksonVersion = "2.9.9"
+val jacksonVersion = "2.9.10"
 val jacksonMoneyVersion = "1.1.1"
 val moneyVersion = "1.0.3"
 val monetaVersion = "1.3"
-val springTestJunit5 = "1.4.0"
+val springTestJunit5 = "1.5.0"
 
 repositories {
     maven(url = "https://jitpack.io")

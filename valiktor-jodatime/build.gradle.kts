@@ -1,4 +1,4 @@
-val jodaTimeVersion = "2.10.2"
+val jodaTimeVersion = "2.10.5"
 
 dependencies {
     compile(project(":valiktor-core"))

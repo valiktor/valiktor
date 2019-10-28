@@ -18,7 +18,6 @@ package org.valiktor.springframework.web.reactive
 
 import org.springframework.core.annotation.Order
 import org.springframework.http.codec.CodecConfigurer
-import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.result.view.ViewResolver
 import org.springframework.web.server.ServerWebExchange
@@ -61,11 +60,11 @@ class ReactiveConstraintViolationExceptionHandler(
             is ConstraintViolationException ->
                 ServerResponse
                     .unprocessableEntity()
-                    .body(BodyInserters.fromObject(
+                    .bodyValue(
                         this.toUnprocessableEntity(
                             baseBundleName = config.baseBundleName,
                             locale = exchange.localeContext.locale ?: Locale.getDefault()
-                        )))
+                        ))
                     .flatMap {
                         it.writeTo(exchange, object : ServerResponse.Context {
                             override fun messageWriters() = codecConfigurer.writers
