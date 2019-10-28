@@ -28,8 +28,10 @@ class LessTest {
     fun `should validate messages`() {
         assertThat(Less(1).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Must be less than 1"),
+            entry(SupportedLocales.CA, "Ha de ser més petit que 1"),
             entry(SupportedLocales.DE, "Muss kleiner 1 sein"),
             entry(SupportedLocales.EN, "Must be less than 1"),
+            entry(SupportedLocales.ES, "Tiene que ser menor que 1"),
             entry(SupportedLocales.PT_BR, "Deve ser menor que 1"))
     }
 }
@@ -40,8 +42,10 @@ class LessOrEqualTest {
     fun `should validate messages`() {
         assertThat(LessOrEqual(5).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Must be less than or equal to 5"),
+            entry(SupportedLocales.CA, "Ha de ser més petit o igual a 5"),
             entry(SupportedLocales.DE, "Muss kleiner oder gleich 5 sein"),
             entry(SupportedLocales.EN, "Must be less than or equal to 5"),
+            entry(SupportedLocales.ES, "Tiene que ser menor o igual que 5"),
             entry(SupportedLocales.PT_BR, "Deve ser menor ou igual a 5"))
     }
 }
@@ -52,8 +56,10 @@ class GreaterTest {
     fun `should validate messages`() {
         assertThat(Greater(10).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Must be greater than 10"),
+            entry(SupportedLocales.CA, "Ha de ser més gran que 10"),
             entry(SupportedLocales.DE, "Muss größer 10 sein"),
             entry(SupportedLocales.EN, "Must be greater than 10"),
+            entry(SupportedLocales.ES, "Tiene que ser mayor que 10"),
             entry(SupportedLocales.PT_BR, "Deve ser maior que 10"))
     }
 }
@@ -64,8 +70,10 @@ class GreaterOrEqualTest {
     fun `should validate messages`() {
         assertThat(GreaterOrEqual(15).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Must be greater than or equal to 15"),
+            entry(SupportedLocales.CA, "Ha de ser més gran o igual a 15"),
             entry(SupportedLocales.DE, "Muss größer oder gleich 15 sein"),
             entry(SupportedLocales.EN, "Must be greater than or equal to 15"),
+            entry(SupportedLocales.ES, "Tiene que ser mayor o igual que 15"),
             entry(SupportedLocales.PT_BR, "Deve ser maior ou igual a 15"))
     }
 }
@@ -76,8 +84,10 @@ class BetweenTest {
     fun `should validate messages`() {
         assertThat(Between(start = 1, end = 10).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Must be between 1 and 10"),
+            entry(SupportedLocales.CA, "Ha d'estar entre 1 i 10"),
             entry(SupportedLocales.DE, "Muss zwischen 1 und 10 sein"),
             entry(SupportedLocales.EN, "Must be between 1 and 10"),
+            entry(SupportedLocales.ES, "Tiene que estar entre 1 y 10"),
             entry(SupportedLocales.PT_BR, "Deve estar entre 1 e 10"))
     }
 }
@@ -88,8 +98,10 @@ class NotBetweenTest {
     fun `should validate messages`() {
         assertThat(NotBetween(start = 1, end = 10).interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Must not be between 1 and 10"),
+            entry(SupportedLocales.CA, "No pot estar entre 1 i 10"),
             entry(SupportedLocales.DE, "Darf nicht zwischen 1 und 10 sein"),
             entry(SupportedLocales.EN, "Must not be between 1 and 10"),
+            entry(SupportedLocales.ES, "No puede estar entre 1 y 10"),
             entry(SupportedLocales.PT_BR, "Não deve estar entre 1 e 10"))
     }
 }

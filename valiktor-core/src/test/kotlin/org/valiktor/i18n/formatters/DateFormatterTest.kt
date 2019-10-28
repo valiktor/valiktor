@@ -32,7 +32,7 @@ class DateFormatterTest {
         val calendar = Calendar.getInstance()
         calendar.set(2018, Calendar.DECEMBER, 31, 0, 0, 0)
 
-        assertThat(Formatters[Date::class].formatAllSupportedLocales(calendar.time)).containsExactly(
+        assertThat(Formatters[Date::class].formatAllSupportedLocales(calendar.time)).contains(
             entry(SupportedLocales.DEFAULT, "Dec 31, 2018"),
             entry(SupportedLocales.DE, "31.12.2018"),
             entry(SupportedLocales.EN, "Dec 31, 2018"),
@@ -44,7 +44,7 @@ class DateFormatterTest {
         val calendar = Calendar.getInstance()
         calendar.set(2018, Calendar.DECEMBER, 31, 23, 58, 59)
 
-        assertThat(Formatters[Date::class].formatAllSupportedLocales(calendar.time)).containsExactly(
+        assertThat(Formatters[Date::class].formatAllSupportedLocales(calendar.time)).contains(
             entry(SupportedLocales.DEFAULT, "Dec 31, 2018 11:58:59 PM"),
             entry(SupportedLocales.DE, "31.12.2018 23:58:59"),
             entry(SupportedLocales.EN, "Dec 31, 2018 11:58:59 PM"),

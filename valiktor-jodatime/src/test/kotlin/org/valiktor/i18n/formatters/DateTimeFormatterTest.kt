@@ -29,7 +29,7 @@ class DateTimeFormatterTest {
 
     @Test
     fun `should format dateTime`() {
-        assertThat(Formatters[DateTime::class].formatAllSupportedLocales(DateTime(2018, 12, 31, 23, 58, 59, DateTimeZone.getDefault()))).containsExactly(
+        assertThat(Formatters[DateTime::class].formatAllSupportedLocales(DateTime(2018, 12, 31, 23, 58, 59, DateTimeZone.getDefault()))).contains(
             entry(SupportedLocales.DEFAULT, "Dec 31, 2018 11:58:59 PM"),
             entry(SupportedLocales.DE, "31.12.2018 23:58:59"),
             entry(SupportedLocales.EN, "Dec 31, 2018 11:58:59 PM"),

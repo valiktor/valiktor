@@ -35,7 +35,7 @@ class AnyFormatterTest {
 
     @Test
     fun `should format Any value`() {
-        assertThat(Formatters[AnyFormatterFixture.TestObject::class].formatAllSupportedLocales(AnyFormatterFixture.TestObject)).containsExactly(
+        assertThat(Formatters[AnyFormatterFixture.TestObject::class].formatAllSupportedLocales(AnyFormatterFixture.TestObject)).contains(
             entry(SupportedLocales.DEFAULT, "TestObject"),
             entry(SupportedLocales.DE, "TestObject"),
             entry(SupportedLocales.EN, "TestObject"),
@@ -44,7 +44,7 @@ class AnyFormatterTest {
 
     @Test
     fun `should format Enum value`() {
-        assertThat(Formatters[Enum::class].formatAllSupportedLocales(AnyFormatterFixture.TestEnum.E1)).containsExactly(
+        assertThat(Formatters[Enum::class].formatAllSupportedLocales(AnyFormatterFixture.TestEnum.E1)).contains(
             entry(SupportedLocales.DEFAULT, "E1"),
             entry(SupportedLocales.DE, "E1"),
             entry(SupportedLocales.EN, "E1"),
@@ -53,7 +53,7 @@ class AnyFormatterTest {
 
     @Test
     fun `should format String value`() {
-        assertThat(Formatters[String::class].formatAllSupportedLocales("test")).containsExactly(
+        assertThat(Formatters[String::class].formatAllSupportedLocales("test")).contains(
             entry(SupportedLocales.DEFAULT, "test"),
             entry(SupportedLocales.DE, "test"),
             entry(SupportedLocales.EN, "test"),
@@ -62,7 +62,7 @@ class AnyFormatterTest {
 
     @Test
     fun `should format Char value`() {
-        assertThat(Formatters[Char::class].formatAllSupportedLocales('A')).containsExactly(
+        assertThat(Formatters[Char::class].formatAllSupportedLocales('A')).contains(
             entry(SupportedLocales.DEFAULT, "A"),
             entry(SupportedLocales.DE, "A"),
             entry(SupportedLocales.EN, "A"),
@@ -71,7 +71,7 @@ class AnyFormatterTest {
 
     @Test
     fun `should format Boolean value`() {
-        assertThat(Formatters[Boolean::class].formatAllSupportedLocales(true)).containsExactly(
+        assertThat(Formatters[Boolean::class].formatAllSupportedLocales(true)).contains(
             entry(SupportedLocales.DEFAULT, "true"),
             entry(SupportedLocales.DE, "true"),
             entry(SupportedLocales.EN, "true"),

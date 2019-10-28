@@ -28,7 +28,7 @@ class LocalDateFormatterTest {
 
     @Test
     fun `should format date`() {
-        assertThat(Formatters[LocalDate::class].formatAllSupportedLocales(LocalDate(2018, 12, 31))).containsExactly(
+        assertThat(Formatters[LocalDate::class].formatAllSupportedLocales(LocalDate(2018, 12, 31))).contains(
             entry(SupportedLocales.DEFAULT, "Dec 31, 2018"),
             entry(SupportedLocales.DE, "31.12.2018"),
             entry(SupportedLocales.EN, "Dec 31, 2018"),

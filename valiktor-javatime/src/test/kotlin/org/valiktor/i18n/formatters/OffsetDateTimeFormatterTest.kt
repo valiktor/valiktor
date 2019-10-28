@@ -31,7 +31,7 @@ class OffsetDateTimeFormatterTest {
 
     @Test
     fun `should format dateTime`() {
-        assertThat(Formatters[OffsetDateTime::class].formatAllSupportedLocales(OffsetDateTime.of(LocalDateTime.of(2018, Month.DECEMBER, 31, 23, 58, 59), ZoneOffset.UTC))).containsExactly(
+        assertThat(Formatters[OffsetDateTime::class].formatAllSupportedLocales(OffsetDateTime.of(LocalDateTime.of(2018, Month.DECEMBER, 31, 23, 58, 59), ZoneOffset.UTC))).contains(
             entry(SupportedLocales.DEFAULT, "Dec 31, 2018 11:58:59 PM"),
             entry(SupportedLocales.DE, "31.12.2018 23:58:59"),
             entry(SupportedLocales.EN, "Dec 31, 2018 11:58:59 PM"),
