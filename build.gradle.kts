@@ -4,7 +4,7 @@ plugins {
     id("signing")
     id("maven-publish")
     id("org.jetbrains.dokka") version "0.10.0"
-    id("org.jmailen.kotlinter") version "1.25.2"
+    id("org.jmailen.kotlinter") version "2.1.2"
     id("com.adarshr.test-logger") version "2.0.0"
 }
 
@@ -44,6 +44,10 @@ subprojects {
 
     testlogger {
         setTheme("mocha")
+    }
+
+    kotlinter {
+        disabledRules = arrayOf("import-ordering")
     }
 
     tasks {
