@@ -1,3 +1,10 @@
+# 0.9.0
+> Published 28 Oct 2019
+
+#### Features:
+
+* [#23](https://github.com/valiktor/valiktor/issues/23) Added catalan and spanish messages
+
 # 0.8.0
 > Published 02 Jul 2019
 
