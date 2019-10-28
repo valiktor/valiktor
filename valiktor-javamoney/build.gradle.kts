@@ -1,11 +1,11 @@
-fun javaMoney(module: String) = "javax.money:money-$module:1.0.3"
-fun moneta(module: String) = "org.javamoney:$module:1.3"
+val moneyVersion = "1.0.3"
+val monetaVersion = "1.3"
 
 dependencies {
     compile(project(":valiktor-core"))
-    compileOnly(javaMoney("api-bp"))
+    compileOnly("javax.money:money-api-bp:$moneyVersion")
 
     testCompile(kotlin("reflect"))
-    testCompile(javaMoney("api-bp"))
-    testRuntime(moneta("moneta-bp"))
+    testCompile("javax.money:money-api-bp:$moneyVersion")
+    testRuntime("org.javamoney:moneta-bp:$monetaVersion")
 }

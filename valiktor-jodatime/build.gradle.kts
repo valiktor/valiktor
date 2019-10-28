@@ -1,9 +1,9 @@
-fun jodaTime(module: String) = "joda-time:$module:2.10.2"
+val jodaTimeVersion = "2.10.2"
 
 dependencies {
     compile(project(":valiktor-core"))
-    compileOnly(jodaTime("joda-time"))
+    compileOnly("joda-time:joda-time:$jodaTimeVersion")
 
     testCompile(kotlin("reflect"))
-    testCompile(jodaTime("joda-time"))
+    testCompile("joda-time:joda-time:$jodaTimeVersion")
 }

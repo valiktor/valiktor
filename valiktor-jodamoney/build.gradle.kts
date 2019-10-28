@@ -1,9 +1,9 @@
-fun joda(module: String) = "org.joda:joda-$module:1.0.1"
+val jodaMoneyVersion = "1.0.1"
 
 dependencies {
     compile(project(":valiktor-core"))
-    compileOnly(joda("money"))
+    compileOnly("org.joda:joda-money:$jodaMoneyVersion")
 
     testCompile(kotlin("reflect"))
-    testCompile(joda("money"))
+    testCompile("org.joda:joda-money:$jodaMoneyVersion")
 }

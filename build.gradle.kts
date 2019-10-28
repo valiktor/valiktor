@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.3.31"
+    kotlin("jvm") version "1.3.50"
     id("jacoco")
     id("signing")
     id("maven-publish")
@@ -14,8 +14,8 @@ repositories {
 }
 
 subprojects {
-    fun assertj(module: String) = "org.assertj:assertj-$module:3.12.2"
-    fun junit5(module: String) = "org.junit.jupiter:junit-jupiter-$module:5.3.2"
+    val junitVersion = "5.3.2"
+    val assertjVersion = "3.12.2"
 
     apply {
         plugin("kotlin")
@@ -38,8 +38,8 @@ subprojects {
         compile(kotlin("stdlib"))
 
         testCompile(kotlin("test-junit5"))
-        testCompile(assertj("core"))
-        testRuntime(junit5("engine"))
+        testCompile("org.assertj:assertj-core:$assertjVersion")
+        testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     }
 
     testlogger {
