@@ -26,12 +26,14 @@ import org.valiktor.constraints.NotIn
 import org.valiktor.constraints.NotNull
 import org.valiktor.constraints.Null
 import org.valiktor.constraints.Valid
+import org.valiktor.constraints.IsUUID
 import org.valiktor.functions.AnyFunctionsFixture.Address
 import org.valiktor.functions.AnyFunctionsFixture.City
 import org.valiktor.functions.AnyFunctionsFixture.Company
 import org.valiktor.functions.AnyFunctionsFixture.Country
 import org.valiktor.functions.AnyFunctionsFixture.Employee
 import org.valiktor.functions.AnyFunctionsFixture.State
+import org.valiktor.functions.AnyFunctionsFixture.User
 import org.valiktor.validate
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -45,6 +47,7 @@ private object AnyFunctionsFixture {
     data class City(val id: Int? = null, val state: State? = null)
     data class State(val id: Int? = null, val country: Country? = null)
     data class Country(val id: Int? = null)
+    data class User(val id: String? = null)
 }
 
 class AnyFunctionsTest {
@@ -401,5 +404,26 @@ class AnyFunctionsTest {
                 }
             }
         }
+    }
+
+    @Test
+    fun `isUUID with uuid value should be valid`() {
+        validate(User(id = "b01951d9-fd75-4e0b-abc8-91ac78a361dc")) {
+            validate(User::id).isUUID()
+        }
+    }
+
+    @Test
+    fun `isUUID with value that is not uuid should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(User(id = "a3551f72")) {
+                validate(User::id).isUUID()
+            }
+        }
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(
+                property = "id",
+                value = "a3551f72",
+                constraint = IsUUID))
     }
 }

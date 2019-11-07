@@ -25,6 +25,7 @@ import org.valiktor.constraints.NotIn
 import org.valiktor.constraints.NotNull
 import org.valiktor.constraints.Null
 import org.valiktor.constraints.Valid
+import org.valiktor.constraints.IsUUID
 
 /**
  * Validates the property initializing another DSL function recursively
@@ -133,3 +134,12 @@ fun <E, T> Validator<E>.Property<T?>.isNotIn(values: Iterable<T>): Validator<E>.
  */
 fun <E, T> Validator<E>.Property<T?>.isValid(validator: (T) -> Boolean): Validator<E>.Property<T?> =
     this.validate(Valid) { it == null || validator(it) }
+
+/**
+ * Validates if the property value is a valid uui
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.isUUID(): Validator<E>.Property<String?> =
+    this.validate(IsUUID) { it == null || it.matches(Regex("^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$")) }

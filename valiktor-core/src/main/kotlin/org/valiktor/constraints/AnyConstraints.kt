@@ -90,3 +90,12 @@ data class NotIn<T>(val values: Iterable<T>) : Constraint
  * @since 0.1.0
  */
 object Valid : Constraint
+
+/**
+ * Represents a constraint that validate if the value is a valid uuid
+ *
+ * @author T. Costa
+ * @see Constraint
+ * @since 0.1.0
+ */
+object IsUUID : Constraint
