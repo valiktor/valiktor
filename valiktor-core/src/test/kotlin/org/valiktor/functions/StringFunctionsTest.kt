@@ -1464,7 +1464,7 @@ class StringFunctionsTest {
     }
 
     @Test
-    fun `isEmail with blank value should be invalid`() {
+    fun `isEmail with invalid value should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(email = "test.test")) {
                 validate(Employee::email).isEmail()
