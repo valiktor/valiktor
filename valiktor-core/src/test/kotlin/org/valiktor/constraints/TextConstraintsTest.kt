@@ -287,3 +287,17 @@ class EmailTest {
             entry(SupportedLocales.PT_BR, "Deve ser um endereço de e-mail válido"))
     }
 }
+
+class WebsiteTest {
+
+    @Test
+    fun `should validate messages`() {
+        assertThat(Website.interpolatedMessages()).containsExactly(
+            entry(SupportedLocales.DEFAULT, "Must be a valid website"),
+            entry(SupportedLocales.CA, "Ha de ser un lloc web vàlid"),
+            entry(SupportedLocales.DE, "Muss eine gültige Website sein"),
+            entry(SupportedLocales.EN, "Must be a valid website"),
+            entry(SupportedLocales.ES, "Tiene que ser un sitio web válido"),
+            entry(SupportedLocales.PT_BR, "Deve ser um website válido"))
+    }
+}

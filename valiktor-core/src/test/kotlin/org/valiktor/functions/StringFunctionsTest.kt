@@ -45,6 +45,7 @@ import org.valiktor.constraints.NotStartWith
 import org.valiktor.constraints.Null
 import org.valiktor.constraints.Size
 import org.valiktor.constraints.StartsWith
+import org.valiktor.constraints.Website
 import org.valiktor.functions.StringFunctionsFixture.Employee
 import org.valiktor.validate
 import kotlin.test.Test
@@ -52,7 +53,12 @@ import kotlin.test.assertFailsWith
 
 private object StringFunctionsFixture {
 
-    data class Employee(val name: String? = null, val email: String? = null, val username: String? = null)
+    data class Employee(
+        val name: String? = null,
+        val email: String? = null,
+        val username: String? = null,
+        val website: String? = null
+    )
 }
 
 class StringFunctionsTest {
@@ -1473,5 +1479,36 @@ class StringFunctionsTest {
 
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(property = "email", value = "test.test", constraint = Email))
+    }
+
+    @Test
+    fun `isWebsite with null value should be valid`() {
+        validate(Employee()) {
+            validate(Employee::website).isWebsite()
+        }
+    }
+
+    @Test
+    fun `isWebsite with valid value should be valid`() {
+        setOf("http://www.test.com",
+            "https://www.test.com",
+            "www.test.com",
+            "test.com").forEach {
+            validate(Employee(website = it)) {
+                validate(Employee::website).isWebsite()
+            }
+        }
+    }
+
+    @Test
+    fun `isWebsite with invalid value should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(website = "test.c")) {
+                validate(Employee::website).isWebsite()
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(property = "website", value = "test.c", constraint = Website))
     }
 }
