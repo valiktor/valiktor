@@ -212,3 +212,12 @@ data class NotEndWith(val suffix: String) : Constraint
  * @since 0.1.0
  */
 object Email : Constraint
+
+/**
+ * Represents a constraint that validate if the value is a valid website
+ *
+ * @author Roberto A. Neto
+ * @see Constraint
+ * @since 0.10.0
+ */
+object Website : Constraint

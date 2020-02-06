@@ -41,6 +41,7 @@ import org.valiktor.constraints.NotMatch
 import org.valiktor.constraints.NotStartWith
 import org.valiktor.constraints.Size
 import org.valiktor.constraints.StartsWith
+import org.valiktor.constraints.Website
 
 /**
  * Validates if the [String] property is empty
@@ -479,4 +480,16 @@ fun <E> Validator<E>.Property<String?>.isEmail(): Validator<E>.Property<String?>
     this.validate(Email) {
         it == null || it.matches(Regex(
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
+    }
+
+/**
+ * Validates if the [String] property value is a valid website
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.isWebsite(): Validator<E>.Property<String?> =
+    this.validate(Website) {
+        it == null || it.matches(Regex(
+            "^(https?:\\/\\/)?([a-zA-Z0-9]+(-?[a-zA-Z0-9])*\\.)+[\\w]{2,}(\\/\\S*)?\$"))
     }
