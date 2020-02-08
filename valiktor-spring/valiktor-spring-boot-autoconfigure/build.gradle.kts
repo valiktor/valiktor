@@ -2,7 +2,7 @@ plugins {
     kotlin("plugin.spring") version "1.3.61"
 }
 
-val springBootVersion = "2.2.0.RELEASE"
+val springBootVersion = "2.2.4.RELEASE"
 val jacksonVersion = "2.10.0"
 
 dependencies {
