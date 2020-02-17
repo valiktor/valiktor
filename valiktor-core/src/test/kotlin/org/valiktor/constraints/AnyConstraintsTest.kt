@@ -119,3 +119,17 @@ class ValidTest {
             entry(SupportedLocales.PT_BR, "Deve ser válido"))
     }
 }
+
+class IsUUIDTest {
+
+    @Test
+    fun `should validate messages`() {
+        assertThat(IsUUID.interpolatedMessages()).containsExactly(
+            entry(SupportedLocales.DEFAULT, "Not a valid identifier (uuid)"),
+            entry(SupportedLocales.CA, "No és un identificador vàlid (uuid)"),
+            entry(SupportedLocales.DE, "Kein gültiger Bezeichner (uuid)"),
+            entry(SupportedLocales.EN, "Not a valid identifier (uuid)"),
+            entry(SupportedLocales.ES, "No es un identificador válido (uuid)"),
+            entry(SupportedLocales.PT_BR, "Não é um identificador (uuid) válido"))
+    }
+}
