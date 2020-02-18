@@ -110,7 +110,7 @@ open class Validator<E>(private val obj: E) {
          */
         fun validate(constraint: (T?) -> Constraint, isValid: (T?) -> Boolean): Property<T> {
             val value = this.property.get(obj)
-            if (this@Validator.constraintViolations.none { it.property == this.property.name } && !isValid(value)) {
+            if (!isValid(value)) {
                 this@Validator.constraintViolations += DefaultConstraintViolation(this.property.name, value, constraint(value))
             }
             return this
