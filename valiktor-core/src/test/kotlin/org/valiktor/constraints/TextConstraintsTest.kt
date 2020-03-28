@@ -32,6 +32,7 @@ class BlankTest {
             entry(SupportedLocales.DE, "Muss blank sein"),
             entry(SupportedLocales.EN, "Must be blank"),
             entry(SupportedLocales.ES, "Tiene que estar vacío"),
+            entry(SupportedLocales.JA, "空文字である必要があります"),
             entry(SupportedLocales.PT_BR, "Deve estar em branco"))
     }
 }
@@ -46,6 +47,7 @@ class NotBlankTest {
             entry(SupportedLocales.DE, "Darf nicht blank sein"),
             entry(SupportedLocales.EN, "Must not be blank"),
             entry(SupportedLocales.ES, "No puede estar vacío"),
+            entry(SupportedLocales.JA, "空文字以外である必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve estar em branco"))
     }
 }
@@ -60,6 +62,7 @@ class LetterTest {
             entry(SupportedLocales.DE, "Muss ein Buchstabe sein"),
             entry(SupportedLocales.EN, "Must be letter"),
             entry(SupportedLocales.ES, "Tiene que ser letra"),
+            entry(SupportedLocales.JA, "文字を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser letra"))
     }
 }
@@ -74,6 +77,7 @@ class NotLetterTest {
             entry(SupportedLocales.DE, "Darf kein Buchstabe sein"),
             entry(SupportedLocales.EN, "Must not be letter"),
             entry(SupportedLocales.ES, "No puede ser letra"),
+            entry(SupportedLocales.JA, "文字以外を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve ser letra"))
     }
 }
@@ -88,6 +92,7 @@ class DigitTest {
             entry(SupportedLocales.DE, "Muss eine Ziffer sein"),
             entry(SupportedLocales.EN, "Must be digit"),
             entry(SupportedLocales.ES, "Tiene que ser número"),
+            entry(SupportedLocales.JA, "数字を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser número"))
     }
 }
@@ -102,6 +107,7 @@ class NotDigitTest {
             entry(SupportedLocales.DE, "Darf keine Ziffer sein"),
             entry(SupportedLocales.EN, "Must not be digit"),
             entry(SupportedLocales.ES, "No puede ser número"),
+            entry(SupportedLocales.JA, "数字以外を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve ser número"))
     }
 }
@@ -116,6 +122,7 @@ class LetterOrDigitTest {
             entry(SupportedLocales.DE, "Muss Buchstabe oder Ziffer sein"),
             entry(SupportedLocales.EN, "Must be letter or digit"),
             entry(SupportedLocales.ES, "Tiene que ser letra o número"),
+            entry(SupportedLocales.JA, "文字や数字を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser letra ou número"))
     }
 }
@@ -130,6 +137,7 @@ class NotLetterOrDigitTest {
             entry(SupportedLocales.DE, "Darf weder Buchstabe noch Ziffer sein"),
             entry(SupportedLocales.EN, "Must not be letter or digit"),
             entry(SupportedLocales.ES, "No puede ser letra o número"),
+            entry(SupportedLocales.JA, "文字や数字以外を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve ser letra ou número"))
     }
 }
@@ -144,6 +152,7 @@ class UpperCaseTest {
             entry(SupportedLocales.DE, "Muss in Großbuchstaben sein"),
             entry(SupportedLocales.EN, "Must be upper case"),
             entry(SupportedLocales.ES, "Tiene que ser mayúsculo"),
+            entry(SupportedLocales.JA, "大文字で指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser maiúsculo"))
     }
 }
@@ -158,6 +167,7 @@ class LowerCaseTest {
             entry(SupportedLocales.DE, "Muss in Kleinbuchstaben sein"),
             entry(SupportedLocales.EN, "Must be lower case"),
             entry(SupportedLocales.ES, "No puede ser minúsculo"),
+            entry(SupportedLocales.JA, "小文字で指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser minúsculo"))
     }
 }
@@ -172,6 +182,7 @@ class MatchesTest {
             entry(SupportedLocales.DE, "Muss mit ^[0-9]*\$ übereinstimmen"),
             entry(SupportedLocales.EN, "Must match ^[0-9]*\$"),
             entry(SupportedLocales.ES, "Tiene que corresponder a la expresión regular ^[0-9]*\$"),
+            entry(SupportedLocales.JA, "^[0-9]*\$ と一致する文字を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Deve corresponder ao padrão ^[0-9]*\$"))
     }
 }
@@ -186,6 +197,7 @@ class NotMatchTest {
             entry(SupportedLocales.DE, "Darf nicht mit ^[0-9]*\$ übereinstimmen"),
             entry(SupportedLocales.EN, "Must not match ^[0-9]*\$"),
             entry(SupportedLocales.ES, "No puede corresponder la expresión regular ^[0-9]*\$"),
+            entry(SupportedLocales.JA, "^[0-9]*\$ と一致しない文字を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve corresponder ao padrão ^[0-9]*\$"))
     }
 }
@@ -200,6 +212,7 @@ class ContainsRegexTest {
             entry(SupportedLocales.DE, "Muss das Muster ^[0-9]*\$ enthalten"),
             entry(SupportedLocales.EN, "Must contain the pattern ^[0-9]*\$"),
             entry(SupportedLocales.ES, "Tiene que contener la expresión regular ^[0-9]*\$"),
+            entry(SupportedLocales.JA, "^[0-9]*\$ を含む文字を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Deve conter o padrão ^[0-9]*\$"))
     }
 }
@@ -214,6 +227,7 @@ class NotContainRegexTest {
             entry(SupportedLocales.DE, "Darf das Muster ^[0-9]*\$ nicht enthalten"),
             entry(SupportedLocales.EN, "Must not contain the pattern ^[0-9]*\$"),
             entry(SupportedLocales.ES, "No puede contener la expresión regular ^[0-9]*\$"),
+            entry(SupportedLocales.JA, "^[0-9]*\$ を含まない文字を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve conter o padrão ^[0-9]*\$"))
     }
 }
@@ -228,6 +242,7 @@ class StartsWithTest {
             entry(SupportedLocales.DE, "Muss mit test beginnen"),
             entry(SupportedLocales.EN, "Must start with test"),
             entry(SupportedLocales.ES, "Tiene que comenzar con test"),
+            entry(SupportedLocales.JA, "test から始まる文字を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Deve começar com test"))
     }
 }
@@ -242,6 +257,7 @@ class NotStartWithTest {
             entry(SupportedLocales.DE, "Darf nicht mit test beginnen"),
             entry(SupportedLocales.EN, "Must not start with test"),
             entry(SupportedLocales.ES, "No puede comenzar con test"),
+            entry(SupportedLocales.JA, "test 以外から始まる文字を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve começar com test"))
     }
 }
@@ -256,6 +272,7 @@ class EndsWithTest {
             entry(SupportedLocales.DE, "Muss mit test enden"),
             entry(SupportedLocales.EN, "Must end with test"),
             entry(SupportedLocales.ES, "Tiene que terminar con test"),
+            entry(SupportedLocales.JA, "test で終わる文字を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Deve terminar com test"))
     }
 }
@@ -270,6 +287,7 @@ class NotEndWithTest {
             entry(SupportedLocales.DE, "Darf nicht mit test enden"),
             entry(SupportedLocales.EN, "Must not end with test"),
             entry(SupportedLocales.ES, "No puede terminar con test"),
+            entry(SupportedLocales.JA, "test 以外で終わる文字を指定する必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve terminar com test"))
     }
 }
@@ -284,6 +302,7 @@ class EmailTest {
             entry(SupportedLocales.DE, "Muss eine gültige E-Mail-Adresse sein"),
             entry(SupportedLocales.EN, "Must be a valid email address"),
             entry(SupportedLocales.ES, "Tiene que ser una dirección de e-mail válida"),
+            entry(SupportedLocales.JA, "有効なメールアドレス形式である必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser um endereço de e-mail válido"))
     }
 }
@@ -298,6 +317,7 @@ class WebsiteTest {
             entry(SupportedLocales.DE, "Muss eine gültige Website sein"),
             entry(SupportedLocales.EN, "Must be a valid website"),
             entry(SupportedLocales.ES, "Tiene que ser un sitio web válido"),
+            entry(SupportedLocales.JA, "有効なウェブサイト形式である必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser um website válido"))
     }
 }

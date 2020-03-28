@@ -36,6 +36,7 @@ class CurrencyEqualsTest {
             entry(SupportedLocales.DE, "Die Währungseinheit muss gleich BRL sein"),
             entry(SupportedLocales.EN, "Currency unit must be equal to BRL"),
             entry(SupportedLocales.ES, "La unidad monetaria tiene que ser igual a BRL"),
+            entry(SupportedLocales.JA, "BRL 通貨単位と同じである必要があります"),
             entry(SupportedLocales.PT_BR, "A unidade monetária deve ser igual a BRL"))
     }
 }
@@ -50,6 +51,7 @@ class CurrencyNotEqualsTest {
             entry(SupportedLocales.DE, "Die Währungseinheit darf nicht gleich BRL sein"),
             entry(SupportedLocales.EN, "Currency unit must not be equal to BRL"),
             entry(SupportedLocales.ES, "La unidad monetaria no pueder ser igual a BRL"),
+            entry(SupportedLocales.JA, "BRL 通貨単位以外である必要があります"),
             entry(SupportedLocales.PT_BR, "A unidade monetária não deve ser igual a BRL"))
     }
 }
@@ -64,6 +66,7 @@ class CurrencyInTest {
             entry(SupportedLocales.DE, "Die Währungseinheit muss in BRL, USD sein"),
             entry(SupportedLocales.EN, "Currency unit must be in BRL, USD"),
             entry(SupportedLocales.ES, "La unidad monetaria tiene que ser una de esas: BRL, USD"),
+            entry(SupportedLocales.JA, "BRL, USD 通貨単位が含まれている必要があります"),
             entry(SupportedLocales.PT_BR, "A unidade monetária deve ser uma dessas: BRL, USD"))
     }
 }
@@ -78,6 +81,7 @@ class CurrencyNotInTest {
             entry(SupportedLocales.DE, "Die Währungseinheit darf nicht in BRL, USD sein"),
             entry(SupportedLocales.EN, "Currency unit must not be in BRL, USD"),
             entry(SupportedLocales.ES, "La unidad monetaria no pueder ser una de esas: BRL, USD"),
+            entry(SupportedLocales.JA, "BRL, USD 通貨単位以外が含まれている必要があります"),
             entry(SupportedLocales.PT_BR, "A unidade monetária não deve ser uma dessas: BRL, USD"))
     }
 }
