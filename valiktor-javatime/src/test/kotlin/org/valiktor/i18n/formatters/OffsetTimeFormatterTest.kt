@@ -34,6 +34,7 @@ class OffsetTimeFormatterTest {
             entry(SupportedLocales.DEFAULT, "11:58:59 PM"),
             entry(SupportedLocales.DE, "23:58:59"),
             entry(SupportedLocales.EN, "11:58:59 PM"),
+            entry(SupportedLocales.JA, "23:58:59"),
             entry(SupportedLocales.PT_BR, "23:58:59"))
     }
 }

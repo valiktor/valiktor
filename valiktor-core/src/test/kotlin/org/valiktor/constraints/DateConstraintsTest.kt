@@ -32,6 +32,7 @@ class TodayTest {
             entry(SupportedLocales.DE, "Muss heute sein"),
             entry(SupportedLocales.EN, "Must be today"),
             entry(SupportedLocales.ES, "Tiene que ser hoy"),
+            entry(SupportedLocales.JA, "今日である必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser hoje"))
     }
 }
@@ -46,6 +47,7 @@ class NotTodayTest {
             entry(SupportedLocales.DE, "Darf nicht heute sein"),
             entry(SupportedLocales.EN, "Must not be today"),
             entry(SupportedLocales.ES, "No puede ser hoy"),
+            entry(SupportedLocales.JA, "今日以外である必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve ser hoje"))
     }
 }

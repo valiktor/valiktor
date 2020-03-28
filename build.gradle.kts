@@ -63,11 +63,25 @@ subprojects {
             }
         }
 
+        processResources {
+            filteringCharset = "UTF-8"
+            filesMatching("**/*.properties") {
+                filter(org.apache.tools.ant.filters.EscapeUnicode::class)
+            }
+        }
+
         test {
             useJUnitPlatform()
 
             // fix for JDK > 8 (see http://openjdk.java.net/jeps/252)
             systemProperty("java.locale.providers", "JRE,SPI")
+        }
+
+        processTestResources {
+            filteringCharset = "UTF-8"
+            filesMatching("**/*.properties") {
+                filter(org.apache.tools.ant.filters.EscapeUnicode::class)
+            }
         }
 
         dokka {

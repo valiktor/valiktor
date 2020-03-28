@@ -32,6 +32,7 @@ class NullTest {
             entry(SupportedLocales.DE, "Muss vorhanden sein"),
             entry(SupportedLocales.EN, "Must be null"),
             entry(SupportedLocales.ES, "Tiene que ser nulo"),
+            entry(SupportedLocales.JA, "null である必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser nulo"))
     }
 }
@@ -46,6 +47,7 @@ class NotNullTest {
             entry(SupportedLocales.DE, "Darf nicht vorhanden sein"),
             entry(SupportedLocales.EN, "Must not be null"),
             entry(SupportedLocales.ES, "No puede ser nulo"),
+            entry(SupportedLocales.JA, "null 以外である必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve ser nulo"))
     }
 }
@@ -60,6 +62,7 @@ class EqualsTest {
             entry(SupportedLocales.DE, "Muss gleich 1 sein"),
             entry(SupportedLocales.EN, "Must be equal to 1"),
             entry(SupportedLocales.ES, "Tiene que ser igual a 1"),
+            entry(SupportedLocales.JA, "1 と同じ値である必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser igual a 1"))
     }
 }
@@ -74,6 +77,7 @@ class NotEqualsTest {
             entry(SupportedLocales.DE, "Darf nicht gleich 1 sein"),
             entry(SupportedLocales.EN, "Must not be equal to 1"),
             entry(SupportedLocales.ES, "No puede ser igual a 1"),
+            entry(SupportedLocales.JA, "1 以外の値である必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve ser igual a 1"))
     }
 }
@@ -88,6 +92,7 @@ class InTest {
             entry(SupportedLocales.DE, "Muss in 1, 2, 3 sein"),
             entry(SupportedLocales.EN, "Must be in 1, 2, 3"),
             entry(SupportedLocales.ES, "Tiene que ser uno de eses: 1, 2, 3"),
+            entry(SupportedLocales.JA, "1, 2, 3 に含まれている必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser um desses: 1, 2, 3"))
     }
 }
@@ -102,6 +107,7 @@ class NotInTest {
             entry(SupportedLocales.DE, "Darf nicht in 1, 2, 3 sein"),
             entry(SupportedLocales.EN, "Must not be in 1, 2, 3"),
             entry(SupportedLocales.ES, "No puede ser uno de eses: 1, 2, 3"),
+            entry(SupportedLocales.JA, "1, 2, 3 以外である必要があります"),
             entry(SupportedLocales.PT_BR, "Não deve ser um desses: 1, 2, 3"))
     }
 }
@@ -116,6 +122,7 @@ class ValidTest {
             entry(SupportedLocales.DE, "Muss gültig sein"),
             entry(SupportedLocales.EN, "Must be valid"),
             entry(SupportedLocales.ES, "Tiene que ser válido"),
+            entry(SupportedLocales.JA, "有効である必要があります"),
             entry(SupportedLocales.PT_BR, "Deve ser válido"))
     }
 }
