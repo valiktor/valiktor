@@ -225,6 +225,7 @@ Currently the following locales are natively supported by Valiktor:
 * `de` (German)
 * `en` (English)
 * `es` (Spanish)
+* `ja` (Japanese)
 * `pt_BR` (Portuguese/Brazil)
 
 #### Customizing a message
