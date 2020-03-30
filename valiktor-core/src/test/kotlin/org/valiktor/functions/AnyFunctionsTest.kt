@@ -366,17 +366,19 @@ class AnyFunctionsTest {
     }
 
     @Test
-    fun `should not repeat the property`() {
+    fun `should contains two constraint violations for same property`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee()) {
+            validate(Employee(id = 0)) {
                 validate(Employee::id).isNotNull().isEqualTo(1).isIn(1, 2, 3)
                 validate(Employee::name).isNotNull().isEqualTo("test").isIn("test1", "test2", "test3")
             }
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", constraint = NotNull),
-            DefaultConstraintViolation(property = "name", constraint = NotNull))
+            DefaultConstraintViolation(property = "id", value = 0, constraint = Equals(1)),
+            DefaultConstraintViolation(property = "id", value = 0, constraint = In(setOf(1, 2, 3))),
+            DefaultConstraintViolation(property = "name", constraint = NotNull)
+        )
     }
 
     @Test
