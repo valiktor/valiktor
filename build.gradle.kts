@@ -1,10 +1,10 @@
 plugins {
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version "1.3.71"
     id("jacoco")
     id("signing")
     id("maven-publish")
-    id("org.jetbrains.dokka") version "0.10.0"
-    id("org.jmailen.kotlinter") version "2.1.2"
+    id("org.jetbrains.dokka") version "0.10.1"
+    id("org.jmailen.kotlinter") version "2.3.2"
     id("com.adarshr.test-logger") version "2.0.0"
 }
 
@@ -15,7 +15,7 @@ repositories {
 
 subprojects {
     val junitVersion = "5.5.2"
-    val assertjVersion = "3.13.2"
+    val assertjVersion = "3.15.0"
 
     apply {
         plugin("kotlin")

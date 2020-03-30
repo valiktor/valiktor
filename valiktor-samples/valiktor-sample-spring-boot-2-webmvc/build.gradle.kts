@@ -1,6 +1,6 @@
 plugins {
-    kotlin("plugin.spring") version "1.3.61"
-    id("org.springframework.boot") version "2.2.4.RELEASE"
+    kotlin("plugin.spring") version "1.3.71"
+    id("org.springframework.boot") version "2.2.6.RELEASE"
 }
 
 apply {
