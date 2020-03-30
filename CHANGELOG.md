@@ -1,3 +1,16 @@
+# 0.10.0
+> Published 30 Mar 2020
+
+#### Features:
+
+* [#30](https://github.com/valiktor/valiktor/pull/30) Added a new constraint to validate website URLs 
+* [#36](https://github.com/valiktor/valiktor/pull/36) Added japanese messages
+
+#### Improvements:
+
+* [#33](https://github.com/valiktor/valiktor/pull/33) Removed the rule that does not allow more than 1 constraint per property
+* [#37](https://github.com/valiktor/valiktor/pull/37) Upgraded to Kotlin 1.3.71
+
 # 0.9.0
 > Published 28 Oct 2019
 
