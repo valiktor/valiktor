@@ -1,5 +1,7 @@
 # :scroll: Changelog
 
+All Valiktor releases
+
 ## :rocket: 0.10.0
 > Published 30 Mar 2020
 
