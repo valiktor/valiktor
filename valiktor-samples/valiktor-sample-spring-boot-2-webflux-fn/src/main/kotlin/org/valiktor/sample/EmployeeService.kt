@@ -30,7 +30,6 @@ import org.valiktor.functions.isNotBlank
 import org.valiktor.functions.validate
 import org.valiktor.functions.validateForEach
 import org.valiktor.validate
-import reactor.core.publisher.Mono
 import java.time.LocalDate
 import java.time.Month
 import javax.money.Monetary
@@ -38,26 +37,25 @@ import javax.money.Monetary
 @Service
 class EmployeeService {
 
-    fun create(employee: Employee): Mono<Employee> =
-        Mono.just(
-            validate(employee) {
-                validate(Employee::documentNumber).isDocumentNumber()
-                validate(Employee::name).hasSize(min = 3, max = 100)
-                validate(Employee::email).isNotBlank().isEmail()
-                validate(Employee::dateOfBirth).isGreaterThan(LocalDate.of(1950, Month.JANUARY, 1))
-                validate(Employee::salary).hasDecimalDigits(max = 2).hasCurrencyEqualTo(Monetary.getCurrency("USD"))
+    suspend fun create(employee: Employee) {
+        validate(employee) {
+            validate(Employee::documentNumber).isDocumentNumber()
+            validate(Employee::name).hasSize(min = 3, max = 100)
+            validate(Employee::email).isNotBlank().isEmail()
+            validate(Employee::dateOfBirth).isGreaterThan(LocalDate.of(1950, Month.JANUARY, 1))
+            validate(Employee::salary).hasDecimalDigits(max = 2).hasCurrencyEqualTo(Monetary.getCurrency("USD"))
 
-                validate(Employee::company).validate {
-                    validate(Company::name).hasSize(min = 3, max = 50)
-                    validate(Company::foundationDate).isLessThan(LocalDate.now().minusYears(1))
-                }
-
-                validate(Employee::dependents).validateForEach {
-                    validate(Dependent::name).hasSize(min = 3, max = 50)
-                    validate(Dependent::age).isBetween(start = 1, end = 18)
-                }
+            validate(Employee::company).validate {
+                validate(Company::name).hasSize(min = 3, max = 50)
+                validate(Company::foundationDate).isLessThan(LocalDate.now().minusYears(1))
             }
-        )
+
+            validate(Employee::dependents).validateForEach {
+                validate(Dependent::name).hasSize(min = 3, max = 50)
+                validate(Dependent::age).isBetween(start = 1, end = 18)
+            }
+        }
+    }
 }
 
 // custom validation constraint
