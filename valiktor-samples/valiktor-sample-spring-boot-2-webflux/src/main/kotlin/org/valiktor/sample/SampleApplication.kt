@@ -16,7 +16,6 @@
 
 package org.valiktor.sample
 
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
@@ -24,9 +23,6 @@ import org.zalando.jackson.datatype.money.MoneyModule
 
 @SpringBootApplication
 class SampleApplication {
-
-    @Bean
-    fun kotlinModule() = KotlinModule()
 
     @Bean
     fun moneyModule() = MoneyModule()

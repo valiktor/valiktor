@@ -20,14 +20,15 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.ServerResponse.created
-import org.springframework.web.reactive.function.server.bodyToMono
-import reactor.core.publisher.Mono
+import org.springframework.web.reactive.function.server.awaitBody
+import org.springframework.web.reactive.function.server.buildAndAwait
 
 @Component
-class EmployeeHandler(val service: EmployeeService) {
+class EmployeeHandler(private val service: EmployeeService) {
 
-    fun create(req: ServerRequest): Mono<ServerResponse> =
-        req.bodyToMono<Employee>()
-            .flatMap { service.create(it) }
-            .flatMap { created(req.uriBuilder().path("/{id}").build(it.documentNumber)).build() }
+    suspend fun create(req: ServerRequest): ServerResponse {
+        val employee = req.awaitBody<Employee>()
+        service.create(employee)
+        return created(req.uriBuilder().path("/{id}").build(employee.documentNumber)).buildAndAwait()
+    }
 }

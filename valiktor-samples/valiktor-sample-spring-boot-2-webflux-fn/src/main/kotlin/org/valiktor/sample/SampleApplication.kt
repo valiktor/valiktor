@@ -16,25 +16,21 @@
 
 package org.valiktor.sample
 
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.http.MediaType.APPLICATION_JSON
-import org.springframework.web.reactive.function.server.router
+import org.springframework.web.reactive.function.server.coRouter
 import org.zalando.jackson.datatype.money.MoneyModule
 
 @SpringBootApplication
 class SampleApplication {
 
     @Bean
-    fun kotlinModule() = KotlinModule()
-
-    @Bean
     fun moneyModule() = MoneyModule()
 
     @Bean
-    fun router(handler: EmployeeHandler) = router {
+    fun router(handler: EmployeeHandler) = coRouter {
         accept(APPLICATION_JSON).nest {
             "/employees".nest {
                 POST("/", handler::create)

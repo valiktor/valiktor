@@ -25,15 +25,14 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.util.UriComponentsBuilder.fromHttpRequest
-import reactor.core.publisher.Mono
 
 @RestController
 @RequestMapping("/employees")
-class EmployeeController(val service: EmployeeService) {
+class EmployeeController(private val service: EmployeeService) {
 
     @PostMapping(consumes = [APPLICATION_JSON_VALUE])
-    fun create(req: ServerHttpRequest, @RequestBody employee: Mono<Employee>): Mono<ResponseEntity<Void>> =
-        employee
-            .flatMap { service.create(it) }
-            .map { created(fromHttpRequest(req).path("/{id}").build(it.documentNumber)).build<Void>() }
+    suspend fun create(req: ServerHttpRequest, @RequestBody employee: Employee): ResponseEntity<Void> {
+        service.create(employee)
+        return created(fromHttpRequest(req).path("/{id}").build(employee.documentNumber)).build()
+    }
 }
