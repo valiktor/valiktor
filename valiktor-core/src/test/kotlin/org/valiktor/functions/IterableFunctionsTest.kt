@@ -16,9 +16,13 @@
 
 package org.valiktor.functions
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
+import org.valiktor.Validator
 import org.valiktor.constraints.Contains
 import org.valiktor.constraints.ContainsAll
 import org.valiktor.constraints.ContainsAny
@@ -34,6 +38,7 @@ import org.valiktor.constraints.NotIn
 import org.valiktor.constraints.NotNull
 import org.valiktor.constraints.Null
 import org.valiktor.constraints.Size
+import org.valiktor.constraints.Valid
 import org.valiktor.functions.IterableFunctionsFixture.Address
 import org.valiktor.functions.IterableFunctionsFixture.City
 import org.valiktor.functions.IterableFunctionsFixture.Company
@@ -51,6 +56,7 @@ private object IterableFunctionsFixture {
     data class City(val id: Int? = null)
 }
 
+@ExperimentalCoroutinesApi
 class IterableFunctionsTest {
 
     @Test
@@ -78,6 +84,24 @@ class IterableFunctionsTest {
                     validate(Address::id).isNotNull()
                     validate(Address::city).validate {
                         validate(City::id).isNotNull()
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `inner iterable properties should call suspending validation functions`() {
+        suspend fun Validator<Address>.Property<Int?>.isValidId() = this.coValidate(Valid) {
+            delay(10L)
+            it == null || it > 0
+        }
+
+        runBlockingTest {
+            validate(Employee(Company(addresses = listOf(Address(id = 1), Address(id = 1), Address(id = 1))))) {
+                validate(Employee::company).validate {
+                    validate(Company::addresses).validateForEach {
+                        validate(Address::id).isValidId()
                     }
                 }
             }
@@ -199,7 +223,9 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses", value = listOf(Address(id = 1), Address(id = 2)), constraint = Equals(listOf(Address(id = 1)))))
+            DefaultConstraintViolation(property = "addresses",
+                value = listOf(Address(id = 1), Address(id = 2)),
+                constraint = Equals(listOf(Address(id = 1)))))
     }
 
     @Test
@@ -224,7 +250,9 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses", value = listOf(Address(id = 1), Address(id = 2)), constraint = NotEquals(listOf(Address(id = 1), Address(id = 2)))))
+            DefaultConstraintViolation(property = "addresses",
+                value = listOf(Address(id = 1), Address(id = 2)),
+                constraint = NotEquals(listOf(Address(id = 1), Address(id = 2)))))
     }
 
     @Test
@@ -249,7 +277,9 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses", value = emptyList<Address>(), constraint = In(setOf(listOf(Address(id = 1))))))
+            DefaultConstraintViolation(property = "addresses",
+                value = emptyList<Address>(),
+                constraint = In(setOf(listOf(Address(id = 1))))))
     }
 
     @Test
@@ -274,7 +304,9 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses", value = emptyList<Address>(), constraint = In(listOf(listOf(Address(id = 1))))))
+            DefaultConstraintViolation(property = "addresses",
+                value = emptyList<Address>(),
+                constraint = In(listOf(listOf(Address(id = 1))))))
     }
 
     @Test
@@ -299,7 +331,9 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses", value = listOf(Address(id = 1)), constraint = NotIn(setOf(listOf(Address(id = 1))))))
+            DefaultConstraintViolation(property = "addresses",
+                value = listOf(Address(id = 1)),
+                constraint = NotIn(setOf(listOf(Address(id = 1))))))
     }
 
     @Test
@@ -324,7 +358,9 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses", value = listOf(Address(id = 1)), constraint = NotIn(listOf(listOf(Address(id = 1))))))
+            DefaultConstraintViolation(property = "addresses",
+                value = listOf(Address(id = 1)),
+                constraint = NotIn(listOf(listOf(Address(id = 1))))))
     }
 
     @Test

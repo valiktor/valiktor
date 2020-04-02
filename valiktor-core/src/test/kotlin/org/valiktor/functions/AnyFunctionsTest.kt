@@ -16,9 +16,13 @@
 
 package org.valiktor.functions
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
+import org.valiktor.Validator
 import org.valiktor.constraints.Equals
 import org.valiktor.constraints.In
 import org.valiktor.constraints.NotEquals
@@ -39,7 +43,13 @@ import kotlin.test.assertFailsWith
 
 private object AnyFunctionsFixture {
 
-    data class Employee(val id: Int? = null, val name: String? = null, val company: Company? = null, val address: Address? = null)
+    data class Employee(
+        val id: Int? = null,
+        val name: String? = null,
+        val company: Company? = null,
+        val address: Address? = null
+    )
+
     data class Company(val id: Int? = null)
     data class Address(val id: Int? = null, val city: City? = null)
     data class City(val id: Int? = null, val state: State? = null)
@@ -47,6 +57,7 @@ private object AnyFunctionsFixture {
     data class Country(val id: Int? = null)
 }
 
+@ExperimentalCoroutinesApi
 class AnyFunctionsTest {
 
     @Test
@@ -283,7 +294,93 @@ class AnyFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 2),
-                constraint = Valid))
+                constraint = Valid)
+        )
+    }
+
+    @Test
+    fun `isCoValid with null property should be valid`() {
+        suspend fun isValidCompany(company: Company): Boolean {
+            delay(10L)
+            return company == Company(id = 1)
+        }
+
+        runBlockingTest {
+            validate(Employee()) {
+                validate(Employee::company).isCoValid { isValidCompany(it) }
+            }
+        }
+    }
+
+    @Test
+    fun `isCoValid with same value should be valid`() {
+        suspend fun isValidCompany(company: Company): Boolean {
+            delay(10L)
+            return company == Company(id = 1)
+        }
+
+        runBlockingTest {
+            validate(Employee(company = Company(id = 1))) {
+                validate(Employee::company).isCoValid { isValidCompany(it) }
+            }
+        }
+    }
+
+    @Test
+    fun `isCoValid with different value should be invalid`() {
+        suspend fun isValidCompany(company: Company): Boolean {
+            delay(10L)
+            return company == Company(id = 1)
+        }
+
+        runBlockingTest {
+            val exception = assertFailsWith<ConstraintViolationException> {
+                validate(Employee(company = Company(id = 2))) {
+                    validate(Employee::company).isCoValid { isValidCompany(it) }
+                }
+            }
+            assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                    property = "company",
+                    value = Company(id = 2),
+                    constraint = Valid
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `should call suspending validation functions`() {
+        suspend fun Validator<Employee>.Property<Company?>.isValidCompany() = this.coValidate(Valid) {
+            delay(10L)
+            it == null || (it.id ?: 0) > 0
+        }
+
+        runBlockingTest {
+            validate(Employee(company = Company(id = 1))) {
+                validate(Employee::company).isValidCompany()
+            }
+        }
+    }
+
+    @Test
+    fun `inner properties should call suspending validation functions`() {
+        suspend fun Validator<State>.Property<Country?>.isValidCountry() = this.coValidate(Valid) {
+            delay(10L)
+            it == null || (it.id ?: 0) > 0
+        }
+
+        runBlockingTest {
+            validate(Employee(address = Address(city = City(state = State(country = Country(id = 1)))))) {
+                validate(Employee::address).validate {
+                    validate(Address::city).validate {
+                        validate(City::state).validate {
+                            validate(State::country).isValidCountry()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Test
