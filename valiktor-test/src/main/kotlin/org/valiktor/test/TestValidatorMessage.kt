@@ -20,7 +20,7 @@ import org.valiktor.Constraint
 import org.valiktor.ConstraintViolation
 import java.lang.System.lineSeparator
 
-internal fun message(expectedConstraintViolations: Set<ConstraintViolation>, constraintViolations: Set<ConstraintViolation>) =
+fun message(expectedConstraintViolations: Set<ConstraintViolation>, constraintViolations: Set<ConstraintViolation>) =
     "Expected:${lineSeparator()}${lineSeparator()}${expectedConstraintViolations.toTestString()}${lineSeparator()}${lineSeparator()}" +
         "but was:${lineSeparator()}${lineSeparator()}${constraintViolations.toTestString()}${lineSeparator()}"
 

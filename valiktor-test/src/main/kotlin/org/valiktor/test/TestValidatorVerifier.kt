@@ -32,8 +32,7 @@ import kotlin.reflect.KProperty1
  */
 class TestValidatorVerifier<E> {
 
-    private val _expectedConstraintViolations = mutableSetOf<ConstraintViolation>()
-    internal val expectedConstraintViolations: Set<ConstraintViolation> get() = _expectedConstraintViolations
+    val expectedConstraintViolations = mutableSetOf<ConstraintViolation>()
 
     /**
      * Expect a constraint violation with [property], [value] and [constraint]
@@ -43,7 +42,7 @@ class TestValidatorVerifier<E> {
      * @param constraint specifies the violated constraint
      */
     fun <T> expect(property: KProperty1<E, T?>, value: Any?, constraint: Constraint) {
-        _expectedConstraintViolations += TestConstraintViolation(
+        expectedConstraintViolations += TestConstraintViolation(
             property = property.name,
             value = value,
             constraint = constraint
@@ -56,8 +55,8 @@ class TestValidatorVerifier<E> {
      * @param property specifies the invalid property
      * @param block specifies the DSL to verify nested properties
      */
-    fun <T> expect(property: KProperty1<E, T?>, block: TestValidatorVerifier<T>.() -> Unit) {
-        _expectedConstraintViolations += TestValidatorVerifier<T>().apply(block).expectedConstraintViolations
+    inline fun <T> expect(property: KProperty1<E, T?>, block: TestValidatorVerifier<T>.() -> Unit) {
+        expectedConstraintViolations += TestValidatorVerifier<T>().apply(block).expectedConstraintViolations
             .map {
                 TestConstraintViolation(
                     property = "${property.name}.${it.property}",
@@ -74,8 +73,11 @@ class TestValidatorVerifier<E> {
      * @param block specifies the DSL to verify iterable elements
      */
     @JvmName("expectAllIterable")
-    fun <T> expectAll(property: KProperty1<E, Iterable<T>?>, block: TestValidatorCollectionVerifier<T>.() -> Unit) {
-        _expectedConstraintViolations += TestValidatorCollectionVerifier<T>().apply(block).expectedConstraintViolations
+    inline fun <T> expectAll(
+        property: KProperty1<E, Iterable<T>?>,
+        block: TestValidatorCollectionVerifier<T>.() -> Unit
+    ) {
+        expectedConstraintViolations += TestValidatorCollectionVerifier<T>().apply(block).expectedConstraintViolations
             .toList()
             .flatMap { pair ->
                 pair.second.map {
@@ -95,8 +97,8 @@ class TestValidatorVerifier<E> {
      * @param block specifies the DSL to verify array elements
      */
     @JvmName("expectAllArray")
-    fun <T> expectAll(property: KProperty1<E, Array<T>?>, block: TestValidatorCollectionVerifier<T>.() -> Unit) {
-        _expectedConstraintViolations += TestValidatorCollectionVerifier<T>().apply(block).expectedConstraintViolations
+    inline fun <T> expectAll(property: KProperty1<E, Array<T>?>, block: TestValidatorCollectionVerifier<T>.() -> Unit) {
+        expectedConstraintViolations += TestValidatorCollectionVerifier<T>().apply(block).expectedConstraintViolations
             .toList()
             .flatMap { pair ->
                 pair.second.map {

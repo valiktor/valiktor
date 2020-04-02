@@ -16,6 +16,9 @@
 
 package org.valiktor.test
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.runBlockingTest
 import org.opentest4j.AssertionFailedError
 import org.valiktor.constraints.Between
 import org.valiktor.constraints.Email
@@ -36,6 +39,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
+@ExperimentalCoroutinesApi
 class TestValidatorTest {
 
     @Test
@@ -48,9 +52,39 @@ class TestValidatorTest {
     }
 
     @Test
+    fun `should not fail validation with suspending function`() {
+        suspend fun validEmployee(): Employee {
+            delay(10L)
+            return TestValidatorTestFixture.validEmployee()
+        }
+
+        runBlockingTest {
+            assertFailsWith<AssertionFailedError> {
+                shouldFailValidation<Employee> {
+                    validEmployee()
+                }
+            }
+        }
+    }
+
+    @Test
     fun `should fail validation`() {
         shouldFailValidation<Employee> {
             TestValidatorTestFixture.invalidEmployee()
+        }
+    }
+
+    @Test
+    fun `should fail validation with suspending function`() {
+        suspend fun invalidEmployee(): Employee {
+            delay(10L)
+            return TestValidatorTestFixture.invalidEmployee()
+        }
+
+        runBlockingTest {
+            shouldFailValidation<Employee> {
+                invalidEmployee()
+            }
         }
     }
 
