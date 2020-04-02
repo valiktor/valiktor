@@ -356,7 +356,7 @@ fun <E> Validator<E>.Property<Int?>.isBetween(start: Int, end: Int) =
     this.validate(Between(start, end)) { it == null || it in start.rangeTo(end) }
 ```
 
-To support [suspending functions](#Coroutines support), you must use `coValidate` instead of `validate`:
+To support suspending functions, you must use `coValidate` instead of `validate`:
 
 ```kotlin
 suspend fun <E> Validator<E>.Property<Int?>.isBetween(start: Int, end: Int) = 
