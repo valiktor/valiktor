@@ -38,14 +38,19 @@ import org.valiktor.constraints.Size
  * @return the same receiver property
  */
 @JvmName("validateForEachIterable")
-fun <E, T> Validator<E>.Property<Iterable<T>?>.validateForEach(block: Validator<T>.(T) -> Unit): Validator<E>.Property<Iterable<T>?> {
-    this.property.get(obj)?.forEachIndexed { index, value ->
-        this.addConstraintViolations(Validator(value).apply { block(value) }.constraintViolations.map {
-            DefaultConstraintViolation(
-                property = "${this.property.name}[$index].${it.property}",
-                value = it.value,
-                constraint = it.constraint)
-        })
+inline fun <E, T> Validator<E>.Property<Iterable<T>?>.validateForEach(
+    block: Validator<T>.(T) -> Unit
+): Validator<E>.Property<Iterable<T>?> {
+    this.property.get(this.obj)?.forEachIndexed { index, value ->
+        this.addConstraintViolations(
+            Validator(value).apply { block(value) }.constraintViolations.map {
+                DefaultConstraintViolation(
+                    property = "${this.property.name}[$index].${it.property}",
+                    value = it.value,
+                    constraint = it.constraint
+                )
+            }
+        )
     }
     return this
 }
@@ -58,14 +63,19 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.validateForEach(block: Validator<
  * @return the same receiver property
  */
 @JvmName("validateForEachIndexedIterable")
-fun <E, T> Validator<E>.Property<Iterable<T>?>.validateForEachIndexed(block: Validator<T>.(Int, T) -> Unit): Validator<E>.Property<Iterable<T>?> {
-    this.property.get(obj)?.forEachIndexed { index, value ->
-        this.addConstraintViolations(Validator(value).apply { block(index, value) }.constraintViolations.map {
-            DefaultConstraintViolation(
-                property = "${this.property.name}[$index].${it.property}",
-                value = it.value,
-                constraint = it.constraint)
-        })
+inline fun <E, T> Validator<E>.Property<Iterable<T>?>.validateForEachIndexed(
+    block: Validator<T>.(Int, T) -> Unit
+): Validator<E>.Property<Iterable<T>?> {
+    this.property.get(this.obj)?.forEachIndexed { index, value ->
+        this.addConstraintViolations(
+            Validator(value).apply { block(index, value) }.constraintViolations.map {
+                DefaultConstraintViolation(
+                    property = "${this.property.name}[$index].${it.property}",
+                    value = it.value,
+                    constraint = it.constraint
+                )
+            }
+        )
     }
     return this
 }
@@ -136,8 +146,10 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotEmpty(): Validator<E>.Proper
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.hasSize(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Iterable<T>?> =
-    this.validate(Size(min, max)) { it == null || it.count() in min.rangeTo(max) }
+fun <E, T> Validator<E>.Property<Iterable<T>?>.hasSize(
+    min: Int = Int.MIN_VALUE,
+    max: Int = Int.MAX_VALUE
+): Validator<E>.Property<Iterable<T>?> = this.validate(Size(min, max)) { it == null || it.count() in min.rangeTo(max) }
 
 /**
  * Validates if the [Iterable] property contains the value

@@ -33,15 +33,18 @@ import org.valiktor.constraints.Valid
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<T?>.validate(block: Validator<T>.(T) -> Unit): Validator<E>.Property<T?> {
-    val value = this.property.get(obj)
+inline fun <E, T> Validator<E>.Property<T?>.validate(block: Validator<T>.(T) -> Unit): Validator<E>.Property<T?> {
+    val value = this.property.get(this.obj)
     if (value != null) {
-        this.addConstraintViolations(Validator(value).apply { block(value) }.constraintViolations.map {
-            DefaultConstraintViolation(
-                property = "${this.property.name}.${it.property}",
-                value = it.value,
-                constraint = it.constraint)
-        })
+        this.addConstraintViolations(
+            Validator(value).apply { block(value) }.constraintViolations.map {
+                DefaultConstraintViolation(
+                    property = "${this.property.name}.${it.property}",
+                    value = it.value,
+                    constraint = it.constraint
+                )
+            }
+        )
     }
     return this
 }
@@ -133,3 +136,13 @@ fun <E, T> Validator<E>.Property<T?>.isNotIn(values: Iterable<T>): Validator<E>.
  */
 fun <E, T> Validator<E>.Property<T?>.isValid(validator: (T) -> Boolean): Validator<E>.Property<T?> =
     this.validate(Valid) { it == null || validator(it) }
+
+/**
+ * Validates if the property is valid by passing a custom suspending function
+ *
+ * @param validator specifies the validation function
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+suspend fun <E, T> Validator<E>.Property<T?>.isCoValid(validator: suspend (T) -> Boolean): Validator<E>.Property<T?> =
+    this.coValidate(Valid) { it == null || validator(it) }
