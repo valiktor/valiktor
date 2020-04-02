@@ -31,7 +31,7 @@ import org.valiktor.ConstraintViolation
  * @see Constraint
  * @since 0.8.0
  */
-internal data class TestConstraintViolation(
+data class TestConstraintViolation(
     override val property: String,
     override val value: Any? = null,
     override val constraint: Constraint

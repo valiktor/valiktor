@@ -30,7 +30,7 @@ import kotlin.test.assertTrue
  * @author Rodolpho S. Couto
  * @since 0.8.0
  */
-fun <E> shouldFailValidation(block: () -> Unit): TestValidator<E> {
+inline fun <E> shouldFailValidation(block: () -> Unit): TestValidator<E> {
     val ex = assertFailsWith<ConstraintViolationException> { block() }
     return TestValidator(ex.constraintViolations)
 }
@@ -46,14 +46,14 @@ fun <E> shouldFailValidation(block: () -> Unit): TestValidator<E> {
  * @see ConstraintViolation
  * @since 0.8.0
  */
-class TestValidator<E>(private val constraintViolations: Set<ConstraintViolation>) {
+class TestValidator<E>(val constraintViolations: Set<ConstraintViolation>) {
 
     /**
      * Verify expected constraint violations using [TestValidatorVerifier] DSL
      *
      * @param block specifies the DSL to verify expected constraint violations
      */
-    fun verify(block: TestValidatorVerifier<E>.() -> Unit) {
+    inline fun verify(block: TestValidatorVerifier<E>.() -> Unit) {
         val expectedConstraintViolations = TestValidatorVerifier<E>().apply(block).expectedConstraintViolations
         val constraintViolations = constraintViolations
             .map { TestConstraintViolation(it.property, it.value, it.constraint) }
