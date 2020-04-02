@@ -16,9 +16,13 @@
 
 package org.valiktor.functions
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.runBlockingTest
 import org.assertj.core.api.Assertions.assertThat
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
+import org.valiktor.Validator
 import org.valiktor.constraints.Contains
 import org.valiktor.constraints.ContainsAll
 import org.valiktor.constraints.ContainsAny
@@ -34,6 +38,7 @@ import org.valiktor.constraints.NotIn
 import org.valiktor.constraints.NotNull
 import org.valiktor.constraints.Null
 import org.valiktor.constraints.Size
+import org.valiktor.constraints.Valid
 import org.valiktor.functions.ArrayFunctionsFixture.Dependent
 import org.valiktor.functions.ArrayFunctionsFixture.Employee
 import org.valiktor.validate
@@ -47,6 +52,7 @@ private object ArrayFunctionsFixture {
     data class Dependent(val id: Int? = null, val name: String? = null)
 }
 
+@ExperimentalCoroutinesApi
 class ArrayFunctionsTest {
 
     @Test
@@ -63,6 +69,22 @@ class ArrayFunctionsTest {
         validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 1), Dependent(id = 1)))) {
             validate(Employee::dependents).validateForEach {
                 validate(Dependent::id).isNotNull()
+            }
+        }
+    }
+
+    @Test
+    fun `inner array properties should call suspending validation functions`() {
+        suspend fun Validator<Dependent>.Property<Int?>.isValidId() = this.coValidate(Valid) {
+            delay(10L)
+            it == null || it > 0
+        }
+
+        runBlockingTest {
+            validate(Employee(dependents = arrayOf(Dependent(id = 1), Dependent(id = 1), Dependent(id = 1)))) {
+                validate(Employee::dependents).validateForEach {
+                    validate(Dependent::id).isValidId()
+                }
             }
         }
     }
@@ -218,7 +240,8 @@ class ArrayFunctionsTest {
     @Test
     fun `isIn vararg with same value should be valid`() {
         validate(Employee(dependents = arrayOf(Dependent(id = 1)))) {
-            validate(Employee::dependents).isIn(arrayOf(Dependent(id = 1)), arrayOf(Dependent(id = 1), Dependent(id = 2)))
+            validate(Employee::dependents).isIn(arrayOf(Dependent(id = 1)),
+                arrayOf(Dependent(id = 1), Dependent(id = 2)))
         }
     }
 
@@ -249,7 +272,8 @@ class ArrayFunctionsTest {
     @Test
     fun `isIn iterable with same value should be valid`() {
         validate(Employee(dependents = arrayOf(Dependent(id = 1)))) {
-            validate(Employee::dependents).isIn(listOf(arrayOf(Dependent(id = 1)), arrayOf(Dependent(id = 1), Dependent(id = 2))))
+            validate(Employee::dependents).isIn(listOf(arrayOf(Dependent(id = 1)),
+                arrayOf(Dependent(id = 1), Dependent(id = 2))))
         }
     }
 
