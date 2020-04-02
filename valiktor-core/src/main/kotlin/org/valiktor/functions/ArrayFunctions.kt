@@ -40,14 +40,19 @@ import org.valiktor.constraints.Size
  * @return the same receiver property
  */
 @JvmName("validateForEachArray")
-fun <E, T> Validator<E>.Property<Array<T>?>.validateForEach(block: Validator<T>.(T) -> Unit): Validator<E>.Property<Array<T>?> {
-    this.property.get(obj)?.forEachIndexed { index, value ->
-        this.addConstraintViolations(Validator(value).apply { block(value) }.constraintViolations.map {
-            DefaultConstraintViolation(
-                property = "${this.property.name}[$index].${it.property}",
-                value = it.value,
-                constraint = it.constraint)
-        })
+inline fun <E, T> Validator<E>.Property<Array<T>?>.validateForEach(
+    block: Validator<T>.(T) -> Unit
+): Validator<E>.Property<Array<T>?> {
+    this.property.get(this.obj)?.forEachIndexed { index, value ->
+        this.addConstraintViolations(
+            Validator(value).apply { block(value) }.constraintViolations.map {
+                DefaultConstraintViolation(
+                    property = "${this.property.name}[$index].${it.property}",
+                    value = it.value,
+                    constraint = it.constraint
+                )
+            }
+        )
     }
     return this
 }
@@ -60,14 +65,19 @@ fun <E, T> Validator<E>.Property<Array<T>?>.validateForEach(block: Validator<T>.
  * @return the same receiver property
  */
 @JvmName("validateForEachIndexedArray")
-fun <E, T> Validator<E>.Property<Array<T>?>.validateForEachIndexed(block: Validator<T>.(Int, T) -> Unit): Validator<E>.Property<Array<T>?> {
-    this.property.get(obj)?.forEachIndexed { index, value ->
-        this.addConstraintViolations(Validator(value).apply { block(index, value) }.constraintViolations.map {
-            DefaultConstraintViolation(
-                property = "${this.property.name}[$index].${it.property}",
-                value = it.value,
-                constraint = it.constraint)
-        })
+inline fun <E, T> Validator<E>.Property<Array<T>?>.validateForEachIndexed(
+    block: Validator<T>.(Int, T) -> Unit
+): Validator<E>.Property<Array<T>?> {
+    this.property.get(this.obj)?.forEachIndexed { index, value ->
+        this.addConstraintViolations(
+            Validator(value).apply { block(index, value) }.constraintViolations.map {
+                DefaultConstraintViolation(
+                    property = "${this.property.name}[$index].${it.property}",
+                    value = it.value,
+                    constraint = it.constraint
+                )
+            }
+        )
     }
     return this
 }
@@ -158,8 +168,10 @@ fun <E, T> Validator<E>.Property<Array<T>?>.isNotEmpty(): Validator<E>.Property<
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Array<T>?>.hasSize(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Array<T>?> =
-    this.validate(Size(min, max)) { it == null || it.count() in min.rangeTo(max) }
+fun <E, T> Validator<E>.Property<Array<T>?>.hasSize(
+    min: Int = Int.MIN_VALUE,
+    max: Int = Int.MAX_VALUE
+): Validator<E>.Property<Array<T>?> = this.validate(Size(min, max)) { it == null || it.count() in min.rangeTo(max) }
 
 /**
  * Validates if the array property contains the value

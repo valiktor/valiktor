@@ -16,6 +16,7 @@
 
 package org.valiktor.sample
 
+import kotlinx.coroutines.delay
 import org.springframework.stereotype.Service
 import org.valiktor.Constraint
 import org.valiktor.Validator
@@ -61,6 +62,8 @@ class EmployeeService {
 // custom validation constraint
 object Document : Constraint
 
-// custom validation function
-fun Validator<Employee>.Property<String?>.isDocumentNumber() =
-    this.validate(Document) { it == null || it.matches(Regex("^\\d{3}.\\d{3}.\\d{3}-\\d{2}\$")) }
+// custom suspending validation function
+suspend fun Validator<Employee>.Property<String?>.isDocumentNumber() = this.coValidate(Document) {
+    delay(100L) // simulating I/O delay
+    it == null || it.matches(Regex("^\\d{3}.\\d{3}.\\d{3}-\\d{2}\$"))
+}
