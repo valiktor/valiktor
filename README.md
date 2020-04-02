@@ -187,7 +187,7 @@ See the [sample](valiktor-samples/valiktor-sample-collections)
 
 ### Internationalization
 
-Valiktor supports decoupled internationalization, this allows to maintain the validation logic in the core of the application and the internationalization in another layer, such as presentation or RESTful adapter. This guarantees some design principles proposed by Domain-Driven Design or Clean Architecture, for example.
+Valiktor provides a decoupled internationalization, that allows to maintain the validation logic in the core of the application and the internationalization in another layer, such as presentation or RESTful adapter. This guarantees some design principles proposed by Domain-Driven Design or Clean Architecture, for example.
 
 The internationalization works by converting a collection of `ConstraintViolation` into a collection of `ConstraintViolationMessage` through the extension function `org.valiktor.i18n.mapToMessage` by passing the following parameters:
 
@@ -356,6 +356,13 @@ fun <E> Validator<E>.Property<Int?>.isBetween(start: Int, end: Int) =
     this.validate(Between(start, end)) { it == null || it in start.rangeTo(end) }
 ```
 
+To support [suspending functions](#Coroutines support), you must use `coValidate` instead of `validate`:
+
+```kotlin
+suspend fun <E> Validator<E>.Property<Int?>.isBetween(start: Int, end: Int) = 
+    this.coValidate(Between(start, end)) { it == null || it in start.rangeTo(end) }
+```
+
 And to use it:
 
 ```kotlin
@@ -387,6 +394,32 @@ org.valiktor.constraints.Between.message=Deve estar entre {start} e {end}
 Note: the variables `start` and `end` are extracted through the property `messageParams` of the constraint `Between` and will be formatted in the message using the [Message formatters](#message-formatters). If you need a custom formatter, see [Creating a custom formatter](#creating-a-custom-formatter).
 
 See the [sample](valiktor-samples/valiktor-sample-custom-constraint)
+
+### Coroutines support
+
+Valiktor supports suspending functions natively, so you can use it in your validations.
+
+For example, consider this suspending function:
+
+```kotlin
+suspend fun countByName(name: String): Int
+```
+
+It cannot be called by `isValid` because it doesn't allow suspending functions:
+
+```kotlin
+validate(employee) {
+    validate(Employee::name).isValid { countByName(it) == 0 } // compilation error
+}
+```
+
+so we can use `isCoValid`, that expects a suspending function:
+
+```kotlin
+validate(employee) {
+    validate(Employee::name).isCoValid { countByName(it) == 0 } // OK
+}
+```
 
 ### Validating RESTful APIs
 
