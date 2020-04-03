@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.web.controller
+package org.valiktor.springframework.handler.webmvc
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.valiktor.ConstraintViolationException
-import org.valiktor.springframework.config.ValiktorConfiguration
-import org.valiktor.springframework.web.payload.UnprocessableEntity
-import org.valiktor.springframework.web.payload.toUnprocessableEntity
+import org.valiktor.springframework.handler.ValiktorExceptionHandler
 import java.util.Locale
 
 /**
  * Represents the REST controller that handles [ConstraintViolationException] and returns an appropriate HTTP response.
  *
- * @param config specifies the [ValiktorConfiguration]
+ * @param handler specifies the [ValiktorExceptionHandler]
  *
  * @author Rodolpho S. Couto
  * @see ConstraintViolationException
@@ -36,22 +34,22 @@ import java.util.Locale
  * @since 0.1.0
  */
 @RestControllerAdvice
-class ConstraintViolationExceptionHandler(private val config: ValiktorConfiguration) {
+class ConstraintViolationExceptionHandler(private val handler: ValiktorExceptionHandler<*>) {
 
     /**
-     * Handle [ConstraintViolationException] and returns 422 (Unprocessable Entity) status code
-     * with the constraint violations.
+     * Handles [ConstraintViolationException] and returns and delegates the response to [handler].
      *
      * @param ex specifies the [ConstraintViolationException]
      * @param locale specifies the [Locale] of the Request
-     * @return the ResponseEntity with 422 status code and the constraint violations
+     * @return the ResponseEntity with status code, headers and body
      */
     @ExceptionHandler(ConstraintViolationException::class)
-    fun handleConstraintViolationException(ex: ConstraintViolationException, locale: Locale?): ResponseEntity<UnprocessableEntity> =
-        ResponseEntity
-            .unprocessableEntity()
-            .body(ex.toUnprocessableEntity(
-                baseBundleName = config.baseBundleName,
-                locale = locale ?: Locale.getDefault()
-            ))
+    fun handleConstraintViolationException(ex: ConstraintViolationException, locale: Locale?): ResponseEntity<*> {
+        val (statusCode, headers, body) = handler.handle(
+            exception = ex,
+            locale = locale ?: Locale.getDefault()
+        )
+
+        return ResponseEntity.status(statusCode).headers(headers).body(body)
+    }
 }

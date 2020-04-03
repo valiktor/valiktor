@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.web.controller
+package org.valiktor.springframework.handler.webmvc
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
@@ -39,6 +39,9 @@ import org.valiktor.functions.isBetween
 import org.valiktor.functions.isEmail
 import org.valiktor.functions.isEqualTo
 import org.valiktor.springframework.config.ValiktorConfiguration
+import org.valiktor.springframework.handler.DefaultValiktorExceptionHandler
+import org.valiktor.springframework.handler.UnprocessableEntity
+import org.valiktor.springframework.handler.ValiktorExceptionHandler
 import org.valiktor.validate
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
@@ -92,9 +95,18 @@ object ExceptionHandlerFixture {
         .setDateFormat(SimpleDateFormat("yyyy-MM-dd"))
         .registerModule(KotlinModule())
 
-    private val constraintViolationExceptionHandler = ConstraintViolationExceptionHandler(config = ValiktorConfiguration())
-    private val invalidFormatExceptionHandler = InvalidFormatExceptionHandler(constraintViolationExceptionHandler = constraintViolationExceptionHandler)
-    private val missingKotlinParameterExceptionHandler = MissingKotlinParameterExceptionHandler(constraintViolationExceptionHandler = constraintViolationExceptionHandler)
+    private val valiktorExceptionHandler: ValiktorExceptionHandler<UnprocessableEntity> =
+        DefaultValiktorExceptionHandler(config = ValiktorConfiguration())
+
+    private val constraintViolationExceptionHandler = ConstraintViolationExceptionHandler(
+        handler = valiktorExceptionHandler
+    )
+    private val invalidFormatExceptionHandler = InvalidFormatExceptionHandler(
+        constraintViolationExceptionHandler = constraintViolationExceptionHandler
+    )
+    private val missingKotlinParameterExceptionHandler = MissingKotlinParameterExceptionHandler(
+        constraintViolationExceptionHandler = constraintViolationExceptionHandler
+    )
 
     val mockMvc: MockMvc = MockMvcBuilders
         .standaloneSetup(ValiktorTestController())

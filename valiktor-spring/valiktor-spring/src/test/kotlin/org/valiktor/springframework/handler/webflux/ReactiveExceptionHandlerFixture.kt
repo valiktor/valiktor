@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.web.reactive
+package org.valiktor.springframework.handler.webflux
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
@@ -32,12 +32,15 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.util.UriComponentsBuilder
+import org.springframework.web.util.UriComponentsBuilder.fromHttpRequest
 import org.valiktor.functions.hasSize
 import org.valiktor.functions.isBetween
 import org.valiktor.functions.isEmail
 import org.valiktor.functions.isEqualTo
 import org.valiktor.springframework.config.ValiktorConfiguration
+import org.valiktor.springframework.handler.DefaultValiktorExceptionHandler
+import org.valiktor.springframework.handler.UnprocessableEntity
+import org.valiktor.springframework.handler.ValiktorExceptionHandler
 import org.valiktor.validate
 import reactor.core.publisher.Mono
 import java.math.BigDecimal
@@ -71,14 +74,12 @@ class ValiktorTestController {
                     validate(Employee::id).isEqualTo(1)
                     validate(Employee::name).hasSize(min = 4)
                     validate(Employee::email).isEmail()
-                    validate(Employee::salary).isBetween(start = "999.99".toBigDecimal(), end = "9999.99".toBigDecimal())
+                    validate(Employee::salary).isBetween("999.99".toBigDecimal(), "9999.99".toBigDecimal())
                     validate(Employee::dateOfBirth).isEqualTo(Date.from(LocalDate.of(2001, Month.JANUARY, 1)
                         .atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 }
             }
-            .map {
-                ResponseEntity.created(UriComponentsBuilder.fromHttpRequest(req).path("/{id}").build(it.id)).build<Void>()
-            }
+            .map { ResponseEntity.created(fromHttpRequest(req).path("/{id}").build(it.id)).build<Void>() }
 }
 
 object ReactiveExceptionHandlerFixture {
@@ -88,8 +89,11 @@ object ReactiveExceptionHandlerFixture {
         .setDateFormat(SimpleDateFormat("yyyy-MM-dd"))
         .registerModule(KotlinModule())
 
+    private val valiktorExceptionHandler: ValiktorExceptionHandler<UnprocessableEntity> =
+        DefaultValiktorExceptionHandler(config = ValiktorConfiguration())
+
     private val reactiveConstraintViolationExceptionHandler = ReactiveConstraintViolationExceptionHandler(
-        config = ValiktorConfiguration(),
+        handler = valiktorExceptionHandler,
         codecConfigurer = DefaultServerCodecConfigurer().apply {
             this.defaultCodecs().jackson2JsonEncoder(Jackson2JsonEncoder(jsonMapper, MediaType.APPLICATION_JSON))
             this.defaultCodecs().jackson2JsonDecoder(Jackson2JsonDecoder(jsonMapper, MediaType.APPLICATION_JSON))

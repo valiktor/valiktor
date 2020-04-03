@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.web.reactive
+package org.valiktor.springframework.handler.webflux
 
 import org.springframework.core.annotation.Order
 import org.springframework.http.codec.CodecConfigurer
@@ -23,15 +23,14 @@ import org.springframework.web.reactive.result.view.ViewResolver
 import org.springframework.web.server.ServerWebExchange
 import org.springframework.web.server.WebExceptionHandler
 import org.valiktor.ConstraintViolationException
-import org.valiktor.springframework.config.ValiktorConfiguration
-import org.valiktor.springframework.web.payload.toUnprocessableEntity
+import org.valiktor.springframework.handler.ValiktorExceptionHandler
 import reactor.core.publisher.Mono
 import java.util.Locale
 
 /**
  * Represents the [WebExceptionHandler] that handles [ConstraintViolationException] and returns an appropriate HTTP response.
  *
- * @param config specifies the [ValiktorConfiguration]
+ * @param handler specifies the [ValiktorExceptionHandler]
  *
  * @author Rodolpho S. Couto
  * @see ConstraintViolationException
@@ -40,31 +39,36 @@ import java.util.Locale
  */
 @Order(-10)
 class ReactiveConstraintViolationExceptionHandler(
-    private val config: ValiktorConfiguration,
+    private val handler: ValiktorExceptionHandler<*>,
     private val codecConfigurer: CodecConfigurer
 ) : WebExceptionHandler {
 
     /**
-     * Handle [ConstraintViolationException] and returns 422 (Unprocessable Entity) status code
-     * with the constraint violations.
+     * Handles [ConstraintViolationException] and returns and delegates the response to [handler].
      *
      * @param exchange specifies the current webflux request
      * @param ex specifies the [ConstraintViolationException]
-     * @return the ResponseEntity with 422 status code and the constraint violations
+     * @return the ResponseEntity with status code, headers and body
      */
     override fun handle(exchange: ServerWebExchange, ex: Throwable): Mono<Void> =
         ex.handle(exchange) ?: Mono.error(ex)
 
     private fun Throwable.handle(exchange: ServerWebExchange): Mono<Void>? =
         when (this) {
-            is ConstraintViolationException ->
+            is ConstraintViolationException -> {
+                val (statusCode, headers, body) = handler.handle(
+                    exception = this,
+                    locale = exchange.localeContext.locale ?: Locale.getDefault()
+                )
+
                 ServerResponse
-                    .unprocessableEntity()
-                    .bodyValue(
-                        this.toUnprocessableEntity(
-                            baseBundleName = config.baseBundleName,
-                            locale = exchange.localeContext.locale ?: Locale.getDefault()
-                        ))
+                    .status(statusCode)
+                    .let {
+                        headers?.toList()?.fold(it) { response, header ->
+                            response.header(header.first, *header.second.toTypedArray())
+                        } ?: it
+                    }
+                    .bodyValue(body)
                     .flatMap {
                         it.writeTo(exchange, object : ServerResponse.Context {
                             override fun messageWriters() = codecConfigurer.writers
@@ -74,6 +78,7 @@ class ReactiveConstraintViolationExceptionHandler(
                     .flatMap {
                         Mono.empty<Void>()
                     }
+            }
             else -> this.cause?.handle(exchange)
         }
 }

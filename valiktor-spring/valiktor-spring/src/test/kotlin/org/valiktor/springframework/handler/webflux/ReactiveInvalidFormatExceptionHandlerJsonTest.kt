@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.web.reactive
+package org.valiktor.springframework.handler.webflux
 
 import org.springframework.http.HttpHeaders.ACCEPT_LANGUAGE
 import org.springframework.http.HttpHeaders.LOCATION
