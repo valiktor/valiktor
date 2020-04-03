@@ -56,7 +56,11 @@ class EmployeeHandlerTest {
             .bodyValue(EmployeeHandlerTestFixture.validEmployee)
             .exchange()
             .expectStatus().isCreated
-            .expectHeader().valueEquals(HttpHeaders.LOCATION, "http://localhost:${env.getProperty("local.server.port")}/employees/111.111.111-11")
+            .expectHeader()
+            .valueEquals(
+                HttpHeaders.LOCATION,
+                "http://localhost:${env.getProperty("local.server.port")}/employees/111.111.111-11"
+            )
             .expectBody().isEmpty
     }
 
@@ -69,9 +73,11 @@ class EmployeeHandlerTest {
             .accept(MediaType.APPLICATION_JSON)
             .bodyValue(EmployeeHandlerTestFixture.invalidEmployee)
             .exchange()
-            .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+            .expectStatus()
+            .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeHandlerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+            .expectBody<UnprocessableEntity>()
+            .isEqualTo(EmployeeHandlerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
     }
 
     @Test
@@ -84,9 +90,11 @@ class EmployeeHandlerTest {
             .header(HttpHeaders.ACCEPT_LANGUAGE, "en")
             .bodyValue(EmployeeHandlerTestFixture.invalidEmployee)
             .exchange()
-            .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+            .expectStatus()
+            .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeHandlerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+            .expectBody<UnprocessableEntity>()
+            .isEqualTo(EmployeeHandlerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
     }
 
     @Test
@@ -99,8 +107,10 @@ class EmployeeHandlerTest {
             .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR")
             .bodyValue(EmployeeHandlerTestFixture.invalidEmployee)
             .exchange()
-            .expectStatus().isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+            .expectStatus()
+            .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-            .expectBody<UnprocessableEntity>().isEqualTo(EmployeeHandlerTestFixture.unprocessableEntity.getValue(Locale("pt", "BR")))
+            .expectBody<UnprocessableEntity>()
+            .isEqualTo(EmployeeHandlerTestFixture.unprocessableEntity.getValue(Locale("pt", "BR")))
     }
 }
