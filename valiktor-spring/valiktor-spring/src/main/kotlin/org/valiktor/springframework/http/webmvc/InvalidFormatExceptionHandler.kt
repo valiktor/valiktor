@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.handler.webmvc
+package org.valiktor.springframework.http.webmvc
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import org.springframework.http.ResponseEntity

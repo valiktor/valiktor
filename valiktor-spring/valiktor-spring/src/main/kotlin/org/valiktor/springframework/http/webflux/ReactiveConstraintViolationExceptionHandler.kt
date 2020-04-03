@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.handler.webflux
+package org.valiktor.springframework.http.webflux
 
 import org.springframework.core.annotation.Order
 import org.springframework.http.codec.CodecConfigurer
@@ -23,7 +23,7 @@ import org.springframework.web.reactive.result.view.ViewResolver
 import org.springframework.web.server.ServerWebExchange
 import org.springframework.web.server.WebExceptionHandler
 import org.valiktor.ConstraintViolationException
-import org.valiktor.springframework.handler.ValiktorExceptionHandler
+import org.valiktor.springframework.http.ValiktorExceptionHandler
 import reactor.core.publisher.Mono
 import java.util.Locale
 

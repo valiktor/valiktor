@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.handler.webmvc
+package org.valiktor.springframework.http.webmvc
 
 import org.springframework.http.HttpHeaders.ACCEPT_LANGUAGE
 import org.springframework.http.HttpHeaders.LOCATION
-import org.springframework.http.MediaType.APPLICATION_JSON
+import org.springframework.http.MediaType.APPLICATION_XML
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.log
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
@@ -28,10 +28,10 @@ import java.util.Locale
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-class MissingKotlinParameterExceptionHandlerJsonTest {
+class MissingKotlinParameterExceptionHandlerXmlTest {
 
     private val mockMvc = ExceptionHandlerFixture.mockMvc
-    private val json = ExceptionHandlerFixture.JSON
+    private val xml = ExceptionHandlerFixture.XML
 
     @BeforeTest
     fun setUp() {
@@ -42,9 +42,9 @@ class MissingKotlinParameterExceptionHandlerJsonTest {
     fun `should return 201`() {
         mockMvc
             .perform(post("/employees")
-                .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON)
-                .content(json.payloadEmployeeValid()))
+                .accept(APPLICATION_XML)
+                .contentType(APPLICATION_XML)
+                .content(xml.payloadEmployeeValid()))
             .andExpect(status().isCreated)
             .andExpect(header().string(LOCATION, "http://localhost/employees/1"))
             .andExpect(content().bytes(ByteArray(0)))
@@ -55,12 +55,12 @@ class MissingKotlinParameterExceptionHandlerJsonTest {
     fun `should return 422 with default locale`() {
         mockMvc
             .perform(post("/employees")
-                .accept(APPLICATION_JSON)
-                .contentType(APPLICATION_JSON)
-                .content(json.payloadEmployeeNullName()))
+                .accept(APPLICATION_XML)
+                .contentType(APPLICATION_XML)
+                .content(xml.payloadEmployeeNullName()))
             .andExpect(status().isUnprocessableEntity)
-            .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON))
-            .andExpect(content().json(json.payload422NullName(Locale.ENGLISH)))
+            .andExpect(content().contentTypeCompatibleWith(APPLICATION_XML))
+            .andExpect(content().xml(xml.payload422NullName(Locale.ENGLISH)))
             .andDo(log())
     }
 
@@ -68,13 +68,13 @@ class MissingKotlinParameterExceptionHandlerJsonTest {
     fun `should return 422 with locale en`() {
         mockMvc
             .perform(post("/employees")
-                .accept(APPLICATION_JSON)
+                .accept(APPLICATION_XML)
                 .header(ACCEPT_LANGUAGE, "en")
-                .contentType(APPLICATION_JSON)
-                .content(json.payloadEmployeeNullName()))
+                .contentType(APPLICATION_XML)
+                .content(xml.payloadEmployeeNullName()))
             .andExpect(status().isUnprocessableEntity)
-            .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON))
-            .andExpect(content().json(json.payload422NullName(Locale.ENGLISH)))
+            .andExpect(content().contentTypeCompatibleWith(APPLICATION_XML))
+            .andExpect(content().xml(xml.payload422NullName(Locale.ENGLISH)))
             .andDo(log())
     }
 
@@ -82,13 +82,13 @@ class MissingKotlinParameterExceptionHandlerJsonTest {
     fun `should return 422 with locale pt_BR`() {
         mockMvc
             .perform(post("/employees")
-                .accept(APPLICATION_JSON)
+                .accept(APPLICATION_XML)
                 .header(ACCEPT_LANGUAGE, "pt-BR")
-                .contentType(APPLICATION_JSON)
-                .content(json.payloadEmployeeNullName()))
+                .contentType(APPLICATION_XML)
+                .content(xml.payloadEmployeeNullName()))
             .andExpect(status().isUnprocessableEntity)
-            .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON))
-            .andExpect(content().json(json.payload422NullName(Locale("pt", "BR"))))
+            .andExpect(content().contentTypeCompatibleWith(APPLICATION_XML))
+            .andExpect(content().xml(xml.payload422NullName(Locale("pt", "BR"))))
             .andDo(log())
     }
 }

@@ -27,7 +27,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.valiktor.springframework.handler.UnprocessableEntity
+import org.valiktor.springframework.http.UnprocessableEntity
 import java.util.Locale
 import kotlin.test.BeforeTest
 import kotlin.test.Test

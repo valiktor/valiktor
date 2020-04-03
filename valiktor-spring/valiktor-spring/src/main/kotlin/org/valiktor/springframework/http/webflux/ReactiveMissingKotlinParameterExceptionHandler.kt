@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.handler.webflux
+package org.valiktor.springframework.http.webflux
 
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import org.springframework.core.annotation.Order

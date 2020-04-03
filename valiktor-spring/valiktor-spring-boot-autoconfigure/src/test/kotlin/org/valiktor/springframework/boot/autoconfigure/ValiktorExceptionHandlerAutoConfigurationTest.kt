@@ -25,9 +25,9 @@ import org.springframework.context.annotation.Configuration
 import org.valiktor.ConstraintViolationException
 import org.valiktor.i18n.mapToMessage
 import org.valiktor.springframework.config.ValiktorConfiguration
-import org.valiktor.springframework.handler.DefaultValiktorExceptionHandler
-import org.valiktor.springframework.handler.ValiktorExceptionHandler
-import org.valiktor.springframework.handler.ValiktorResponse
+import org.valiktor.springframework.http.DefaultValiktorExceptionHandler
+import org.valiktor.springframework.http.ValiktorExceptionHandler
+import org.valiktor.springframework.http.ValiktorResponse
 import java.util.Locale
 import kotlin.test.Test
 

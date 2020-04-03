@@ -27,7 +27,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
-import org.valiktor.springframework.handler.UnprocessableEntity
+import org.valiktor.springframework.http.UnprocessableEntity
 import java.util.Locale
 import kotlin.test.BeforeTest
 import kotlin.test.Test

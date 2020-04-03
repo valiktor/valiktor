@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.handler.webmvc
+package org.valiktor.springframework.http.webmvc
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.valiktor.ConstraintViolationException
-import org.valiktor.springframework.handler.ValiktorExceptionHandler
+import org.valiktor.springframework.http.ValiktorExceptionHandler
 import java.util.Locale
 
 /**

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.handler.webflux
+package org.valiktor.springframework.http.webflux
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
@@ -38,9 +38,9 @@ import org.valiktor.functions.isBetween
 import org.valiktor.functions.isEmail
 import org.valiktor.functions.isEqualTo
 import org.valiktor.springframework.config.ValiktorConfiguration
-import org.valiktor.springframework.handler.DefaultValiktorExceptionHandler
-import org.valiktor.springframework.handler.UnprocessableEntity
-import org.valiktor.springframework.handler.ValiktorExceptionHandler
+import org.valiktor.springframework.http.DefaultValiktorExceptionHandler
+import org.valiktor.springframework.http.UnprocessableEntity
+import org.valiktor.springframework.http.ValiktorExceptionHandler
 import org.valiktor.validate
 import reactor.core.publisher.Mono
 import java.math.BigDecimal

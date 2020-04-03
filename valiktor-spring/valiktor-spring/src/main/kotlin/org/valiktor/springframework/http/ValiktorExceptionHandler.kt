@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.handler
+package org.valiktor.springframework.http
 
 import org.valiktor.ConstraintViolationException
 import java.util.Locale
