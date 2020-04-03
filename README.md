@@ -413,7 +413,7 @@ validate(employee) {
 }
 ```
 
-so we can use `isCoValid`, that expects a suspending function:
+but we can use `isCoValid`, that expects a suspending function:
 
 ```kotlin
 validate(employee) {
@@ -695,6 +695,38 @@ Samples:
 
 * [valiktor-sample-spring-boot-2-webflux](valiktor-samples/valiktor-sample-spring-boot-2-webflux)
 * [valiktor-sample-spring-boot-2-webflux-fn](valiktor-samples/valiktor-sample-spring-boot-2-webflux-fn)
+
+#### Custom Exception Handler
+
+Valiktor provides an interface to customize the HTTP response, for example:
+
+```kotlin
+data class ValidationError(
+    val errors: Map<String, String>
+)
+
+@Component
+class ValidationExceptionHandler(
+    private val config: ValiktorConfiguration
+) : ValiktorExceptionHandler<ValidationError> {
+
+    override fun handle(exception: ConstraintViolationException, locale: Locale) =
+        ValiktorResponse(
+            statusCode = HttpStatus.BAD_REQUEST,
+            headers = HttpHeaders().apply {
+                this.set("X-Custom-Header", "OK")
+            },
+            body = ValidationError(
+                errors = exception.constraintViolations
+                    .mapToMessage(baseName = config.baseBundleName, locale = locale)
+                    .map { it.property to it.message }
+                    .toMap()
+            )
+        )
+}
+```
+
+You can customize status code, headers and payload by implementing the interface `ValiktorExceptionHandler`.
 
 #### Spring Boot support
 
