@@ -24,17 +24,18 @@ import org.springframework.core.env.Environment
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
-import org.valiktor.springframework.handler.UnprocessableEntity
 import java.util.Locale
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
+@ActiveProfiles("custom-exception-handler")
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-class EmployeeControllerTest {
+class CustomEmployeeControllerTest {
 
     @Autowired
     private lateinit var env: Environment
@@ -53,13 +54,12 @@ class EmployeeControllerTest {
             .post()
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(EmployeeControllerTestFixture.validEmployee)
+            .bodyValue(CustomEmployeeControllerTestFixture.validEmployee)
             .exchange()
             .expectStatus().isCreated
-            .expectHeader().valueEquals(
-                HttpHeaders.LOCATION,
-                "http://localhost:${env.getProperty("local.server.port")}/employees/111.111.111-11"
-            )
+            .expectHeader()
+            .valueEquals(HttpHeaders.LOCATION,
+                "http://localhost:${env.getProperty("local.server.port")}/employees/111.111.111-11")
             .expectBody().isEmpty
     }
 
@@ -70,13 +70,14 @@ class EmployeeControllerTest {
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .bodyValue(EmployeeControllerTestFixture.invalidEmployee)
+            .bodyValue(CustomEmployeeControllerTestFixture.invalidEmployee)
             .exchange()
             .expectStatus()
-            .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+            .isEqualTo(HttpStatus.BAD_REQUEST)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-            .expectBody<UnprocessableEntity>()
-            .isEqualTo(EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+            .expectHeader().valueEquals("X-Custom-Header", "OK")
+            .expectBody<ValidationError>()
+            .isEqualTo(CustomEmployeeControllerTestFixture.validationErrors.getValue(Locale.ENGLISH))
     }
 
     @Test
@@ -87,13 +88,14 @@ class EmployeeControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .header(HttpHeaders.ACCEPT_LANGUAGE, "en")
-            .bodyValue(EmployeeControllerTestFixture.invalidEmployee)
+            .bodyValue(CustomEmployeeControllerTestFixture.invalidEmployee)
             .exchange()
             .expectStatus()
-            .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+            .isEqualTo(HttpStatus.BAD_REQUEST)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-            .expectBody<UnprocessableEntity>()
-            .isEqualTo(EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+            .expectHeader().valueEquals("X-Custom-Header", "OK")
+            .expectBody<ValidationError>()
+            .isEqualTo(CustomEmployeeControllerTestFixture.validationErrors.getValue(Locale.ENGLISH))
     }
 
     @Test
@@ -104,12 +106,13 @@ class EmployeeControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR")
-            .bodyValue(EmployeeControllerTestFixture.invalidEmployee)
+            .bodyValue(CustomEmployeeControllerTestFixture.invalidEmployee)
             .exchange()
             .expectStatus()
-            .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
+            .isEqualTo(HttpStatus.BAD_REQUEST)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-            .expectBody<UnprocessableEntity>()
-            .isEqualTo(EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale("pt", "BR")))
+            .expectHeader().valueEquals("X-Custom-Header", "OK")
+            .expectBody<ValidationError>()
+            .isEqualTo(CustomEmployeeControllerTestFixture.validationErrors.getValue(Locale("pt", "BR")))
     }
 }
