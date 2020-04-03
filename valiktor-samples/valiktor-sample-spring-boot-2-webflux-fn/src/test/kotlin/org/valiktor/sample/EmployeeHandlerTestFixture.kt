@@ -16,10 +16,10 @@
 
 package org.valiktor.sample
 
-import org.valiktor.springframework.web.payload.UnprocessableEntity
-import org.valiktor.springframework.web.payload.ValidationConstraint
-import org.valiktor.springframework.web.payload.ValidationError
-import org.valiktor.springframework.web.payload.ValidationParam
+import org.valiktor.springframework.handler.UnprocessableEntity
+import org.valiktor.springframework.handler.ValidationConstraint
+import org.valiktor.springframework.handler.ValidationError
+import org.valiktor.springframework.handler.ValidationParam
 import java.time.LocalDate
 import java.time.Month
 import java.util.Locale

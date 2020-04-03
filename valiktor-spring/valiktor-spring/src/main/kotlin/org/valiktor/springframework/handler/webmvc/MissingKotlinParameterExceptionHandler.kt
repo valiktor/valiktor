@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.web.controller
+package org.valiktor.springframework.handler.webmvc
 
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import org.springframework.http.ResponseEntity
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.NotNull
-import org.valiktor.springframework.web.payload.UnprocessableEntity
 import java.util.Locale
 
 /**
@@ -38,24 +37,30 @@ import java.util.Locale
  * @since 0.1.0
  */
 @RestControllerAdvice
-class MissingKotlinParameterExceptionHandler(private val constraintViolationExceptionHandler: ConstraintViolationExceptionHandler) {
+class MissingKotlinParameterExceptionHandler(
+    private val constraintViolationExceptionHandler: ConstraintViolationExceptionHandler
+) {
 
     /**
-     * Handle [MissingKotlinParameterException] and returns 422 (Unprocessable Entity) status code
-     * with a [NotNull] constraint violation
+     * Handles [MissingKotlinParameterException] and delegates the response to [constraintViolationExceptionHandler].
      *
      * @param ex specifies the [MissingKotlinParameterException]
      * @param locale specifies the [Locale] of the Request
-     * @return the ResponseEntity with 422 status code and the constraint violations
+     * @return the ResponseEntity with status code, headers and body
      */
     @ExceptionHandler(MissingKotlinParameterException::class)
-    fun handleMissingKotlinParameterException(ex: MissingKotlinParameterException, locale: Locale?): ResponseEntity<UnprocessableEntity> =
+    fun handleMissingKotlinParameterException(ex: MissingKotlinParameterException, locale: Locale?): ResponseEntity<*> =
         constraintViolationExceptionHandler.handleConstraintViolationException(
-            ConstraintViolationException(constraintViolations = setOf(
-                DefaultConstraintViolation(
-                    property = ex.path.fold("") { jsonPath, it ->
-                        (jsonPath + if (it.index > -1) "[${it.index}]" else ".${it.fieldName}").removePrefix(".")
-                    },
-                    constraint = NotNull)
-            )), locale)
+            ex = ConstraintViolationException(
+                constraintViolations = setOf(
+                    DefaultConstraintViolation(
+                        property = ex.path.fold("") { path, it ->
+                            (path + if (it.index > -1) "[${it.index}]" else ".${it.fieldName}").removePrefix(".")
+                        },
+                        constraint = NotNull
+                    )
+                )
+            ),
+            locale = locale
+        )
 }

@@ -30,8 +30,7 @@ import kotlin.test.assertNull
 class ValiktorAutoConfigurationTest {
 
     private val contextRunner = ApplicationContextRunner()
-        .withConfiguration(AutoConfigurations
-            .of(ValiktorAutoConfiguration::class.java))
+        .withConfiguration(AutoConfigurations.of(ValiktorAutoConfiguration::class.java))
 
     @Test
     fun `should not create ValiktorConfiguration without ValiktorConfiguration`() {

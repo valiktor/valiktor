@@ -21,10 +21,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.valiktor.springframework.config.ValiktorConfiguration
-import org.valiktor.springframework.web.controller.InvalidFormatExceptionHandler
-import org.valiktor.springframework.web.controller.MissingKotlinParameterExceptionHandler
-import org.valiktor.springframework.web.controller.ConstraintViolationExceptionHandler
+import org.valiktor.springframework.handler.ValiktorExceptionHandler
+import org.valiktor.springframework.handler.webmvc.ConstraintViolationExceptionHandler
+import org.valiktor.springframework.handler.webmvc.InvalidFormatExceptionHandler
+import org.valiktor.springframework.handler.webmvc.MissingKotlinParameterExceptionHandler
 
 /**
  * Represents the SpringBoot Auto Configuration for Spring WebFlux exception handlers
@@ -34,7 +34,7 @@ import org.valiktor.springframework.web.controller.ConstraintViolationExceptionH
  */
 @Configuration
 @ConditionalOnClass(name = ["org.springframework.web.servlet.DispatcherServlet"])
-@ConditionalOnBean(type = ["org.valiktor.springframework.config.ValiktorConfiguration"])
+@ConditionalOnBean(type = ["org.valiktor.springframework.handler.ValiktorExceptionHandler"])
 class ValiktorWebMvcAutoConfiguration {
 
     /**
@@ -44,8 +44,8 @@ class ValiktorWebMvcAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    fun constraintViolationExceptionHandler(valiktorConfiguration: ValiktorConfiguration) =
-        ConstraintViolationExceptionHandler(valiktorConfiguration)
+    fun constraintViolationExceptionHandler(handler: ValiktorExceptionHandler<*>) =
+        ConstraintViolationExceptionHandler(handler)
 
     /**
      * Creates a [InvalidFormatExceptionHandler]

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.web.controller
+package org.valiktor.springframework.handler.webmvc
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import org.springframework.http.ResponseEntity
@@ -23,9 +23,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
 import org.valiktor.constraints.In
-import org.valiktor.constraints.NotNull
 import org.valiktor.constraints.Valid
-import org.valiktor.springframework.web.payload.UnprocessableEntity
 import java.util.Locale
 
 /**
@@ -40,26 +38,31 @@ import java.util.Locale
  * @since 0.4.0
  */
 @RestControllerAdvice
-class InvalidFormatExceptionHandler(private val constraintViolationExceptionHandler: ConstraintViolationExceptionHandler) {
+class InvalidFormatExceptionHandler(
+    private val constraintViolationExceptionHandler: ConstraintViolationExceptionHandler
+) {
 
     /**
-     * Handle [InvalidFormatException] and returns 422 (Unprocessable Entity) status code
-     * with a [NotNull] constraint violation
+     * Handles [InvalidFormatException] and delegates the response to [constraintViolationExceptionHandler].
      *
      * @param ex specifies the [InvalidFormatException]
      * @param locale specifies the [Locale] of the Request
-     * @return the ResponseEntity with 422 status code and the constraint violations
+     * @return the ResponseEntity with status code, headers and body
      */
     @ExceptionHandler(InvalidFormatException::class)
-    fun handleInvalidFormatException(ex: InvalidFormatException, locale: Locale?): ResponseEntity<UnprocessableEntity> =
+    fun handleInvalidFormatException(ex: InvalidFormatException, locale: Locale?): ResponseEntity<*> =
         constraintViolationExceptionHandler.handleConstraintViolationException(
-            ConstraintViolationException(constraintViolations = setOf(
-                DefaultConstraintViolation(
-                    property = ex.path.fold("") { jsonPath, it ->
-                        (jsonPath + if (it.index > -1) "[${it.index}]" else ".${it.fieldName}").removePrefix(".")
-                    },
-                    constraint = if (ex.targetType.isEnum) In(ex.targetType.enumConstants.toSet()) else Valid,
-                    value = ex.value
+            ex = ConstraintViolationException(
+                constraintViolations = setOf(
+                    DefaultConstraintViolation(
+                        property = ex.path.fold("") { path, it ->
+                            (path + if (it.index > -1) "[${it.index}]" else ".${it.fieldName}").removePrefix(".")
+                        },
+                        constraint = if (ex.targetType.isEnum) In(ex.targetType.enumConstants.toSet()) else Valid,
+                        value = ex.value
+                    )
                 )
-            )), locale)
+            ),
+            locale = locale
+        )
 }
