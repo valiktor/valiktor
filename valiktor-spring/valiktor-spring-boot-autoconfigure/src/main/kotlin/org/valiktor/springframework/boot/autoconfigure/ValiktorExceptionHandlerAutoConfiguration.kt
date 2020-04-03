@@ -22,8 +22,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.valiktor.springframework.config.ValiktorConfiguration
-import org.valiktor.springframework.handler.DefaultValiktorExceptionHandler
-import org.valiktor.springframework.handler.ValiktorExceptionHandler
+import org.valiktor.springframework.http.DefaultValiktorExceptionHandler
+import org.valiktor.springframework.http.ValiktorExceptionHandler
 
 /**
  * Represents the SpringBoot Auto Configuration for [ValiktorExceptionHandler]
@@ -34,8 +34,8 @@ import org.valiktor.springframework.handler.ValiktorExceptionHandler
  */
 @Configuration
 @ConditionalOnClass(name = [
-    "org.valiktor.springframework.handler.ValiktorExceptionHandler",
-    "org.valiktor.springframework.handler.DefaultValiktorExceptionHandler"
+    "org.valiktor.springframework.http.ValiktorExceptionHandler",
+    "org.valiktor.springframework.http.DefaultValiktorExceptionHandler"
 ])
 @ConditionalOnBean(type = ["org.valiktor.springframework.config.ValiktorConfiguration"])
 class ValiktorExceptionHandlerAutoConfiguration {

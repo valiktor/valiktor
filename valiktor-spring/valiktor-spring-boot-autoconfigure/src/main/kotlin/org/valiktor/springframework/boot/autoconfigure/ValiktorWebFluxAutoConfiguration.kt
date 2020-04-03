@@ -22,10 +22,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.codec.CodecConfigurer
-import org.valiktor.springframework.handler.ValiktorExceptionHandler
-import org.valiktor.springframework.handler.webflux.ReactiveConstraintViolationExceptionHandler
-import org.valiktor.springframework.handler.webflux.ReactiveInvalidFormatExceptionHandler
-import org.valiktor.springframework.handler.webflux.ReactiveMissingKotlinParameterExceptionHandler
+import org.valiktor.springframework.http.ValiktorExceptionHandler
+import org.valiktor.springframework.http.webflux.ReactiveConstraintViolationExceptionHandler
+import org.valiktor.springframework.http.webflux.ReactiveInvalidFormatExceptionHandler
+import org.valiktor.springframework.http.webflux.ReactiveMissingKotlinParameterExceptionHandler
 
 /**
  * Represents the SpringBoot Auto Configuration for Spring WebMvc exception handlers
@@ -36,7 +36,7 @@ import org.valiktor.springframework.handler.webflux.ReactiveMissingKotlinParamet
 @Configuration
 @ConditionalOnClass(name = ["org.springframework.web.reactive.DispatcherHandler"])
 @ConditionalOnBean(type = [
-    "org.valiktor.springframework.handler.ValiktorExceptionHandler",
+    "org.valiktor.springframework.http.ValiktorExceptionHandler",
     "org.springframework.http.codec.CodecConfigurer"
 ])
 class ValiktorWebFluxAutoConfiguration {

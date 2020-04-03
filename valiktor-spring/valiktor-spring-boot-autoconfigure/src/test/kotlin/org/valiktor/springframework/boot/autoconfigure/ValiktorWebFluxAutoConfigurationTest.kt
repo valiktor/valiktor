@@ -27,10 +27,10 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.codec.CodecConfigurer
 import org.springframework.http.codec.support.DefaultServerCodecConfigurer
 import org.springframework.web.reactive.DispatcherHandler
-import org.valiktor.springframework.handler.ValiktorExceptionHandler
-import org.valiktor.springframework.handler.webflux.ReactiveConstraintViolationExceptionHandler
-import org.valiktor.springframework.handler.webflux.ReactiveInvalidFormatExceptionHandler
-import org.valiktor.springframework.handler.webflux.ReactiveMissingKotlinParameterExceptionHandler
+import org.valiktor.springframework.http.ValiktorExceptionHandler
+import org.valiktor.springframework.http.webflux.ReactiveConstraintViolationExceptionHandler
+import org.valiktor.springframework.http.webflux.ReactiveInvalidFormatExceptionHandler
+import org.valiktor.springframework.http.webflux.ReactiveMissingKotlinParameterExceptionHandler
 import kotlin.test.Test
 
 class ValiktorWebFluxAutoConfigurationTest {

@@ -23,8 +23,8 @@ import org.springframework.stereotype.Component
 import org.valiktor.ConstraintViolationException
 import org.valiktor.i18n.mapToMessage
 import org.valiktor.springframework.config.ValiktorConfiguration
-import org.valiktor.springframework.handler.ValiktorExceptionHandler
-import org.valiktor.springframework.handler.ValiktorResponse
+import org.valiktor.springframework.http.ValiktorExceptionHandler
+import org.valiktor.springframework.http.ValiktorResponse
 import java.util.Locale
 
 data class ValidationError(

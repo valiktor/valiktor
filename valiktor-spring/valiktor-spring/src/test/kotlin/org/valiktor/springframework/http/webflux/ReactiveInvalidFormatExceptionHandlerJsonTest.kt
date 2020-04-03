@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.valiktor.springframework.handler.webflux
+package org.valiktor.springframework.http.webflux
 
 import org.springframework.http.HttpHeaders.ACCEPT_LANGUAGE
 import org.springframework.http.HttpHeaders.LOCATION
@@ -24,7 +24,7 @@ import java.util.Locale
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-class ReactiveMissingKotlinParameterExceptionHandlerJsonTest {
+class ReactiveInvalidFormatExceptionHandlerJsonTest {
 
     private val json = ReactiveExceptionHandlerFixture.JSON
     private val webClient = ReactiveExceptionHandlerFixture.webClient
@@ -49,46 +49,90 @@ class ReactiveMissingKotlinParameterExceptionHandlerJsonTest {
     }
 
     @Test
-    fun `should return 422 with default locale`() {
+    fun `should return 422 (In) with default locale`() {
         webClient
             .post()
             .uri("/employees")
             .accept(APPLICATION_JSON)
             .contentType(APPLICATION_JSON)
-            .bodyValue(json.payloadEmployeeNullName())
+            .bodyValue(json.payloadEmployeeInvalidStatus())
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
-            .expectBody().json(json.payload422NullName(Locale.ENGLISH))
+            .expectBody().json(json.payload422InvalidStatus(Locale.ENGLISH))
     }
 
     @Test
-    fun `should return 422 with locale en`() {
+    fun `should return 422 (In) with locale en`() {
         webClient
             .post()
             .uri("/employees")
             .accept(APPLICATION_JSON)
             .header(ACCEPT_LANGUAGE, "en")
             .contentType(APPLICATION_JSON)
-            .bodyValue(json.payloadEmployeeNullName())
+            .bodyValue(json.payloadEmployeeInvalidStatus())
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
-            .expectBody().json(json.payload422NullName(Locale.ENGLISH))
+            .expectBody().json(json.payload422InvalidStatus(Locale.ENGLISH))
     }
 
     @Test
-    fun `should return 422 with locale pt_BR`() {
+    fun `should return 422 (In) with locale pt_BR`() {
         webClient
             .post()
             .uri("/employees")
             .accept(APPLICATION_JSON)
             .header(ACCEPT_LANGUAGE, "pt-BR")
             .contentType(APPLICATION_JSON)
-            .bodyValue(json.payloadEmployeeNullName())
+            .bodyValue(json.payloadEmployeeInvalidStatus())
             .exchange()
             .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
-            .expectBody().json(json.payload422NullName(Locale("pt", "BR")))
+            .expectBody().json(json.payload422InvalidStatus(Locale("pt", "BR")))
+    }
+
+    @Test
+    fun `should return 422 (Valid) with default locale`() {
+        webClient
+            .post()
+            .uri("/employees")
+            .accept(APPLICATION_JSON)
+            .contentType(APPLICATION_JSON)
+            .bodyValue(json.payloadEmployeeInvalidSalary())
+            .exchange()
+            .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
+            .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
+            .expectBody().json(json.payload422InvalidSalary(Locale.ENGLISH))
+    }
+
+    @Test
+    fun `should return 422 (Valid) with locale en`() {
+        webClient
+            .post()
+            .uri("/employees")
+            .accept(APPLICATION_JSON)
+            .header(ACCEPT_LANGUAGE, "en")
+            .contentType(APPLICATION_JSON)
+            .bodyValue(json.payloadEmployeeInvalidSalary())
+            .exchange()
+            .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
+            .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
+            .expectBody().json(json.payload422InvalidSalary(Locale.ENGLISH))
+    }
+
+    @Test
+    fun `should return 422 (Valid) with locale pt_BR`() {
+        webClient
+            .post()
+            .uri("/employees")
+            .accept(APPLICATION_JSON)
+            .header(ACCEPT_LANGUAGE, "pt-BR")
+            .contentType(APPLICATION_JSON)
+            .bodyValue(json.payloadEmployeeInvalidSalary())
+            .exchange()
+            .expectStatus().isEqualTo(UNPROCESSABLE_ENTITY)
+            .expectHeader().contentTypeCompatibleWith(APPLICATION_JSON)
+            .expectBody().json(json.payload422InvalidSalary(Locale("pt", "BR")))
     }
 }
