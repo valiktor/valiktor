@@ -2,6 +2,14 @@
 
 All Valiktor releases
 
+## :rocket: 0.11.0
+> Published 04 Apr 2020
+
+### :tada: Features
+
+* [#39](https://github.com/valiktor/valiktor/pull/39) Added support for Coroutines 
+* [#41](https://github.com/valiktor/valiktor/pull/41) Added support for custom exception handlers
+
 ## :rocket: 0.10.0
 > Published 30 Mar 2020
 
