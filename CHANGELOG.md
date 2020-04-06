@@ -3,7 +3,7 @@
 All Valiktor releases
 
 ## :rocket: 0.11.0
-> Published 04 Apr 2020
+> Published 06 Apr 2020
 
 ### :tada: Features
 
