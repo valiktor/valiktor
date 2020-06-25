@@ -1,43 +1,14 @@
 package org.valiktor.functions
 
-import org.valiktor.DefaultConstraintViolation
 import org.valiktor.Validator
+import org.valiktor.constraints.Contains
+import org.valiktor.constraints.ContainsAll
+import org.valiktor.constraints.ContainsAny
 import org.valiktor.constraints.Empty
-import org.valiktor.constraints.In
+import org.valiktor.constraints.NotContain
+import org.valiktor.constraints.NotContainAll
+import org.valiktor.constraints.NotContainAny
 import org.valiktor.constraints.NotEmpty
-
-/**
- * Validates the map keys property initializing another DSL function recursively
- * @param block specifies the function DSL
- * @receiver the property to be validated
- * @return the same receiver property
- */
-@JvmName("validateKeys")
-inline fun <E, K, V> Validator<E>.Property<Map<K, V>?>.validateKeys(
-    block: Validator<K>.(K) -> Unit
-): Validator<E>.Property<Map<K, V>?> {
-    this.property.get(this.obj)?.keys?.forEach { key ->
-        this.addConstraintViolations(
-            Validator(key).apply { block(key) }.constraintViolations.map {
-                DefaultConstraintViolation(
-                    property = "${this.property.name}[${it.property}]",
-                    value = it.value,
-                    constraint = it.constraint
-                )
-            }
-        )
-    }
-    return this
-}
-
-/**
- * Validates if the [Map] property is equal to one of the values
- * @param block specifies the array of values to be compared
- * @receiver the property to be validated
- * @return the same receiver property
- */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isIn(vararg values: Map<K, V>): Validator<E>.Property<Map<K, V>?> =
-    this.validate(In(values.toSet())) { it == null || values.contains(it) }
 
 /**
  * Validates if the [Map] property is empty
@@ -57,12 +28,182 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isEmpty(): Validator<E>.Property
 fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isNotEmpty(): Validator<E>.Property<Map<K, V>?> =
     this.validate(NotEmpty) { it == null || it.count() > 0 }
 
-
 /**
- * Validates if the [Key] property is equal to one of the values
+ * Validates if the [Key] property contains the value
  * @param block specifies the array of values to be compared
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.keyIsIn(vararg values: K): Validator<E>.Property<Map<K, V>?> =
-    this.validate(In(values.toSet())) { it == null || it.keys.any { key -> values.contains(key) } }
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsKey(value: K): Validator<E>.Property<Map<K, V>?> =
+    this.validate(Contains(value)) { it == null || it.containsKey(value) }
+
+/**
+ * Validates if the [Key] property contains all values
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllKeys(vararg values: K): Validator<E>.Property<Map<K, V>?> =
+    this.validate(ContainsAll(values.toSet())) { it == null || values.toSet().all { e -> it.containsKey(e) } }
+
+/**
+ * Validates if the [Key] property contains all values
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllKeys(values: Iterable<K>): Validator<E>.Property<Map<K, V>?> =
+    this.validate(ContainsAll(values)) { it == null || values.all { e -> it.containsKey(e) } }
+
+/**
+ * Validates if the [Key] property contains any value
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyKeys(vararg values: K): Validator<E>.Property<Map<K, V>?> =
+    this.validate(ContainsAny(values.toSet())) { it == null || values.toSet().any { e -> it.containsKey(e) } }
+
+/**
+ * Validates if the [Key] property contains all values
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyKeys(values: Iterable<K>): Validator<E>.Property<Map<K, V>?> =
+    this.validate(ContainsAny(values)) { it == null || values.any { e -> it.containsKey(e) } }
+
+/**
+ * Validates if the [Key] property doesn't contains the value
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainsKey(value: K): Validator<E>.Property<Map<K, V>?> =
+    this.validate(NotContain(value)) { it == null || !it.containsKey(value) }
+
+/**
+ * Validates if the [Key] property doesn't contains all values
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainsAllKeys(vararg values: K): Validator<E>.Property<Map<K, V>?> =
+    this.validate(NotContainAll(values.toSet())) { it == null || !values.toSet().all { e -> it.containsKey(e) } }
+
+/**
+ * Validates if the [Key] property doesn't contains all values
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainsAllKeys(values: Iterable<K>): Validator<E>.Property<Map<K, V>?> =
+    this.validate(NotContainAll(values)) { it == null || !values.all { e -> it.containsKey(e) } }
+
+/**
+ * Validates if the [Key] property doesn't contains any value
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainsAnyKeys(vararg values: K): Validator<E>.Property<Map<K, V>?> =
+    this.validate(NotContainAny(values.toSet())) { it == null || !values.toSet().any { e -> it.containsKey(e) } }
+
+/**
+ * Validates if the [Key] property doesn't contains all values
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainsAnyKeys(values: Iterable<K>): Validator<E>.Property<Map<K, V>?> =
+    this.validate(NotContainAny(values)) { it == null || !values.any { e -> it.containsKey(e) } }
+
+/**
+ * Validates if the [Value] property contains the value
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsValue(value: V): Validator<E>.Property<Map<K, V>?> =
+    this.validate(Contains(value)) { it == null || it.containsValue(value) }
+
+/**
+ * Validates if the [Value] property contains all values
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllValues(vararg values: V): Validator<E>.Property<Map<K, V>?> =
+    this.validate(ContainsAll(values.toSet())) { it == null || values.toSet().all { e -> it.containsValue(e) } }
+
+/**
+ * Validates if the [Value] property contains all values
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllValues(values: Iterable<V>): Validator<E>.Property<Map<K, V>?> =
+    this.validate(ContainsAll(values)) { it == null || values.all { e -> it.containsValue(e) } }
+
+/**
+ * Validates if the [Value] property contains any value
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyValues(vararg values: V): Validator<E>.Property<Map<K, V>?> =
+    this.validate(ContainsAny(values.toSet())) { it == null || values.toSet().any { e -> it.containsValue(e) } }
+
+/**
+ * Validates if the [Value] property contains any value
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyValues(values: Iterable<V>): Validator<E>.Property<Map<K, V>?> =
+    this.validate(ContainsAny(values)) { it == null || values.any { e -> it.containsValue(e) } }
+
+/**
+ * Validates if the [Value] property doesn't contains the value
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainsValue(value: V): Validator<E>.Property<Map<K, V>?> =
+    this.validate(NotContain(value)) { it == null || !it.containsValue(value) }
+
+/**
+ * Validates if the [Value] property doesn't contains all values
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainsAllValues(vararg values: V): Validator<E>.Property<Map<K, V>?> =
+    this.validate(NotContainAll(values.toSet())) { it == null || !values.toSet().all { e -> it.containsValue(e) } }
+
+/**
+ * Validates if the [Value] property doesn't contains all values
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainsAllValues(values: Iterable<V>): Validator<E>.Property<Map<K, V>?> =
+    this.validate(NotContainAll(values)) { it == null || !values.all { e -> it.containsValue(e) } }
+
+/**
+ * Validates if the [Value] property doesn't contains any value
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainsAnyValues(vararg values: V): Validator<E>.Property<Map<K, V>?> =
+    this.validate(NotContainAny(values.toSet())) { it == null || !values.toSet().any { e -> it.containsValue(e) } }
+
+/**
+ * Validates if the [Value] property doesn't contains any value
+ * @param block specifies the array of values to be compared
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainsAnyValues(values: Iterable<V>): Validator<E>.Property<Map<K, V>?> =
+    this.validate(NotContainAny(values)) { it == null || !values.any { e -> it.containsValue(e) } }
