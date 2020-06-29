@@ -17,10 +17,10 @@ import org.valiktor.constraints.NotEquals
 import org.valiktor.constraints.NotNull
 import org.valiktor.constraints.Null
 import org.valiktor.functions.MapFunctionsFixture.Employee
-import org.valiktor.functions.MapFunctionsFixture.updatedAtMetadata
 import org.valiktor.functions.MapFunctionsFixture.createdAtMetadata
-import org.valiktor.functions.MapFunctionsFixture.startedPositionMetadata
 import org.valiktor.functions.MapFunctionsFixture.currentPositionMetadata
+import org.valiktor.functions.MapFunctionsFixture.startedPositionMetadata
+import org.valiktor.functions.MapFunctionsFixture.updatedAtMetadata
 import org.valiktor.validate
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
@@ -28,6 +28,7 @@ import kotlin.test.assertFailsWith
 private object MapFunctionsFixture {
 
     data class Employee(val metadata: Map<String, String>? = null)
+
     val createdAtMetadata = "createdAt" to "2020-02-20 10:05Z"
     val updatedAtMetadata = "updatedAt" to "2001-01-01 15:48Z"
     val startedPositionMetadata = "startedOn" to "BackEnd Development"
@@ -56,7 +57,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(startedPositionMetadata),
-                constraint = Null))
+                constraint = Null
+            )
+        )
     }
 
     @Test
@@ -78,7 +81,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = null,
-                constraint = NotNull))
+                constraint = NotNull
+            )
+        )
     }
 
     @Test
@@ -107,7 +112,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(startedPositionMetadata.copy(first = "endedOn")),
-                constraint = Equals(mapOf(startedPositionMetadata))))
+                constraint = Equals(mapOf(startedPositionMetadata))
+            )
+        )
     }
 
     @Test
@@ -122,7 +129,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(startedPositionMetadata.copy(second = "Manager")),
-                constraint = Equals(mapOf(startedPositionMetadata))))
+                constraint = Equals(mapOf(startedPositionMetadata))
+            )
+        )
     }
 
     @Test
@@ -144,7 +153,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(startedPositionMetadata),
-                constraint = NotEquals(mapOf(startedPositionMetadata))))
+                constraint = NotEquals(mapOf(startedPositionMetadata))
+            )
+        )
     }
 
     @Test
@@ -187,7 +198,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = emptyMap<String, String>(),
-                constraint = In(setOf(mapOf(startedPositionMetadata)))))
+                constraint = In(setOf(mapOf(startedPositionMetadata)))
+            )
+        )
     }
 
     @Test
@@ -202,7 +215,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(startedPositionMetadata.copy(first = "endedOn")),
-                constraint = In(setOf(mapOf(startedPositionMetadata)))))
+                constraint = In(setOf(mapOf(startedPositionMetadata)))
+            )
+        )
     }
 
     @Test
@@ -217,7 +232,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(startedPositionMetadata.copy(second = "Manager")),
-                constraint = In(setOf(mapOf(startedPositionMetadata)))))
+                constraint = In(setOf(mapOf(startedPositionMetadata)))
+            )
+        )
     }
 
     @Test
@@ -247,7 +264,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = emptyMap<String, String>(),
-                constraint = NotEmpty))
+                constraint = NotEmpty
+            )
+        )
     }
 
     @Test
@@ -276,7 +295,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata),
-                constraint = Contains("startedOn")))
+                constraint = Contains("startedOn")
+            )
+        )
     }
 
     @Test
@@ -305,7 +326,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = emptyMap<String, String>(),
-                constraint = ContainsAll(setOf("startedOn", "createdAt"))))
+                constraint = ContainsAll(setOf("startedOn", "createdAt"))
+            )
+        )
     }
 
     @Test
@@ -334,20 +357,22 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = emptyMap<String, String>(),
-                constraint = ContainsAll(setOf("startedOn", "createdAt"))))
+                constraint = ContainsAll(setOf("startedOn", "createdAt"))
+            )
+        )
     }
 
     @Test
     fun `containsAnyKey vararg with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).containsAnyKeys("startedOn")
+            validate(Employee::metadata).containsAnyKey("startedOn")
         }
     }
 
     @Test
     fun `containsAnyKey vararg with valid property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata, currentPositionMetadata))) {
-            validate(Employee::metadata).containsAnyKeys("startedOn", "currentOn")
+            validate(Employee::metadata).containsAnyKey("startedOn", "currentOn")
         }
     }
 
@@ -355,7 +380,7 @@ class MapFunctionsTest {
     fun `containsAnyKey vararg with empty property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = emptyMap())) {
-                validate(Employee::metadata).containsAnyKeys("startedOn", "currentOn")
+                validate(Employee::metadata).containsAnyKey("startedOn", "currentOn")
             }
         }
 
@@ -363,14 +388,16 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = emptyMap<String, String>(),
-                constraint = ContainsAny(setOf("startedOn", "currentOn"))))
+                constraint = ContainsAny(setOf("startedOn", "currentOn"))
+            )
+        )
     }
 
     @Test
     fun `containsAnyKey vararg with no match property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).containsAnyKeys("startedOn", "currentOn")
+                validate(Employee::metadata).containsAnyKey("startedOn", "currentOn")
             }
         }
 
@@ -378,20 +405,22 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = ContainsAny(setOf("startedOn", "currentOn"))))
+                constraint = ContainsAny(setOf("startedOn", "currentOn"))
+            )
+        )
     }
 
     @Test
     fun `containsAnyKey iterable with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).containsAnyKeys(setOf("startedOn", "createdAt"))
+            validate(Employee::metadata).containsAnyKey(setOf("startedOn", "createdAt"))
         }
     }
 
     @Test
     fun `containsAnyKey iterable with valid property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata, currentPositionMetadata))) {
-            validate(Employee::metadata).containsAnyKeys(setOf("startedOn", "currentOn"))
+            validate(Employee::metadata).containsAnyKey(setOf("startedOn", "currentOn"))
         }
     }
 
@@ -399,7 +428,7 @@ class MapFunctionsTest {
     fun `containsAnyKey iterable with empty property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = emptyMap())) {
-                validate(Employee::metadata).containsAnyKeys(setOf("startedOn", "currentOn"))
+                validate(Employee::metadata).containsAnyKey(setOf("startedOn", "currentOn"))
             }
         }
 
@@ -407,14 +436,16 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = emptyMap<String, String>(),
-                constraint = ContainsAny(setOf("startedOn", "currentOn"))))
+                constraint = ContainsAny(setOf("startedOn", "currentOn"))
+            )
+        )
     }
 
     @Test
     fun `containsAnyKey iterable with no match property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).containsAnyKeys(setOf("startedOn", "currentOn"))
+                validate(Employee::metadata).containsAnyKey(setOf("startedOn", "currentOn"))
             }
         }
 
@@ -422,20 +453,22 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = ContainsAny(setOf("startedOn", "currentOn"))))
+                constraint = ContainsAny(setOf("startedOn", "currentOn"))
+            )
+        )
     }
 
     @Test
     fun `doesNotContainKey with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).doesNotContainsKey("startedOn")
+            validate(Employee::metadata).doesNotContainKey("startedOn")
         }
     }
 
     @Test
     fun `doesNotContainKey with different property should be valid`() {
         validate(Employee(metadata = mapOf(startedPositionMetadata, updatedAtMetadata))) {
-            validate(Employee::metadata).doesNotContainsKey("createdAt")
+            validate(Employee::metadata).doesNotContainKey("createdAt")
         }
     }
 
@@ -443,7 +476,7 @@ class MapFunctionsTest {
     fun `doesNotContainKey with same property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).doesNotContainsKey("createdAt")
+                validate(Employee::metadata).doesNotContainKey("createdAt")
             }
         }
 
@@ -451,35 +484,37 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = NotContain("createdAt")))
+                constraint = NotContain("createdAt")
+            )
+        )
     }
 
     @Test
-    fun `doesNotContainsAllKeys vararg with null property should be valid`() {
+    fun `doesNotContainAllKeys vararg with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).doesNotContainsAllKeys("startedOn", "createdAt")
+            validate(Employee::metadata).doesNotContainAllKeys("startedOn", "createdAt")
         }
     }
 
     @Test
-    fun `doesNotContainsAllKeys vararg with empty property should be valid`() {
+    fun `doesNotContainAllKeys vararg with empty property should be valid`() {
         validate(Employee(metadata = emptyMap())) {
-            validate(Employee::metadata).doesNotContainsAllKeys("startedOn", "createdAt")
+            validate(Employee::metadata).doesNotContainAllKeys("startedOn", "createdAt")
         }
     }
 
     @Test
-    fun `doesNotContainsAllKeys vararg with different property should be valid`() {
+    fun `doesNotContainAllKeys vararg with different property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-            validate(Employee::metadata).doesNotContainsAllKeys("startedOn", "currentOn")
+            validate(Employee::metadata).doesNotContainAllKeys("startedOn", "currentOn")
         }
     }
 
     @Test
-    fun `doesNotContainsAllKeys vararg with same property should be invalid`() {
+    fun `doesNotContainAllKeys vararg with same property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).doesNotContainsAllKeys("createdAt", "updatedAt")
+                validate(Employee::metadata).doesNotContainAllKeys("createdAt", "updatedAt")
             }
         }
 
@@ -487,35 +522,37 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = NotContainAll(setOf("createdAt", "updatedAt"))))
+                constraint = NotContainAll(setOf("createdAt", "updatedAt"))
+            )
+        )
     }
 
     @Test
-    fun `doesNotContainsAllKeys iterable with null property should be valid`() {
+    fun `doesNotContainAllKeys iterable with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).doesNotContainsAllKeys(setOf("startedOn", "createdAt"))
+            validate(Employee::metadata).doesNotContainAllKeys(setOf("startedOn", "createdAt"))
         }
     }
 
     @Test
-    fun `doesNotContainsAllKeys iterable with empty property should be valid`() {
+    fun `doesNotContainAllKeys iterable with empty property should be valid`() {
         validate(Employee(metadata = emptyMap())) {
-            validate(Employee::metadata).doesNotContainsAllKeys(setOf("startedOn", "createdAt"))
+            validate(Employee::metadata).doesNotContainAllKeys(setOf("startedOn", "createdAt"))
         }
     }
 
     @Test
-    fun `doesNotContainsAllKeys iterable with different property should be valid`() {
+    fun `doesNotContainAllKeys iterable with different property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-            validate(Employee::metadata).doesNotContainsAllKeys(setOf("startedOn", "currentOn"))
+            validate(Employee::metadata).doesNotContainAllKeys(setOf("startedOn", "currentOn"))
         }
     }
 
     @Test
-    fun `doesNotContainsAllKeys iterable with same property should be invalid`() {
+    fun `doesNotContainAllKeys iterable with same property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).doesNotContainsAllKeys(setOf("createdAt", "updatedAt"))
+                validate(Employee::metadata).doesNotContainAllKeys(setOf("createdAt", "updatedAt"))
             }
         }
 
@@ -523,35 +560,37 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = NotContainAll(setOf("createdAt", "updatedAt"))))
+                constraint = NotContainAll(setOf("createdAt", "updatedAt"))
+            )
+        )
     }
 
     @Test
-    fun `doesNotContainsAnyKeys vararg with null property should be valid`() {
+    fun `doesNotContainAnyKey vararg with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).doesNotContainsAnyKeys("startedOn", "createdAt")
+            validate(Employee::metadata).doesNotContainAnyKey("startedOn", "createdAt")
         }
     }
 
     @Test
-    fun `doesNotContainsAnyKeys vararg with empty property should be valid`() {
+    fun `doesNotContainAnyKey vararg with empty property should be valid`() {
         validate(Employee(metadata = emptyMap())) {
-            validate(Employee::metadata).doesNotContainsAnyKeys("startedOn", "createdAt")
+            validate(Employee::metadata).doesNotContainAnyKey("startedOn", "createdAt")
         }
     }
 
     @Test
-    fun `doesNotContainsAnyKeys vararg with different property should be valid`() {
+    fun `doesNotContainAnyKey vararg with different property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-            validate(Employee::metadata).doesNotContainsAnyKeys("startedOn", "currentOn")
+            validate(Employee::metadata).doesNotContainAnyKey("startedOn", "currentOn")
         }
     }
 
     @Test
-    fun `doesNotContainsAnyKeys vararg with one same property should be invalid`() {
+    fun `doesNotContainAnyKey vararg with one same property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).doesNotContainsAnyKeys("createdAt", "currentOn")
+                validate(Employee::metadata).doesNotContainAnyKey("createdAt", "currentOn")
             }
         }
 
@@ -559,35 +598,37 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = NotContainAny(setOf("createdAt", "currentOn"))))
+                constraint = NotContainAny(setOf("createdAt", "currentOn"))
+            )
+        )
     }
 
     @Test
-    fun `doesNotContainsAnyKeys iterable with null property should be valid`() {
+    fun `doesNotContainAnyKey iterable with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).doesNotContainsAnyKeys(setOf("startedOn", "createdAt"))
+            validate(Employee::metadata).doesNotContainAnyKey(setOf("startedOn", "createdAt"))
         }
     }
 
     @Test
-    fun `doesNotContainsAnyKeys iterable with empty property should be valid`() {
+    fun `doesNotContainAnyKey iterable with empty property should be valid`() {
         validate(Employee(metadata = emptyMap())) {
-            validate(Employee::metadata).doesNotContainsAnyKeys(setOf("startedOn", "createdAt"))
+            validate(Employee::metadata).doesNotContainAnyKey(setOf("startedOn", "createdAt"))
         }
     }
 
     @Test
-    fun `doesNotContainsAnyKeys iterable with different property should be valid`() {
+    fun `doesNotContainAnyKey iterable with different property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-            validate(Employee::metadata).doesNotContainsAnyKeys(setOf("startedOn", "currentOn"))
+            validate(Employee::metadata).doesNotContainAnyKey(setOf("startedOn", "currentOn"))
         }
     }
 
     @Test
-    fun `doesNotContainsAnyKeys iterable with one same property should be invalid`() {
+    fun `doesNotContainAnyKey iterable with one same property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).doesNotContainsAnyKeys(setOf("createdAt", "currentOn"))
+                validate(Employee::metadata).doesNotContainAnyKey(setOf("createdAt", "currentOn"))
             }
         }
 
@@ -595,7 +636,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = NotContainAny(setOf("createdAt", "currentOn"))))
+                constraint = NotContainAny(setOf("createdAt", "currentOn"))
+            )
+        )
     }
 
     @Test
@@ -617,7 +660,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata),
-                constraint = Contains("BackEnd Development")))
+                constraint = Contains("BackEnd Development")
+            )
+        )
     }
 
     @Test
@@ -646,7 +691,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = emptyMap<String, String>(),
-                constraint = ContainsAll(setOf("BackEnd Development", "2020-02-20 10:05Z"))))
+                constraint = ContainsAll(setOf("BackEnd Development", "2020-02-20 10:05Z"))
+            )
+        )
     }
 
     @Test
@@ -675,7 +722,9 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = emptyMap<String, String>(),
-                constraint = ContainsAll(setOf("BackEnd Development", "2020-02-20 10:05Z"))))
+                constraint = ContainsAll(setOf("BackEnd Development", "2020-02-20 10:05Z"))
+            )
+        )
     }
 
     @Test
@@ -690,20 +739,22 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(updatedAtMetadata),
-                constraint = ContainsAll(setOf("BackEnd Development", "2020-02-20 10:05Z"))))
+                constraint = ContainsAll(setOf("BackEnd Development", "2020-02-20 10:05Z"))
+            )
+        )
     }
 
     @Test
     fun `containsAnyValue vararg with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).containsAnyValues("BackEnd Development")
+            validate(Employee::metadata).containsAnyValue("BackEnd Development")
         }
     }
 
     @Test
     fun `containsAnyValue vararg with valid property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata, currentPositionMetadata))) {
-            validate(Employee::metadata).containsAnyValues("BackEnd Development", "BackEnd Development II")
+            validate(Employee::metadata).containsAnyValue("BackEnd Development", "BackEnd Development II")
         }
     }
 
@@ -711,7 +762,7 @@ class MapFunctionsTest {
     fun `containsAnyValue vararg with empty property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = emptyMap())) {
-                validate(Employee::metadata).containsAnyValues("BackEnd Development", "BackEnd Development II")
+                validate(Employee::metadata).containsAnyValue("BackEnd Development", "BackEnd Development II")
             }
         }
 
@@ -719,14 +770,16 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = emptyMap<String, String>(),
-                constraint = ContainsAny(setOf("BackEnd Development", "BackEnd Development II"))))
+                constraint = ContainsAny(setOf("BackEnd Development", "BackEnd Development II"))
+            )
+        )
     }
 
     @Test
     fun `containsAnyValue vararg with no match property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).containsAnyValues("BackEnd Development", "BackEnd Development II")
+                validate(Employee::metadata).containsAnyValue("BackEnd Development", "BackEnd Development II")
             }
         }
 
@@ -734,20 +787,22 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = ContainsAny(setOf("BackEnd Development", "BackEnd Development II"))))
+                constraint = ContainsAny(setOf("BackEnd Development", "BackEnd Development II"))
+            )
+        )
     }
 
     @Test
     fun `containsAnyValue iterable with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).containsAnyValues(setOf("BackEnd Development", "2020-02-20 10:05Z"))
+            validate(Employee::metadata).containsAnyValue(setOf("BackEnd Development", "2020-02-20 10:05Z"))
         }
     }
 
     @Test
     fun `containsAnyValue iterable with valid property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata, currentPositionMetadata))) {
-            validate(Employee::metadata).containsAnyValues(setOf("BackEnd Development", "BackEnd Development II"))
+            validate(Employee::metadata).containsAnyValue(setOf("BackEnd Development", "BackEnd Development II"))
         }
     }
 
@@ -755,7 +810,7 @@ class MapFunctionsTest {
     fun `containsAnyValue iterable with empty property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = emptyMap())) {
-                validate(Employee::metadata).containsAnyValues(setOf("BackEnd Development", "BackEnd Development II"))
+                validate(Employee::metadata).containsAnyValue(setOf("BackEnd Development", "BackEnd Development II"))
             }
         }
 
@@ -763,14 +818,16 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = emptyMap<String, String>(),
-                constraint = ContainsAny(setOf("BackEnd Development", "BackEnd Development II"))))
+                constraint = ContainsAny(setOf("BackEnd Development", "BackEnd Development II"))
+            )
+        )
     }
 
     @Test
     fun `containsAnyValue iterable with no match property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).containsAnyValues(setOf("BackEnd Development", "BackEnd Development II"))
+                validate(Employee::metadata).containsAnyValue(setOf("BackEnd Development", "BackEnd Development II"))
             }
         }
 
@@ -778,28 +835,30 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = ContainsAny(setOf("BackEnd Development", "BackEnd Development II"))))
+                constraint = ContainsAny(setOf("BackEnd Development", "BackEnd Development II"))
+            )
+        )
     }
 
     @Test
-    fun `doesNotContainsValue with null property should be valid`() {
+    fun `doesNotContainValue with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).doesNotContainsValue("BackEnd Development")
+            validate(Employee::metadata).doesNotContainValue("BackEnd Development")
         }
     }
 
     @Test
-    fun `doesNotContainsValue with different property should be valid`() {
+    fun `doesNotContainValue with different property should be valid`() {
         validate(Employee(metadata = mapOf(startedPositionMetadata, updatedAtMetadata))) {
-            validate(Employee::metadata).doesNotContainsValue("2020-02-20 10:05Z")
+            validate(Employee::metadata).doesNotContainValue("2020-02-20 10:05Z")
         }
     }
 
     @Test
-    fun `doesNotContainsValue with same property should be invalid`() {
+    fun `doesNotContainValue with same property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).doesNotContainsValue("2020-02-20 10:05Z")
+                validate(Employee::metadata).doesNotContainValue("2020-02-20 10:05Z")
             }
         }
 
@@ -807,35 +866,36 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = NotContain("2020-02-20 10:05Z")))
+                constraint = NotContain("2020-02-20 10:05Z"))
+        )
     }
 
     @Test
-    fun `doesNotContainsAllValues vararg with null property should be valid`() {
+    fun `doesNotContainAllValues vararg with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).doesNotContainsAllValues("BackEnd Development", "2020-02-20 10:05Z")
+            validate(Employee::metadata).doesNotContainAllValues("BackEnd Development", "2020-02-20 10:05Z")
         }
     }
 
     @Test
-    fun `doesNotContainsAllValues vararg with empty property should be valid`() {
+    fun `doesNotContainAllValues vararg with empty property should be valid`() {
         validate(Employee(metadata = emptyMap())) {
-            validate(Employee::metadata).doesNotContainsAllValues("BackEnd Development", "2020-02-20 10:05Z")
+            validate(Employee::metadata).doesNotContainAllValues("BackEnd Development", "2020-02-20 10:05Z")
         }
     }
 
     @Test
-    fun `doesNotContainsAllValues vararg with different property should be valid`() {
+    fun `doesNotContainAllValues vararg with different property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-            validate(Employee::metadata).doesNotContainsAllValues("BackEnd Development", "BackEnd Development II")
+            validate(Employee::metadata).doesNotContainAllValues("BackEnd Development", "BackEnd Development II")
         }
     }
 
     @Test
-    fun `doesNotContainsAllValues vararg with same property should be invalid`() {
+    fun `doesNotContainAllValues vararg with same property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).doesNotContainsAllValues("2020-02-20 10:05Z", "2001-01-01 15:48Z")
+                validate(Employee::metadata).doesNotContainAllValues("2020-02-20 10:05Z", "2001-01-01 15:48Z")
             }
         }
 
@@ -843,35 +903,37 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = NotContainAll(setOf("2020-02-20 10:05Z", "2001-01-01 15:48Z"))))
+                constraint = NotContainAll(setOf("2020-02-20 10:05Z", "2001-01-01 15:48Z"))
+            )
+        )
     }
 
     @Test
-    fun `doesNotContainsAllValues iterable with null property should be valid`() {
+    fun `doesNotContainAllValues iterable with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).doesNotContainsAllValues(setOf("BackEnd Development", "2020-02-20 10:05Z"))
+            validate(Employee::metadata).doesNotContainAllValues(setOf("BackEnd Development", "2020-02-20 10:05Z"))
         }
     }
 
     @Test
-    fun `doesNotContainsAllValues iterable with empty property should be valid`() {
+    fun `doesNotContainAllValues iterable with empty property should be valid`() {
         validate(Employee(metadata = emptyMap())) {
-            validate(Employee::metadata).doesNotContainsAllValues(setOf("BackEnd Development", "2020-02-20 10:05Z"))
+            validate(Employee::metadata).doesNotContainAllValues(setOf("BackEnd Development", "2020-02-20 10:05Z"))
         }
     }
 
     @Test
-    fun `doesNotContainsAllValues iterable with different property should be valid`() {
+    fun `doesNotContainAllValues iterable with different property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-            validate(Employee::metadata).doesNotContainsAllValues(setOf("BackEnd Development", "BackEnd Development II"))
+            validate(Employee::metadata).doesNotContainAllValues(setOf("BackEnd Development", "BackEnd Development II"))
         }
     }
 
     @Test
-    fun `doesNotContainsAllValues iterable with same property should be invalid`() {
+    fun `doesNotContainAllValues iterable with same property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).doesNotContainsAllValues(setOf("2020-02-20 10:05Z", "2001-01-01 15:48Z"))
+                validate(Employee::metadata).doesNotContainAllValues(setOf("2020-02-20 10:05Z", "2001-01-01 15:48Z"))
             }
         }
 
@@ -879,35 +941,37 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = NotContainAll(setOf("2020-02-20 10:05Z", "2001-01-01 15:48Z"))))
+                constraint = NotContainAll(setOf("2020-02-20 10:05Z", "2001-01-01 15:48Z"))
+            )
+        )
     }
 
     @Test
-    fun `doesNotContainsAnyValues vararg with null property should be valid`() {
+    fun `doesNotContainAnyValue vararg with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).doesNotContainsAnyValues("BackEnd Development", "2020-02-20 10:05Z")
+            validate(Employee::metadata).doesNotContainAnyValue("BackEnd Development", "2020-02-20 10:05Z")
         }
     }
 
     @Test
-    fun `doesNotContainsAnyValues vararg with empty property should be valid`() {
+    fun `doesNotContainAnyValue vararg with empty property should be valid`() {
         validate(Employee(metadata = emptyMap())) {
-            validate(Employee::metadata).doesNotContainsAnyValues("BackEnd Development", "2020-02-20 10:05Z")
+            validate(Employee::metadata).doesNotContainAnyValue("BackEnd Development", "2020-02-20 10:05Z")
         }
     }
 
     @Test
-    fun `doesNotContainsAnyValues vararg with different property should be valid`() {
+    fun `doesNotContainAnyValue vararg with different property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-            validate(Employee::metadata).doesNotContainsAnyValues("BackEnd Development", "BackEnd Development II")
+            validate(Employee::metadata).doesNotContainAnyValue("BackEnd Development", "BackEnd Development II")
         }
     }
 
     @Test
-    fun `doesNotContainsAnyValues vararg with one same property should be invalid`() {
+    fun `doesNotContainAnyValue vararg with one same property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).doesNotContainsAnyValues("2020-02-20 10:05Z", "BackEnd Development II")
+                validate(Employee::metadata).doesNotContainAnyValue("2020-02-20 10:05Z", "BackEnd Development II")
             }
         }
 
@@ -915,35 +979,38 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = NotContainAny(setOf("2020-02-20 10:05Z", "BackEnd Development II"))))
+                constraint = NotContainAny(setOf("2020-02-20 10:05Z", "BackEnd Development II"))
+            )
+        )
     }
 
     @Test
-    fun `doesNotContainsAnyValues iterable with null property should be valid`() {
+    fun `doesNotContainAnyValue iterable with null property should be valid`() {
         validate(Employee()) {
-            validate(Employee::metadata).doesNotContainsAnyValues(setOf("BackEnd Development", "2020-02-20 10:05Z"))
+            validate(Employee::metadata).doesNotContainAnyValue(setOf("BackEnd Development", "2020-02-20 10:05Z"))
         }
     }
 
     @Test
-    fun `doesNotContainsAnyValues iterable with empty property should be valid`() {
+    fun `doesNotContainAnyValue iterable with empty property should be valid`() {
         validate(Employee(metadata = emptyMap())) {
-            validate(Employee::metadata).doesNotContainsAnyValues(setOf("BackEnd Development", "2020-02-20 10:05Z"))
+            validate(Employee::metadata).doesNotContainAnyValue(setOf("BackEnd Development", "2020-02-20 10:05Z"))
         }
     }
 
     @Test
-    fun `doesNotContainsAnyValues iterable with different property should be valid`() {
+    fun `doesNotContainAnyValue iterable with different property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-            validate(Employee::metadata).doesNotContainsAnyValues(setOf("BackEnd Development", "BackEnd Development II"))
+            validate(Employee::metadata).doesNotContainAnyValue(setOf("BackEnd Development", "BackEnd Development II"))
         }
     }
 
     @Test
-    fun `doesNotContainsAnyValues iterable with one same property should be invalid`() {
+    fun `doesNotContainAnyValue iterable with one same property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).doesNotContainsAnyValues(setOf("2020-02-20 10:05Z", "BackEnd Development II"))
+                validate(Employee::metadata).doesNotContainAnyValue(setOf("2020-02-20 10:05Z",
+                    "BackEnd Development II"))
             }
         }
 
@@ -951,6 +1018,8 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = NotContainAny(setOf("2020-02-20 10:05Z", "BackEnd Development II"))))
+                constraint = NotContainAny(setOf("2020-02-20 10:05Z", "BackEnd Development II"))
+            )
+        )
     }
 }
