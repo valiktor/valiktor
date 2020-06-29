@@ -2,6 +2,13 @@
 
 All Valiktor releases
 
+## :rocket: 0.12.0
+> Published 28 Jun 2020
+
+### :tada: Features
+
+* [#44](https://github.com/valiktor/valiktor/pull/44) Added support for Map properties
+
 ## :rocket: 0.11.0
 > Published 06 Apr 2020
 
