@@ -14,6 +14,7 @@ import org.valiktor.constraints.NotContainAll
 import org.valiktor.constraints.NotContainAny
 import org.valiktor.constraints.NotEmpty
 import org.valiktor.constraints.NotEquals
+import org.valiktor.constraints.NotIn
 import org.valiktor.constraints.NotNull
 import org.valiktor.constraints.Null
 import org.valiktor.functions.MapFunctionsFixture.Employee
@@ -29,8 +30,8 @@ private object MapFunctionsFixture {
 
     data class Employee(val metadata: Map<String, String>? = null)
 
-    val createdAtMetadata = "createdAt" to "2020-02-20 10:05Z"
-    val updatedAtMetadata = "updatedAt" to "2001-01-01 15:48Z"
+    val createdAtMetadata = "createdAt" to "2001-01-01 15:48Z"
+    val updatedAtMetadata = "updatedAt" to "2020-02-20 10:05Z"
     val startedPositionMetadata = "startedOn" to "BackEnd Development"
     val currentPositionMetadata = "currentOn" to "BackEnd Development II"
 }
@@ -642,6 +643,166 @@ class MapFunctionsTest {
     }
 
     @Test
+    fun `isInKeys vararg with null property should be valid`() {
+        validate(Employee()) {
+            validate(Employee::metadata).isInKeys("createdAt", "updatedAt", "currentOn", "startedOn")
+        }
+    }
+
+    @Test
+    fun `isInKeys vararg with same values should be valid`() {
+        validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
+            validate(Employee::metadata).isInKeys("createdAt", "updatedAt", "currentOn", "startedOn")
+        }
+    }
+
+    @Test
+    fun `isInKeys vararg with different values should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = mapOf(createdAtMetadata, startedPositionMetadata))) {
+                validate(Employee::metadata).isInKeys("createdAt", "updatedAt", "currentOn")
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(
+                property = "metadata",
+                value = mapOf(createdAtMetadata, startedPositionMetadata),
+                constraint = In(setOf("createdAt", "updatedAt", "currentOn"))))
+    }
+
+    @Test
+    fun `isInKeys vararg with empty maps should be valid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = emptyMap())) {
+                validate(Employee::metadata).isInKeys("createdAt", "updatedAt", "currentOn")
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(
+                property = "metadata",
+                value = emptyMap<String, String>(),
+                constraint = In(setOf("createdAt", "updatedAt", "currentOn"))))
+    }
+
+    @Test
+    fun `isInKeys iterable with null property should be valid`() {
+        validate(Employee()) {
+            validate(Employee::metadata).isInKeys(setOf("createdAt", "updatedAt", "currentOn", "startedOn"))
+        }
+    }
+
+    @Test
+    fun `isInKeys iterable with same values should be valid`() {
+        validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
+            validate(Employee::metadata).isInKeys(setOf("createdAt", "updatedAt", "currentOn", "startedOn"))
+        }
+    }
+
+    @Test
+    fun `isInKeys iterable with different values should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = mapOf(createdAtMetadata, startedPositionMetadata))) {
+                validate(Employee::metadata).isInKeys(setOf("createdAt", "updatedAt", "currentOn"))
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(
+                property = "metadata",
+                value = mapOf(createdAtMetadata, startedPositionMetadata),
+                constraint = In(setOf("createdAt", "updatedAt", "currentOn"))))
+    }
+
+    @Test
+    fun `isInKeys iterable with empty maps should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = emptyMap())) {
+                validate(Employee::metadata).isInKeys(setOf("createdAt", "updatedAt", "currentOn"))
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(
+                property = "metadata",
+                value = emptyMap<String, String>(),
+                constraint = In(setOf("createdAt", "updatedAt", "currentOn"))))
+    }
+
+    @Test
+    fun `isNotInKeys vararg with null property should be valid`() {
+        validate(Employee()) {
+            validate(Employee::metadata).isNotInKeys("createdAt", "updatedAt")
+        }
+    }
+
+    @Test
+    fun `isNotInKeys vararg with different property should be valid`() {
+        validate(Employee(metadata = mapOf(startedPositionMetadata))) {
+            validate(Employee::metadata).isNotInKeys("createdAt", "updatedAt")
+        }
+    }
+
+    @Test
+    fun `isNotInKeys vararg with empty property should be valid`() {
+        validate(Employee(metadata = emptyMap())) {
+            validate(Employee::metadata).isNotInKeys("createdAt", "updatedAt")
+        }
+    }
+
+    @Test
+    fun `isNotInKeys vararg with same property should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = mapOf(createdAtMetadata))) {
+                validate(Employee::metadata).isNotInKeys("createdAt", "updatedAt")
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(DefaultConstraintViolation(
+            property = "metadata",
+            value = mapOf(createdAtMetadata),
+            constraint = NotIn(setOf("createdAt", "updatedAt"))
+        ))
+    }
+
+    @Test
+    fun `isNotInKeys iterable with null property should be valid`() {
+        validate(Employee()) {
+            validate(Employee::metadata).isNotInKeys(setOf("createdAt", "updatedAt"))
+        }
+    }
+
+    @Test
+    fun `isNotInKeys iterable with different property should be valid`() {
+        validate(Employee(metadata = mapOf(startedPositionMetadata))) {
+            validate(Employee::metadata).isNotInKeys(setOf("createdAt", "updatedAt"))
+        }
+    }
+
+    @Test
+    fun `isNotInKeys iterable with empty property should be valid`() {
+        validate(Employee(metadata = emptyMap())) {
+            validate(Employee::metadata).isNotInKeys(setOf("createdAt", "updatedAt"))
+        }
+    }
+
+    @Test
+    fun `isNotInKeys iterable with same property should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = mapOf(createdAtMetadata))) {
+                validate(Employee::metadata).isNotInKeys(setOf("createdAt", "updatedAt"))
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(DefaultConstraintViolation(
+            property = "metadata",
+            value = mapOf(createdAtMetadata),
+            constraint = NotIn(setOf("createdAt", "updatedAt"))
+        ))
+    }
+
+    @Test
     fun `containsValue with same property should be valid`() {
         validate(Employee(metadata = mapOf(createdAtMetadata, startedPositionMetadata))) {
             validate(Employee::metadata).containsValue("BackEnd Development")
@@ -850,7 +1011,7 @@ class MapFunctionsTest {
     @Test
     fun `doesNotContainValue with different property should be valid`() {
         validate(Employee(metadata = mapOf(startedPositionMetadata, updatedAtMetadata))) {
-            validate(Employee::metadata).doesNotContainValue("2020-02-20 10:05Z")
+            validate(Employee::metadata).doesNotContainValue("2020-01-01 09:05Z")
         }
     }
 
@@ -1021,5 +1182,165 @@ class MapFunctionsTest {
                 constraint = NotContainAny(setOf("2020-02-20 10:05Z", "BackEnd Development II"))
             )
         )
+    }
+
+    @Test
+    fun `isInValues vararg with null property should be valid`() {
+        validate(Employee()) {
+            validate(Employee::metadata).isInValues("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II", "BackEnd Development")
+        }
+    }
+
+    @Test
+    fun `isInValues vararg with same values should be valid`() {
+        validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
+            validate(Employee::metadata).isInValues("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II", "BackEnd Development")
+        }
+    }
+
+    @Test
+    fun `isInValues vararg with different values should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = mapOf(createdAtMetadata, startedPositionMetadata))) {
+                validate(Employee::metadata).isInValues("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II")
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(
+                property = "metadata",
+                value = mapOf(createdAtMetadata, startedPositionMetadata),
+                constraint = In(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II"))))
+    }
+
+    @Test
+    fun `isInValues vararg with empty maps should be valid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = emptyMap())) {
+                validate(Employee::metadata).isInValues("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II")
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(
+                property = "metadata",
+                value = emptyMap<String, String>(),
+                constraint = In(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II"))))
+    }
+
+    @Test
+    fun `isInValues iterable with null property should be valid`() {
+        validate(Employee()) {
+            validate(Employee::metadata).isInValues(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II", "BackEnd Development"))
+        }
+    }
+
+    @Test
+    fun `isInValues iterable with same values should be valid`() {
+        validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
+            validate(Employee::metadata).isInValues(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II", "BackEnd Development"))
+        }
+    }
+
+    @Test
+    fun `isInValues iterable with different values should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = mapOf(createdAtMetadata, startedPositionMetadata))) {
+                validate(Employee::metadata).isInValues(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II"))
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(
+                property = "metadata",
+                value = mapOf(createdAtMetadata, startedPositionMetadata),
+                constraint = In(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II"))))
+    }
+
+    @Test
+    fun `isInValues iterable with empty maps should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = emptyMap())) {
+                validate(Employee::metadata).isInValues(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II"))
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+            DefaultConstraintViolation(
+                property = "metadata",
+                value = emptyMap<String, String>(),
+                constraint = In(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z", "BackEnd Development II"))))
+    }
+
+    @Test
+    fun `isNotInValues vararg with null property should be valid`() {
+        validate(Employee()) {
+            validate(Employee::metadata).isNotInValues("2001-01-01 15:48Z", "2020-02-20 10:05Z")
+        }
+    }
+
+    @Test
+    fun `isNotInValues vararg with different property should be valid`() {
+        validate(Employee(metadata = mapOf(startedPositionMetadata))) {
+            validate(Employee::metadata).isNotInValues("2001-01-01 15:48Z", "2020-02-20 10:05Z")
+        }
+    }
+
+    @Test
+    fun `isNotInValues vararg with empty property should be valid`() {
+        validate(Employee(metadata = emptyMap())) {
+            validate(Employee::metadata).isNotInValues("2001-01-01 15:48Z", "2020-02-20 10:05Z")
+        }
+    }
+
+    @Test
+    fun `isNotInValues vararg with same property should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = mapOf(createdAtMetadata))) {
+                validate(Employee::metadata).isNotInValues("2001-01-01 15:48Z", "2020-02-20 10:05Z")
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(DefaultConstraintViolation(
+            property = "metadata",
+            value = mapOf(createdAtMetadata),
+            constraint = NotIn(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z"))
+        ))
+    }
+
+    @Test
+    fun `isNotInValues iterable with null property should be valid`() {
+        validate(Employee()) {
+            validate(Employee::metadata).isNotInValues(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z"))
+        }
+    }
+
+    @Test
+    fun `isNotInValues iterable with different property should be valid`() {
+        validate(Employee(metadata = mapOf(startedPositionMetadata))) {
+            validate(Employee::metadata).isNotInValues(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z"))
+        }
+    }
+
+    @Test
+    fun `isNotInValues iterable with empty property should be valid`() {
+        validate(Employee(metadata = emptyMap())) {
+            validate(Employee::metadata).isNotInValues(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z"))
+        }
+    }
+
+    @Test
+    fun `isNotInValues iterable with same property should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee(metadata = mapOf(createdAtMetadata))) {
+                validate(Employee::metadata).isNotInValues(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z"))
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(DefaultConstraintViolation(
+            property = "metadata",
+            value = mapOf(createdAtMetadata),
+            constraint = NotIn(setOf("2001-01-01 15:48Z", "2020-02-20 10:05Z"))
+        ))
     }
 }
