@@ -158,7 +158,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isInKeys(keys: Iterable<K>): Val
  * @return the same receiver property
  */
 fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isNotInKeys(vararg keys: K): Validator<E>.Property<Map<K, V>?> =
-    this.validate(NotIn(keys.toSet())) { it == null ||  it.keys.none { e -> keys.contains(e) }  }
+    this.validate(NotIn(keys.toSet())) { it == null || it.keys.none { e -> keys.contains(e) } }
 
 /**
  * Validates if the [Map] property isn't equal to all of the values
@@ -278,7 +278,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAnyValue(values: I
  * @return the same receiver property
  */
 fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isInValues(vararg values: V): Validator<E>.Property<Map<K, V>?> =
-    this.validate(In(values.toSet())) { it == null || (it.isNotEmpty() && it.values.all { e -> values.contains(e) } ) }
+    this.validate(In(values.toSet())) { it == null || (it.isNotEmpty() && it.values.all { e -> values.contains(e) }) }
 
 /**
  * Validates if the [Map] property is equal to all of the values
@@ -288,8 +288,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isInValues(vararg values: V): Va
  * @return the same receiver property
  */
 fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isInValues(values: Iterable<V>): Validator<E>.Property<Map<K, V>?> =
-    this.validate(In(values.toSet())) { it == null || (it.isNotEmpty() && it.values.all { e -> values.contains(e) } ) }
-
+    this.validate(In(values.toSet())) { it == null || (it.isNotEmpty() && it.values.all { e -> values.contains(e) }) }
 
 /**
  * Validates if the [Map] property isn't equal to all of the values
