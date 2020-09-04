@@ -135,8 +135,10 @@ open class Validator<E>(private val obj: E) {
          * @param isValid specifies the validation function
          * @return the ValidatedType validator
          */
-        fun validate(constraint: (ValidatedType?) -> Constraint,
-                     isValid: (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType> {
+        fun validate(
+            constraint: (ValidatedType?) -> Constraint,
+            isValid: (ValidatedType?) -> Boolean
+        ): ReceiverValidator<ValidatedClass, ValidatedType> {
             if (!isValid(value())) {
                 addConstraintViolation(constraint)
             }
@@ -164,8 +166,10 @@ open class Validator<E>(private val obj: E) {
          * @param isValid specifies the validation function
          * @return the ValidatedType validator
          */
-        suspend fun coValidate(constraint: (ValidatedType?) -> Constraint,
-                               isValid: suspend (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType> {
+        suspend fun coValidate(
+            constraint: (ValidatedType?) -> Constraint,
+            isValid: suspend (ValidatedType?) -> Boolean
+        ): ReceiverValidator<ValidatedClass, ValidatedType> {
             if (!isValid(value())) {
                 addConstraintViolation(constraint)
             }
@@ -232,7 +236,7 @@ open class Validator<E>(private val obj: E) {
      * @see KProperty1
      * @since 0.1.0
      */
-    open inner class Property<T>(val obj: E, val property: KProperty1<E, T?>): ReceiverValidator<E, T>() {
+    open inner class Property<T>(val obj: E, val property: KProperty1<E, T?>) : ReceiverValidator<E, T>() {
 
         override fun name(): String = this.property.name
 
