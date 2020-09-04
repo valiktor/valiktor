@@ -26,16 +26,16 @@ import java.time.ZonedDateTime
  * Validates if the [ZonedDateTime] property is today
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<ZonedDateTime?>.isToday(): Validator<E>.Property<ZonedDateTime?> =
+fun <E> Validator<E>.ReceiverValidator<E, ZonedDateTime?>.isToday(): Validator<E>.ReceiverValidator<E, ZonedDateTime?> =
     this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.zone) }
 
 /**
  * Validates if the [ZonedDateTime] property isn't today
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<ZonedDateTime?>.isNotToday(): Validator<E>.Property<ZonedDateTime?> =
+fun <E> Validator<E>.ReceiverValidator<E, ZonedDateTime?>.isNotToday(): Validator<E>.ReceiverValidator<E, ZonedDateTime?> =
     this.validate(NotToday) { it == null || it.toLocalDate() != LocalDate.now(it.zone) }

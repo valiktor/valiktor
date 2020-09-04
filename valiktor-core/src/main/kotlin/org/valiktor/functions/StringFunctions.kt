@@ -47,36 +47,36 @@ import org.valiktor.constraints.Website
  * Validates if the [String] property is empty
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isEmpty(): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isEmpty(): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(Empty) { it == null || it.isEmpty() }
 
 /**
  * Validates if the [String] property is not empty
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isNotEmpty(): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isNotEmpty(): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotEmpty) { it == null || it.isNotEmpty() }
 
 /**
  * Validates if the [String] property is blank
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isBlank(): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isBlank(): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(Blank) { it == null || it.isBlank() }
 
 /**
  * Validates if the [String] property is not blank
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isNotBlank(): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isNotBlank(): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotBlank) { it == null || it.isNotBlank() }
 
 /**
@@ -84,9 +84,9 @@ fun <E> Validator<E>.Property<String?>.isNotBlank(): Validator<E>.Property<Strin
  *
  * @param value specifies the value that should be equal
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isEqualToIgnoringCase(value: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isEqualToIgnoringCase(value: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(Equals(value)) { it == null || it.equals(other = value, ignoreCase = true) }
 
 /**
@@ -94,9 +94,9 @@ fun <E> Validator<E>.Property<String?>.isEqualToIgnoringCase(value: String): Val
  *
  * @param value specifies the value that should not be equal
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isNotEqualToIgnoringCase(value: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isNotEqualToIgnoringCase(value: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotEquals(value)) { it == null || !it.equals(other = value, ignoreCase = true) }
 
 /**
@@ -104,9 +104,9 @@ fun <E> Validator<E>.Property<String?>.isNotEqualToIgnoringCase(value: String): 
  *
  * @param values specifies the array of values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isInIgnoringCase(vararg values: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isInIgnoringCase(vararg values: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(In(values.toSet())) { it == null || values.toSet().any { e -> it.equals(other = e, ignoreCase = true) } }
 
 /**
@@ -114,9 +114,9 @@ fun <E> Validator<E>.Property<String?>.isInIgnoringCase(vararg values: String): 
  *
  * @param values specifies the iterable of values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isInIgnoringCase(values: Iterable<String>): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isInIgnoringCase(values: Iterable<String>): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(In(values)) { it == null || values.any { e -> it.equals(other = e, ignoreCase = true) } }
 
 /**
@@ -124,9 +124,9 @@ fun <E> Validator<E>.Property<String?>.isInIgnoringCase(values: Iterable<String>
  *
  * @param values specifies the array of values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isNotInIgnoringCase(vararg values: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isNotInIgnoringCase(vararg values: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotIn(values.toSet())) { it == null || values.toSet().none { e -> it.equals(other = e, ignoreCase = true) } }
 
 /**
@@ -134,9 +134,9 @@ fun <E> Validator<E>.Property<String?>.isNotInIgnoringCase(vararg values: String
  *
  * @param values specifies the iterable of values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isNotInIgnoringCase(values: Iterable<String>): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isNotInIgnoringCase(values: Iterable<String>): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotIn(values)) { it == null || values.none { e -> it.equals(other = e, ignoreCase = true) } }
 
 /**
@@ -145,9 +145,9 @@ fun <E> Validator<E>.Property<String?>.isNotInIgnoringCase(values: Iterable<Stri
  * @param min specifies the minimum size
  * @param max specifies the maximum size
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.hasSize(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.hasSize(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(Size(min, max)) { it == null || it.length in min.rangeTo(max) }
 
 /**
@@ -155,9 +155,9 @@ fun <E> Validator<E>.Property<String?>.hasSize(min: Int = Int.MIN_VALUE, max: In
  *
  * @param value specifies the value that should contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.contains(value: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.contains(value: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(Contains(value)) { it == null || it.contains(value) }
 
 /**
@@ -165,9 +165,9 @@ fun <E> Validator<E>.Property<String?>.contains(value: String): Validator<E>.Pro
  *
  * @param value specifies the value that should contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.containsIgnoringCase(value: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.containsIgnoringCase(value: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(Contains(value)) { it == null || it.contains(other = value, ignoreCase = true) }
 
 /**
@@ -175,9 +175,9 @@ fun <E> Validator<E>.Property<String?>.containsIgnoringCase(value: String): Vali
  *
  * @param values specifies the all values that should contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.containsAll(vararg values: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.containsAll(vararg values: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(ContainsAll(values.toSet())) { it == null || values.toSet().all { e -> it.contains(e) } }
 
 /**
@@ -185,9 +185,9 @@ fun <E> Validator<E>.Property<String?>.containsAll(vararg values: String): Valid
  *
  * @param values specifies the all values that should contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.containsAll(values: Iterable<String>): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.containsAll(values: Iterable<String>): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(ContainsAll(values)) { it == null || values.all { e -> it.contains(e) } }
 
 /**
@@ -195,9 +195,9 @@ fun <E> Validator<E>.Property<String?>.containsAll(values: Iterable<String>): Va
  *
  * @param values specifies the all values that should contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.containsAllIgnoringCase(vararg values: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.containsAllIgnoringCase(vararg values: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(ContainsAll(values.toSet())) { it == null || values.toSet().all { e -> it.contains(other = e, ignoreCase = true) } }
 
 /**
@@ -205,9 +205,9 @@ fun <E> Validator<E>.Property<String?>.containsAllIgnoringCase(vararg values: St
  *
  * @param values specifies the all values that should contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.containsAllIgnoringCase(values: Iterable<String>): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.containsAllIgnoringCase(values: Iterable<String>): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(ContainsAll(values)) { it == null || values.all { e -> it.contains(other = e, ignoreCase = true) } }
 
 /**
@@ -215,9 +215,9 @@ fun <E> Validator<E>.Property<String?>.containsAllIgnoringCase(values: Iterable<
  *
  * @param values specifies the values that one should contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.containsAny(vararg values: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.containsAny(vararg values: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(ContainsAny(values.toSet())) { it == null || values.toSet().any { e -> it.contains(e) } }
 
 /**
@@ -225,9 +225,9 @@ fun <E> Validator<E>.Property<String?>.containsAny(vararg values: String): Valid
  *
  * @param values specifies the values that one should contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.containsAny(values: Iterable<String>): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.containsAny(values: Iterable<String>): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(ContainsAny(values)) { it == null || values.any { e -> it.contains(e) } }
 
 /**
@@ -235,9 +235,9 @@ fun <E> Validator<E>.Property<String?>.containsAny(values: Iterable<String>): Va
  *
  * @param values specifies the values that one should contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.containsAnyIgnoringCase(vararg values: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.containsAnyIgnoringCase(vararg values: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(ContainsAny(values.toSet())) { it == null || values.toSet().any { e -> it.contains(other = e, ignoreCase = true) } }
 
 /**
@@ -245,9 +245,9 @@ fun <E> Validator<E>.Property<String?>.containsAnyIgnoringCase(vararg values: St
  *
  * @param values specifies the values that one should contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.containsAnyIgnoringCase(values: Iterable<String>): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.containsAnyIgnoringCase(values: Iterable<String>): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(ContainsAny(values)) { it == null || values.any { e -> it.contains(other = e, ignoreCase = true) } }
 
 /**
@@ -255,9 +255,9 @@ fun <E> Validator<E>.Property<String?>.containsAnyIgnoringCase(values: Iterable<
  *
  * @param value specifies the value that shouldn't contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotContain(value: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotContain(value: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotContain(value)) { it == null || !it.contains(value) }
 
 /**
@@ -265,9 +265,9 @@ fun <E> Validator<E>.Property<String?>.doesNotContain(value: String): Validator<
  *
  * @param value specifies the value that shouldn't contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotContainIgnoringCase(value: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotContainIgnoringCase(value: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotContain(value)) { it == null || !it.contains(other = value, ignoreCase = true) }
 
 /**
@@ -275,9 +275,9 @@ fun <E> Validator<E>.Property<String?>.doesNotContainIgnoringCase(value: String)
  *
  * @param values specifies the all values that shouldn't contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotContainAll(vararg values: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotContainAll(vararg values: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotContainAll(values.toSet())) { it == null || !values.toSet().all { e -> it.contains(e) } }
 
 /**
@@ -285,9 +285,9 @@ fun <E> Validator<E>.Property<String?>.doesNotContainAll(vararg values: String):
  *
  * @param values specifies the all values that shouldn't contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotContainAll(values: Iterable<String>): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotContainAll(values: Iterable<String>): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotContainAll(values)) { it == null || !values.all { e -> it.contains(e) } }
 
 /**
@@ -295,9 +295,9 @@ fun <E> Validator<E>.Property<String?>.doesNotContainAll(values: Iterable<String
  *
  * @param values specifies the all values that shouldn't contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotContainAllIgnoringCase(vararg values: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotContainAllIgnoringCase(vararg values: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotContainAll(values.toSet())) { it == null || !values.toSet().all { e -> it.contains(other = e, ignoreCase = true) } }
 
 /**
@@ -305,9 +305,9 @@ fun <E> Validator<E>.Property<String?>.doesNotContainAllIgnoringCase(vararg valu
  *
  * @param values specifies the all values that shouldn't contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotContainAllIgnoringCase(values: Iterable<String>): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotContainAllIgnoringCase(values: Iterable<String>): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotContainAll(values)) { it == null || !values.all { e -> it.contains(other = e, ignoreCase = true) } }
 
 /**
@@ -315,9 +315,9 @@ fun <E> Validator<E>.Property<String?>.doesNotContainAllIgnoringCase(values: Ite
  *
  * @param values specifies the values that one shouldn't contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotContainAny(vararg values: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotContainAny(vararg values: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotContainAny(values.toSet())) { it == null || !values.toSet().any { e -> it.contains(e) } }
 
 /**
@@ -325,9 +325,9 @@ fun <E> Validator<E>.Property<String?>.doesNotContainAny(vararg values: String):
  *
  * @param values specifies the values that one shouldn't contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotContainAny(values: Iterable<String>): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotContainAny(values: Iterable<String>): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotContainAny(values)) { it == null || !values.any { e -> it.contains(e) } }
 
 /**
@@ -335,9 +335,9 @@ fun <E> Validator<E>.Property<String?>.doesNotContainAny(values: Iterable<String
  *
  * @param values specifies the values that one shouldn't contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotContainAnyIgnoringCase(vararg values: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotContainAnyIgnoringCase(vararg values: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotContainAny(values.toSet())) { it == null || !values.toSet().any { e -> it.contains(other = e, ignoreCase = true) } }
 
 /**
@@ -345,9 +345,9 @@ fun <E> Validator<E>.Property<String?>.doesNotContainAnyIgnoringCase(vararg valu
  *
  * @param values specifies the values that one shouldn't contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotContainAnyIgnoringCase(values: Iterable<String>): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotContainAnyIgnoringCase(values: Iterable<String>): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotContainAny(values)) { it == null || !values.any { e -> it.contains(other = e, ignoreCase = true) } }
 
 /**
@@ -355,9 +355,9 @@ fun <E> Validator<E>.Property<String?>.doesNotContainAnyIgnoringCase(values: Ite
  *
  * @param regex specifies the pattern value that should match
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.matches(regex: Regex): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.matches(regex: Regex): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(Matches(regex)) { it == null || it.matches(regex) }
 
 /**
@@ -365,9 +365,9 @@ fun <E> Validator<E>.Property<String?>.matches(regex: Regex): Validator<E>.Prope
  *
  * @param regex specifies the pattern value that shouldn't match
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotMatch(regex: Regex): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotMatch(regex: Regex): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotMatch(regex)) { it == null || !it.matches(regex) }
 
 /**
@@ -375,9 +375,9 @@ fun <E> Validator<E>.Property<String?>.doesNotMatch(regex: Regex): Validator<E>.
  *
  * @param regex specifies the pattern value that should contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.contains(regex: Regex): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.contains(regex: Regex): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(ContainsRegex(regex)) { it == null || it.contains(regex) }
 
 /**
@@ -385,9 +385,9 @@ fun <E> Validator<E>.Property<String?>.contains(regex: Regex): Validator<E>.Prop
  *
  * @param regex specifies the pattern value that shouldn't contain
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotContain(regex: Regex): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotContain(regex: Regex): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotContainRegex(regex)) { it == null || !it.contains(regex) }
 
 /**
@@ -395,9 +395,9 @@ fun <E> Validator<E>.Property<String?>.doesNotContain(regex: Regex): Validator<E
  *
  * @param prefix specifies the value that should start
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.startsWith(prefix: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.startsWith(prefix: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(StartsWith(prefix)) { it == null || it.startsWith(prefix) }
 
 /**
@@ -405,9 +405,9 @@ fun <E> Validator<E>.Property<String?>.startsWith(prefix: String): Validator<E>.
  *
  * @param prefix specifies the value that should start
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.startsWithIgnoringCase(prefix: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.startsWithIgnoringCase(prefix: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(StartsWith(prefix)) { it == null || it.startsWith(prefix = prefix, ignoreCase = true) }
 
 /**
@@ -415,9 +415,9 @@ fun <E> Validator<E>.Property<String?>.startsWithIgnoringCase(prefix: String): V
  *
  * @param prefix specifies the value that shouldn't start
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotStartWith(prefix: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotStartWith(prefix: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotStartWith(prefix)) { it == null || !it.startsWith(prefix) }
 
 /**
@@ -425,9 +425,9 @@ fun <E> Validator<E>.Property<String?>.doesNotStartWith(prefix: String): Validat
  *
  * @param prefix specifies the value that shouldn't start
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotStartWithIgnoringCase(prefix: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotStartWithIgnoringCase(prefix: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotStartWith(prefix)) { it == null || !it.startsWith(prefix = prefix, ignoreCase = true) }
 
 /**
@@ -435,9 +435,9 @@ fun <E> Validator<E>.Property<String?>.doesNotStartWithIgnoringCase(prefix: Stri
  *
  * @param suffix specifies the value that should end
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.endsWith(suffix: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.endsWith(suffix: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(EndsWith(suffix)) { it == null || it.endsWith(suffix) }
 
 /**
@@ -445,9 +445,9 @@ fun <E> Validator<E>.Property<String?>.endsWith(suffix: String): Validator<E>.Pr
  *
  * @param suffix specifies the value that should end
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.endsWithIgnoringCase(suffix: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.endsWithIgnoringCase(suffix: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(EndsWith(suffix)) { it == null || it.endsWith(suffix = suffix, ignoreCase = true) }
 
 /**
@@ -455,9 +455,9 @@ fun <E> Validator<E>.Property<String?>.endsWithIgnoringCase(suffix: String): Val
  *
  * @param suffix specifies the value that shouldn't end
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotEndWith(suffix: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotEndWith(suffix: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotEndWith(suffix)) { it == null || !it.endsWith(suffix) }
 
 /**
@@ -465,18 +465,18 @@ fun <E> Validator<E>.Property<String?>.doesNotEndWith(suffix: String): Validator
  *
  * @param suffix specifies the value that shouldn't end
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.doesNotEndWithIgnoringCase(suffix: String): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.doesNotEndWithIgnoringCase(suffix: String): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(NotEndWith(suffix)) { it == null || !it.endsWith(suffix = suffix, ignoreCase = true) }
 
 /**
  * Validates if the [String] property value is a valid email
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isEmail(): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isEmail(): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(Email) {
         it == null || it.matches(Regex(
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
@@ -486,9 +486,9 @@ fun <E> Validator<E>.Property<String?>.isEmail(): Validator<E>.Property<String?>
  * Validates if the [String] property value is a valid website
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<String?>.isWebsite(): Validator<E>.Property<String?> =
+fun <E> Validator<E>.ReceiverValidator<E, String?>.isWebsite(): Validator<E>.ReceiverValidator<E, String?> =
     this.validate(Website) {
         it == null || it.matches(Regex(
             "^(https?:\\/\\/)?([a-zA-Z0-9]+(-?[a-zA-Z0-9])*\\.)+[\\w]{2,}(\\/\\S*)?\$"))

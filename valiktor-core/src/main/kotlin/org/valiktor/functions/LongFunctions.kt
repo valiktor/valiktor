@@ -29,72 +29,72 @@ import org.valiktor.constraints.NotEquals
  * Validates if the [Long] property is equal to zero
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Long?>.isZero(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ReceiverValidator<E, Long?>.isZero(): Validator<E>.ReceiverValidator<E, Long?> =
     this.validate(Equals(0L)) { it == null || it == 0L }
 
 /**
  * Validates if the [Long] property is not equal to zero
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Long?>.isNotZero(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ReceiverValidator<E, Long?>.isNotZero(): Validator<E>.ReceiverValidator<E, Long?> =
     this.validate(NotEquals(0L)) { it == null || it != 0L }
 
 /**
  * Validates if the [Long] property is equal to one
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Long?>.isOne(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ReceiverValidator<E, Long?>.isOne(): Validator<E>.ReceiverValidator<E, Long?> =
     this.validate(Equals(1L)) { it == null || it == 1L }
 
 /**
  * Validates if the [Long] property is not equal to one
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Long?>.isNotOne(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ReceiverValidator<E, Long?>.isNotOne(): Validator<E>.ReceiverValidator<E, Long?> =
     this.validate(NotEquals(1L)) { it == null || it != 1L }
 
 /**
  * Validates if the [Long] property is positive
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Long?>.isPositive(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ReceiverValidator<E, Long?>.isPositive(): Validator<E>.ReceiverValidator<E, Long?> =
     this.validate(Greater(0L)) { it == null || it > 0L }
 
 /**
  * Validates if the [Long] property isn't negative
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Long?>.isPositiveOrZero(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ReceiverValidator<E, Long?>.isPositiveOrZero(): Validator<E>.ReceiverValidator<E, Long?> =
     this.validate(GreaterOrEqual(0L)) { it == null || it >= 0L }
 
 /**
  * Validates if the [Long] property is negative
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Long?>.isNegative(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ReceiverValidator<E, Long?>.isNegative(): Validator<E>.ReceiverValidator<E, Long?> =
     this.validate(Less(0L)) { it == null || it < 0L }
 
 /**
  * Validates if the [Long] property isn't positive
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Long?>.isNegativeOrZero(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ReceiverValidator<E, Long?>.isNegativeOrZero(): Validator<E>.ReceiverValidator<E, Long?> =
     this.validate(LessOrEqual(0L)) { it == null || it <= 0L }
 
 /**
@@ -104,7 +104,7 @@ fun <E> Validator<E>.Property<Long?>.isNegativeOrZero(): Validator<E>.Property<L
  * @property max specifies the maximum size
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Long?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ReceiverValidator<E, Long?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ReceiverValidator<E, Long?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) }

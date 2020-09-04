@@ -26,16 +26,16 @@ import java.time.OffsetDateTime
  * Validates if the [OffsetDateTime] property is today
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<OffsetDateTime?>.isToday(): Validator<E>.Property<OffsetDateTime?> =
+fun <E> Validator<E>.ReceiverValidator<E, OffsetDateTime?>.isToday(): Validator<E>.ReceiverValidator<E, OffsetDateTime?> =
     this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.offset) }
 
 /**
  * Validates if the [OffsetDateTime] property isn't today
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<OffsetDateTime?>.isNotToday(): Validator<E>.Property<OffsetDateTime?> =
+fun <E> Validator<E>.ReceiverValidator<E, OffsetDateTime?>.isNotToday(): Validator<E>.ReceiverValidator<E, OffsetDateTime?> =
     this.validate(NotToday) { it == null || it.toLocalDate() != LocalDate.now(it.offset) }

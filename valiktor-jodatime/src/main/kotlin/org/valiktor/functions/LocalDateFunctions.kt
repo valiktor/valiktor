@@ -25,16 +25,16 @@ import org.valiktor.constraints.Today
  * Validates if the [LocalDate] property is today
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<LocalDate?>.isToday(): Validator<E>.Property<LocalDate?> =
+fun <E> Validator<E>.ReceiverValidator<E, LocalDate?>.isToday(): Validator<E>.ReceiverValidator<E, LocalDate?> =
     this.validate(Today) { it == null || it == LocalDate.now() }
 
 /**
  * Validates if the [LocalDate] property isn't today
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<LocalDate?>.isNotToday(): Validator<E>.Property<LocalDate?> =
+fun <E> Validator<E>.ReceiverValidator<E, LocalDate?>.isNotToday(): Validator<E>.ReceiverValidator<E, LocalDate?> =
     this.validate(NotToday) { it == null || it != LocalDate.now() }

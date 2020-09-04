@@ -36,90 +36,90 @@ import org.valiktor.constraints.UpperCase
  * Validates if the [Char] property is a whitespace
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isWhitespace(): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isWhitespace(): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(Blank) { it == null || it.isWhitespace() }
 
 /**
  * Validates if the [Char] property is not a whitespace
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isNotWhitespace(): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isNotWhitespace(): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(NotBlank) { it == null || !it.isWhitespace() }
 
 /**
  * Validates if the [Char] property is a letter
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isLetter(): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isLetter(): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(Letter) { it == null || it.isLetter() }
 
 /**
  * Validates if the [Char] property is not a letter
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isNotLetter(): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isNotLetter(): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(NotLetter) { it == null || !it.isLetter() }
 
 /**
  * Validates if the [Char] property is a digit
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isDigit(): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isDigit(): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(Digit) { it == null || it.isDigit() }
 
 /**
  * Validates if the [Char] property is not a digit
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isNotDigit(): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isNotDigit(): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(NotDigit) { it == null || !it.isDigit() }
 
 /**
  * Validates if the [Char] property is a letter or a digit
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isLetterOrDigit(): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isLetterOrDigit(): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(LetterOrDigit) { it == null || it.isLetterOrDigit() }
 
 /**
  * Validates if the [Char] property is not a letter or a digit
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isNotLetterOrDigit(): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isNotLetterOrDigit(): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(NotLetterOrDigit) { it == null || !it.isLetterOrDigit() }
 
 /**
  * Validates if the [Char] property is uppercase
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isUpperCase(): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isUpperCase(): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(UpperCase) { it == null || it.isUpperCase() }
 
 /**
  * Validates if the [Char] property is lowercase
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isLowerCase(): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isLowerCase(): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(LowerCase) { it == null || it.isLowerCase() }
 
 /**
@@ -127,9 +127,9 @@ fun <E> Validator<E>.Property<Char?>.isLowerCase(): Validator<E>.Property<Char?>
  *
  * @param value specifies the value that should be equal
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isEqualToIgnoringCase(value: Char): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isEqualToIgnoringCase(value: Char): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(Equals(value)) { it == null || it.equals(other = value, ignoreCase = true) }
 
 /**
@@ -137,9 +137,9 @@ fun <E> Validator<E>.Property<Char?>.isEqualToIgnoringCase(value: Char): Validat
  *
  * @param value specifies the value that should not be equal
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isNotEqualToIgnoringCase(value: Char): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isNotEqualToIgnoringCase(value: Char): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(NotEquals(value)) { it == null || !it.equals(other = value, ignoreCase = true) }
 
 /**
@@ -147,9 +147,9 @@ fun <E> Validator<E>.Property<Char?>.isNotEqualToIgnoringCase(value: Char): Vali
  *
  * @param values specifies the array of values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isInIgnoringCase(vararg values: Char): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isInIgnoringCase(vararg values: Char): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(In(values.toSet())) { it == null || values.toSet().any { e -> it.equals(other = e, ignoreCase = true) } }
 
 /**
@@ -157,9 +157,9 @@ fun <E> Validator<E>.Property<Char?>.isInIgnoringCase(vararg values: Char): Vali
  *
  * @param values specifies the iterable of values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isInIgnoringCase(values: Iterable<Char>): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isInIgnoringCase(values: Iterable<Char>): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(In(values)) { it == null || values.any { e -> it.equals(other = e, ignoreCase = true) } }
 
 /**
@@ -167,9 +167,9 @@ fun <E> Validator<E>.Property<Char?>.isInIgnoringCase(values: Iterable<Char>): V
  *
  * @param values specifies the array of values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isNotInIgnoringCase(vararg values: Char): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isNotInIgnoringCase(vararg values: Char): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(NotIn(values.toSet())) { it == null || values.toSet().none { e -> it.equals(other = e, ignoreCase = true) } }
 
 /**
@@ -177,7 +177,7 @@ fun <E> Validator<E>.Property<Char?>.isNotInIgnoringCase(vararg values: Char): V
  *
  * @param values specifies the iterable of values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Char?>.isNotInIgnoringCase(values: Iterable<Char>): Validator<E>.Property<Char?> =
+fun <E> Validator<E>.ReceiverValidator<E, Char?>.isNotInIgnoringCase(values: Iterable<Char>): Validator<E>.ReceiverValidator<E, Char?> =
     this.validate(NotIn(values)) { it == null || values.none { e -> it.equals(other = e, ignoreCase = true) } }

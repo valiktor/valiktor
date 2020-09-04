@@ -16,6 +16,7 @@
 
 package org.valiktor
 
+import kotlin.reflect.KFunction
 import kotlin.reflect.KProperty1
 
 /**
@@ -87,6 +88,147 @@ open class Validator<E>(private val obj: E) {
     fun <T> validate(property: KProperty1<E, Array<T>?>): Property<Array<T>?> = Property(obj, property)
 
     /**
+     * Returns a [Function] for this function's return value.
+     *
+     * @receiver the function to be validated
+     * @return the function validator
+     */
+    @JvmName("validateFunction")
+    fun <T> validate(function: KFunction<T?>): Function<T?> = Function(obj, function)
+
+    /**
+     * Returns a [Function] for this array function's return value.
+     *
+     * @receiver the function to be validated
+     * @return the function validator
+     */
+    @JvmName("validateArrayFunction")
+    fun <T> validate(function: KFunction<Array<T>?>): Function<Array<T>?> = Function(obj, function)
+
+    /**
+     * Returns a [Function] for this iterable function's return value.
+     *
+     * @receiver the function to be validated
+     * @return the function validator
+     */
+    @JvmName("validateIterableFunction")
+    fun <T> validate(function: KFunction<Iterable<T>?>): Function<Iterable<T>?> = Function(obj, function)
+
+    abstract inner class ReceiverValidator<ValidatedClass, ValidatedType> {
+
+        /**
+         * @return the name of the source of the ValidatedType
+         */
+        abstract fun name(): String
+
+        /**
+         * @return the value returned from the source of the ValidatedType
+         */
+        abstract fun value(): ValidatedType?
+
+        /**
+         * Validates the ValidatedType by passing the constraint and the validation function
+         *
+         * This function is used by all constraint validations
+         *
+         * @param constraint specifies the function that returns the constraint to be validated
+         * @param isValid specifies the validation function
+         * @return the ValidatedType validator
+         */
+        abstract fun validate(constraint: (ValidatedType?) -> Constraint,
+                              isValid: (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType>
+
+        /**
+         * Validates the ValidatedType by passing the constraint and the validation function
+         *
+         * This function is used by all constraint validations
+         *
+         * @param constraint specifies the constraint that will be validated
+         * @param isValid specifies the validation function
+         * @return the ValidatedType validator
+         */
+        fun validate(constraint: Constraint, isValid: (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType> =
+                validate({ constraint }, isValid)
+
+        /**
+         * Validates the ValidatedType by passing the constraint and the suspending validation function
+         *
+         * This function is used by all constraint validations
+         *
+         * @param constraint specifies the function that returns the constraint to be validated
+         * @param isValid specifies the validation function
+         * @return the ValidatedType validator
+         */
+        abstract suspend fun coValidate(constraint: (ValidatedType?) -> Constraint,
+                                        isValid: suspend (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType>
+
+        /**
+         * Validates the ValidatedType by passing the constraint and the suspending validation function
+         *
+         * This function is used by all constraint validations
+         *
+         * @param constraint specifies the constraint that will be validated
+         * @param isValid specifies the validation function
+         * @return the ValidatedType validator
+         */
+        suspend fun coValidate(constraint: Constraint, isValid: suspend (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType> =
+                coValidate({ constraint }, isValid)
+
+        /**
+         * Adds the constraint violations to property
+         *
+         * @param constraintViolations specifies the constraint violations
+         */
+        abstract fun addConstraintViolations(constraintViolations: Iterable<ConstraintViolation>)
+    }
+
+    /**
+     * Represents a function validator that contains extended functions
+     *
+     * @param obj specifies the object to be validated
+     * @param function specifies the function to be validated
+     *
+     * @author Thomas Krause
+     * @see Validator
+     * @see KFunction
+     * @since 1.5.0
+     */
+    open inner class Function<T>(val obj: E, val function: KFunction<T?>) : ReceiverValidator<E, T>() {
+
+        override fun name(): String = this.function.name
+
+        override fun value(): T? = function.call(obj)
+
+        override fun validate(constraint: (T?) -> Constraint, isValid: (T?) -> Boolean): Function<T> {
+            val value = this.function.call(this.obj)
+            if (!isValid(value)) {
+                this@Validator.constraintViolations += DefaultConstraintViolation(
+                    property = this.function.name,
+                    value = value,
+                    constraint = constraint(value)
+                )
+            }
+            return this
+        }
+
+        override suspend fun coValidate(constraint: (T?) -> Constraint, isValid: suspend (T?) -> Boolean): Function<T> {
+            val value = this.function.call()
+            if (!isValid(value)) {
+                this@Validator.constraintViolations += DefaultConstraintViolation(
+                    property = this.function.name,
+                    value = value,
+                    constraint = constraint(value)
+                )
+            }
+            return this
+        }
+
+        override fun addConstraintViolations(constraintViolations: Iterable<ConstraintViolation>) {
+            this@Validator.constraintViolations += constraintViolations
+        }
+    }
+
+    /**
      * Represents a property validator that contains extended functions
      *
      * @param obj specifies the object to be validated
@@ -97,18 +239,13 @@ open class Validator<E>(private val obj: E) {
      * @see KProperty1
      * @since 0.1.0
      */
-    open inner class Property<T>(val obj: E, val property: KProperty1<E, T?>) {
+    open inner class Property<T>(val obj: E, val property: KProperty1<E, T?>): ReceiverValidator<E, T>() {
 
-        /**
-         * Validates the property by passing the constraint and the validation function
-         *
-         * This function is used by all constraint validations
-         *
-         * @param constraint specifies the function that returns the constraint to be validated
-         * @param isValid specifies the validation function
-         * @return the property validator
-         */
-        fun validate(constraint: (T?) -> Constraint, isValid: (T?) -> Boolean): Property<T> {
+        override fun name(): String = this.property.name
+
+        override fun value(): T? = this.property.get(obj)
+
+        override fun validate(constraint: (T?) -> Constraint, isValid: (T?) -> Boolean): Property<T> {
             val value = this.property.get(this.obj)
             if (!isValid(value)) {
                 this@Validator.constraintViolations += DefaultConstraintViolation(
@@ -120,28 +257,7 @@ open class Validator<E>(private val obj: E) {
             return this
         }
 
-        /**
-         * Validates the property by passing the constraint and the validation function
-         *
-         * This function is used by all constraint validations
-         *
-         * @param constraint specifies the constraint that will be validated
-         * @param isValid specifies the validation function
-         * @return the property validator
-         */
-        fun validate(constraint: Constraint, isValid: (T?) -> Boolean): Property<T> =
-            validate({ constraint }, isValid)
-
-        /**
-         * Validates the property by passing the constraint and the suspending validation function
-         *
-         * This function is used by all constraint validations
-         *
-         * @param constraint specifies the function that returns the constraint to be validated
-         * @param isValid specifies the validation function
-         * @return the property validator
-         */
-        suspend fun coValidate(constraint: (T?) -> Constraint, isValid: suspend (T?) -> Boolean): Property<T> {
+        override suspend fun coValidate(constraint: (T?) -> Constraint, isValid: suspend (T?) -> Boolean): Property<T> {
             val value = this.property.get(this.obj)
             if (!isValid(value)) {
                 this@Validator.constraintViolations += DefaultConstraintViolation(
@@ -153,24 +269,7 @@ open class Validator<E>(private val obj: E) {
             return this
         }
 
-        /**
-         * Validates the property by passing the constraint and the suspending validation function
-         *
-         * This function is used by all constraint validations
-         *
-         * @param constraint specifies the constraint that will be validated
-         * @param isValid specifies the validation function
-         * @return the property validator
-         */
-        suspend fun coValidate(constraint: Constraint, isValid: suspend (T?) -> Boolean): Property<T> =
-            coValidate({ constraint }, isValid)
-
-        /**
-         * Adds the constraint violations to property
-         *
-         * @param constraintViolations specifies the constraint violations
-         */
-        fun addConstraintViolations(constraintViolations: Iterable<ConstraintViolation>) {
+        override fun addConstraintViolations(constraintViolations: Iterable<ConstraintViolation>) {
             this@Validator.constraintViolations += constraintViolations
         }
     }

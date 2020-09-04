@@ -45,9 +45,9 @@ import java.math.BigDecimal.ZERO
  *
  * @param value specifies the [Money] value that should be equal
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isEqualTo(value: Money): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isEqualTo(value: Money): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(Equals(value)) { it == null || it.safelyEquals(value) }
 
 /**
@@ -55,9 +55,9 @@ fun <E> Validator<E>.Property<Money?>.isEqualTo(value: Money): Validator<E>.Prop
  *
  * @param value specifies the [Number] value that should be equal
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isEqualTo(value: Number): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isEqualTo(value: Number): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { Equals(Money.of(it?.currencyUnit, value.asBigDecimal())) },
         { it == null || it.compareTo(Money.of(it.currencyUnit, value.asBigDecimal())) == 0 })
@@ -67,9 +67,9 @@ fun <E> Validator<E>.Property<Money?>.isEqualTo(value: Number): Validator<E>.Pro
  *
  * @param value specifies the [Money] value that should be equal
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isNotEqualTo(value: Money): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isNotEqualTo(value: Money): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(NotEquals(value)) { it == null || !it.safelyEquals(value) }
 
 /**
@@ -77,9 +77,9 @@ fun <E> Validator<E>.Property<Money?>.isNotEqualTo(value: Money): Validator<E>.P
  *
  * @param value specifies the [Number] value that should not be equal
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isNotEqualTo(value: Number): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isNotEqualTo(value: Number): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { NotEquals(Money.of(it?.currencyUnit, value.asBigDecimal())) },
         { it == null || it.compareTo(Money.of(it.currencyUnit, value.asBigDecimal())) != 0 })
@@ -89,9 +89,9 @@ fun <E> Validator<E>.Property<Money?>.isNotEqualTo(value: Number): Validator<E>.
  *
  * @param values specifies the array of [Money] values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isIn(vararg values: Money): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isIn(vararg values: Money): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(In(values.toSet())) { it == null || values.any { e -> it.safelyEquals(e) } }
 
 /**
@@ -99,9 +99,9 @@ fun <E> Validator<E>.Property<Money?>.isIn(vararg values: Money): Validator<E>.P
  *
  * @param values specifies the array of [Number] values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isIn(vararg values: Number): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isIn(vararg values: Number): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { In(values.map { value -> Money.of(it?.currencyUnit, value.asBigDecimal()) }.toSet()) },
         { it == null || values.map { value -> Money.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } })
@@ -111,9 +111,9 @@ fun <E> Validator<E>.Property<Money?>.isIn(vararg values: Number): Validator<E>.
  *
  * @param values specifies the iterable of [Money] values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isIn(values: Iterable<Money>): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isIn(values: Iterable<Money>): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(In(values)) { it == null || values.any { e -> it.safelyEquals(e) } }
 
 /**
@@ -121,10 +121,10 @@ fun <E> Validator<E>.Property<Money?>.isIn(values: Iterable<Money>): Validator<E
  *
  * @param values specifies the iterable of [Number] values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
 @JvmName("isInNumber")
-fun <E> Validator<E>.Property<Money?>.isIn(values: Iterable<Number>): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isIn(values: Iterable<Number>): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { In(values.map { value -> Money.of(it?.currencyUnit, value.asBigDecimal()) }) },
         { it == null || values.map { value -> Money.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } })
@@ -134,9 +134,9 @@ fun <E> Validator<E>.Property<Money?>.isIn(values: Iterable<Number>): Validator<
  *
  * @param values specifies the array of [Money] values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isNotIn(vararg values: Money): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isNotIn(vararg values: Money): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(NotIn(values.toSet())) { it == null || !values.any { e -> it.safelyEquals(e) } }
 
 /**
@@ -144,9 +144,9 @@ fun <E> Validator<E>.Property<Money?>.isNotIn(vararg values: Money): Validator<E
  *
  * @param values specifies the array of [Number] values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isNotIn(vararg values: Number): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isNotIn(vararg values: Number): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { NotIn(values.map { value -> Money.of(it?.currencyUnit, value.asBigDecimal()) }.toSet()) },
         { it == null || !values.map { value -> Money.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } })
@@ -156,9 +156,9 @@ fun <E> Validator<E>.Property<Money?>.isNotIn(vararg values: Number): Validator<
  *
  * @param values specifies the iterable of [Money] values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isNotIn(values: Iterable<Money>): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isNotIn(values: Iterable<Money>): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(NotIn(values)) { it == null || !values.any { e -> it.safelyEquals(e) } }
 
 /**
@@ -166,10 +166,10 @@ fun <E> Validator<E>.Property<Money?>.isNotIn(values: Iterable<Money>): Validato
  *
  * @param values specifies the iterable of [Number] values to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
 @JvmName("isNotInNumber")
-fun <E> Validator<E>.Property<Money?>.isNotIn(values: Iterable<Number>): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isNotIn(values: Iterable<Number>): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { NotIn(values.map { value -> Money.of(it?.currencyUnit, value.asBigDecimal()) }) },
         { it == null || !values.map { value -> Money.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } })
@@ -180,9 +180,9 @@ fun <E> Validator<E>.Property<Money?>.isNotIn(values: Iterable<Number>): Validat
  * @property value specifies the [Number] value that should be validated
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isLessThan(value: Number): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isLessThan(value: Number): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { Less(Money.of(it?.currencyUnit, value.asBigDecimal())) },
         { it == null || it < Money.of(it.currencyUnit, value.asBigDecimal()) })
@@ -193,9 +193,9 @@ fun <E> Validator<E>.Property<Money?>.isLessThan(value: Number): Validator<E>.Pr
  * @property value specifies the [Number] value that should be validated
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isLessThanOrEqualTo(value: Number): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isLessThanOrEqualTo(value: Number): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { LessOrEqual(Money.of(it?.currencyUnit, value.asBigDecimal())) },
         { it == null || it <= Money.of(it.currencyUnit, value.asBigDecimal()) })
@@ -206,9 +206,9 @@ fun <E> Validator<E>.Property<Money?>.isLessThanOrEqualTo(value: Number): Valida
  * @property value specifies the [Number] value that should be validated
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isGreaterThan(value: Number): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isGreaterThan(value: Number): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { Greater(Money.of(it?.currencyUnit, value.asBigDecimal())) },
         { it == null || it > Money.of(it.currencyUnit, value.asBigDecimal()) })
@@ -219,9 +219,9 @@ fun <E> Validator<E>.Property<Money?>.isGreaterThan(value: Number): Validator<E>
  * @property value specifies the [Number] value that should be validated
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isGreaterThanOrEqualTo(value: Number): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isGreaterThanOrEqualTo(value: Number): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { GreaterOrEqual(Money.of(it?.currencyUnit, value.asBigDecimal())) },
         { it == null || it >= Money.of(it.currencyUnit, value.asBigDecimal()) })
@@ -233,9 +233,9 @@ fun <E> Validator<E>.Property<Money?>.isGreaterThanOrEqualTo(value: Number): Val
  * @property end (inclusive) specifies [Number] value that should end
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isBetween(start: Number, end: Number): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isBetween(start: Number, end: Number): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { Between(Money.of(it?.currencyUnit, start.asBigDecimal()), Money.of(it?.currencyUnit, end.asBigDecimal())) },
         { it == null || it in Money.of(it.currencyUnit, start.asBigDecimal()).rangeTo(Money.of(it.currencyUnit, end.asBigDecimal())) })
@@ -247,9 +247,9 @@ fun <E> Validator<E>.Property<Money?>.isBetween(start: Number, end: Number): Val
  * @property end (inclusive) specifies [Number] value that shouldn't end
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isNotBetween(start: Number, end: Number): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isNotBetween(start: Number, end: Number): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { NotBetween(Money.of(it?.currencyUnit, start.asBigDecimal()), Money.of(it?.currencyUnit, end.asBigDecimal())) },
         { it == null || it !in Money.of(it.currencyUnit, start.asBigDecimal()).rangeTo(Money.of(it.currencyUnit, end.asBigDecimal())) })
@@ -258,9 +258,9 @@ fun <E> Validator<E>.Property<Money?>.isNotBetween(start: Number, end: Number): 
  * Validates if the [Money] property is equal to zero
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isZero(): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isZero(): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { Equals(Money.of(it?.currencyUnit, ZERO)) },
         { it == null || it.isZero })
@@ -269,9 +269,9 @@ fun <E> Validator<E>.Property<Money?>.isZero(): Validator<E>.Property<Money?> =
  * Validates if the [Money] property is not equal to zero
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isNotZero(): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isNotZero(): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { NotEquals(Money.of(it?.currencyUnit, ZERO)) },
         { it == null || !it.isZero })
@@ -280,9 +280,9 @@ fun <E> Validator<E>.Property<Money?>.isNotZero(): Validator<E>.Property<Money?>
  * Validates if the [Money] property is equal to one
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isOne(): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isOne(): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { Equals(Money.of(it?.currencyUnit, ONE)) },
         { it == null || it.compareTo(Money.of(it.currencyUnit, ONE)) == 0 })
@@ -291,9 +291,9 @@ fun <E> Validator<E>.Property<Money?>.isOne(): Validator<E>.Property<Money?> =
  * Validates if the [Money] property is not equal to one
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isNotOne(): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isNotOne(): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { NotEquals(Money.of(it?.currencyUnit, ONE)) },
         { it == null || it.compareTo(Money.of(it.currencyUnit, ONE)) != 0 })
@@ -302,9 +302,9 @@ fun <E> Validator<E>.Property<Money?>.isNotOne(): Validator<E>.Property<Money?> 
  * Validates if the [Money] property is positive
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isPositive(): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isPositive(): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { Greater(Money.of(it?.currencyUnit, ZERO)) },
         { it == null || it > Money.of(it.currencyUnit, ZERO) })
@@ -313,9 +313,9 @@ fun <E> Validator<E>.Property<Money?>.isPositive(): Validator<E>.Property<Money?
  * Validates if the [Money] property isn't negative
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isPositiveOrZero(): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isPositiveOrZero(): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { GreaterOrEqual(Money.of(it?.currencyUnit, ZERO)) },
         { it == null || it >= Money.of(it.currencyUnit, ZERO) })
@@ -324,9 +324,9 @@ fun <E> Validator<E>.Property<Money?>.isPositiveOrZero(): Validator<E>.Property<
  * Validates if the [Money] property is negative
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isNegative(): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isNegative(): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { Less(Money.of(it?.currencyUnit, ZERO)) },
         { it == null || it < Money.of(it.currencyUnit, ZERO) })
@@ -335,9 +335,9 @@ fun <E> Validator<E>.Property<Money?>.isNegative(): Validator<E>.Property<Money?
  * Validates if the [Money] property isn't positive
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.isNegativeOrZero(): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.isNegativeOrZero(): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(
         { LessOrEqual(Money.of(it?.currencyUnit, ZERO)) },
         { it == null || it <= Money.of(it.currencyUnit, ZERO) })
@@ -349,9 +349,9 @@ fun <E> Validator<E>.Property<Money?>.isNegativeOrZero(): Validator<E>.Property<
  * @property max specifies the maximum size
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.amount.precision() - it.amount.scale() in min.rangeTo(max) }
 
 /**
@@ -361,9 +361,9 @@ fun <E> Validator<E>.Property<Money?>.hasIntegerDigits(min: Int = Int.MIN_VALUE,
  * @property max specifies the maximum size
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(DecimalDigits(min, max)) { it == null || (if (it.amount.scale() < 0) 0 else it.amount.scale()) in min.rangeTo(max) }
 
 /**
@@ -371,9 +371,9 @@ fun <E> Validator<E>.Property<Money?>.hasDecimalDigits(min: Int = Int.MIN_VALUE,
  *
  * @param currency specifies the currency unit to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.hasCurrencyEqualTo(currency: CurrencyUnit): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.hasCurrencyEqualTo(currency: CurrencyUnit): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(CurrencyEquals(currency)) { it == null || it.currencyUnit == currency }
 
 /**
@@ -381,9 +381,9 @@ fun <E> Validator<E>.Property<Money?>.hasCurrencyEqualTo(currency: CurrencyUnit)
  *
  * @param currency specifies the currency unit to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.hasCurrencyNotEqualTo(currency: CurrencyUnit): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.hasCurrencyNotEqualTo(currency: CurrencyUnit): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(CurrencyNotEquals(currency)) { it == null || it.currencyUnit != currency }
 
 /**
@@ -391,9 +391,9 @@ fun <E> Validator<E>.Property<Money?>.hasCurrencyNotEqualTo(currency: CurrencyUn
  *
  * @param currencies specifies the currencies to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.hasCurrencyIn(vararg currencies: CurrencyUnit): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.hasCurrencyIn(vararg currencies: CurrencyUnit): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(CurrencyIn(currencies.toSet())) { it == null || currencies.contains(it.currencyUnit) }
 
 /**
@@ -401,9 +401,9 @@ fun <E> Validator<E>.Property<Money?>.hasCurrencyIn(vararg currencies: CurrencyU
  *
  * @param currencies specifies the currencies to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.hasCurrencyIn(currencies: Iterable<CurrencyUnit>): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.hasCurrencyIn(currencies: Iterable<CurrencyUnit>): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(CurrencyIn(currencies)) { it == null || currencies.contains(it.currencyUnit) }
 
 /**
@@ -411,9 +411,9 @@ fun <E> Validator<E>.Property<Money?>.hasCurrencyIn(currencies: Iterable<Currenc
  *
  * @param currencies specifies the currencies to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.hasCurrencyNotIn(vararg currencies: CurrencyUnit): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.hasCurrencyNotIn(vararg currencies: CurrencyUnit): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(CurrencyNotIn(currencies.toSet())) { it == null || !currencies.contains(it.currencyUnit) }
 
 /**
@@ -421,7 +421,7 @@ fun <E> Validator<E>.Property<Money?>.hasCurrencyNotIn(vararg currencies: Curren
  *
  * @param currencies specifies the currencies to be compared
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Money?>.hasCurrencyNotIn(currencies: Iterable<CurrencyUnit>): Validator<E>.Property<Money?> =
+fun <E> Validator<E>.ReceiverValidator<E, Money?>.hasCurrencyNotIn(currencies: Iterable<CurrencyUnit>): Validator<E>.ReceiverValidator<E, Money?> =
     this.validate(CurrencyNotIn(currencies)) { it == null || !currencies.contains(it.currencyUnit) }

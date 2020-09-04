@@ -24,16 +24,16 @@ import org.valiktor.constraints.True
  * Validates if the [Boolean] property is true
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Boolean?>.isTrue(): Validator<E>.Property<Boolean?> =
+fun <E> Validator<E>.ReceiverValidator<E, Boolean?>.isTrue(): Validator<E>.ReceiverValidator<E, Boolean?> =
     this.validate(True) { it == null || it }
 
 /**
  * Validates if the [Boolean] property is false
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E> Validator<E>.Property<Boolean?>.isFalse(): Validator<E>.Property<Boolean?> =
+fun <E> Validator<E>.ReceiverValidator<E, Boolean?>.isFalse(): Validator<E>.ReceiverValidator<E, Boolean?> =
     this.validate(False) { it == null || !it }

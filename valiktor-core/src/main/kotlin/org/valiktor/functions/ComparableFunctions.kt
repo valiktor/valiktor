@@ -30,9 +30,9 @@ import org.valiktor.constraints.NotBetween
  * @property value specifies the value that should be validated
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E, T : Comparable<T>> Validator<E>.Property<T?>.isLessThan(value: T): Validator<E>.Property<T?> =
+fun <E, T : Comparable<T>> Validator<E>.ReceiverValidator<E, T?>.isLessThan(value: T): Validator<E>.ReceiverValidator<E, T?> =
     this.validate(Less(value)) { it == null || it < value }
 
 /**
@@ -41,9 +41,9 @@ fun <E, T : Comparable<T>> Validator<E>.Property<T?>.isLessThan(value: T): Valid
  * @property value specifies the value that should be validated
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E, T : Comparable<T>> Validator<E>.Property<T?>.isLessThanOrEqualTo(value: T): Validator<E>.Property<T?> =
+fun <E, T : Comparable<T>> Validator<E>.ReceiverValidator<E, T?>.isLessThanOrEqualTo(value: T): Validator<E>.ReceiverValidator<E, T?> =
     this.validate(LessOrEqual(value)) { it == null || it <= value }
 
 /**
@@ -52,9 +52,9 @@ fun <E, T : Comparable<T>> Validator<E>.Property<T?>.isLessThanOrEqualTo(value: 
  * @property value specifies the value that should be validated
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E, T : Comparable<T>> Validator<E>.Property<T?>.isGreaterThan(value: T): Validator<E>.Property<T?> =
+fun <E, T : Comparable<T>> Validator<E>.ReceiverValidator<E, T?>.isGreaterThan(value: T): Validator<E>.ReceiverValidator<E, T?> =
     this.validate(Greater(value)) { it == null || it > value }
 
 /**
@@ -63,9 +63,9 @@ fun <E, T : Comparable<T>> Validator<E>.Property<T?>.isGreaterThan(value: T): Va
  * @property value specifies the value that should be validated
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E, T : Comparable<T>> Validator<E>.Property<T?>.isGreaterThanOrEqualTo(value: T): Validator<E>.Property<T?> =
+fun <E, T : Comparable<T>> Validator<E>.ReceiverValidator<E, T?>.isGreaterThanOrEqualTo(value: T): Validator<E>.ReceiverValidator<E, T?> =
     this.validate(GreaterOrEqual(value)) { it == null || it >= value }
 
 /**
@@ -75,9 +75,9 @@ fun <E, T : Comparable<T>> Validator<E>.Property<T?>.isGreaterThanOrEqualTo(valu
  * @property end (inclusive) specifies value that should end
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E, T : Comparable<T>> Validator<E>.Property<T?>.isBetween(start: T, end: T): Validator<E>.Property<T?> =
+fun <E, T : Comparable<T>> Validator<E>.ReceiverValidator<E, T?>.isBetween(start: T, end: T): Validator<E>.ReceiverValidator<E, T?> =
     this.validate(Between(start, end)) { it == null || it in start.rangeTo(end) }
 
 /**
@@ -87,7 +87,7 @@ fun <E, T : Comparable<T>> Validator<E>.Property<T?>.isBetween(start: T, end: T)
  * @property end (inclusive) specifies value that shouldn't end
  *
  * @receiver the property to be validated
- * @return the same receiver property
+ * @return the same receiver validator
  */
-fun <E, T : Comparable<T>> Validator<E>.Property<T?>.isNotBetween(start: T, end: T): Validator<E>.Property<T?> =
+fun <E, T : Comparable<T>> Validator<E>.ReceiverValidator<E, T?>.isNotBetween(start: T, end: T): Validator<E>.ReceiverValidator<E, T?> =
     this.validate(NotBetween(start, end)) { it == null || it !in start.rangeTo(end) }
