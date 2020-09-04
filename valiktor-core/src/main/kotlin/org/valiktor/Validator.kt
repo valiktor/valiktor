@@ -148,7 +148,7 @@ open class Validator<E>(private val obj: E) {
          * @return the ValidatedType validator
          */
         fun validate(constraint: Constraint, isValid: (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType> =
-                validate({ constraint }, isValid)
+            validate({ constraint }, isValid)
 
         /**
          * Validates the ValidatedType by passing the constraint and the suspending validation function
@@ -172,7 +172,7 @@ open class Validator<E>(private val obj: E) {
          * @return the ValidatedType validator
          */
         suspend fun coValidate(constraint: Constraint, isValid: suspend (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType> =
-                coValidate({ constraint }, isValid)
+            coValidate({ constraint }, isValid)
 
         /**
          * Adds the constraint violations to property
