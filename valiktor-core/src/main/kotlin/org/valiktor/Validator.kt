@@ -135,8 +135,13 @@ open class Validator<E>(private val obj: E) {
          * @param isValid specifies the validation function
          * @return the ValidatedType validator
          */
-        abstract fun validate(constraint: (ValidatedType?) -> Constraint,
-                              isValid: (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType>
+        fun validate(constraint: (ValidatedType?) -> Constraint,
+                     isValid: (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType> {
+            if (!isValid(value())) {
+                addConstraintViolation(constraint)
+            }
+            return this
+        }
 
         /**
          * Validates the ValidatedType by passing the constraint and the validation function
@@ -159,8 +164,13 @@ open class Validator<E>(private val obj: E) {
          * @param isValid specifies the validation function
          * @return the ValidatedType validator
          */
-        abstract suspend fun coValidate(constraint: (ValidatedType?) -> Constraint,
-                                        isValid: suspend (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType>
+        suspend fun coValidate(constraint: (ValidatedType?) -> Constraint,
+                               isValid: suspend (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType> {
+            if (!isValid(value())) {
+                addConstraintViolation(constraint)
+            }
+            return this
+        }
 
         /**
          * Validates the ValidatedType by passing the constraint and the suspending validation function
@@ -174,12 +184,23 @@ open class Validator<E>(private val obj: E) {
         suspend fun coValidate(constraint: Constraint, isValid: suspend (ValidatedType?) -> Boolean): ReceiverValidator<ValidatedClass, ValidatedType> =
             coValidate({ constraint }, isValid)
 
+        private fun addConstraintViolation(constraint: (ValidatedType?) -> Constraint) {
+            val value = value()
+            this@Validator.constraintViolations += DefaultConstraintViolation(
+                property = name(),
+                value = value,
+                constraint = constraint(value)
+            )
+        }
+
         /**
          * Adds the constraint violations to property
          *
          * @param constraintViolations specifies the constraint violations
          */
-        abstract fun addConstraintViolations(constraintViolations: Iterable<ConstraintViolation>)
+        fun addConstraintViolations(constraintViolations: Iterable<ConstraintViolation>) {
+            this@Validator.constraintViolations += constraintViolations
+        }
     }
 
     /**
@@ -198,34 +219,6 @@ open class Validator<E>(private val obj: E) {
         override fun name(): String = this.function.name
 
         override fun value(): T? = function.call(obj)
-
-        override fun validate(constraint: (T?) -> Constraint, isValid: (T?) -> Boolean): Function<T> {
-            val value = this.function.call(this.obj)
-            if (!isValid(value)) {
-                this@Validator.constraintViolations += DefaultConstraintViolation(
-                    property = this.function.name,
-                    value = value,
-                    constraint = constraint(value)
-                )
-            }
-            return this
-        }
-
-        override suspend fun coValidate(constraint: (T?) -> Constraint, isValid: suspend (T?) -> Boolean): Function<T> {
-            val value = this.function.call()
-            if (!isValid(value)) {
-                this@Validator.constraintViolations += DefaultConstraintViolation(
-                    property = this.function.name,
-                    value = value,
-                    constraint = constraint(value)
-                )
-            }
-            return this
-        }
-
-        override fun addConstraintViolations(constraintViolations: Iterable<ConstraintViolation>) {
-            this@Validator.constraintViolations += constraintViolations
-        }
     }
 
     /**
@@ -244,33 +237,5 @@ open class Validator<E>(private val obj: E) {
         override fun name(): String = this.property.name
 
         override fun value(): T? = this.property.get(obj)
-
-        override fun validate(constraint: (T?) -> Constraint, isValid: (T?) -> Boolean): Property<T> {
-            val value = this.property.get(this.obj)
-            if (!isValid(value)) {
-                this@Validator.constraintViolations += DefaultConstraintViolation(
-                    property = this.property.name,
-                    value = value,
-                    constraint = constraint(value)
-                )
-            }
-            return this
-        }
-
-        override suspend fun coValidate(constraint: (T?) -> Constraint, isValid: suspend (T?) -> Boolean): Property<T> {
-            val value = this.property.get(this.obj)
-            if (!isValid(value)) {
-                this@Validator.constraintViolations += DefaultConstraintViolation(
-                    property = this.property.name,
-                    value = value,
-                    constraint = constraint(value)
-                )
-            }
-            return this
-        }
-
-        override fun addConstraintViolations(constraintViolations: Iterable<ConstraintViolation>) {
-            this@Validator.constraintViolations += constraintViolations
-        }
     }
 }
