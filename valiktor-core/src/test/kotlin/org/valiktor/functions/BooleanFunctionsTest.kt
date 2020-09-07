@@ -17,16 +17,10 @@
 package org.valiktor.functions
 
 import org.assertj.core.api.Assertions.assertThat
+import org.valiktor.Constraint
 import org.valiktor.ConstraintViolationException
 import org.valiktor.DefaultConstraintViolation
-import org.valiktor.constraints.Equals
-import org.valiktor.constraints.False
-import org.valiktor.constraints.In
-import org.valiktor.constraints.NotEquals
-import org.valiktor.constraints.NotIn
-import org.valiktor.constraints.NotNull
-import org.valiktor.constraints.Null
-import org.valiktor.constraints.True
+import org.valiktor.constraints.*
 import org.valiktor.functions.BooleanFunctionsFixture.Employee
 import org.valiktor.validate
 import kotlin.test.Test
@@ -34,15 +28,21 @@ import kotlin.test.assertFailsWith
 
 private object BooleanFunctionsFixture {
 
-    data class Employee(val active: Boolean? = null)
+    data class Employee(val active: Boolean? = null) {
+
+        fun isActive(): Boolean? = this.active
+    }
 }
 
 class BooleanFunctionsTest {
+
+    private val names = setOf("active", "isActive")
 
     @Test
     fun `isNull with null value should be valid`() {
         validate(Employee()) {
             validate(Employee::active).isNull()
+            validate(Employee::isActive).isNull()
         }
     }
 
@@ -51,16 +51,18 @@ class BooleanFunctionsTest {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = true)) {
                 validate(Employee::active).isNull()
+                validate(Employee::isActive).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = true, constraint = Null))
+
+        assertThat(exception.constraintViolations).containsExactly(*expectedViolations(true, Null))
     }
 
     @Test
     fun `isNotNull with not null value should be valid`() {
         validate(Employee(active = true)) {
             validate(Employee::active).isNotNull()
+            validate(Employee::isActive).isNotNull()
         }
     }
 
@@ -69,16 +71,18 @@ class BooleanFunctionsTest {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee()) {
                 validate(Employee::active).isNotNull()
+                validate(Employee::isActive).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", constraint = NotNull))
+
+        assertThat(exception.constraintViolations).containsExactly(*expectedViolations(null, NotNull))
     }
 
     @Test
     fun `isEqualTo with null value should be valid`() {
         validate(Employee()) {
             validate(Employee::active).isEqualTo(true)
+            validate(Employee::isActive).isEqualTo(true)
         }
     }
 
@@ -86,6 +90,7 @@ class BooleanFunctionsTest {
     fun `isEqualTo with same value should be valid`() {
         validate(Employee(active = true)) {
             validate(Employee::active).isEqualTo(true)
+            validate(Employee::isActive).isEqualTo(true)
         }
     }
 
@@ -94,16 +99,18 @@ class BooleanFunctionsTest {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = true)) {
                 validate(Employee::active).isEqualTo(false)
+                validate(Employee::isActive).isEqualTo(false)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = true, constraint = Equals(false)))
+
+        assertThat(exception.constraintViolations).containsExactly(*expectedViolations(true, Equals(false)))
     }
 
     @Test
     fun `isNotEqualTo with null value should be valid`() {
         validate(Employee()) {
             validate(Employee::active).isNotEqualTo(false)
+            validate(Employee::isActive).isNotEqualTo(false)
         }
     }
 
@@ -111,6 +118,7 @@ class BooleanFunctionsTest {
     fun `isNotEqualTo with different value should be valid`() {
         validate(Employee(active = false)) {
             validate(Employee::active).isNotEqualTo(true)
+            validate(Employee::isActive).isNotEqualTo(true)
         }
     }
 
@@ -119,16 +127,18 @@ class BooleanFunctionsTest {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = false)) {
                 validate(Employee::active).isNotEqualTo(false)
+                validate(Employee::isActive).isNotEqualTo(false)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = false, constraint = NotEquals(false)))
+
+        assertThat(exception.constraintViolations).containsExactly(*expectedViolations(false, NotEquals(false)))
     }
 
     @Test
     fun `isIn vararg with null value should be valid`() {
         validate(Employee()) {
             validate(Employee::active).isIn(true, false)
+            validate(Employee::isActive).isIn(true, false)
         }
     }
 
@@ -136,6 +146,7 @@ class BooleanFunctionsTest {
     fun `isIn vararg with same value should be valid`() {
         validate(Employee(active = false)) {
             validate(Employee::active).isIn(true, false)
+            validate(Employee::isActive).isIn(true, false)
         }
     }
 
@@ -144,16 +155,18 @@ class BooleanFunctionsTest {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = true)) {
                 validate(Employee::active).isIn(false)
+                validate(Employee::isActive).isIn(false)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = true, constraint = In(setOf(false))))
+
+        assertThat(exception.constraintViolations).containsExactly(*expectedViolations(true, In(setOf(false))))
     }
 
     @Test
     fun `isIn iterable with null value should be valid`() {
         validate(Employee()) {
             validate(Employee::active).isIn(listOf(true, false))
+            validate(Employee::isActive).isIn(listOf(true, false))
         }
     }
 
@@ -161,6 +174,7 @@ class BooleanFunctionsTest {
     fun `isIn iterable with same value should be valid`() {
         validate(Employee(active = false)) {
             validate(Employee::active).isIn(listOf(true, false))
+            validate(Employee::isActive).isIn(listOf(true, false))
         }
     }
 
@@ -169,16 +183,18 @@ class BooleanFunctionsTest {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = true)) {
                 validate(Employee::active).isIn(listOf(false))
+                validate(Employee::isActive).isIn(listOf(false))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = true, constraint = In(listOf(false))))
+
+        assertThat(exception.constraintViolations).containsExactly(*expectedViolations(true, In(listOf(false))))
     }
 
     @Test
     fun `isNotIn vararg with null value should be valid`() {
         validate(Employee()) {
             validate(Employee::active).isNotIn(false, true)
+            validate(Employee::isActive).isNotIn(false, true)
         }
     }
 
@@ -186,6 +202,7 @@ class BooleanFunctionsTest {
     fun `isNotIn vararg with different value should be valid`() {
         validate(Employee(active = false)) {
             validate(Employee::active).isNotIn(true)
+            validate(Employee::isActive).isNotIn(true)
         }
     }
 
@@ -194,16 +211,18 @@ class BooleanFunctionsTest {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = false)) {
                 validate(Employee::active).isNotIn(true, false)
+                validate(Employee::isActive).isNotIn(true, false)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(setOf(true, false))))
+
+        assertThat(exception.constraintViolations).containsExactly(*expectedViolations(false, NotIn(setOf(true, false))))
     }
 
     @Test
     fun `isNotIn iterable with null value should be valid`() {
         validate(Employee()) {
             validate(Employee::active).isNotIn(listOf(false, true))
+            validate(Employee::isActive).isNotIn(listOf(false, true))
         }
     }
 
@@ -211,6 +230,7 @@ class BooleanFunctionsTest {
     fun `isNotIn iterable with different value should be valid`() {
         validate(Employee(active = false)) {
             validate(Employee::active).isNotIn(listOf(true))
+            validate(Employee::isActive).isNotIn(listOf(true))
         }
     }
 
@@ -219,16 +239,17 @@ class BooleanFunctionsTest {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = false)) {
                 validate(Employee::active).isNotIn(listOf(true, false))
+                validate(Employee::isActive).isNotIn(listOf(true, false))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(listOf(true, false))))
+        assertThat(exception.constraintViolations).containsExactly(*expectedViolations(false, NotIn(listOf(true, false))))
     }
 
     @Test
     fun `isTrue with null value should be valid`() {
         validate(Employee()) {
             validate(Employee::active).isTrue()
+            validate(Employee::isActive).isTrue()
         }
     }
 
@@ -236,6 +257,7 @@ class BooleanFunctionsTest {
     fun `isTrue with true should be valid`() {
         validate(Employee(active = true)) {
             validate(Employee::active).isTrue()
+            validate(Employee::isActive).isTrue()
         }
     }
 
@@ -244,20 +266,18 @@ class BooleanFunctionsTest {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = false)) {
                 validate(Employee::active).isTrue()
+                validate(Employee::isActive).isTrue()
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(
-                property = "active",
-                value = false,
-                constraint = True))
+        assertThat(exception.constraintViolations).containsExactly(*expectedViolations(false, True))
     }
 
     @Test
     fun `isFalse with null value should be valid`() {
         validate(Employee()) {
             validate(Employee::active).isFalse()
+            validate(Employee::isActive).isFalse()
         }
     }
 
@@ -265,6 +285,7 @@ class BooleanFunctionsTest {
     fun `isFalse with false should be valid`() {
         validate(Employee(active = false)) {
             validate(Employee::active).isFalse()
+            validate(Employee::isActive).isFalse()
         }
     }
 
@@ -273,13 +294,17 @@ class BooleanFunctionsTest {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(active = true)) {
                 validate(Employee::active).isFalse()
+                validate(Employee::isActive).isFalse()
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(
-                property = "active",
-                value = true,
-                constraint = False))
+        assertThat(exception.constraintViolations).containsExactly(*expectedViolations(true, False))
     }
+
+    private fun expectedViolations(
+        value: Boolean?,
+        constraint: Constraint
+    ): Array<DefaultConstraintViolation> = names.map {
+        DefaultConstraintViolation(property = it, value = value, constraint = constraint)
+    }.toTypedArray()
 }
