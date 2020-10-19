@@ -58,8 +58,10 @@ class CustomEmployeeHandlerTest {
             .exchange()
             .expectStatus().isCreated
             .expectHeader()
-            .valueEquals(HttpHeaders.LOCATION,
-                "http://localhost:${env.getProperty("local.server.port")}/employees/111.111.111-11")
+            .valueEquals(
+                HttpHeaders.LOCATION,
+                "http://localhost:${env.getProperty("local.server.port")}/employees/111.111.111-11"
+            )
             .expectBody().isEmpty
     }
 

@@ -35,10 +35,12 @@ import org.valiktor.springframework.http.webflux.ReactiveMissingKotlinParameterE
  */
 @Configuration
 @ConditionalOnClass(name = ["org.springframework.web.reactive.DispatcherHandler"])
-@ConditionalOnBean(type = [
-    "org.valiktor.springframework.http.ValiktorExceptionHandler",
-    "org.springframework.http.codec.CodecConfigurer"
-])
+@ConditionalOnBean(
+    type = [
+        "org.valiktor.springframework.http.ValiktorExceptionHandler",
+        "org.springframework.http.codec.CodecConfigurer"
+    ]
+)
 class ValiktorWebFluxAutoConfiguration {
 
     /**

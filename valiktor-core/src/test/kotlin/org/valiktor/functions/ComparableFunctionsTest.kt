@@ -75,7 +75,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 50),
-                constraint = Less(Company(id = 49))))
+                constraint = Less(Company(id = 49))
+            )
+        )
     }
 
     @Test
@@ -90,7 +92,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -50),
-                constraint = Less(Company(id = -51))))
+                constraint = Less(Company(id = -51))
+            )
+        )
     }
 
     @Test
@@ -105,7 +109,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 0),
-                constraint = Less(Company(id = 0))))
+                constraint = Less(Company(id = 0))
+            )
+        )
     }
 
     @Test
@@ -148,7 +154,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 56789),
-                constraint = LessOrEqual(Company(id = 57))))
+                constraint = LessOrEqual(Company(id = 57))
+            )
+        )
     }
 
     @Test
@@ -163,7 +171,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -96),
-                constraint = LessOrEqual(Company(id = -97))))
+                constraint = LessOrEqual(Company(id = -97))
+            )
+        )
     }
 
     @Test
@@ -199,7 +209,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 10),
-                constraint = Greater(Company(id = 11))))
+                constraint = Greater(Company(id = 11))
+            )
+        )
     }
 
     @Test
@@ -214,7 +226,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -189),
-                constraint = Greater(Company(id = -180))))
+                constraint = Greater(Company(id = -180))
+            )
+        )
     }
 
     @Test
@@ -229,7 +243,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 0),
-                constraint = Greater(Company(id = 0))))
+                constraint = Greater(Company(id = 0))
+            )
+        )
     }
 
     @Test
@@ -272,7 +288,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 57),
-                constraint = GreaterOrEqual(Company(id = 56789))))
+                constraint = GreaterOrEqual(Company(id = 56789))
+            )
+        )
     }
 
     @Test
@@ -287,7 +305,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -97),
-                constraint = GreaterOrEqual(Company(id = -96))))
+                constraint = GreaterOrEqual(Company(id = -96))
+            )
+        )
     }
 
     @Test
@@ -351,7 +371,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 10),
-                constraint = Between(start = Company(id = 11), end = Company(id = 12))))
+                constraint = Between(start = Company(id = 11), end = Company(id = 12))
+            )
+        )
     }
 
     @Test
@@ -366,7 +388,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 12),
-                constraint = Between(start = Company(id = 10), end = Company(id = 11))))
+                constraint = Between(start = Company(id = 10), end = Company(id = 11))
+            )
+        )
     }
 
     @Test
@@ -381,7 +405,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -10),
-                constraint = Between(start = Company(id = -9), end = Company(id = -8))))
+                constraint = Between(start = Company(id = -9), end = Company(id = -8))
+            )
+        )
     }
 
     @Test
@@ -396,7 +422,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -12),
-                constraint = Between(start = Company(id = -14), end = Company(id = -13))))
+                constraint = Between(start = Company(id = -14), end = Company(id = -13))
+            )
+        )
     }
 
     @Test
@@ -446,7 +474,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 0),
-                constraint = NotBetween(start = Company(id = 0), end = Company(id = 1))))
+                constraint = NotBetween(start = Company(id = 0), end = Company(id = 1))
+            )
+        )
     }
 
     @Test
@@ -461,7 +491,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
-                constraint = NotBetween(start = Company(id = 0), end = Company(id = 1))))
+                constraint = NotBetween(start = Company(id = 0), end = Company(id = 1))
+            )
+        )
     }
 
     @Test
@@ -476,7 +508,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -2),
-                constraint = NotBetween(start = Company(id = -2), end = Company(id = -1))))
+                constraint = NotBetween(start = Company(id = -2), end = Company(id = -1))
+            )
+        )
     }
 
     @Test
@@ -491,7 +525,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -1),
-                constraint = NotBetween(start = Company(id = -2), end = Company(id = -1))))
+                constraint = NotBetween(start = Company(id = -2), end = Company(id = -1))
+            )
+        )
     }
 
     @Test
@@ -506,7 +542,9 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 5),
-                constraint = NotBetween(start = Company(id = 0), end = Company(id = 10))))
+                constraint = NotBetween(start = Company(id = 0), end = Company(id = 10))
+            )
+        )
     }
 
     @Test
@@ -521,6 +559,8 @@ class ComparableFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -15),
-                constraint = NotBetween(start = Company(id = -20), end = Company(id = -10))))
+                constraint = NotBetween(start = Company(id = -20), end = Company(id = -10))
+            )
+        )
     }
 }

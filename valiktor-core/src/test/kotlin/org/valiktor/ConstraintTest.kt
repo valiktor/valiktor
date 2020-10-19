@@ -50,7 +50,8 @@ class ConstraintTest {
         val constraint = CustomConstraint(
             name = "TestTestConstraint",
             messageKey = "org.valiktor.test.constraints.TestConstraint.message",
-            messageParams = mapOf("value" to 1))
+            messageParams = mapOf("value" to 1)
+        )
 
         assertEquals(constraint.name, "TestTestConstraint")
         assertEquals(constraint.messageKey, "org.valiktor.test.constraints.TestConstraint.message")

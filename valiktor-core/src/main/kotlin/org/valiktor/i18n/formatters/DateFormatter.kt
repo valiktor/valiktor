@@ -31,10 +31,12 @@ import java.util.Date
 object DateFormatter : Formatter<Date> {
 
     override fun format(value: Date, messageBundle: MessageBundle): String =
-        (if (value.hasTime())
-            DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, messageBundle.locale)
-        else
-            DateFormat.getDateInstance(DateFormat.MEDIUM, messageBundle.locale))
+        (
+            if (value.hasTime())
+                DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, messageBundle.locale)
+            else
+                DateFormat.getDateInstance(DateFormat.MEDIUM, messageBundle.locale)
+            )
             .format(value)
 
     private fun Date.hasTime(): Boolean {

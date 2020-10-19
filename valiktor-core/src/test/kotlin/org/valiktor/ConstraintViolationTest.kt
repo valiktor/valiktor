@@ -41,7 +41,8 @@ class ConstraintViolationTest {
             DefaultConstraintViolation(
                 property = "name",
                 value = "Test",
-                constraint = EmptyConstraint)
+                constraint = EmptyConstraint
+            )
 
         assertEquals(constraintViolation.property, "name")
         assertEquals(constraintViolation.value, "Test")
@@ -56,15 +57,20 @@ class ConstraintViolationExceptionTest {
     @Test
     fun `should throws ConstraintViolationException`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            throw ConstraintViolationException(setOf(
-                DefaultConstraintViolation(
-                    property = "name",
-                    value = "Test",
-                    constraint = EmptyConstraint),
-                DefaultConstraintViolation(
-                    property = "name",
-                    value = "Test2",
-                    constraint = TestConstraint("test value 1", "test value 2"))))
+            throw ConstraintViolationException(
+                setOf(
+                    DefaultConstraintViolation(
+                        property = "name",
+                        value = "Test",
+                        constraint = EmptyConstraint
+                    ),
+                    DefaultConstraintViolation(
+                        property = "name",
+                        value = "Test2",
+                        constraint = TestConstraint("test value 1", "test value 2")
+                    )
+                )
+            )
         }
 
         assertThat(exception.constraintViolations)
@@ -72,10 +78,13 @@ class ConstraintViolationExceptionTest {
                 DefaultConstraintViolation(
                     property = "name",
                     value = "Test",
-                    constraint = EmptyConstraint),
+                    constraint = EmptyConstraint
+                ),
                 DefaultConstraintViolation(
                     property = "name",
                     value = "Test2",
-                    constraint = TestConstraint("test value 1", "test value 2")))
+                    constraint = TestConstraint("test value 1", "test value 2")
+                )
+            )
     }
 }

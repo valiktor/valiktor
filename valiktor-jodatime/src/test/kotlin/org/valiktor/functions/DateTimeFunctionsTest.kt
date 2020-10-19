@@ -66,7 +66,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = Null))
+            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = Null)
+        )
     }
 
     @Test
@@ -84,7 +85,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull))
+            DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull)
+        )
     }
 
     @Test
@@ -109,7 +111,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = Equals(dateTime.minusSeconds(1))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = Equals(dateTime.minusSeconds(1)))
+        )
     }
 
     @Test
@@ -134,7 +137,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = NotEquals(dateTime)))
+            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = NotEquals(dateTime))
+        )
     }
 
     @Test
@@ -159,7 +163,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = In(setOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = In(setOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2))))
+        )
     }
 
     @Test
@@ -184,7 +189,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = In(listOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = In(listOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2))))
+        )
     }
 
     @Test
@@ -209,7 +215,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = NotIn(setOf(dateTime, dateTime.plusSeconds(1)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = NotIn(setOf(dateTime, dateTime.plusSeconds(1))))
+        )
     }
 
     @Test
@@ -234,7 +241,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = NotIn(listOf(dateTime, dateTime.plusSeconds(1)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = NotIn(listOf(dateTime, dateTime.plusSeconds(1))))
+        )
     }
 
     @Test
@@ -275,7 +283,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime.minusDays(1), constraint = Today))
+            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime.minusDays(1), constraint = Today)
+        )
     }
 
     @Test
@@ -288,7 +297,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime.plusDays(1), constraint = Today))
+            DefaultConstraintViolation(property = "dateOfBirth", value = dateTime.plusDays(1), constraint = Today)
+        )
     }
 
     @Test
@@ -306,7 +316,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(DateTimeZone.getDefault()).toDateTimeAtStartOfDay(), constraint = NotToday))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(DateTimeZone.getDefault()).toDateTimeAtStartOfDay(), constraint = NotToday)
+        )
     }
 
     @Test
@@ -317,7 +328,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(DateTimeZone.getDefault()).toDateTime(LocalTime(23, 59, 59)), constraint = NotToday))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(DateTimeZone.getDefault()).toDateTime(LocalTime(23, 59, 59)), constraint = NotToday)
+        )
     }
 
     @Test
@@ -330,7 +342,8 @@ class OffsetDateTimeFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = now, constraint = NotToday))
+            DefaultConstraintViolation(property = "dateOfBirth", value = now, constraint = NotToday)
+        )
     }
 
     @Test
@@ -373,7 +386,9 @@ class OffsetDateTimeFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
-                constraint = Less(dateTime.minusSeconds(1))))
+                constraint = Less(dateTime.minusSeconds(1))
+            )
+        )
     }
 
     @Test
@@ -388,7 +403,9 @@ class OffsetDateTimeFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
-                constraint = Less(dateTime)))
+                constraint = Less(dateTime)
+            )
+        )
     }
 
     @Test
@@ -424,7 +441,9 @@ class OffsetDateTimeFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
-                constraint = LessOrEqual(dateTime.minusSeconds(1))))
+                constraint = LessOrEqual(dateTime.minusSeconds(1))
+            )
+        )
     }
 
     @Test
@@ -453,7 +472,9 @@ class OffsetDateTimeFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
-                constraint = Greater(dateTime.plusSeconds(1))))
+                constraint = Greater(dateTime.plusSeconds(1))
+            )
+        )
     }
 
     @Test
@@ -468,7 +489,9 @@ class OffsetDateTimeFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
-                constraint = Greater(dateTime)))
+                constraint = Greater(dateTime)
+            )
+        )
     }
 
     @Test
@@ -504,7 +527,9 @@ class OffsetDateTimeFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
-                constraint = GreaterOrEqual(dateTime.plusSeconds(1))))
+                constraint = GreaterOrEqual(dateTime.plusSeconds(1))
+            )
+        )
     }
 
     @Test
@@ -547,7 +572,9 @@ class OffsetDateTimeFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
-                constraint = Between(start = dateTime.plusSeconds(1), end = dateTime.plusSeconds(3))))
+                constraint = Between(start = dateTime.plusSeconds(1), end = dateTime.plusSeconds(3))
+            )
+        )
     }
 
     @Test
@@ -562,7 +589,9 @@ class OffsetDateTimeFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime.plusSeconds(4),
-                constraint = Between(start = dateTime.plusSeconds(1), end = dateTime.plusSeconds(3))))
+                constraint = Between(start = dateTime.plusSeconds(1), end = dateTime.plusSeconds(3))
+            )
+        )
     }
 
     @Test
@@ -598,7 +627,9 @@ class OffsetDateTimeFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
-                constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(1))))
+                constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(1))
+            )
+        )
     }
 
     @Test
@@ -613,7 +644,9 @@ class OffsetDateTimeFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime.plusSeconds(1),
-                constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(1))))
+                constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(1))
+            )
+        )
     }
 
     @Test
@@ -628,6 +661,8 @@ class OffsetDateTimeFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime.plusSeconds(1),
-                constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(2))))
+                constraint = NotBetween(start = dateTime, end = dateTime.plusSeconds(2))
+            )
+        )
     }
 }

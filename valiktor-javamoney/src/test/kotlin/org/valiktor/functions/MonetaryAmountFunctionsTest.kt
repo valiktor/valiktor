@@ -61,11 +61,13 @@ private fun <T : Number> moneyOf(currency: CurrencyUnit, number: T) =
 
 private val ONE_NUMBERS = listOf<Number>(
     1.toByte(), 1.toShort(), 1, 1.toLong(), 1.toBigInteger(),
-    1.toFloat(), 1.toDouble(), 1.toBigDecimal())
+    1.toFloat(), 1.toDouble(), 1.toBigDecimal()
+)
 
 private val NEGATIVE_ONE_NUMBERS = listOf<Number>(
     1.unaryMinus().toByte(), 1.unaryMinus().toShort(), 1.unaryMinus(), 1.unaryMinus().toLong(), 1.unaryMinus().toBigInteger(),
-    1.unaryMinus().toFloat(), 1.unaryMinus().toDouble(), 1.unaryMinus().toBigDecimal())
+    1.unaryMinus().toFloat(), 1.unaryMinus().toDouble(), 1.unaryMinus().toBigDecimal()
+)
 
 class MonetaryAmountFunctionsTest {
 
@@ -84,7 +86,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, 1000), constraint = Null))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, 1000), constraint = Null)
+        )
     }
 
     @Test
@@ -102,7 +105,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", constraint = NotNull))
+            DefaultConstraintViolation(property = "salary", constraint = NotNull)
+        )
     }
 
     @Test
@@ -141,7 +145,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = Equals(moneyOf(USD, ONE))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = Equals(moneyOf(USD, ONE)))
+        )
     }
 
     @Test
@@ -152,7 +157,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = Equals(moneyOf(BRL, ZERO))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = Equals(moneyOf(BRL, ZERO)))
+        )
     }
 
     @Test
@@ -197,7 +203,8 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = Equals(moneyOf(USD, one))))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = Equals(moneyOf(USD, one)))
+            )
         }
     }
 
@@ -230,7 +237,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = NotEquals(moneyOf(BRL, ONE))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = NotEquals(moneyOf(BRL, ONE)))
+        )
     }
 
     @Test
@@ -241,7 +249,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotEquals(moneyOf(USD, 1.00.toBigDecimal()))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotEquals(moneyOf(USD, 1.00.toBigDecimal())))
+        )
     }
 
     @Test
@@ -252,7 +261,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotEquals(moneyOf(USD, 1))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotEquals(moneyOf(USD, 1)))
+        )
     }
 
     @Test
@@ -286,7 +296,8 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(moneyOf(BRL, one))))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(moneyOf(BRL, one)))
+            )
         }
     }
 
@@ -301,7 +312,8 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(moneyOf(USD, one))))
+                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(moneyOf(USD, one)))
+            )
         }
     }
 
@@ -341,7 +353,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = In(setOf(moneyOf(USD, ZERO), moneyOf(USD, TEN)))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = In(setOf(moneyOf(USD, ZERO), moneyOf(USD, TEN))))
+        )
     }
 
     @Test
@@ -352,7 +365,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = In(setOf(moneyOf(BRL, ONE), moneyOf(USD, TEN)))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = In(setOf(moneyOf(BRL, ONE), moneyOf(USD, TEN))))
+        )
     }
 
     @Test
@@ -397,9 +411,16 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = In(setOf(
-                    moneyOf(USD, one),
-                    moneyOf(USD, TEN)))))
+                DefaultConstraintViolation(
+                    property = "salary", value = salary,
+                    constraint = In(
+                        setOf(
+                            moneyOf(USD, one),
+                            moneyOf(USD, TEN)
+                        )
+                    )
+                )
+            )
         }
     }
 
@@ -439,7 +460,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = In(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, TEN)))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = In(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, TEN))))
+        )
     }
 
     @Test
@@ -450,7 +472,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = In(listOf(moneyOf(USD, ONE), moneyOf(BRL, TEN)))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = In(listOf(moneyOf(USD, ONE), moneyOf(BRL, TEN))))
+        )
     }
 
     @Test
@@ -495,9 +518,16 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = In(listOf(
-                    moneyOf(USD, one),
-                    moneyOf(USD, TEN)))))
+                DefaultConstraintViolation(
+                    property = "salary", value = salary,
+                    constraint = In(
+                        listOf(
+                            moneyOf(USD, one),
+                            moneyOf(USD, TEN)
+                        )
+                    )
+                )
+            )
         }
     }
 
@@ -530,7 +560,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, ZERO), moneyOf(USD, ONE), moneyOf(USD, TEN)))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, ZERO), moneyOf(USD, ONE), moneyOf(USD, TEN))))
+        )
     }
 
     @Test
@@ -541,7 +572,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN)))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN))))
+        )
     }
 
     @Test
@@ -552,7 +584,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, 0L), moneyOf(USD, 1L), moneyOf(USD, 10L)))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, 0L), moneyOf(USD, 1L), moneyOf(USD, 10L))))
+        )
     }
 
     @Test
@@ -586,10 +619,17 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(setOf(
-                    moneyOf(USD, ZERO),
-                    moneyOf(USD, one),
-                    moneyOf(USD, TEN)))))
+                DefaultConstraintViolation(
+                    property = "salary", value = salary,
+                    constraint = NotIn(
+                        setOf(
+                            moneyOf(USD, ZERO),
+                            moneyOf(USD, one),
+                            moneyOf(USD, TEN)
+                        )
+                    )
+                )
+            )
         }
     }
 
@@ -604,10 +644,17 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(setOf(
-                    moneyOf(USD, ZERO),
-                    moneyOf(USD, one),
-                    moneyOf(USD, TEN)))))
+                DefaultConstraintViolation(
+                    property = "salary", value = salary,
+                    constraint = NotIn(
+                        setOf(
+                            moneyOf(USD, ZERO),
+                            moneyOf(USD, one),
+                            moneyOf(USD, TEN)
+                        )
+                    )
+                )
+            )
         }
     }
 
@@ -640,7 +687,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = NotIn(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, ONE), moneyOf(BRL, TEN)))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = NotIn(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, ONE), moneyOf(BRL, TEN))))
+        )
     }
 
     @Test
@@ -651,7 +699,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(listOf(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN)))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(listOf(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN))))
+        )
     }
 
     @Test
@@ -662,7 +711,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(listOf(moneyOf(USD, 0.0), moneyOf(USD, 1.0), moneyOf(USD, 10.0)))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(listOf(moneyOf(USD, 0.0), moneyOf(USD, 1.0), moneyOf(USD, 10.0))))
+        )
     }
 
     @Test
@@ -696,10 +746,17 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(listOf(
-                    moneyOf(USD, ZERO),
-                    moneyOf(USD, one),
-                    moneyOf(USD, TEN)))))
+                DefaultConstraintViolation(
+                    property = "salary", value = salary,
+                    constraint = NotIn(
+                        listOf(
+                            moneyOf(USD, ZERO),
+                            moneyOf(USD, one),
+                            moneyOf(USD, TEN)
+                        )
+                    )
+                )
+            )
         }
     }
 
@@ -714,10 +771,17 @@ class MonetaryAmountFunctionsTest {
                 }
             }
             assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "salary", value = salary, constraint = NotIn(listOf(
-                    moneyOf(USD, ZERO),
-                    moneyOf(USD, one),
-                    moneyOf(USD, TEN)))))
+                DefaultConstraintViolation(
+                    property = "salary", value = salary,
+                    constraint = NotIn(
+                        listOf(
+                            moneyOf(USD, ZERO),
+                            moneyOf(USD, one),
+                            moneyOf(USD, TEN)
+                        )
+                    )
+                )
+            )
         }
     }
 
@@ -754,7 +818,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 50.0.toBigDecimal()),
-                constraint = Less(moneyOf(USD, 49.9.toBigDecimal()))))
+                constraint = Less(moneyOf(USD, 49.9.toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -769,7 +835,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 50.9.unaryMinus().toBigDecimal()),
-                constraint = Less(moneyOf(BRL, 51.0.unaryMinus().toBigDecimal()))))
+                constraint = Less(moneyOf(BRL, 51.0.unaryMinus().toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -784,7 +852,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ZERO),
-                constraint = Less(moneyOf(USD, ZERO))))
+                constraint = Less(moneyOf(USD, ZERO))
+            )
+        )
     }
 
     @Test
@@ -833,7 +903,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Less(moneyOf(USD, one))))
+                    constraint = Less(moneyOf(USD, one))
+                )
+            )
         }
     }
 
@@ -852,7 +924,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Less(moneyOf(BRL, one))))
+                    constraint = Less(moneyOf(BRL, one))
+                )
+            )
         }
     }
 
@@ -871,7 +945,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Less(moneyOf(USD, one))))
+                    constraint = Less(moneyOf(USD, one))
+                )
+            )
         }
     }
 
@@ -915,7 +991,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 56789.19.toBigDecimal()),
-                constraint = LessOrEqual(moneyOf(BRL, 57.0.toBigDecimal()))))
+                constraint = LessOrEqual(moneyOf(BRL, 57.0.toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -930,7 +1008,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 96.0.unaryMinus().toBigDecimal()),
-                constraint = LessOrEqual(moneyOf(USD, 97.0.unaryMinus().toBigDecimal()))))
+                constraint = LessOrEqual(moneyOf(USD, 97.0.unaryMinus().toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -990,7 +1070,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = LessOrEqual(moneyOf(BRL, one))))
+                    constraint = LessOrEqual(moneyOf(BRL, one))
+                )
+            )
         }
     }
 
@@ -1009,7 +1091,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = LessOrEqual(moneyOf(USD, one))))
+                    constraint = LessOrEqual(moneyOf(USD, one))
+                )
+            )
         }
     }
 
@@ -1046,7 +1130,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 10.0.toBigDecimal()),
-                constraint = Greater(moneyOf(USD, 11.0.toBigDecimal()))))
+                constraint = Greater(moneyOf(USD, 11.0.toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -1061,7 +1147,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 189.20.unaryMinus().toBigDecimal()),
-                constraint = Greater(moneyOf(BRL, 180.0.unaryMinus().toBigDecimal()))))
+                constraint = Greater(moneyOf(BRL, 180.0.unaryMinus().toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -1076,7 +1164,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ZERO),
-                constraint = Greater(moneyOf(USD, ZERO))))
+                constraint = Greater(moneyOf(USD, ZERO))
+            )
+        )
     }
 
     @Test
@@ -1125,7 +1215,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Greater(moneyOf(USD, one))))
+                    constraint = Greater(moneyOf(USD, one))
+                )
+            )
         }
     }
 
@@ -1144,7 +1236,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Greater(moneyOf(BRL, one))))
+                    constraint = Greater(moneyOf(BRL, one))
+                )
+            )
         }
     }
 
@@ -1163,7 +1257,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Greater(moneyOf(USD, one))))
+                    constraint = Greater(moneyOf(USD, one))
+                )
+            )
         }
     }
 
@@ -1207,7 +1303,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 57.0.toBigDecimal()),
-                constraint = GreaterOrEqual(moneyOf(BRL, 56789.19.toBigDecimal()))))
+                constraint = GreaterOrEqual(moneyOf(BRL, 56789.19.toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -1222,7 +1320,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 97.0.unaryMinus().toBigDecimal()),
-                constraint = GreaterOrEqual(moneyOf(USD, 96.0.unaryMinus().toBigDecimal()))))
+                constraint = GreaterOrEqual(moneyOf(USD, 96.0.unaryMinus().toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -1282,7 +1382,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = GreaterOrEqual(moneyOf(BRL, one))))
+                    constraint = GreaterOrEqual(moneyOf(BRL, one))
+                )
+            )
         }
     }
 
@@ -1301,7 +1403,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = GreaterOrEqual(moneyOf(USD, one))))
+                    constraint = GreaterOrEqual(moneyOf(USD, one))
+                )
+            )
         }
     }
 
@@ -1366,7 +1470,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 10.0.toBigDecimal()),
-                constraint = Between(start = moneyOf(USD, 10.1.toBigDecimal()), end = moneyOf(USD, 11.0.toBigDecimal()))))
+                constraint = Between(start = moneyOf(USD, 10.1.toBigDecimal()), end = moneyOf(USD, 11.0.toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -1381,7 +1487,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 12.0.toBigDecimal()),
-                constraint = Between(start = moneyOf(BRL, 10.1.toBigDecimal()), end = moneyOf(BRL, 11.0.toBigDecimal()))))
+                constraint = Between(start = moneyOf(BRL, 10.1.toBigDecimal()), end = moneyOf(BRL, 11.0.toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -1396,7 +1504,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 10.0.unaryMinus().toBigDecimal()),
-                constraint = Between(start = moneyOf(USD, 9.9.unaryMinus().toBigDecimal()), end = moneyOf(USD, 8.0.unaryMinus().toBigDecimal()))))
+                constraint = Between(start = moneyOf(USD, 9.9.unaryMinus().toBigDecimal()), end = moneyOf(USD, 8.0.unaryMinus().toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -1411,7 +1521,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 12.0.unaryMinus().toBigDecimal()),
-                constraint = Between(start = moneyOf(BRL, 13.0.unaryMinus().toBigDecimal()), end = moneyOf(BRL, 12.9.unaryMinus().toBigDecimal()))))
+                constraint = Between(start = moneyOf(BRL, 13.0.unaryMinus().toBigDecimal()), end = moneyOf(BRL, 12.9.unaryMinus().toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -1504,7 +1616,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Between(start = moneyOf(USD, 0.1), end = moneyOf(USD, one))))
+                    constraint = Between(start = moneyOf(USD, 0.1), end = moneyOf(USD, one))
+                )
+            )
         }
     }
 
@@ -1523,7 +1637,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Between(start = moneyOf(BRL, 0.5), end = moneyOf(BRL, one))))
+                    constraint = Between(start = moneyOf(BRL, 0.5), end = moneyOf(BRL, one))
+                )
+            )
         }
     }
 
@@ -1542,7 +1658,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Between(start = moneyOf(USD, one), end = moneyOf(USD, 0.5.unaryMinus()))))
+                    constraint = Between(start = moneyOf(USD, one), end = moneyOf(USD, 0.5.unaryMinus()))
+                )
+            )
         }
     }
 
@@ -1561,7 +1679,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = Between(start = moneyOf(BRL, 2.unaryMinus().toFloat()), end = moneyOf(BRL, one))))
+                    constraint = Between(start = moneyOf(BRL, 2.unaryMinus().toFloat()), end = moneyOf(BRL, one))
+                )
+            )
         }
     }
 
@@ -1612,7 +1732,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ZERO),
-                constraint = NotBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, ONE))))
+                constraint = NotBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, ONE))
+            )
+        )
     }
 
     @Test
@@ -1627,7 +1749,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ONE),
-                constraint = NotBetween(start = moneyOf(USD, ZERO), end = moneyOf(USD, ONE))))
+                constraint = NotBetween(start = moneyOf(USD, ZERO), end = moneyOf(USD, ONE))
+            )
+        )
     }
 
     @Test
@@ -1642,7 +1766,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal()),
-                constraint = NotBetween(start = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(BRL, 1.0.unaryMinus().toBigDecimal()))))
+                constraint = NotBetween(start = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(BRL, 1.0.unaryMinus().toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -1657,7 +1783,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()),
-                constraint = NotBetween(start = moneyOf(USD, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()))))
+                constraint = NotBetween(start = moneyOf(USD, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -1672,7 +1800,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 0.5.toBigDecimal()),
-                constraint = NotBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, ONE))))
+                constraint = NotBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, ONE))
+            )
+        )
     }
 
     @Test
@@ -1687,7 +1817,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 1.5.unaryMinus().toBigDecimal()),
-                constraint = NotBetween(start = moneyOf(USD, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()))))
+                constraint = NotBetween(start = moneyOf(USD, 2.0.unaryMinus().toBigDecimal()), end = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()))
+            )
+        )
     }
 
     @Test
@@ -1758,7 +1890,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = moneyOf(BRL, one), end = moneyOf(BRL, 2))))
+                    constraint = NotBetween(start = moneyOf(BRL, one), end = moneyOf(BRL, 2))
+                )
+            )
         }
     }
 
@@ -1777,7 +1911,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = moneyOf(USD, one), end = moneyOf(USD, 2))))
+                    constraint = NotBetween(start = moneyOf(USD, one), end = moneyOf(USD, 2))
+                )
+            )
         }
     }
 
@@ -1796,7 +1932,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = moneyOf(BRL, -2), end = moneyOf(BRL, one))))
+                    constraint = NotBetween(start = moneyOf(BRL, -2), end = moneyOf(BRL, one))
+                )
+            )
         }
     }
 
@@ -1815,7 +1953,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = moneyOf(USD, -2), end = moneyOf(USD, one))))
+                    constraint = NotBetween(start = moneyOf(USD, -2), end = moneyOf(USD, one))
+                )
+            )
         }
     }
 
@@ -1834,7 +1974,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, one))))
+                    constraint = NotBetween(start = moneyOf(BRL, ZERO), end = moneyOf(BRL, one))
+                )
+            )
         }
     }
 
@@ -1853,7 +1995,9 @@ class MonetaryAmountFunctionsTest {
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
-                    constraint = NotBetween(start = moneyOf(USD, -2), end = moneyOf(USD, one))))
+                    constraint = NotBetween(start = moneyOf(USD, -2), end = moneyOf(USD, one))
+                )
+            )
         }
     }
 
@@ -1879,7 +2023,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = CurrencyEquals(BRL)))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = CurrencyEquals(BRL))
+        )
     }
 
     @Test
@@ -1904,7 +2049,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyNotEquals(BRL)))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyNotEquals(BRL))
+        )
     }
 
     @Test
@@ -1929,7 +2075,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = CurrencyIn(setOf(BRL))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = CurrencyIn(setOf(BRL)))
+        )
     }
 
     @Test
@@ -1954,7 +2101,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyIn(listOf(USD))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyIn(listOf(USD)))
+        )
     }
 
     @Test
@@ -1979,7 +2127,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = CurrencyNotIn(setOf(USD, BRL))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = CurrencyNotIn(setOf(USD, BRL)))
+        )
     }
 
     @Test
@@ -2004,7 +2153,8 @@ class MonetaryAmountFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyNotIn(listOf(USD, BRL))))
+            DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyNotIn(listOf(USD, BRL)))
+        )
     }
 
     @Test
@@ -2040,7 +2190,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ONE),
-                constraint = Equals(moneyOf(BRL, ZERO))))
+                constraint = Equals(moneyOf(BRL, ZERO))
+            )
+        )
     }
 
     @Test
@@ -2069,7 +2221,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ZERO),
-                constraint = NotEquals(moneyOf(BRL, ZERO))))
+                constraint = NotEquals(moneyOf(BRL, ZERO))
+            )
+        )
     }
 
     @Test
@@ -2084,7 +2238,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 0.00.toBigDecimal()),
-                constraint = NotEquals(moneyOf(USD, ZERO))))
+                constraint = NotEquals(moneyOf(USD, ZERO))
+            )
+        )
     }
 
     @Test
@@ -2120,7 +2276,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ZERO),
-                constraint = Equals(moneyOf(BRL, ONE))))
+                constraint = Equals(moneyOf(BRL, ONE))
+            )
+        )
     }
 
     @Test
@@ -2149,7 +2307,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ONE),
-                constraint = NotEquals(moneyOf(BRL, ONE))))
+                constraint = NotEquals(moneyOf(BRL, ONE))
+            )
+        )
     }
 
     @Test
@@ -2164,7 +2324,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 1.00.toBigDecimal()),
-                constraint = NotEquals(moneyOf(USD, ONE))))
+                constraint = NotEquals(moneyOf(USD, ONE))
+            )
+        )
     }
 
     @Test
@@ -2193,7 +2355,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ZERO),
-                constraint = Greater(moneyOf(USD, ZERO))))
+                constraint = Greater(moneyOf(USD, ZERO))
+            )
+        )
     }
 
     @Test
@@ -2208,7 +2372,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 98765.432.unaryMinus().toBigDecimal()),
-                constraint = Greater(moneyOf(BRL, ZERO))))
+                constraint = Greater(moneyOf(BRL, ZERO))
+            )
+        )
     }
 
     @Test
@@ -2244,7 +2410,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ONE),
-                constraint = LessOrEqual(moneyOf(USD, ZERO))))
+                constraint = LessOrEqual(moneyOf(USD, ZERO))
+            )
+        )
     }
 
     @Test
@@ -2273,7 +2441,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ZERO),
-                constraint = Less(moneyOf(USD, ZERO))))
+                constraint = Less(moneyOf(USD, ZERO))
+            )
+        )
     }
 
     @Test
@@ -2288,7 +2458,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ONE),
-                constraint = Less(moneyOf(BRL, ZERO))))
+                constraint = Less(moneyOf(BRL, ZERO))
+            )
+        )
     }
 
     @Test
@@ -2324,7 +2496,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 98765.432.unaryMinus().toBigDecimal()),
-                constraint = GreaterOrEqual(moneyOf(USD, ZERO))))
+                constraint = GreaterOrEqual(moneyOf(USD, ZERO))
+            )
+        )
     }
 
     @Test
@@ -2395,7 +2569,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 748536.78.toBigDecimal()),
-                constraint = IntegerDigits(min = 7)))
+                constraint = IntegerDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -2410,7 +2586,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 748536.78.toBigDecimal()),
-                constraint = IntegerDigits(max = 5)))
+                constraint = IntegerDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -2425,7 +2603,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 748536.78.toBigDecimal()),
-                constraint = IntegerDigits(min = 7, max = 5)))
+                constraint = IntegerDigits(min = 7, max = 5)
+            )
+        )
     }
 
     @Test
@@ -2440,7 +2620,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 748536.78.unaryMinus().toBigDecimal()),
-                constraint = IntegerDigits(min = 7)))
+                constraint = IntegerDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -2455,7 +2637,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 748536.78.unaryMinus().toBigDecimal()),
-                constraint = IntegerDigits(max = 5)))
+                constraint = IntegerDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -2470,7 +2654,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 748536.78.unaryMinus().toBigDecimal()),
-                constraint = IntegerDigits(min = 7, max = 5)))
+                constraint = IntegerDigits(min = 7, max = 5)
+            )
+        )
     }
 
     @Test
@@ -2541,7 +2727,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 78.748536.toBigDecimal()),
-                constraint = DecimalDigits(min = 7)))
+                constraint = DecimalDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -2556,7 +2744,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 78.748536.toBigDecimal()),
-                constraint = DecimalDigits(max = 5)))
+                constraint = DecimalDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -2571,7 +2761,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 78.748536.toBigDecimal()),
-                constraint = DecimalDigits(min = 7, max = 5)))
+                constraint = DecimalDigits(min = 7, max = 5)
+            )
+        )
     }
 
     @Test
@@ -2586,7 +2778,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 78.748536.unaryMinus().toBigDecimal()),
-                constraint = DecimalDigits(min = 7)))
+                constraint = DecimalDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -2601,7 +2795,9 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 78.748536.unaryMinus().toBigDecimal()),
-                constraint = DecimalDigits(max = 5)))
+                constraint = DecimalDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -2616,6 +2812,8 @@ class MonetaryAmountFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 78.748536.unaryMinus().toBigDecimal()),
-                constraint = DecimalDigits(min = 7, max = 5)))
+                constraint = DecimalDigits(min = 7, max = 5)
+            )
+        )
     }
 }

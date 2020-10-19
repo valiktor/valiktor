@@ -54,7 +54,8 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = true, constraint = Null))
+            DefaultConstraintViolation(property = "active", value = true, constraint = Null)
+        )
     }
 
     @Test
@@ -72,7 +73,8 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", constraint = NotNull))
+            DefaultConstraintViolation(property = "active", constraint = NotNull)
+        )
     }
 
     @Test
@@ -97,7 +99,8 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = true, constraint = Equals(false)))
+            DefaultConstraintViolation(property = "active", value = true, constraint = Equals(false))
+        )
     }
 
     @Test
@@ -122,7 +125,8 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = false, constraint = NotEquals(false)))
+            DefaultConstraintViolation(property = "active", value = false, constraint = NotEquals(false))
+        )
     }
 
     @Test
@@ -147,7 +151,8 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = true, constraint = In(setOf(false))))
+            DefaultConstraintViolation(property = "active", value = true, constraint = In(setOf(false)))
+        )
     }
 
     @Test
@@ -172,7 +177,8 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = true, constraint = In(listOf(false))))
+            DefaultConstraintViolation(property = "active", value = true, constraint = In(listOf(false)))
+        )
     }
 
     @Test
@@ -197,7 +203,8 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(setOf(true, false))))
+            DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(setOf(true, false)))
+        )
     }
 
     @Test
@@ -222,7 +229,8 @@ class BooleanFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(listOf(true, false))))
+            DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(listOf(true, false)))
+        )
     }
 
     @Test
@@ -251,7 +259,9 @@ class BooleanFunctionsTest {
             DefaultConstraintViolation(
                 property = "active",
                 value = false,
-                constraint = True))
+                constraint = True
+            )
+        )
     }
 
     @Test
@@ -280,6 +290,8 @@ class BooleanFunctionsTest {
             DefaultConstraintViolation(
                 property = "active",
                 value = true,
-                constraint = False))
+                constraint = False
+            )
+        )
     }
 }

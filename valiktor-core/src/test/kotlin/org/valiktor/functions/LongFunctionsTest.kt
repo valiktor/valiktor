@@ -59,7 +59,8 @@ class LongFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1L, constraint = Null))
+            DefaultConstraintViolation(property = "id", value = 1L, constraint = Null)
+        )
     }
 
     @Test
@@ -77,7 +78,8 @@ class LongFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", constraint = NotNull))
+            DefaultConstraintViolation(property = "id", constraint = NotNull)
+        )
     }
 
     @Test
@@ -102,7 +104,8 @@ class LongFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 2L, constraint = Equals(1L)))
+            DefaultConstraintViolation(property = "id", value = 2L, constraint = Equals(1L))
+        )
     }
 
     @Test
@@ -127,7 +130,8 @@ class LongFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1L, constraint = NotEquals(1L)))
+            DefaultConstraintViolation(property = "id", value = 1L, constraint = NotEquals(1L))
+        )
     }
 
     @Test
@@ -152,7 +156,8 @@ class LongFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1L, constraint = In(setOf(0L, 2L, 3L))))
+            DefaultConstraintViolation(property = "id", value = 1L, constraint = In(setOf(0L, 2L, 3L)))
+        )
     }
 
     @Test
@@ -177,7 +182,8 @@ class LongFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1L, constraint = In(listOf(0L, 2L, 3L))))
+            DefaultConstraintViolation(property = "id", value = 1L, constraint = In(listOf(0L, 2L, 3L)))
+        )
     }
 
     @Test
@@ -202,7 +208,8 @@ class LongFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1L, constraint = NotIn(setOf(1L, 2L, 3L))))
+            DefaultConstraintViolation(property = "id", value = 1L, constraint = NotIn(setOf(1L, 2L, 3L)))
+        )
     }
 
     @Test
@@ -227,7 +234,8 @@ class LongFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1L, constraint = NotIn(listOf(1L, 2L, 3L))))
+            DefaultConstraintViolation(property = "id", value = 1L, constraint = NotIn(listOf(1L, 2L, 3L)))
+        )
     }
 
     @Test
@@ -256,7 +264,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1L,
-                constraint = Equals(0L)))
+                constraint = Equals(0L)
+            )
+        )
     }
 
     @Test
@@ -285,7 +295,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0L,
-                constraint = NotEquals(0L)))
+                constraint = NotEquals(0L)
+            )
+        )
     }
 
     @Test
@@ -314,7 +326,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0L,
-                constraint = Equals(1L)))
+                constraint = Equals(1L)
+            )
+        )
     }
 
     @Test
@@ -343,7 +357,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1L,
-                constraint = NotEquals(1L)))
+                constraint = NotEquals(1L)
+            )
+        )
     }
 
     @Test
@@ -372,7 +388,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0L,
-                constraint = Greater(0L)))
+                constraint = Greater(0L)
+            )
+        )
     }
 
     @Test
@@ -387,7 +405,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 98765L.unaryMinus(),
-                constraint = Greater(0L)))
+                constraint = Greater(0L)
+            )
+        )
     }
 
     @Test
@@ -423,7 +443,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1L,
-                constraint = LessOrEqual(0L)))
+                constraint = LessOrEqual(0L)
+            )
+        )
     }
 
     @Test
@@ -452,7 +474,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0L,
-                constraint = Less(0L)))
+                constraint = Less(0L)
+            )
+        )
     }
 
     @Test
@@ -467,7 +491,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1L,
-                constraint = Less(0L)))
+                constraint = Less(0L)
+            )
+        )
     }
 
     @Test
@@ -503,7 +529,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 98765L.unaryMinus(),
-                constraint = GreaterOrEqual(0L)))
+                constraint = GreaterOrEqual(0L)
+            )
+        )
     }
 
     @Test
@@ -539,7 +567,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 50L,
-                constraint = Less(49L)))
+                constraint = Less(49L)
+            )
+        )
     }
 
     @Test
@@ -554,7 +584,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 50L.unaryMinus(),
-                constraint = Less(51L.unaryMinus())))
+                constraint = Less(51L.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -569,7 +601,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0L,
-                constraint = Less(0L)))
+                constraint = Less(0L)
+            )
+        )
     }
 
     @Test
@@ -612,7 +646,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 56789L,
-                constraint = LessOrEqual(57L)))
+                constraint = LessOrEqual(57L)
+            )
+        )
     }
 
     @Test
@@ -627,7 +663,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 96L.unaryMinus(),
-                constraint = LessOrEqual(97L.unaryMinus())))
+                constraint = LessOrEqual(97L.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -663,7 +701,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 10L,
-                constraint = Greater(11L)))
+                constraint = Greater(11L)
+            )
+        )
     }
 
     @Test
@@ -678,7 +718,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 189L.unaryMinus(),
-                constraint = Greater(180L.unaryMinus())))
+                constraint = Greater(180L.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -693,7 +735,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0L,
-                constraint = Greater(0L)))
+                constraint = Greater(0L)
+            )
+        )
     }
 
     @Test
@@ -736,7 +780,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 57L,
-                constraint = GreaterOrEqual(56789L)))
+                constraint = GreaterOrEqual(56789L)
+            )
+        )
     }
 
     @Test
@@ -751,7 +797,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 97L.unaryMinus(),
-                constraint = GreaterOrEqual(96L.unaryMinus())))
+                constraint = GreaterOrEqual(96L.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -815,7 +863,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 10L,
-                constraint = Between(start = 11L, end = 12L)))
+                constraint = Between(start = 11L, end = 12L)
+            )
+        )
     }
 
     @Test
@@ -830,7 +880,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 12L,
-                constraint = Between(start = 10L, end = 11L)))
+                constraint = Between(start = 10L, end = 11L)
+            )
+        )
     }
 
     @Test
@@ -845,7 +897,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 10L.unaryMinus(),
-                constraint = Between(start = 9L.unaryMinus(), end = 8L.unaryMinus())))
+                constraint = Between(start = 9L.unaryMinus(), end = 8L.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -860,7 +914,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 12L.unaryMinus(),
-                constraint = Between(start = 14L.unaryMinus(), end = 13L.unaryMinus())))
+                constraint = Between(start = 14L.unaryMinus(), end = 13L.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -910,7 +966,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0L,
-                constraint = NotBetween(start = 0L, end = 1L)))
+                constraint = NotBetween(start = 0L, end = 1L)
+            )
+        )
     }
 
     @Test
@@ -925,7 +983,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1L,
-                constraint = NotBetween(start = 0L, end = 1L)))
+                constraint = NotBetween(start = 0L, end = 1L)
+            )
+        )
     }
 
     @Test
@@ -940,7 +1000,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 2L.unaryMinus(),
-                constraint = NotBetween(start = 2L.unaryMinus(), end = 1L.unaryMinus())))
+                constraint = NotBetween(start = 2L.unaryMinus(), end = 1L.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -955,7 +1017,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1L.unaryMinus(),
-                constraint = NotBetween(start = 2L.unaryMinus(), end = 1L.unaryMinus())))
+                constraint = NotBetween(start = 2L.unaryMinus(), end = 1L.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -970,7 +1034,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 5L,
-                constraint = NotBetween(start = 0L, end = 10L)))
+                constraint = NotBetween(start = 0L, end = 10L)
+            )
+        )
     }
 
     @Test
@@ -985,7 +1051,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 15L.unaryMinus(),
-                constraint = NotBetween(start = 20L.unaryMinus(), end = 10L.unaryMinus())))
+                constraint = NotBetween(start = 20L.unaryMinus(), end = 10L.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -1056,7 +1124,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536L,
-                constraint = IntegerDigits(min = 7)))
+                constraint = IntegerDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -1071,7 +1141,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536L,
-                constraint = IntegerDigits(max = 5)))
+                constraint = IntegerDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -1086,7 +1158,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536L,
-                constraint = IntegerDigits(min = 7, max = 5)))
+                constraint = IntegerDigits(min = 7, max = 5)
+            )
+        )
     }
 
     @Test
@@ -1101,7 +1175,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536L.unaryMinus(),
-                constraint = IntegerDigits(min = 7)))
+                constraint = IntegerDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -1116,7 +1192,9 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536L.unaryMinus(),
-                constraint = IntegerDigits(max = 5)))
+                constraint = IntegerDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -1131,6 +1209,8 @@ class LongFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536L.unaryMinus(),
-                constraint = IntegerDigits(min = 7, max = 5)))
+                constraint = IntegerDigits(min = 7, max = 5)
+            )
+        )
     }
 }

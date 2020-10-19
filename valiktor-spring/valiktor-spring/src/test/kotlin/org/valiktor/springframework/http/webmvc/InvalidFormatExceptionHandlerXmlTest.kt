@@ -41,10 +41,12 @@ class InvalidFormatExceptionHandlerXmlTest {
     @Test
     fun `should return 201`() {
         mockMvc
-            .perform(post("/employees")
-                .accept(APPLICATION_XML)
-                .contentType(APPLICATION_XML)
-                .content(xml.payloadEmployeeValid()))
+            .perform(
+                post("/employees")
+                    .accept(APPLICATION_XML)
+                    .contentType(APPLICATION_XML)
+                    .content(xml.payloadEmployeeValid())
+            )
             .andExpect(status().isCreated)
             .andExpect(header().string(LOCATION, "http://localhost/employees/1"))
             .andExpect(content().bytes(ByteArray(0)))
@@ -54,10 +56,12 @@ class InvalidFormatExceptionHandlerXmlTest {
     @Test
     fun `should return 422 (In) with default locale`() {
         mockMvc
-            .perform(post("/employees")
-                .accept(APPLICATION_XML)
-                .contentType(APPLICATION_XML)
-                .content(xml.payloadEmployeeInvalidStatus()))
+            .perform(
+                post("/employees")
+                    .accept(APPLICATION_XML)
+                    .contentType(APPLICATION_XML)
+                    .content(xml.payloadEmployeeInvalidStatus())
+            )
             .andExpect(status().isUnprocessableEntity)
             .andExpect(content().contentTypeCompatibleWith(APPLICATION_XML))
             .andExpect(content().xml(xml.payload422InvalidStatus(Locale.ENGLISH)))
@@ -67,11 +71,13 @@ class InvalidFormatExceptionHandlerXmlTest {
     @Test
     fun `should return 422 (In) with locale en`() {
         mockMvc
-            .perform(post("/employees")
-                .accept(APPLICATION_XML)
-                .header(ACCEPT_LANGUAGE, "en")
-                .contentType(APPLICATION_XML)
-                .content(xml.payloadEmployeeInvalidStatus()))
+            .perform(
+                post("/employees")
+                    .accept(APPLICATION_XML)
+                    .header(ACCEPT_LANGUAGE, "en")
+                    .contentType(APPLICATION_XML)
+                    .content(xml.payloadEmployeeInvalidStatus())
+            )
             .andExpect(status().isUnprocessableEntity)
             .andExpect(content().contentTypeCompatibleWith(APPLICATION_XML))
             .andExpect(content().xml(xml.payload422InvalidStatus(Locale.ENGLISH)))
@@ -81,11 +87,13 @@ class InvalidFormatExceptionHandlerXmlTest {
     @Test
     fun `should return 422 (In) with locale pt_BR`() {
         mockMvc
-            .perform(post("/employees")
-                .accept(APPLICATION_XML)
-                .header(ACCEPT_LANGUAGE, "pt-BR")
-                .contentType(APPLICATION_XML)
-                .content(xml.payloadEmployeeInvalidStatus()))
+            .perform(
+                post("/employees")
+                    .accept(APPLICATION_XML)
+                    .header(ACCEPT_LANGUAGE, "pt-BR")
+                    .contentType(APPLICATION_XML)
+                    .content(xml.payloadEmployeeInvalidStatus())
+            )
             .andExpect(status().isUnprocessableEntity)
             .andExpect(content().contentTypeCompatibleWith(APPLICATION_XML))
             .andExpect(content().xml(xml.payload422InvalidStatus(Locale("pt", "BR"))))
@@ -95,10 +103,12 @@ class InvalidFormatExceptionHandlerXmlTest {
     @Test
     fun `should return 422 (Valid) with default locale`() {
         mockMvc
-            .perform(post("/employees")
-                .accept(APPLICATION_XML)
-                .contentType(APPLICATION_XML)
-                .content(xml.payloadEmployeeInvalidSalary()))
+            .perform(
+                post("/employees")
+                    .accept(APPLICATION_XML)
+                    .contentType(APPLICATION_XML)
+                    .content(xml.payloadEmployeeInvalidSalary())
+            )
             .andExpect(status().isUnprocessableEntity)
             .andExpect(content().contentTypeCompatibleWith(APPLICATION_XML))
             .andExpect(content().xml(xml.payload422InvalidSalary(Locale.ENGLISH)))
@@ -108,11 +118,13 @@ class InvalidFormatExceptionHandlerXmlTest {
     @Test
     fun `should return 422 (Valid) with locale en`() {
         mockMvc
-            .perform(post("/employees")
-                .accept(APPLICATION_XML)
-                .header(ACCEPT_LANGUAGE, "en")
-                .contentType(APPLICATION_XML)
-                .content(xml.payloadEmployeeInvalidSalary()))
+            .perform(
+                post("/employees")
+                    .accept(APPLICATION_XML)
+                    .header(ACCEPT_LANGUAGE, "en")
+                    .contentType(APPLICATION_XML)
+                    .content(xml.payloadEmployeeInvalidSalary())
+            )
             .andExpect(status().isUnprocessableEntity)
             .andExpect(content().contentTypeCompatibleWith(APPLICATION_XML))
             .andExpect(content().xml(xml.payload422InvalidSalary(Locale.ENGLISH)))
@@ -122,11 +134,13 @@ class InvalidFormatExceptionHandlerXmlTest {
     @Test
     fun `should return 422 (Valid) with locale pt_BR`() {
         mockMvc
-            .perform(post("/employees")
-                .accept(APPLICATION_XML)
-                .header(ACCEPT_LANGUAGE, "pt-BR")
-                .contentType(APPLICATION_XML)
-                .content(xml.payloadEmployeeInvalidSalary()))
+            .perform(
+                post("/employees")
+                    .accept(APPLICATION_XML)
+                    .header(ACCEPT_LANGUAGE, "pt-BR")
+                    .contentType(APPLICATION_XML)
+                    .content(xml.payloadEmployeeInvalidSalary())
+            )
             .andExpect(status().isUnprocessableEntity)
             .andExpect(content().contentTypeCompatibleWith(APPLICATION_XML))
             .andExpect(content().xml(xml.payload422InvalidSalary(Locale("pt", "BR"))))

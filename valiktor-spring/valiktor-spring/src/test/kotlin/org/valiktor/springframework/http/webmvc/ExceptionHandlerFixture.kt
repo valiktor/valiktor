@@ -74,8 +74,12 @@ private class ValiktorTestController {
             validate(Employee::name).hasSize(min = 4)
             validate(Employee::email).isEmail()
             validate(Employee::salary).isBetween(start = "999.99".toBigDecimal(), end = "9999.99".toBigDecimal())
-            validate(Employee::dateOfBirth).isEqualTo(Date.from(LocalDate.of(2001, Month.JANUARY, 1)
-                .atStartOfDay(ZoneId.systemDefault()).toInstant()))
+            validate(Employee::dateOfBirth).isEqualTo(
+                Date.from(
+                    LocalDate.of(2001, Month.JANUARY, 1)
+                        .atStartOfDay(ZoneId.systemDefault()).toInstant()
+                )
+            )
         }
 
         val location = fromCurrentRequestUri().path("/{id}").buildAndExpand(employee.id).toUri()
@@ -117,12 +121,14 @@ object ExceptionHandlerFixture {
         )
         .setMessageConverters(
             MappingJackson2HttpMessageConverter().also { it.objectMapper = this.jsonMapper },
-            MappingJackson2XmlHttpMessageConverter().also { it.objectMapper = this.xmlMapper })
+            MappingJackson2XmlHttpMessageConverter().also { it.objectMapper = this.xmlMapper }
+        )
         .setLocaleResolver(object : AcceptHeaderLocaleResolver() {
             override fun resolveLocale(req: HttpServletRequest): Locale? =
                 Locale.lookup(
                     Locale.LanguageRange.parse(req.getHeader(ACCEPT_LANGUAGE) ?: "en"),
-                    listOf(Locale.ENGLISH, Locale("pt", "BR")))
+                    listOf(Locale.ENGLISH, Locale("pt", "BR"))
+                )
         })
         .build()
 

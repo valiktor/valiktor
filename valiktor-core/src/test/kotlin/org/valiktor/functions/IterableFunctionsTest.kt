@@ -75,10 +75,17 @@ class IterableFunctionsTest {
 
     @Test
     fun `inner iterable properties should be valid`() {
-        validate(Employee(company = Company(addresses = listOf(
-            Address(id = 1, city = City(id = 1)),
-            Address(id = 1, city = City(id = 1)),
-            Address(id = 1, city = City(id = 1)))))) {
+        validate(
+            Employee(
+                company = Company(
+                    addresses = listOf(
+                        Address(id = 1, city = City(id = 1)),
+                        Address(id = 1, city = City(id = 1)),
+                        Address(id = 1, city = City(id = 1))
+                    )
+                )
+            )
+        ) {
             validate(Employee::company).validate {
                 validate(Company::addresses).validateForEach {
                     validate(Address::id).isNotNull()
@@ -111,10 +118,17 @@ class IterableFunctionsTest {
     @Test
     fun `inner iterable properties should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(addresses = listOf(
-                Address(city = City()),
-                Address(city = City()),
-                Address(city = City()))))) {
+            validate(
+                Employee(
+                    company = Company(
+                        addresses = listOf(
+                            Address(city = City()),
+                            Address(city = City()),
+                            Address(city = City())
+                        )
+                    )
+                )
+            ) {
                 validate(Employee::company).validate {
                     validate(Company::addresses).validateForEach {
                         validate(Address::id).isNotNull()
@@ -132,15 +146,23 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(property = "company.addresses[1].id", constraint = NotNull),
             DefaultConstraintViolation(property = "company.addresses[1].city.id", constraint = NotNull),
             DefaultConstraintViolation(property = "company.addresses[2].id", constraint = NotNull),
-            DefaultConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull))
+            DefaultConstraintViolation(property = "company.addresses[2].city.id", constraint = NotNull)
+        )
     }
 
     @Test
     fun `should receive the current value as function parameter`() {
-        validate(Employee(company = Company(addresses = listOf(
-            Address(city = City(id = 1)),
-            Address(city = City(id = 2)),
-            Address(city = City(id = 3)))))) {
+        validate(
+            Employee(
+                company = Company(
+                    addresses = listOf(
+                        Address(city = City(id = 1)),
+                        Address(city = City(id = 2)),
+                        Address(city = City(id = 3))
+                    )
+                )
+            )
+        ) {
             validate(Employee::company).validate {
                 var id = 1
                 validate(Company::addresses).validateForEach { address ->
@@ -153,10 +175,17 @@ class IterableFunctionsTest {
 
     @Test
     fun `should receive the current index and value as function parameter`() {
-        validate(Employee(company = Company(addresses = listOf(
-            Address(city = City(id = 1)),
-            Address(city = City(id = 2)),
-            Address(city = City(id = 3)))))) {
+        validate(
+            Employee(
+                company = Company(
+                    addresses = listOf(
+                        Address(city = City(id = 1)),
+                        Address(city = City(id = 2)),
+                        Address(city = City(id = 3))
+                    )
+                )
+            )
+        ) {
             validate(Employee::company).validate {
                 validate(Company::addresses).validateForEachIndexed { index, address ->
                     assertEquals(address, Address(city = City(id = index + 1)))
@@ -180,7 +209,8 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses", value = emptyList<Address>(), constraint = Null))
+            DefaultConstraintViolation(property = "addresses", value = emptyList<Address>(), constraint = Null)
+        )
     }
 
     @Test
@@ -198,7 +228,8 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses", constraint = NotNull))
+            DefaultConstraintViolation(property = "addresses", constraint = NotNull)
+        )
     }
 
     @Test
@@ -223,9 +254,12 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses",
+            DefaultConstraintViolation(
+                property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2)),
-                constraint = Equals(listOf(Address(id = 1)))))
+                constraint = Equals(listOf(Address(id = 1)))
+            )
+        )
     }
 
     @Test
@@ -250,9 +284,12 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses",
+            DefaultConstraintViolation(
+                property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2)),
-                constraint = NotEquals(listOf(Address(id = 1), Address(id = 2)))))
+                constraint = NotEquals(listOf(Address(id = 1), Address(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -277,9 +314,12 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses",
+            DefaultConstraintViolation(
+                property = "addresses",
                 value = emptyList<Address>(),
-                constraint = In(setOf(listOf(Address(id = 1))))))
+                constraint = In(setOf(listOf(Address(id = 1))))
+            )
+        )
     }
 
     @Test
@@ -304,9 +344,12 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses",
+            DefaultConstraintViolation(
+                property = "addresses",
                 value = emptyList<Address>(),
-                constraint = In(listOf(listOf(Address(id = 1))))))
+                constraint = In(listOf(listOf(Address(id = 1))))
+            )
+        )
     }
 
     @Test
@@ -331,9 +374,12 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses",
+            DefaultConstraintViolation(
+                property = "addresses",
                 value = listOf(Address(id = 1)),
-                constraint = NotIn(setOf(listOf(Address(id = 1))))))
+                constraint = NotIn(setOf(listOf(Address(id = 1))))
+            )
+        )
     }
 
     @Test
@@ -358,9 +404,12 @@ class IterableFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "addresses",
+            DefaultConstraintViolation(
+                property = "addresses",
                 value = listOf(Address(id = 1)),
-                constraint = NotIn(listOf(listOf(Address(id = 1))))))
+                constraint = NotIn(listOf(listOf(Address(id = 1))))
+            )
+        )
     }
 
     @Test
@@ -389,7 +438,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address()),
-                constraint = Empty))
+                constraint = Empty
+            )
+        )
     }
 
     @Test
@@ -418,7 +469,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
-                constraint = NotEmpty))
+                constraint = NotEmpty
+            )
+        )
     }
 
     @Test
@@ -468,7 +521,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(), Address()),
-                constraint = Size(min = 5)))
+                constraint = Size(min = 5)
+            )
+        )
     }
 
     @Test
@@ -483,7 +538,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(), Address()),
-                constraint = Size(max = 1)))
+                constraint = Size(max = 1)
+            )
+        )
     }
 
     @Test
@@ -498,7 +555,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(), Address()),
-                constraint = Size(min = 3, max = 1)))
+                constraint = Size(min = 3, max = 1)
+            )
+        )
     }
 
     @Test
@@ -527,7 +586,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
-                constraint = Contains(Address(id = 1))))
+                constraint = Contains(Address(id = 1))
+            )
+        )
     }
 
     @Test
@@ -556,7 +617,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
-                constraint = ContainsAll(setOf(Address(id = 1), Address(id = 2)))))
+                constraint = ContainsAll(setOf(Address(id = 1), Address(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -585,7 +648,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1)),
-                constraint = ContainsAll(listOf(Address(id = 1), Address(id = 2)))))
+                constraint = ContainsAll(listOf(Address(id = 1), Address(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -614,7 +679,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
-                constraint = ContainsAny(setOf(Address(id = 1), Address(id = 2)))))
+                constraint = ContainsAny(setOf(Address(id = 1), Address(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -643,7 +710,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
-                constraint = ContainsAny(listOf(Address(id = 1), Address(id = 2)))))
+                constraint = ContainsAny(listOf(Address(id = 1), Address(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -672,7 +741,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1)),
-                constraint = NotContain(Address(id = 1))))
+                constraint = NotContain(Address(id = 1))
+            )
+        )
     }
 
     @Test
@@ -701,7 +772,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                constraint = NotContainAll(setOf(Address(id = 1), Address(id = 2)))))
+                constraint = NotContainAll(setOf(Address(id = 1), Address(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -730,7 +803,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                constraint = NotContainAll(listOf(Address(id = 1), Address(id = 2)))))
+                constraint = NotContainAll(listOf(Address(id = 1), Address(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -759,7 +834,9 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                constraint = NotContainAny(setOf(Address(id = 1), Address(id = 5)))))
+                constraint = NotContainAny(setOf(Address(id = 1), Address(id = 5)))
+            )
+        )
     }
 
     @Test
@@ -788,6 +865,8 @@ class IterableFunctionsTest {
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
-                constraint = NotContainAny(listOf(Address(id = 1), Address(id = 5)))))
+                constraint = NotContainAny(listOf(Address(id = 1), Address(id = 5)))
+            )
+        )
     }
 }

@@ -102,7 +102,8 @@ class ArrayFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(property = "dependents[0].id", constraint = NotNull),
             DefaultConstraintViolation(property = "dependents[1].id", constraint = NotNull),
-            DefaultConstraintViolation(property = "dependents[2].id", constraint = NotNull))
+            DefaultConstraintViolation(property = "dependents[2].id", constraint = NotNull)
+        )
     }
 
     @Test
@@ -145,7 +146,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = Null))
+                constraint = Null
+            )
+        )
     }
 
     @Test
@@ -165,7 +168,9 @@ class ArrayFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "dependents",
-                constraint = NotNull))
+                constraint = NotNull
+            )
+        )
     }
 
     @Test
@@ -196,7 +201,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = Equals(constraintDependents)))
+                constraint = Equals(constraintDependents)
+            )
+        )
     }
 
     @Test
@@ -227,7 +234,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = NotEquals(constraintDependents)))
+                constraint = NotEquals(constraintDependents)
+            )
+        )
     }
 
     @Test
@@ -240,8 +249,10 @@ class ArrayFunctionsTest {
     @Test
     fun `isIn vararg with same value should be valid`() {
         validate(Employee(dependents = arrayOf(Dependent(id = 1)))) {
-            validate(Employee::dependents).isIn(arrayOf(Dependent(id = 1)),
-                arrayOf(Dependent(id = 1), Dependent(id = 2)))
+            validate(Employee::dependents).isIn(
+                arrayOf(Dependent(id = 1)),
+                arrayOf(Dependent(id = 1), Dependent(id = 2))
+            )
         }
     }
 
@@ -259,7 +270,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = In(setOf(constraintDependents))))
+                constraint = In(setOf(constraintDependents))
+            )
+        )
     }
 
     @Test
@@ -272,8 +285,12 @@ class ArrayFunctionsTest {
     @Test
     fun `isIn iterable with same value should be valid`() {
         validate(Employee(dependents = arrayOf(Dependent(id = 1)))) {
-            validate(Employee::dependents).isIn(listOf(arrayOf(Dependent(id = 1)),
-                arrayOf(Dependent(id = 1), Dependent(id = 2))))
+            validate(Employee::dependents).isIn(
+                listOf(
+                    arrayOf(Dependent(id = 1)),
+                    arrayOf(Dependent(id = 1), Dependent(id = 2))
+                )
+            )
         }
     }
 
@@ -291,7 +308,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = In(listOf(constraintDependents))))
+                constraint = In(listOf(constraintDependents))
+            )
+        )
     }
 
     @Test
@@ -322,7 +341,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = NotIn(setOf(constraintDependents))))
+                constraint = NotIn(setOf(constraintDependents))
+            )
+        )
     }
 
     @Test
@@ -353,7 +374,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = NotIn(listOf(constraintDependents))))
+                constraint = NotIn(listOf(constraintDependents))
+            )
+        )
     }
 
     @Test
@@ -384,7 +407,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = Empty))
+                constraint = Empty
+            )
+        )
     }
 
     @Test
@@ -415,7 +440,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = NotEmpty))
+                constraint = NotEmpty
+            )
+        )
     }
 
     @Test
@@ -467,7 +494,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = Size(min = 5)))
+                constraint = Size(min = 5)
+            )
+        )
     }
 
     @Test
@@ -484,7 +513,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = Size(max = 1)))
+                constraint = Size(max = 1)
+            )
+        )
     }
 
     @Test
@@ -501,7 +532,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = Size(min = 3, max = 1)))
+                constraint = Size(min = 3, max = 1)
+            )
+        )
     }
 
     @Test
@@ -532,7 +565,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = Contains(Dependent(id = 1))))
+                constraint = Contains(Dependent(id = 1))
+            )
+        )
     }
 
     @Test
@@ -563,7 +598,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = ContainsAll(setOf(Dependent(id = 1), Dependent(id = 2)))))
+                constraint = ContainsAll(setOf(Dependent(id = 1), Dependent(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -594,7 +631,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = ContainsAll(listOf(Dependent(id = 1), Dependent(id = 2)))))
+                constraint = ContainsAll(listOf(Dependent(id = 1), Dependent(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -625,7 +664,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = ContainsAny(setOf(Dependent(id = 1), Dependent(id = 2)))))
+                constraint = ContainsAny(setOf(Dependent(id = 1), Dependent(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -656,7 +697,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = ContainsAny(listOf(Dependent(id = 1), Dependent(id = 2)))))
+                constraint = ContainsAny(listOf(Dependent(id = 1), Dependent(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -687,7 +730,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = NotContain(Dependent(id = 1))))
+                constraint = NotContain(Dependent(id = 1))
+            )
+        )
     }
 
     @Test
@@ -718,7 +763,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = NotContainAll(setOf(Dependent(id = 1), Dependent(id = 2)))))
+                constraint = NotContainAll(setOf(Dependent(id = 1), Dependent(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -749,7 +796,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = NotContainAll(listOf(Dependent(id = 1), Dependent(id = 2)))))
+                constraint = NotContainAll(listOf(Dependent(id = 1), Dependent(id = 2)))
+            )
+        )
     }
 
     @Test
@@ -780,7 +829,9 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = NotContainAny(setOf(Dependent(id = 1), Dependent(id = 5)))))
+                constraint = NotContainAny(setOf(Dependent(id = 1), Dependent(id = 5)))
+            )
+        )
     }
 
     @Test
@@ -811,6 +862,8 @@ class ArrayFunctionsTest {
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
-                constraint = NotContainAny(listOf(Dependent(id = 1), Dependent(id = 5)))))
+                constraint = NotContainAny(listOf(Dependent(id = 1), Dependent(id = 5)))
+            )
+        )
     }
 }

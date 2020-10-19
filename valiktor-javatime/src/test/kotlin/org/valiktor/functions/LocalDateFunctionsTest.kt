@@ -61,7 +61,8 @@ class LocalDateFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = Null))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = Null)
+        )
     }
 
     @Test
@@ -79,7 +80,8 @@ class LocalDateFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull))
+            DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull)
+        )
     }
 
     @Test
@@ -104,7 +106,8 @@ class LocalDateFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = Equals(LocalDate.now().minusDays(1))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = Equals(LocalDate.now().minusDays(1)))
+        )
     }
 
     @Test
@@ -129,7 +132,8 @@ class LocalDateFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotEquals(LocalDate.now())))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotEquals(LocalDate.now()))
+        )
     }
 
     @Test
@@ -154,7 +158,8 @@ class LocalDateFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = In(setOf(LocalDate.now().minusDays(1), LocalDate.now().minusDays(2)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = In(setOf(LocalDate.now().minusDays(1), LocalDate.now().minusDays(2))))
+        )
     }
 
     @Test
@@ -179,7 +184,8 @@ class LocalDateFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = In(listOf(LocalDate.now().minusDays(1), LocalDate.now().minusDays(2)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = In(listOf(LocalDate.now().minusDays(1), LocalDate.now().minusDays(2))))
+        )
     }
 
     @Test
@@ -204,7 +210,8 @@ class LocalDateFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotIn(setOf(LocalDate.now(), LocalDate.now().plusDays(1)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotIn(setOf(LocalDate.now(), LocalDate.now().plusDays(1))))
+        )
     }
 
     @Test
@@ -229,7 +236,8 @@ class LocalDateFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotIn(listOf(LocalDate.now(), LocalDate.now().plusDays(1)))))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotIn(listOf(LocalDate.now(), LocalDate.now().plusDays(1))))
+        )
     }
 
     @Test
@@ -254,7 +262,8 @@ class LocalDateFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now().minusDays(1), constraint = Today))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now().minusDays(1), constraint = Today)
+        )
     }
 
     @Test
@@ -265,7 +274,8 @@ class LocalDateFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now().plusDays(1), constraint = Today))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now().plusDays(1), constraint = Today)
+        )
     }
 
     @Test
@@ -283,7 +293,8 @@ class LocalDateFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotToday))
+            DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotToday)
+        )
     }
 
     @Test
@@ -326,7 +337,9 @@ class LocalDateFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
-                constraint = Less(LocalDate.now().minusDays(1))))
+                constraint = Less(LocalDate.now().minusDays(1))
+            )
+        )
     }
 
     @Test
@@ -341,7 +354,9 @@ class LocalDateFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
-                constraint = Less(LocalDate.now())))
+                constraint = Less(LocalDate.now())
+            )
+        )
     }
 
     @Test
@@ -377,7 +392,9 @@ class LocalDateFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
-                constraint = LessOrEqual(LocalDate.now().minusDays(1))))
+                constraint = LessOrEqual(LocalDate.now().minusDays(1))
+            )
+        )
     }
 
     @Test
@@ -406,7 +423,9 @@ class LocalDateFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
-                constraint = Greater(LocalDate.now().plusDays(1))))
+                constraint = Greater(LocalDate.now().plusDays(1))
+            )
+        )
     }
 
     @Test
@@ -421,7 +440,9 @@ class LocalDateFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
-                constraint = Greater(LocalDate.now())))
+                constraint = Greater(LocalDate.now())
+            )
+        )
     }
 
     @Test
@@ -457,7 +478,9 @@ class LocalDateFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
-                constraint = GreaterOrEqual(LocalDate.now().plusDays(1))))
+                constraint = GreaterOrEqual(LocalDate.now().plusDays(1))
+            )
+        )
     }
 
     @Test
@@ -500,7 +523,9 @@ class LocalDateFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
-                constraint = Between(start = LocalDate.now().plusDays(1), end = LocalDate.now().plusDays(3))))
+                constraint = Between(start = LocalDate.now().plusDays(1), end = LocalDate.now().plusDays(3))
+            )
+        )
     }
 
     @Test
@@ -515,7 +540,9 @@ class LocalDateFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now().plusDays(4),
-                constraint = Between(start = LocalDate.now().plusDays(1), end = LocalDate.now().plusDays(3))))
+                constraint = Between(start = LocalDate.now().plusDays(1), end = LocalDate.now().plusDays(3))
+            )
+        )
     }
 
     @Test
@@ -551,7 +578,9 @@ class LocalDateFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
-                constraint = NotBetween(start = LocalDate.now(), end = LocalDate.now().plusDays(1))))
+                constraint = NotBetween(start = LocalDate.now(), end = LocalDate.now().plusDays(1))
+            )
+        )
     }
 
     @Test
@@ -566,7 +595,9 @@ class LocalDateFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now().plusDays(1),
-                constraint = NotBetween(start = LocalDate.now(), end = LocalDate.now().plusDays(1))))
+                constraint = NotBetween(start = LocalDate.now(), end = LocalDate.now().plusDays(1))
+            )
+        )
     }
 
     @Test
@@ -581,6 +612,8 @@ class LocalDateFunctionsTest {
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now().plusDays(1),
-                constraint = NotBetween(start = LocalDate.now(), end = LocalDate.now().plusDays(2))))
+                constraint = NotBetween(start = LocalDate.now(), end = LocalDate.now().plusDays(2))
+            )
+        )
     }
 }

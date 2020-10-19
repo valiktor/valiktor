@@ -39,10 +39,14 @@ private val SUPPORTED_LOCALES: List<Locale> = SupportedLocales::class.declaredMe
 
 fun <T : Any> Formatter<T>.formatAllSupportedLocales(value: T): Map<Locale, String> = SUPPORTED_LOCALES
     .map {
-        it to this.format(value, MessageBundle(
-            baseName = DEFAULT_BUNDLE,
-            locale = it,
-            fallbackBaseName = DEFAULT_BUNDLE,
-            fallbackLocale = Locale.getDefault()))
+        it to this.format(
+            value,
+            MessageBundle(
+                baseName = DEFAULT_BUNDLE,
+                locale = it,
+                fallbackBaseName = DEFAULT_BUNDLE,
+                fallbackLocale = Locale.getDefault()
+            )
+        )
     }
     .toMap()

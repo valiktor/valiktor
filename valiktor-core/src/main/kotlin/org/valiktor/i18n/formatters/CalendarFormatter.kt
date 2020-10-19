@@ -30,10 +30,12 @@ import java.util.Calendar
 object CalendarFormatter : Formatter<Calendar> {
 
     override fun format(value: Calendar, messageBundle: MessageBundle): String =
-        (if (value.hasTime())
-            DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, messageBundle.locale)
-        else
-            DateFormat.getDateInstance(DateFormat.MEDIUM, messageBundle.locale))
+        (
+            if (value.hasTime())
+                DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, messageBundle.locale)
+            else
+                DateFormat.getDateInstance(DateFormat.MEDIUM, messageBundle.locale)
+            )
             .format(value.time)
 
     private fun Calendar.hasTime(): Boolean {

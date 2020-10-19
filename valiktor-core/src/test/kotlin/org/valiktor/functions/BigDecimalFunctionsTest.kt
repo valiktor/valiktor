@@ -64,7 +64,8 @@ class BigDecimalFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = ZERO, constraint = Null))
+            DefaultConstraintViolation(property = "salary", value = ZERO, constraint = Null)
+        )
     }
 
     @Test
@@ -82,7 +83,8 @@ class BigDecimalFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", constraint = NotNull))
+            DefaultConstraintViolation(property = "salary", constraint = NotNull)
+        )
     }
 
     @Test
@@ -114,7 +116,8 @@ class BigDecimalFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = ZERO, constraint = Equals(ONE)))
+            DefaultConstraintViolation(property = "salary", value = ZERO, constraint = Equals(ONE))
+        )
     }
 
     @Test
@@ -139,7 +142,8 @@ class BigDecimalFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotEquals(ONE)))
+            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotEquals(ONE))
+        )
     }
 
     @Test
@@ -150,7 +154,8 @@ class BigDecimalFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotEquals(1.00.toBigDecimal())))
+            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotEquals(1.00.toBigDecimal()))
+        )
     }
 
     @Test
@@ -182,7 +187,8 @@ class BigDecimalFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = ONE, constraint = In(setOf(ZERO, TEN))))
+            DefaultConstraintViolation(property = "salary", value = ONE, constraint = In(setOf(ZERO, TEN)))
+        )
     }
 
     @Test
@@ -214,7 +220,8 @@ class BigDecimalFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = ONE, constraint = In(listOf(ZERO, TEN))))
+            DefaultConstraintViolation(property = "salary", value = ONE, constraint = In(listOf(ZERO, TEN)))
+        )
     }
 
     @Test
@@ -239,7 +246,8 @@ class BigDecimalFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(setOf(ZERO, ONE, TEN))))
+            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(setOf(ZERO, ONE, TEN)))
+        )
     }
 
     @Test
@@ -250,7 +258,8 @@ class BigDecimalFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(setOf(ZERO, 1.00.toBigDecimal(), TEN))))
+            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(setOf(ZERO, 1.00.toBigDecimal(), TEN)))
+        )
     }
 
     @Test
@@ -275,7 +284,8 @@ class BigDecimalFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(listOf(ZERO, ONE, TEN))))
+            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(listOf(ZERO, ONE, TEN)))
+        )
     }
 
     @Test
@@ -286,7 +296,8 @@ class BigDecimalFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(listOf(ZERO, 1.00.toBigDecimal(), TEN))))
+            DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(listOf(ZERO, 1.00.toBigDecimal(), TEN)))
+        )
     }
 
     @Test
@@ -322,7 +333,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ONE,
-                constraint = Equals(ZERO)))
+                constraint = Equals(ZERO)
+            )
+        )
     }
 
     @Test
@@ -351,7 +364,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
-                constraint = NotEquals(ZERO)))
+                constraint = NotEquals(ZERO)
+            )
+        )
     }
 
     @Test
@@ -366,7 +381,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.00.toBigDecimal(),
-                constraint = NotEquals(ZERO)))
+                constraint = NotEquals(ZERO)
+            )
+        )
     }
 
     @Test
@@ -402,7 +419,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
-                constraint = Equals(ONE)))
+                constraint = Equals(ONE)
+            )
+        )
     }
 
     @Test
@@ -431,7 +450,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ONE,
-                constraint = NotEquals(ONE)))
+                constraint = NotEquals(ONE)
+            )
+        )
     }
 
     @Test
@@ -446,7 +467,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.00.toBigDecimal(),
-                constraint = NotEquals(ONE)))
+                constraint = NotEquals(ONE)
+            )
+        )
     }
 
     @Test
@@ -475,7 +498,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
-                constraint = Greater(ZERO)))
+                constraint = Greater(ZERO)
+            )
+        )
     }
 
     @Test
@@ -490,7 +515,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 98765.432.unaryMinus().toBigDecimal(),
-                constraint = Greater(ZERO)))
+                constraint = Greater(ZERO)
+            )
+        )
     }
 
     @Test
@@ -526,7 +553,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ONE,
-                constraint = LessOrEqual(ZERO)))
+                constraint = LessOrEqual(ZERO)
+            )
+        )
     }
 
     @Test
@@ -555,7 +584,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
-                constraint = Less(ZERO)))
+                constraint = Less(ZERO)
+            )
+        )
     }
 
     @Test
@@ -570,7 +601,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ONE,
-                constraint = Less(ZERO)))
+                constraint = Less(ZERO)
+            )
+        )
     }
 
     @Test
@@ -606,7 +639,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 98765.432.unaryMinus().toBigDecimal(),
-                constraint = GreaterOrEqual(ZERO)))
+                constraint = GreaterOrEqual(ZERO)
+            )
+        )
     }
 
     @Test
@@ -642,7 +677,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 50.0.toBigDecimal(),
-                constraint = Less(49.9.toBigDecimal())))
+                constraint = Less(49.9.toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -657,7 +694,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 50.9.unaryMinus().toBigDecimal(),
-                constraint = Less(51.0.unaryMinus().toBigDecimal())))
+                constraint = Less(51.0.unaryMinus().toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -672,7 +711,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
-                constraint = Less(ZERO)))
+                constraint = Less(ZERO)
+            )
+        )
     }
 
     @Test
@@ -715,7 +756,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 56789.19.toBigDecimal(),
-                constraint = LessOrEqual(57.0.toBigDecimal())))
+                constraint = LessOrEqual(57.0.toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -730,7 +773,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 96.0.unaryMinus().toBigDecimal(),
-                constraint = LessOrEqual(97.0.unaryMinus().toBigDecimal())))
+                constraint = LessOrEqual(97.0.unaryMinus().toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -766,7 +811,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0.toBigDecimal(),
-                constraint = Greater(11.0.toBigDecimal())))
+                constraint = Greater(11.0.toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -781,7 +828,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 189.20.unaryMinus().toBigDecimal(),
-                constraint = Greater(180.0.unaryMinus().toBigDecimal())))
+                constraint = Greater(180.0.unaryMinus().toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -796,7 +845,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
-                constraint = Greater(ZERO)))
+                constraint = Greater(ZERO)
+            )
+        )
     }
 
     @Test
@@ -839,7 +890,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 57.0.toBigDecimal(),
-                constraint = GreaterOrEqual(56789.19.toBigDecimal())))
+                constraint = GreaterOrEqual(56789.19.toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -854,7 +907,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 97.0.unaryMinus().toBigDecimal(),
-                constraint = GreaterOrEqual(96.0.unaryMinus().toBigDecimal())))
+                constraint = GreaterOrEqual(96.0.unaryMinus().toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -918,7 +973,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0.toBigDecimal(),
-                constraint = Between(start = 10.1.toBigDecimal(), end = 11.0.toBigDecimal())))
+                constraint = Between(start = 10.1.toBigDecimal(), end = 11.0.toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -933,7 +990,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 12.0.toBigDecimal(),
-                constraint = Between(start = 10.1.toBigDecimal(), end = 11.0.toBigDecimal())))
+                constraint = Between(start = 10.1.toBigDecimal(), end = 11.0.toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -948,7 +1007,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0.unaryMinus().toBigDecimal(),
-                constraint = Between(start = 9.9.unaryMinus().toBigDecimal(), end = 8.0.unaryMinus().toBigDecimal())))
+                constraint = Between(start = 9.9.unaryMinus().toBigDecimal(), end = 8.0.unaryMinus().toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -963,7 +1024,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 12.0.unaryMinus().toBigDecimal(),
-                constraint = Between(start = 13.0.unaryMinus().toBigDecimal(), end = 12.9.unaryMinus().toBigDecimal())))
+                constraint = Between(start = 13.0.unaryMinus().toBigDecimal(), end = 12.9.unaryMinus().toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -1013,7 +1076,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
-                constraint = NotBetween(start = ZERO, end = ONE)))
+                constraint = NotBetween(start = ZERO, end = ONE)
+            )
+        )
     }
 
     @Test
@@ -1028,7 +1093,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = ONE,
-                constraint = NotBetween(start = ZERO, end = ONE)))
+                constraint = NotBetween(start = ZERO, end = ONE)
+            )
+        )
     }
 
     @Test
@@ -1043,7 +1110,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 2.0.unaryMinus().toBigDecimal(),
-                constraint = NotBetween(start = 2.0.unaryMinus().toBigDecimal(), end = 1.0.unaryMinus().toBigDecimal())))
+                constraint = NotBetween(start = 2.0.unaryMinus().toBigDecimal(), end = 1.0.unaryMinus().toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -1058,7 +1127,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0.unaryMinus().toBigDecimal(),
-                constraint = NotBetween(start = 2.0.unaryMinus().toBigDecimal(), end = 1.0.unaryMinus().toBigDecimal())))
+                constraint = NotBetween(start = 2.0.unaryMinus().toBigDecimal(), end = 1.0.unaryMinus().toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -1073,7 +1144,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.5.toBigDecimal(),
-                constraint = NotBetween(start = ZERO, end = ONE)))
+                constraint = NotBetween(start = ZERO, end = ONE)
+            )
+        )
     }
 
     @Test
@@ -1088,7 +1161,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.5.unaryMinus().toBigDecimal(),
-                constraint = NotBetween(start = 2.0.unaryMinus().toBigDecimal(), end = 1.0.unaryMinus().toBigDecimal())))
+                constraint = NotBetween(start = 2.0.unaryMinus().toBigDecimal(), end = 1.0.unaryMinus().toBigDecimal())
+            )
+        )
     }
 
     @Test
@@ -1159,7 +1234,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.toBigDecimal(),
-                constraint = IntegerDigits(min = 7)))
+                constraint = IntegerDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -1174,7 +1251,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.toBigDecimal(),
-                constraint = IntegerDigits(max = 5)))
+                constraint = IntegerDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -1189,7 +1268,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.toBigDecimal(),
-                constraint = IntegerDigits(min = 7, max = 5)))
+                constraint = IntegerDigits(min = 7, max = 5)
+            )
+        )
     }
 
     @Test
@@ -1204,7 +1285,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.unaryMinus().toBigDecimal(),
-                constraint = IntegerDigits(min = 7)))
+                constraint = IntegerDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -1219,7 +1302,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.unaryMinus().toBigDecimal(),
-                constraint = IntegerDigits(max = 5)))
+                constraint = IntegerDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -1234,7 +1319,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.unaryMinus().toBigDecimal(),
-                constraint = IntegerDigits(min = 7, max = 5)))
+                constraint = IntegerDigits(min = 7, max = 5)
+            )
+        )
     }
 
     @Test
@@ -1305,7 +1392,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.toBigDecimal(),
-                constraint = DecimalDigits(min = 7)))
+                constraint = DecimalDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -1320,7 +1409,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.toBigDecimal(),
-                constraint = DecimalDigits(max = 5)))
+                constraint = DecimalDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -1335,7 +1426,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.toBigDecimal(),
-                constraint = DecimalDigits(min = 7, max = 5)))
+                constraint = DecimalDigits(min = 7, max = 5)
+            )
+        )
     }
 
     @Test
@@ -1350,7 +1443,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.unaryMinus().toBigDecimal(),
-                constraint = DecimalDigits(min = 7)))
+                constraint = DecimalDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -1365,7 +1460,9 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.unaryMinus().toBigDecimal(),
-                constraint = DecimalDigits(max = 5)))
+                constraint = DecimalDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -1380,6 +1477,8 @@ class BigDecimalFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.unaryMinus().toBigDecimal(),
-                constraint = DecimalDigits(min = 7, max = 5)))
+                constraint = DecimalDigits(min = 7, max = 5)
+            )
+        )
     }
 }

@@ -33,7 +33,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "1"),
             entry(SupportedLocales.DE, "1"),
             entry(SupportedLocales.EN, "1"),
-            entry(SupportedLocales.PT_BR, "1"))
+            entry(SupportedLocales.PT_BR, "1")
+        )
     }
 
     @Test
@@ -42,7 +43,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-98"),
             entry(SupportedLocales.DE, "-98"),
             entry(SupportedLocales.EN, "-98"),
-            entry(SupportedLocales.PT_BR, "-98"))
+            entry(SupportedLocales.PT_BR, "-98")
+        )
     }
 
     @Test
@@ -51,7 +53,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "987"),
             entry(SupportedLocales.DE, "987"),
             entry(SupportedLocales.EN, "987"),
-            entry(SupportedLocales.PT_BR, "987"))
+            entry(SupportedLocales.PT_BR, "987")
+        )
     }
 
     @Test
@@ -60,7 +63,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-987"),
             entry(SupportedLocales.DE, "-987"),
             entry(SupportedLocales.EN, "-987"),
-            entry(SupportedLocales.PT_BR, "-987"))
+            entry(SupportedLocales.PT_BR, "-987")
+        )
     }
 
     @Test
@@ -69,7 +73,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "9,876"),
             entry(SupportedLocales.DE, "9.876"),
             entry(SupportedLocales.EN, "9,876"),
-            entry(SupportedLocales.PT_BR, "9.876"))
+            entry(SupportedLocales.PT_BR, "9.876")
+        )
     }
 
     @Test
@@ -78,7 +83,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-9,876"),
             entry(SupportedLocales.DE, "-9.876"),
             entry(SupportedLocales.EN, "-9,876"),
-            entry(SupportedLocales.PT_BR, "-9.876"))
+            entry(SupportedLocales.PT_BR, "-9.876")
+        )
     }
 
     @Test
@@ -87,7 +93,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "987"),
             entry(SupportedLocales.DE, "987"),
             entry(SupportedLocales.EN, "987"),
-            entry(SupportedLocales.PT_BR, "987"))
+            entry(SupportedLocales.PT_BR, "987")
+        )
     }
 
     @Test
@@ -96,7 +103,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-987"),
             entry(SupportedLocales.DE, "-987"),
             entry(SupportedLocales.EN, "-987"),
-            entry(SupportedLocales.PT_BR, "-987"))
+            entry(SupportedLocales.PT_BR, "-987")
+        )
     }
 
     @Test
@@ -105,7 +113,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "987,654,321"),
             entry(SupportedLocales.DE, "987.654.321"),
             entry(SupportedLocales.EN, "987,654,321"),
-            entry(SupportedLocales.PT_BR, "987.654.321"))
+            entry(SupportedLocales.PT_BR, "987.654.321")
+        )
     }
 
     @Test
@@ -114,7 +123,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-987,654,321"),
             entry(SupportedLocales.DE, "-987.654.321"),
             entry(SupportedLocales.EN, "-987,654,321"),
-            entry(SupportedLocales.PT_BR, "-987.654.321"))
+            entry(SupportedLocales.PT_BR, "-987.654.321")
+        )
     }
 
     @Test
@@ -123,7 +133,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "987"),
             entry(SupportedLocales.DE, "987"),
             entry(SupportedLocales.EN, "987"),
-            entry(SupportedLocales.PT_BR, "987"))
+            entry(SupportedLocales.PT_BR, "987")
+        )
     }
 
     @Test
@@ -132,7 +143,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-987"),
             entry(SupportedLocales.DE, "-987"),
             entry(SupportedLocales.EN, "-987"),
-            entry(SupportedLocales.PT_BR, "-987"))
+            entry(SupportedLocales.PT_BR, "-987")
+        )
     }
 
     @Test
@@ -141,7 +153,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "98,765,432,109,876,543"),
             entry(SupportedLocales.DE, "98.765.432.109.876.543"),
             entry(SupportedLocales.EN, "98,765,432,109,876,543"),
-            entry(SupportedLocales.PT_BR, "98.765.432.109.876.543"))
+            entry(SupportedLocales.PT_BR, "98.765.432.109.876.543")
+        )
     }
 
     @Test
@@ -150,7 +163,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-98,765,432,109,876,543"),
             entry(SupportedLocales.DE, "-98.765.432.109.876.543"),
             entry(SupportedLocales.EN, "-98,765,432,109,876,543"),
-            entry(SupportedLocales.PT_BR, "-98.765.432.109.876.543"))
+            entry(SupportedLocales.PT_BR, "-98.765.432.109.876.543")
+        )
     }
 
     @Test
@@ -159,7 +173,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "123"),
             entry(SupportedLocales.DE, "123"),
             entry(SupportedLocales.EN, "123"),
-            entry(SupportedLocales.PT_BR, "123"))
+            entry(SupportedLocales.PT_BR, "123")
+        )
     }
 
     @Test
@@ -168,7 +183,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-123"),
             entry(SupportedLocales.DE, "-123"),
             entry(SupportedLocales.EN, "-123"),
-            entry(SupportedLocales.PT_BR, "-123"))
+            entry(SupportedLocales.PT_BR, "-123")
+        )
     }
 
     @Test
@@ -177,7 +193,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "987,654,321,012,345,678,910,111,231,451,659,990"),
             entry(SupportedLocales.DE, "987.654.321.012.345.678.910.111.231.451.659.990"),
             entry(SupportedLocales.EN, "987,654,321,012,345,678,910,111,231,451,659,990"),
-            entry(SupportedLocales.PT_BR, "987.654.321.012.345.678.910.111.231.451.659.990"))
+            entry(SupportedLocales.PT_BR, "987.654.321.012.345.678.910.111.231.451.659.990")
+        )
     }
 
     @Test
@@ -186,7 +203,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-987,654,321,012,345,678,910,111,231,451,659,990"),
             entry(SupportedLocales.DE, "-987.654.321.012.345.678.910.111.231.451.659.990"),
             entry(SupportedLocales.EN, "-987,654,321,012,345,678,910,111,231,451,659,990"),
-            entry(SupportedLocales.PT_BR, "-987.654.321.012.345.678.910.111.231.451.659.990"))
+            entry(SupportedLocales.PT_BR, "-987.654.321.012.345.678.910.111.231.451.659.990")
+        )
     }
 
     @Test
@@ -195,7 +213,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "987"),
             entry(SupportedLocales.DE, "987"),
             entry(SupportedLocales.EN, "987"),
-            entry(SupportedLocales.PT_BR, "987"))
+            entry(SupportedLocales.PT_BR, "987")
+        )
     }
 
     @Test
@@ -204,7 +223,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-987"),
             entry(SupportedLocales.DE, "-987"),
             entry(SupportedLocales.EN, "-987"),
-            entry(SupportedLocales.PT_BR, "-987"))
+            entry(SupportedLocales.PT_BR, "-987")
+        )
     }
 
     @Test
@@ -213,7 +233,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "9,210,123"),
             entry(SupportedLocales.DE, "9.210.123"),
             entry(SupportedLocales.EN, "9,210,123"),
-            entry(SupportedLocales.PT_BR, "9.210.123"))
+            entry(SupportedLocales.PT_BR, "9.210.123")
+        )
     }
 
     @Test
@@ -222,7 +243,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-9,210,123"),
             entry(SupportedLocales.DE, "-9.210.123"),
             entry(SupportedLocales.EN, "-9,210,123"),
-            entry(SupportedLocales.PT_BR, "-9.210.123"))
+            entry(SupportedLocales.PT_BR, "-9.210.123")
+        )
     }
 
     @Test
@@ -231,7 +253,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0.9876543"),
             entry(SupportedLocales.DE, "0,9876543"),
             entry(SupportedLocales.EN, "0.9876543"),
-            entry(SupportedLocales.PT_BR, "0,9876543"))
+            entry(SupportedLocales.PT_BR, "0,9876543")
+        )
     }
 
     @Test
@@ -240,7 +263,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0.9876543"),
             entry(SupportedLocales.DE, "0,9876543"),
             entry(SupportedLocales.EN, "0.9876543"),
-            entry(SupportedLocales.PT_BR, "0,9876543"))
+            entry(SupportedLocales.PT_BR, "0,9876543")
+        )
     }
 
     @Test
@@ -249,7 +273,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-0.9876543"),
             entry(SupportedLocales.DE, "-0,9876543"),
             entry(SupportedLocales.EN, "-0.9876543"),
-            entry(SupportedLocales.PT_BR, "-0,9876543"))
+            entry(SupportedLocales.PT_BR, "-0,9876543")
+        )
     }
 
     @Test
@@ -258,7 +283,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-0.9876543"),
             entry(SupportedLocales.DE, "-0,9876543"),
             entry(SupportedLocales.EN, "-0.9876543"),
-            entry(SupportedLocales.PT_BR, "-0,9876543"))
+            entry(SupportedLocales.PT_BR, "-0,9876543")
+        )
     }
 
     @Test
@@ -267,7 +293,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "6,543.987"),
             entry(SupportedLocales.DE, "6.543,987"),
             entry(SupportedLocales.EN, "6,543.987"),
-            entry(SupportedLocales.PT_BR, "6.543,987"))
+            entry(SupportedLocales.PT_BR, "6.543,987")
+        )
     }
 
     @Test
@@ -276,7 +303,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "6,543.987"),
             entry(SupportedLocales.DE, "6.543,987"),
             entry(SupportedLocales.EN, "6,543.987"),
-            entry(SupportedLocales.PT_BR, "6.543,987"))
+            entry(SupportedLocales.PT_BR, "6.543,987")
+        )
     }
 
     @Test
@@ -285,7 +313,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-6,543.987"),
             entry(SupportedLocales.DE, "-6.543,987"),
             entry(SupportedLocales.EN, "-6,543.987"),
-            entry(SupportedLocales.PT_BR, "-6.543,987"))
+            entry(SupportedLocales.PT_BR, "-6.543,987")
+        )
     }
 
     @Test
@@ -294,7 +323,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-6,543.987"),
             entry(SupportedLocales.DE, "-6.543,987"),
             entry(SupportedLocales.EN, "-6,543.987"),
-            entry(SupportedLocales.PT_BR, "-6.543,987"))
+            entry(SupportedLocales.PT_BR, "-6.543,987")
+        )
     }
 
     @Test
@@ -303,7 +333,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0"),
             entry(SupportedLocales.DE, "0"),
             entry(SupportedLocales.EN, "0"),
-            entry(SupportedLocales.PT_BR, "0"))
+            entry(SupportedLocales.PT_BR, "0")
+        )
     }
 
     @Test
@@ -312,7 +343,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0"),
             entry(SupportedLocales.DE, "0"),
             entry(SupportedLocales.EN, "0"),
-            entry(SupportedLocales.PT_BR, "0"))
+            entry(SupportedLocales.PT_BR, "0")
+        )
     }
 
     @Test
@@ -321,7 +353,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0"),
             entry(SupportedLocales.DE, "0"),
             entry(SupportedLocales.EN, "0"),
-            entry(SupportedLocales.PT_BR, "0"))
+            entry(SupportedLocales.PT_BR, "0")
+        )
     }
 
     @Test
@@ -330,7 +363,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "987"),
             entry(SupportedLocales.DE, "987"),
             entry(SupportedLocales.EN, "987"),
-            entry(SupportedLocales.PT_BR, "987"))
+            entry(SupportedLocales.PT_BR, "987")
+        )
     }
 
     @Test
@@ -339,7 +373,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-987"),
             entry(SupportedLocales.DE, "-987"),
             entry(SupportedLocales.EN, "-987"),
-            entry(SupportedLocales.PT_BR, "-987"))
+            entry(SupportedLocales.PT_BR, "-987")
+        )
     }
 
     @Test
@@ -348,7 +383,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "9,876,543,210,123"),
             entry(SupportedLocales.DE, "9.876.543.210.123"),
             entry(SupportedLocales.EN, "9,876,543,210,123"),
-            entry(SupportedLocales.PT_BR, "9.876.543.210.123"))
+            entry(SupportedLocales.PT_BR, "9.876.543.210.123")
+        )
     }
 
     @Test
@@ -357,7 +393,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-9,876,543,210,123"),
             entry(SupportedLocales.DE, "-9.876.543.210.123"),
             entry(SupportedLocales.EN, "-9,876,543,210,123"),
-            entry(SupportedLocales.PT_BR, "-9.876.543.210.123"))
+            entry(SupportedLocales.PT_BR, "-9.876.543.210.123")
+        )
     }
 
     @Test
@@ -366,7 +403,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0.987654321"),
             entry(SupportedLocales.DE, "0,987654321"),
             entry(SupportedLocales.EN, "0.987654321"),
-            entry(SupportedLocales.PT_BR, "0,987654321"))
+            entry(SupportedLocales.PT_BR, "0,987654321")
+        )
     }
 
     @Test
@@ -375,7 +413,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0.987654321"),
             entry(SupportedLocales.DE, "0,987654321"),
             entry(SupportedLocales.EN, "0.987654321"),
-            entry(SupportedLocales.PT_BR, "0,987654321"))
+            entry(SupportedLocales.PT_BR, "0,987654321")
+        )
     }
 
     @Test
@@ -384,7 +423,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-0.987654321"),
             entry(SupportedLocales.DE, "-0,987654321"),
             entry(SupportedLocales.EN, "-0.987654321"),
-            entry(SupportedLocales.PT_BR, "-0,987654321"))
+            entry(SupportedLocales.PT_BR, "-0,987654321")
+        )
     }
 
     @Test
@@ -393,7 +433,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-0.987654321"),
             entry(SupportedLocales.DE, "-0,987654321"),
             entry(SupportedLocales.EN, "-0.987654321"),
-            entry(SupportedLocales.PT_BR, "-0,987654321"))
+            entry(SupportedLocales.PT_BR, "-0,987654321")
+        )
     }
 
     @Test
@@ -402,7 +443,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "876,543.987654321"),
             entry(SupportedLocales.DE, "876.543,987654321"),
             entry(SupportedLocales.EN, "876,543.987654321"),
-            entry(SupportedLocales.PT_BR, "876.543,987654321"))
+            entry(SupportedLocales.PT_BR, "876.543,987654321")
+        )
     }
 
     @Test
@@ -411,7 +453,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "876,543.987654321"),
             entry(SupportedLocales.DE, "876.543,987654321"),
             entry(SupportedLocales.EN, "876,543.987654321"),
-            entry(SupportedLocales.PT_BR, "876.543,987654321"))
+            entry(SupportedLocales.PT_BR, "876.543,987654321")
+        )
     }
 
     @Test
@@ -420,7 +463,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-876,543.987654321"),
             entry(SupportedLocales.DE, "-876.543,987654321"),
             entry(SupportedLocales.EN, "-876,543.987654321"),
-            entry(SupportedLocales.PT_BR, "-876.543,987654321"))
+            entry(SupportedLocales.PT_BR, "-876.543,987654321")
+        )
     }
 
     @Test
@@ -429,7 +473,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-876,543.987654321"),
             entry(SupportedLocales.DE, "-876.543,987654321"),
             entry(SupportedLocales.EN, "-876,543.987654321"),
-            entry(SupportedLocales.PT_BR, "-876.543,987654321"))
+            entry(SupportedLocales.PT_BR, "-876.543,987654321")
+        )
     }
 
     @Test
@@ -438,7 +483,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0"),
             entry(SupportedLocales.DE, "0"),
             entry(SupportedLocales.EN, "0"),
-            entry(SupportedLocales.PT_BR, "0"))
+            entry(SupportedLocales.PT_BR, "0")
+        )
     }
 
     @Test
@@ -447,7 +493,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0"),
             entry(SupportedLocales.DE, "0"),
             entry(SupportedLocales.EN, "0"),
-            entry(SupportedLocales.PT_BR, "0"))
+            entry(SupportedLocales.PT_BR, "0")
+        )
     }
 
     @Test
@@ -456,7 +503,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0"),
             entry(SupportedLocales.DE, "0"),
             entry(SupportedLocales.EN, "0"),
-            entry(SupportedLocales.PT_BR, "0"))
+            entry(SupportedLocales.PT_BR, "0")
+        )
     }
 
     @Test
@@ -465,7 +513,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "987"),
             entry(SupportedLocales.DE, "987"),
             entry(SupportedLocales.EN, "987"),
-            entry(SupportedLocales.PT_BR, "987"))
+            entry(SupportedLocales.PT_BR, "987")
+        )
     }
 
     @Test
@@ -474,7 +523,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-987"),
             entry(SupportedLocales.DE, "-987"),
             entry(SupportedLocales.EN, "-987"),
-            entry(SupportedLocales.PT_BR, "-987"))
+            entry(SupportedLocales.PT_BR, "-987")
+        )
     }
 
     @Test
@@ -483,7 +533,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "987,654,321,012,345,678,910,111,231,451,659,990"),
             entry(SupportedLocales.DE, "987.654.321.012.345.678.910.111.231.451.659.990"),
             entry(SupportedLocales.EN, "987,654,321,012,345,678,910,111,231,451,659,990"),
-            entry(SupportedLocales.PT_BR, "987.654.321.012.345.678.910.111.231.451.659.990"))
+            entry(SupportedLocales.PT_BR, "987.654.321.012.345.678.910.111.231.451.659.990")
+        )
     }
 
     @Test
@@ -492,7 +543,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-987,654,321,012,345,678,910,111,231,451,659,990"),
             entry(SupportedLocales.DE, "-987.654.321.012.345.678.910.111.231.451.659.990"),
             entry(SupportedLocales.EN, "-987,654,321,012,345,678,910,111,231,451,659,990"),
-            entry(SupportedLocales.PT_BR, "-987.654.321.012.345.678.910.111.231.451.659.990"))
+            entry(SupportedLocales.PT_BR, "-987.654.321.012.345.678.910.111.231.451.659.990")
+        )
     }
 
     @Test
@@ -501,7 +553,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0.987654321234567891011121314151699786"),
             entry(SupportedLocales.DE, "0,987654321234567891011121314151699786"),
             entry(SupportedLocales.EN, "0.987654321234567891011121314151699786"),
-            entry(SupportedLocales.PT_BR, "0,987654321234567891011121314151699786"))
+            entry(SupportedLocales.PT_BR, "0,987654321234567891011121314151699786")
+        )
     }
 
     @Test
@@ -510,7 +563,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0.987654321234567891011121314151699786000"),
             entry(SupportedLocales.DE, "0,987654321234567891011121314151699786000"),
             entry(SupportedLocales.EN, "0.987654321234567891011121314151699786000"),
-            entry(SupportedLocales.PT_BR, "0,987654321234567891011121314151699786000"))
+            entry(SupportedLocales.PT_BR, "0,987654321234567891011121314151699786000")
+        )
     }
 
     @Test
@@ -519,7 +573,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-0.987654321234567891011121314151699786"),
             entry(SupportedLocales.DE, "-0,987654321234567891011121314151699786"),
             entry(SupportedLocales.EN, "-0.987654321234567891011121314151699786"),
-            entry(SupportedLocales.PT_BR, "-0,987654321234567891011121314151699786"))
+            entry(SupportedLocales.PT_BR, "-0,987654321234567891011121314151699786")
+        )
     }
 
     @Test
@@ -528,7 +583,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-0.98765432123456789101112131415169978600"),
             entry(SupportedLocales.DE, "-0,98765432123456789101112131415169978600"),
             entry(SupportedLocales.EN, "-0.98765432123456789101112131415169978600"),
-            entry(SupportedLocales.PT_BR, "-0,98765432123456789101112131415169978600"))
+            entry(SupportedLocales.PT_BR, "-0,98765432123456789101112131415169978600")
+        )
     }
 
     @Test
@@ -537,7 +593,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "987,654,321,987,654,321,987,654,321.12345678910111213141516178"),
             entry(SupportedLocales.DE, "987.654.321.987.654.321.987.654.321,12345678910111213141516178"),
             entry(SupportedLocales.EN, "987,654,321,987,654,321,987,654,321.12345678910111213141516178"),
-            entry(SupportedLocales.PT_BR, "987.654.321.987.654.321.987.654.321,12345678910111213141516178"))
+            entry(SupportedLocales.PT_BR, "987.654.321.987.654.321.987.654.321,12345678910111213141516178")
+        )
     }
 
     @Test
@@ -546,7 +603,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "987,654,321,987,654,321,987,654,321.1234567891011121314151617800"),
             entry(SupportedLocales.DE, "987.654.321.987.654.321.987.654.321,1234567891011121314151617800"),
             entry(SupportedLocales.EN, "987,654,321,987,654,321,987,654,321.1234567891011121314151617800"),
-            entry(SupportedLocales.PT_BR, "987.654.321.987.654.321.987.654.321,1234567891011121314151617800"))
+            entry(SupportedLocales.PT_BR, "987.654.321.987.654.321.987.654.321,1234567891011121314151617800")
+        )
     }
 
     @Test
@@ -555,7 +613,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-987,654,321,987,654,321,987,654,321.12345678910111213141516178"),
             entry(SupportedLocales.DE, "-987.654.321.987.654.321.987.654.321,12345678910111213141516178"),
             entry(SupportedLocales.EN, "-987,654,321,987,654,321,987,654,321.12345678910111213141516178"),
-            entry(SupportedLocales.PT_BR, "-987.654.321.987.654.321.987.654.321,12345678910111213141516178"))
+            entry(SupportedLocales.PT_BR, "-987.654.321.987.654.321.987.654.321,12345678910111213141516178")
+        )
     }
 
     @Test
@@ -564,7 +623,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "-987,654,321,987,654,321,987,654,321.123456789101112131415161780"),
             entry(SupportedLocales.DE, "-987.654.321.987.654.321.987.654.321,123456789101112131415161780"),
             entry(SupportedLocales.EN, "-987,654,321,987,654,321,987,654,321.123456789101112131415161780"),
-            entry(SupportedLocales.PT_BR, "-987.654.321.987.654.321.987.654.321,123456789101112131415161780"))
+            entry(SupportedLocales.PT_BR, "-987.654.321.987.654.321.987.654.321,123456789101112131415161780")
+        )
     }
 
     @Test
@@ -573,7 +633,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0"),
             entry(SupportedLocales.DE, "0"),
             entry(SupportedLocales.EN, "0"),
-            entry(SupportedLocales.PT_BR, "0"))
+            entry(SupportedLocales.PT_BR, "0")
+        )
     }
 
     @Test
@@ -582,7 +643,8 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0.0"),
             entry(SupportedLocales.DE, "0,0"),
             entry(SupportedLocales.EN, "0.0"),
-            entry(SupportedLocales.PT_BR, "0,0"))
+            entry(SupportedLocales.PT_BR, "0,0")
+        )
     }
 
     @Test
@@ -591,6 +653,7 @@ class NumberFormatterTest {
             entry(SupportedLocales.DEFAULT, "0.00000"),
             entry(SupportedLocales.DE, "0,00000"),
             entry(SupportedLocales.EN, "0.00000"),
-            entry(SupportedLocales.PT_BR, "0,00000"))
+            entry(SupportedLocales.PT_BR, "0,00000")
+        )
     }
 }
