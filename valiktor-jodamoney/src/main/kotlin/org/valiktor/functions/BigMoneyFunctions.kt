@@ -60,7 +60,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isEqualTo(value: BigMoney): Validator<E
 fun <E> Validator<E>.Property<BigMoney?>.isEqualTo(value: Number): Validator<E>.Property<BigMoney?> =
     this.validate(
         { Equals(BigMoney.of(it?.currencyUnit, value.asBigDecimal())) },
-        { it == null || it.compareTo(BigMoney.of(it.currencyUnit, value.asBigDecimal())) == 0 })
+        { it == null || it.compareTo(BigMoney.of(it.currencyUnit, value.asBigDecimal())) == 0 }
+    )
 
 /**
  * Validates if the [BigMoney] number property is equal to another [BigMoney] value
@@ -82,7 +83,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isNotEqualTo(value: BigMoney): Validato
 fun <E> Validator<E>.Property<BigMoney?>.isNotEqualTo(value: Number): Validator<E>.Property<BigMoney?> =
     this.validate(
         { NotEquals(BigMoney.of(it?.currencyUnit, value.asBigDecimal())) },
-        { it == null || it.compareTo(BigMoney.of(it.currencyUnit, value.asBigDecimal())) != 0 })
+        { it == null || it.compareTo(BigMoney.of(it.currencyUnit, value.asBigDecimal())) != 0 }
+    )
 
 /**
  * Validates if the [BigMoney] number property is equal to one of the [BigMoney] values
@@ -104,7 +106,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isIn(vararg values: BigMoney): Validato
 fun <E> Validator<E>.Property<BigMoney?>.isIn(vararg values: Number): Validator<E>.Property<BigMoney?> =
     this.validate(
         { In(values.map { value -> BigMoney.of(it?.currencyUnit, value.asBigDecimal()) }.toSet()) },
-        { it == null || values.map { value -> BigMoney.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } })
+        { it == null || values.map { value -> BigMoney.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } }
+    )
 
 /**
  * Validates if the [BigMoney] number property is equal to one of the [BigMoney] values
@@ -127,7 +130,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isIn(values: Iterable<BigMoney>): Valid
 fun <E> Validator<E>.Property<BigMoney?>.isIn(values: Iterable<Number>): Validator<E>.Property<BigMoney?> =
     this.validate(
         { In(values.map { value -> BigMoney.of(it?.currencyUnit, value.asBigDecimal()) }) },
-        { it == null || values.map { value -> BigMoney.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } })
+        { it == null || values.map { value -> BigMoney.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } }
+    )
 
 /**
  * Validates if the [BigMoney] number property isn't equal to any [BigMoney] value
@@ -149,7 +153,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isNotIn(vararg values: BigMoney): Valid
 fun <E> Validator<E>.Property<BigMoney?>.isNotIn(vararg values: Number): Validator<E>.Property<BigMoney?> =
     this.validate(
         { NotIn(values.map { value -> BigMoney.of(it?.currencyUnit, value.asBigDecimal()) }.toSet()) },
-        { it == null || !values.map { value -> BigMoney.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } })
+        { it == null || !values.map { value -> BigMoney.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } }
+    )
 
 /**
  * Validates if the [BigMoney] number property isn't equal to any [BigMoney] value
@@ -172,7 +177,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isNotIn(values: Iterable<BigMoney>): Va
 fun <E> Validator<E>.Property<BigMoney?>.isNotIn(values: Iterable<Number>): Validator<E>.Property<BigMoney?> =
     this.validate(
         { NotIn(values.map { value -> BigMoney.of(it?.currencyUnit, value.asBigDecimal()) }) },
-        { it == null || !values.map { value -> BigMoney.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } })
+        { it == null || !values.map { value -> BigMoney.of(it.currencyUnit, value.asBigDecimal()) }.any { e -> it.compareTo(e) == 0 } }
+    )
 
 /**
  * Validates if the [BigMoney] number property is less than another [Number] value
@@ -185,7 +191,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isNotIn(values: Iterable<Number>): Vali
 fun <E> Validator<E>.Property<BigMoney?>.isLessThan(value: Number): Validator<E>.Property<BigMoney?> =
     this.validate(
         { Less(BigMoney.of(it?.currencyUnit, value.asBigDecimal())) },
-        { it == null || it < BigMoney.of(it.currencyUnit, value.asBigDecimal()) })
+        { it == null || it < BigMoney.of(it.currencyUnit, value.asBigDecimal()) }
+    )
 
 /**
  * Validates if the [BigMoney] number property is less than or equal to another [Number] value
@@ -198,7 +205,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isLessThan(value: Number): Validator<E>
 fun <E> Validator<E>.Property<BigMoney?>.isLessThanOrEqualTo(value: Number): Validator<E>.Property<BigMoney?> =
     this.validate(
         { LessOrEqual(BigMoney.of(it?.currencyUnit, value.asBigDecimal())) },
-        { it == null || it <= BigMoney.of(it.currencyUnit, value.asBigDecimal()) })
+        { it == null || it <= BigMoney.of(it.currencyUnit, value.asBigDecimal()) }
+    )
 
 /**
  * Validates if the [BigMoney] number property is greater than another [Number]  value
@@ -211,7 +219,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isLessThanOrEqualTo(value: Number): Val
 fun <E> Validator<E>.Property<BigMoney?>.isGreaterThan(value: Number): Validator<E>.Property<BigMoney?> =
     this.validate(
         { Greater(BigMoney.of(it?.currencyUnit, value.asBigDecimal())) },
-        { it == null || it > BigMoney.of(it.currencyUnit, value.asBigDecimal()) })
+        { it == null || it > BigMoney.of(it.currencyUnit, value.asBigDecimal()) }
+    )
 
 /**
  * Validates if the [BigMoney] number property is greater than or equal to another [Number] value
@@ -224,7 +233,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isGreaterThan(value: Number): Validator
 fun <E> Validator<E>.Property<BigMoney?>.isGreaterThanOrEqualTo(value: Number): Validator<E>.Property<BigMoney?> =
     this.validate(
         { GreaterOrEqual(BigMoney.of(it?.currencyUnit, value.asBigDecimal())) },
-        { it == null || it >= BigMoney.of(it.currencyUnit, value.asBigDecimal()) })
+        { it == null || it >= BigMoney.of(it.currencyUnit, value.asBigDecimal()) }
+    )
 
 /**
  * Validates if the [BigMoney] number property is between two [Number] values
@@ -238,7 +248,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isGreaterThanOrEqualTo(value: Number): 
 fun <E> Validator<E>.Property<BigMoney?>.isBetween(start: Number, end: Number): Validator<E>.Property<BigMoney?> =
     this.validate(
         { Between(BigMoney.of(it?.currencyUnit, start.asBigDecimal()), BigMoney.of(it?.currencyUnit, end.asBigDecimal())) },
-        { it == null || it in BigMoney.of(it.currencyUnit, start.asBigDecimal()).rangeTo(BigMoney.of(it.currencyUnit, end.asBigDecimal())) })
+        { it == null || it in BigMoney.of(it.currencyUnit, start.asBigDecimal()).rangeTo(BigMoney.of(it.currencyUnit, end.asBigDecimal())) }
+    )
 
 /**
  * Validates if the [BigMoney] number property isn't between two [Number] values
@@ -252,7 +263,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isBetween(start: Number, end: Number): 
 fun <E> Validator<E>.Property<BigMoney?>.isNotBetween(start: Number, end: Number): Validator<E>.Property<BigMoney?> =
     this.validate(
         { NotBetween(BigMoney.of(it?.currencyUnit, start.asBigDecimal()), BigMoney.of(it?.currencyUnit, end.asBigDecimal())) },
-        { it == null || it !in BigMoney.of(it.currencyUnit, start.asBigDecimal()).rangeTo(BigMoney.of(it.currencyUnit, end.asBigDecimal())) })
+        { it == null || it !in BigMoney.of(it.currencyUnit, start.asBigDecimal()).rangeTo(BigMoney.of(it.currencyUnit, end.asBigDecimal())) }
+    )
 
 /**
  * Validates if the [BigMoney] property is equal to zero
@@ -263,7 +275,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isNotBetween(start: Number, end: Number
 fun <E> Validator<E>.Property<BigMoney?>.isZero(): Validator<E>.Property<BigMoney?> =
     this.validate(
         { Equals(BigMoney.of(it?.currencyUnit, ZERO)) },
-        { it == null || it.isZero })
+        { it == null || it.isZero }
+    )
 
 /**
  * Validates if the [BigMoney] property is not equal to zero
@@ -274,7 +287,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isZero(): Validator<E>.Property<BigMone
 fun <E> Validator<E>.Property<BigMoney?>.isNotZero(): Validator<E>.Property<BigMoney?> =
     this.validate(
         { NotEquals(BigMoney.of(it?.currencyUnit, ZERO)) },
-        { it == null || !it.isZero })
+        { it == null || !it.isZero }
+    )
 
 /**
  * Validates if the [BigMoney] property is equal to one
@@ -285,7 +299,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isNotZero(): Validator<E>.Property<BigM
 fun <E> Validator<E>.Property<BigMoney?>.isOne(): Validator<E>.Property<BigMoney?> =
     this.validate(
         { Equals(BigMoney.of(it?.currencyUnit, ONE)) },
-        { it == null || it.compareTo(BigMoney.of(it.currencyUnit, ONE)) == 0 })
+        { it == null || it.compareTo(BigMoney.of(it.currencyUnit, ONE)) == 0 }
+    )
 
 /**
  * Validates if the [BigMoney] property is not equal to one
@@ -296,7 +311,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isOne(): Validator<E>.Property<BigMoney
 fun <E> Validator<E>.Property<BigMoney?>.isNotOne(): Validator<E>.Property<BigMoney?> =
     this.validate(
         { NotEquals(BigMoney.of(it?.currencyUnit, ONE)) },
-        { it == null || it.compareTo(BigMoney.of(it.currencyUnit, ONE)) != 0 })
+        { it == null || it.compareTo(BigMoney.of(it.currencyUnit, ONE)) != 0 }
+    )
 
 /**
  * Validates if the [BigMoney] property is positive
@@ -307,7 +323,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isNotOne(): Validator<E>.Property<BigMo
 fun <E> Validator<E>.Property<BigMoney?>.isPositive(): Validator<E>.Property<BigMoney?> =
     this.validate(
         { Greater(BigMoney.of(it?.currencyUnit, ZERO)) },
-        { it == null || it > BigMoney.of(it.currencyUnit, ZERO) })
+        { it == null || it > BigMoney.of(it.currencyUnit, ZERO) }
+    )
 
 /**
  * Validates if the [BigMoney] property isn't negative
@@ -318,7 +335,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isPositive(): Validator<E>.Property<Big
 fun <E> Validator<E>.Property<BigMoney?>.isPositiveOrZero(): Validator<E>.Property<BigMoney?> =
     this.validate(
         { GreaterOrEqual(BigMoney.of(it?.currencyUnit, ZERO)) },
-        { it == null || it >= BigMoney.of(it.currencyUnit, ZERO) })
+        { it == null || it >= BigMoney.of(it.currencyUnit, ZERO) }
+    )
 
 /**
  * Validates if the [BigMoney] property is negative
@@ -329,7 +347,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isPositiveOrZero(): Validator<E>.Proper
 fun <E> Validator<E>.Property<BigMoney?>.isNegative(): Validator<E>.Property<BigMoney?> =
     this.validate(
         { Less(BigMoney.of(it?.currencyUnit, ZERO)) },
-        { it == null || it < BigMoney.of(it.currencyUnit, ZERO) })
+        { it == null || it < BigMoney.of(it.currencyUnit, ZERO) }
+    )
 
 /**
  * Validates if the [BigMoney] property isn't positive
@@ -340,7 +359,8 @@ fun <E> Validator<E>.Property<BigMoney?>.isNegative(): Validator<E>.Property<Big
 fun <E> Validator<E>.Property<BigMoney?>.isNegativeOrZero(): Validator<E>.Property<BigMoney?> =
     this.validate(
         { LessOrEqual(BigMoney.of(it?.currencyUnit, ZERO)) },
-        { it == null || it <= BigMoney.of(it.currencyUnit, ZERO) })
+        { it == null || it <= BigMoney.of(it.currencyUnit, ZERO) }
+    )
 
 /**
  * Validates if the [BigMoney] integer digits (before decimal separator) is within the limits (min and max)

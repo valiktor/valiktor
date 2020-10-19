@@ -60,7 +60,8 @@ class FloatFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = 0f, constraint = Null))
+            DefaultConstraintViolation(property = "salary", value = 0f, constraint = Null)
+        )
     }
 
     @Test
@@ -78,7 +79,8 @@ class FloatFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", constraint = NotNull))
+            DefaultConstraintViolation(property = "salary", constraint = NotNull)
+        )
     }
 
     @Test
@@ -110,7 +112,8 @@ class FloatFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = 0f, constraint = Equals(1f)))
+            DefaultConstraintViolation(property = "salary", value = 0f, constraint = Equals(1f))
+        )
     }
 
     @Test
@@ -135,7 +138,8 @@ class FloatFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotEquals(1f)))
+            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotEquals(1f))
+        )
     }
 
     @Test
@@ -146,7 +150,8 @@ class FloatFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotEquals(1.00f)))
+            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotEquals(1.00f))
+        )
     }
 
     @Test
@@ -178,7 +183,8 @@ class FloatFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = 1f, constraint = In(setOf(0f, 10f))))
+            DefaultConstraintViolation(property = "salary", value = 1f, constraint = In(setOf(0f, 10f)))
+        )
     }
 
     @Test
@@ -210,7 +216,8 @@ class FloatFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = 1f, constraint = In(listOf(0f, 10f))))
+            DefaultConstraintViolation(property = "salary", value = 1f, constraint = In(listOf(0f, 10f)))
+        )
     }
 
     @Test
@@ -235,7 +242,8 @@ class FloatFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(setOf(0f, 1f, 10f))))
+            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(setOf(0f, 1f, 10f)))
+        )
     }
 
     @Test
@@ -246,7 +254,8 @@ class FloatFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(setOf(0f, 1.00f, 10f))))
+            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(setOf(0f, 1.00f, 10f)))
+        )
     }
 
     @Test
@@ -271,7 +280,8 @@ class FloatFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(listOf(0f, 1f, 10f))))
+            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(listOf(0f, 1f, 10f)))
+        )
     }
 
     @Test
@@ -282,7 +292,8 @@ class FloatFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(listOf(0f, 1.00f, 10f))))
+            DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(listOf(0f, 1.00f, 10f)))
+        )
     }
 
     @Test
@@ -318,7 +329,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1f,
-                constraint = Equals(0f)))
+                constraint = Equals(0f)
+            )
+        )
     }
 
     @Test
@@ -347,7 +360,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0f,
-                constraint = NotEquals(0f)))
+                constraint = NotEquals(0f)
+            )
+        )
     }
 
     @Test
@@ -362,7 +377,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.00f,
-                constraint = NotEquals(0f)))
+                constraint = NotEquals(0f)
+            )
+        )
     }
 
     @Test
@@ -398,7 +415,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0f,
-                constraint = Equals(1f)))
+                constraint = Equals(1f)
+            )
+        )
     }
 
     @Test
@@ -427,7 +446,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1f,
-                constraint = NotEquals(1f)))
+                constraint = NotEquals(1f)
+            )
+        )
     }
 
     @Test
@@ -442,7 +463,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.00f,
-                constraint = NotEquals(1f)))
+                constraint = NotEquals(1f)
+            )
+        )
     }
 
     @Test
@@ -471,7 +494,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0f,
-                constraint = Greater(0.0f)))
+                constraint = Greater(0.0f)
+            )
+        )
     }
 
     @Test
@@ -486,7 +511,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 98765.432f.unaryMinus(),
-                constraint = Greater(0.0f)))
+                constraint = Greater(0.0f)
+            )
+        )
     }
 
     @Test
@@ -522,7 +549,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0f,
-                constraint = LessOrEqual(0.0f)))
+                constraint = LessOrEqual(0.0f)
+            )
+        )
     }
 
     @Test
@@ -551,7 +580,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0f,
-                constraint = Less(0.0f)))
+                constraint = Less(0.0f)
+            )
+        )
     }
 
     @Test
@@ -566,7 +597,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0f,
-                constraint = Less(0.0f)))
+                constraint = Less(0.0f)
+            )
+        )
     }
 
     @Test
@@ -602,7 +635,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 98765.432f.unaryMinus(),
-                constraint = GreaterOrEqual(0.0f)))
+                constraint = GreaterOrEqual(0.0f)
+            )
+        )
     }
 
     @Test
@@ -638,7 +673,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 50.0f,
-                constraint = Less(49.9f)))
+                constraint = Less(49.9f)
+            )
+        )
     }
 
     @Test
@@ -653,7 +690,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 50.9f.unaryMinus(),
-                constraint = Less(51.0f.unaryMinus())))
+                constraint = Less(51.0f.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -668,7 +707,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0f,
-                constraint = Less(0.0f)))
+                constraint = Less(0.0f)
+            )
+        )
     }
 
     @Test
@@ -711,7 +752,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 56789.19f,
-                constraint = LessOrEqual(57.0f)))
+                constraint = LessOrEqual(57.0f)
+            )
+        )
     }
 
     @Test
@@ -726,7 +769,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 96.0f.unaryMinus(),
-                constraint = LessOrEqual(97.0f.unaryMinus())))
+                constraint = LessOrEqual(97.0f.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -762,7 +807,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0f,
-                constraint = Greater(11.0f)))
+                constraint = Greater(11.0f)
+            )
+        )
     }
 
     @Test
@@ -777,7 +824,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 189.20f.unaryMinus(),
-                constraint = Greater(180.0f.unaryMinus())))
+                constraint = Greater(180.0f.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -792,7 +841,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0f,
-                constraint = Greater(0.0f)))
+                constraint = Greater(0.0f)
+            )
+        )
     }
 
     @Test
@@ -835,7 +886,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 57.0f,
-                constraint = GreaterOrEqual(56789.19f)))
+                constraint = GreaterOrEqual(56789.19f)
+            )
+        )
     }
 
     @Test
@@ -850,7 +903,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 97.0f.unaryMinus(),
-                constraint = GreaterOrEqual(96.0f.unaryMinus())))
+                constraint = GreaterOrEqual(96.0f.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -914,7 +969,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0f,
-                constraint = Between(start = 10.1f, end = 11.0f)))
+                constraint = Between(start = 10.1f, end = 11.0f)
+            )
+        )
     }
 
     @Test
@@ -929,7 +986,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 12.0f,
-                constraint = Between(start = 10.1f, end = 11.0f)))
+                constraint = Between(start = 10.1f, end = 11.0f)
+            )
+        )
     }
 
     @Test
@@ -944,7 +1003,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0f.unaryMinus(),
-                constraint = Between(start = 9.9f.unaryMinus(), end = 8.0f.unaryMinus())))
+                constraint = Between(start = 9.9f.unaryMinus(), end = 8.0f.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -959,7 +1020,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 12.0f.unaryMinus(),
-                constraint = Between(start = 13.0f.unaryMinus(), end = 12.9f.unaryMinus())))
+                constraint = Between(start = 13.0f.unaryMinus(), end = 12.9f.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -1009,7 +1072,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0f,
-                constraint = NotBetween(start = 0.0f, end = 1.0f)))
+                constraint = NotBetween(start = 0.0f, end = 1.0f)
+            )
+        )
     }
 
     @Test
@@ -1024,7 +1089,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0f,
-                constraint = NotBetween(start = 0.0f, end = 1.0f)))
+                constraint = NotBetween(start = 0.0f, end = 1.0f)
+            )
+        )
     }
 
     @Test
@@ -1039,7 +1106,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 2.0f.unaryMinus(),
-                constraint = NotBetween(start = 2.0f.unaryMinus(), end = 1.0f.unaryMinus())))
+                constraint = NotBetween(start = 2.0f.unaryMinus(), end = 1.0f.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -1054,7 +1123,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0f.unaryMinus(),
-                constraint = NotBetween(start = 2.0f.unaryMinus(), end = 1.0f.unaryMinus())))
+                constraint = NotBetween(start = 2.0f.unaryMinus(), end = 1.0f.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -1069,7 +1140,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.5f,
-                constraint = NotBetween(start = 0.0f, end = 1.0f)))
+                constraint = NotBetween(start = 0.0f, end = 1.0f)
+            )
+        )
     }
 
     @Test
@@ -1084,7 +1157,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.5f.unaryMinus(),
-                constraint = NotBetween(start = 2.0f.unaryMinus(), end = 1.0f.unaryMinus())))
+                constraint = NotBetween(start = 2.0f.unaryMinus(), end = 1.0f.unaryMinus())
+            )
+        )
     }
 
     @Test
@@ -1155,7 +1230,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f,
-                constraint = IntegerDigits(min = 7)))
+                constraint = IntegerDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -1170,7 +1247,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f,
-                constraint = IntegerDigits(max = 5)))
+                constraint = IntegerDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -1185,7 +1264,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f,
-                constraint = IntegerDigits(min = 7, max = 5)))
+                constraint = IntegerDigits(min = 7, max = 5)
+            )
+        )
     }
 
     @Test
@@ -1200,7 +1281,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f.unaryMinus(),
-                constraint = IntegerDigits(min = 7)))
+                constraint = IntegerDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -1215,7 +1298,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f.unaryMinus(),
-                constraint = IntegerDigits(max = 5)))
+                constraint = IntegerDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -1230,7 +1315,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f.unaryMinus(),
-                constraint = IntegerDigits(min = 7, max = 5)))
+                constraint = IntegerDigits(min = 7, max = 5)
+            )
+        )
     }
 
     @Test
@@ -1301,7 +1388,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f,
-                constraint = DecimalDigits(min = 7)))
+                constraint = DecimalDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -1316,7 +1405,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f,
-                constraint = DecimalDigits(max = 5)))
+                constraint = DecimalDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -1331,7 +1422,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f,
-                constraint = DecimalDigits(min = 7, max = 5)))
+                constraint = DecimalDigits(min = 7, max = 5)
+            )
+        )
     }
 
     @Test
@@ -1346,7 +1439,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f.unaryMinus(),
-                constraint = DecimalDigits(min = 7)))
+                constraint = DecimalDigits(min = 7)
+            )
+        )
     }
 
     @Test
@@ -1361,7 +1456,9 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f.unaryMinus(),
-                constraint = DecimalDigits(max = 5)))
+                constraint = DecimalDigits(max = 5)
+            )
+        )
     }
 
     @Test
@@ -1376,6 +1473,8 @@ class FloatFunctionsTest {
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f.unaryMinus(),
-                constraint = DecimalDigits(min = 7, max = 5)))
+                constraint = DecimalDigits(min = 7, max = 5)
+            )
+        )
     }
 }

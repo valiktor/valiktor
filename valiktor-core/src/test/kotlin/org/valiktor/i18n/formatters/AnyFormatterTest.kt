@@ -39,7 +39,8 @@ class AnyFormatterTest {
             entry(SupportedLocales.DEFAULT, "TestObject"),
             entry(SupportedLocales.DE, "TestObject"),
             entry(SupportedLocales.EN, "TestObject"),
-            entry(SupportedLocales.PT_BR, "TestObject"))
+            entry(SupportedLocales.PT_BR, "TestObject")
+        )
     }
 
     @Test
@@ -48,7 +49,8 @@ class AnyFormatterTest {
             entry(SupportedLocales.DEFAULT, "E1"),
             entry(SupportedLocales.DE, "E1"),
             entry(SupportedLocales.EN, "E1"),
-            entry(SupportedLocales.PT_BR, "E1"))
+            entry(SupportedLocales.PT_BR, "E1")
+        )
     }
 
     @Test
@@ -57,7 +59,8 @@ class AnyFormatterTest {
             entry(SupportedLocales.DEFAULT, "test"),
             entry(SupportedLocales.DE, "test"),
             entry(SupportedLocales.EN, "test"),
-            entry(SupportedLocales.PT_BR, "test"))
+            entry(SupportedLocales.PT_BR, "test")
+        )
     }
 
     @Test
@@ -66,7 +69,8 @@ class AnyFormatterTest {
             entry(SupportedLocales.DEFAULT, "A"),
             entry(SupportedLocales.DE, "A"),
             entry(SupportedLocales.EN, "A"),
-            entry(SupportedLocales.PT_BR, "A"))
+            entry(SupportedLocales.PT_BR, "A")
+        )
     }
 
     @Test
@@ -75,6 +79,7 @@ class AnyFormatterTest {
             entry(SupportedLocales.DEFAULT, "true"),
             entry(SupportedLocales.DE, "true"),
             entry(SupportedLocales.EN, "true"),
-            entry(SupportedLocales.PT_BR, "true"))
+            entry(SupportedLocales.PT_BR, "true")
+        )
     }
 }

@@ -78,7 +78,9 @@ class AnyFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
-                constraint = Null))
+                constraint = Null
+            )
+        )
     }
 
     @Test
@@ -98,7 +100,9 @@ class AnyFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(
                 property = "company",
-                constraint = NotNull))
+                constraint = NotNull
+            )
+        )
     }
 
     @Test
@@ -126,7 +130,9 @@ class AnyFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 2),
-                constraint = Equals(Company(id = 1))))
+                constraint = Equals(Company(id = 1))
+            )
+        )
     }
 
     @Test
@@ -154,7 +160,9 @@ class AnyFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
-                constraint = NotEquals(Company(id = 1))))
+                constraint = NotEquals(Company(id = 1))
+            )
+        )
     }
 
     @Test
@@ -182,7 +190,9 @@ class AnyFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
-                constraint = In(setOf(Company(id = 0), Company(id = 2), Company(id = 3)))))
+                constraint = In(setOf(Company(id = 0), Company(id = 2), Company(id = 3)))
+            )
+        )
     }
 
     @Test
@@ -210,7 +220,9 @@ class AnyFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
-                constraint = In(listOf(Company(id = 0), Company(id = 2), Company(id = 3)))))
+                constraint = In(listOf(Company(id = 0), Company(id = 2), Company(id = 3)))
+            )
+        )
     }
 
     @Test
@@ -238,7 +250,9 @@ class AnyFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
-                constraint = NotIn(setOf(Company(id = 1), Company(id = 2), Company(id = 3)))))
+                constraint = NotIn(setOf(Company(id = 1), Company(id = 2), Company(id = 3)))
+            )
+        )
     }
 
     @Test
@@ -266,7 +280,9 @@ class AnyFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
-                constraint = NotIn(listOf(Company(id = 1), Company(id = 2), Company(id = 3)))))
+                constraint = NotIn(listOf(Company(id = 1), Company(id = 2), Company(id = 3)))
+            )
+        )
     }
 
     @Test
@@ -294,7 +310,8 @@ class AnyFunctionsTest {
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 2),
-                constraint = Valid)
+                constraint = Valid
+            )
         )
     }
 
@@ -406,9 +423,20 @@ class AnyFunctionsTest {
 
     @Test
     fun `inner not null properties should be valid`() {
-        validate(Employee(id = 1, company = Company(id = 1), address =
-        Address(id = 1, city = City(id = 1, state =
-        State(id = 1, country = Country(id = 1)))))) {
+        validate(
+            Employee(
+                id = 1, company = Company(id = 1),
+                address =
+                    Address(
+                        id = 1,
+                        city = City(
+                            id = 1,
+                            state =
+                                State(id = 1, country = Country(id = 1))
+                        )
+                    )
+            )
+        ) {
             validate(Employee::id).isNotNull()
             validate(Employee::company).validate {
                 validate(Company::id).isNotNull()
@@ -431,9 +459,18 @@ class AnyFunctionsTest {
     @Test
     fun `inner null properties should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
-            validate(Employee(company = Company(), address =
-            Address(city = City(state =
-            State(country = Country()))))) {
+            validate(
+                Employee(
+                    company = Company(),
+                    address =
+                        Address(
+                            city = City(
+                                state =
+                                    State(country = Country())
+                            )
+                        )
+                )
+            ) {
                 validate(Employee::id).isNotNull()
                 validate(Employee::company).validate {
                     validate(Company::id).isNotNull()
@@ -459,7 +496,8 @@ class AnyFunctionsTest {
             DefaultConstraintViolation(property = "address.id", constraint = NotNull),
             DefaultConstraintViolation(property = "address.city.id", constraint = NotNull),
             DefaultConstraintViolation(property = "address.city.state.id", constraint = NotNull),
-            DefaultConstraintViolation(property = "address.city.state.country.id", constraint = NotNull))
+            DefaultConstraintViolation(property = "address.city.state.country.id", constraint = NotNull)
+        )
     }
 
     @Test

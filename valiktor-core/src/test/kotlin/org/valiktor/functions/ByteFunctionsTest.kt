@@ -59,7 +59,8 @@ class ByteFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = Null))
+            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = Null)
+        )
     }
 
     @Test
@@ -77,7 +78,8 @@ class ByteFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", constraint = NotNull))
+            DefaultConstraintViolation(property = "id", constraint = NotNull)
+        )
     }
 
     @Test
@@ -102,7 +104,8 @@ class ByteFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 2.toByte(), constraint = Equals<Byte>(1)))
+            DefaultConstraintViolation(property = "id", value = 2.toByte(), constraint = Equals<Byte>(1))
+        )
     }
 
     @Test
@@ -127,7 +130,8 @@ class ByteFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = NotEquals<Byte>(1)))
+            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = NotEquals<Byte>(1))
+        )
     }
 
     @Test
@@ -152,7 +156,8 @@ class ByteFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = In(setOf<Byte>(0, 2, 3))))
+            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = In(setOf<Byte>(0, 2, 3)))
+        )
     }
 
     @Test
@@ -177,7 +182,8 @@ class ByteFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = In(listOf<Byte>(0, 2, 3))))
+            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = In(listOf<Byte>(0, 2, 3)))
+        )
     }
 
     @Test
@@ -202,7 +208,8 @@ class ByteFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = NotIn(setOf<Byte>(1, 2, 3))))
+            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = NotIn(setOf<Byte>(1, 2, 3)))
+        )
     }
 
     @Test
@@ -227,7 +234,8 @@ class ByteFunctionsTest {
             }
         }
         assertThat(exception.constraintViolations).containsExactly(
-            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = NotIn(listOf<Byte>(1, 2, 3))))
+            DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = NotIn(listOf<Byte>(1, 2, 3)))
+        )
     }
 
     @Test
@@ -256,7 +264,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toByte(),
-                constraint = Equals<Byte>(0)))
+                constraint = Equals<Byte>(0)
+            )
+        )
     }
 
     @Test
@@ -285,7 +295,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
-                constraint = NotEquals<Byte>(0)))
+                constraint = NotEquals<Byte>(0)
+            )
+        )
     }
 
     @Test
@@ -314,7 +326,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
-                constraint = Equals<Byte>(1)))
+                constraint = Equals<Byte>(1)
+            )
+        )
     }
 
     @Test
@@ -343,7 +357,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toByte(),
-                constraint = NotEquals<Byte>(1)))
+                constraint = NotEquals<Byte>(1)
+            )
+        )
     }
 
     @Test
@@ -372,7 +388,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
-                constraint = Greater<Byte>(0)))
+                constraint = Greater<Byte>(0)
+            )
+        )
     }
 
     @Test
@@ -387,7 +405,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 98.unaryMinus().toByte(),
-                constraint = Greater<Byte>(0)))
+                constraint = Greater<Byte>(0)
+            )
+        )
     }
 
     @Test
@@ -423,7 +443,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toByte(),
-                constraint = LessOrEqual<Byte>(0)))
+                constraint = LessOrEqual<Byte>(0)
+            )
+        )
     }
 
     @Test
@@ -452,7 +474,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
-                constraint = Less<Byte>(0)))
+                constraint = Less<Byte>(0)
+            )
+        )
     }
 
     @Test
@@ -467,7 +491,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toByte(),
-                constraint = Less<Byte>(0)))
+                constraint = Less<Byte>(0)
+            )
+        )
     }
 
     @Test
@@ -503,7 +529,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 98.unaryMinus().toByte(),
-                constraint = GreaterOrEqual<Byte>(0)))
+                constraint = GreaterOrEqual<Byte>(0)
+            )
+        )
     }
 
     @Test
@@ -539,7 +567,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 50.toByte(),
-                constraint = Less<Byte>(49)))
+                constraint = Less<Byte>(49)
+            )
+        )
     }
 
     @Test
@@ -554,7 +584,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 50.unaryMinus().toByte(),
-                constraint = Less<Byte>(-51)))
+                constraint = Less<Byte>(-51)
+            )
+        )
     }
 
     @Test
@@ -569,7 +601,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
-                constraint = Less<Byte>(0)))
+                constraint = Less<Byte>(0)
+            )
+        )
     }
 
     @Test
@@ -612,7 +646,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 58.toByte(),
-                constraint = LessOrEqual<Byte>(57)))
+                constraint = LessOrEqual<Byte>(57)
+            )
+        )
     }
 
     @Test
@@ -627,7 +663,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 96.unaryMinus().toByte(),
-                constraint = LessOrEqual<Byte>(-97)))
+                constraint = LessOrEqual<Byte>(-97)
+            )
+        )
     }
 
     @Test
@@ -663,7 +701,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.toByte(),
-                constraint = Greater<Byte>(11)))
+                constraint = Greater<Byte>(11)
+            )
+        )
     }
 
     @Test
@@ -678,7 +718,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 19.unaryMinus().toByte(),
-                constraint = Greater<Byte>(-18)))
+                constraint = Greater<Byte>(-18)
+            )
+        )
     }
 
     @Test
@@ -693,7 +735,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
-                constraint = Greater<Byte>(0)))
+                constraint = Greater<Byte>(0)
+            )
+        )
     }
 
     @Test
@@ -736,7 +780,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 57.toByte(),
-                constraint = GreaterOrEqual<Byte>(58)))
+                constraint = GreaterOrEqual<Byte>(58)
+            )
+        )
     }
 
     @Test
@@ -751,7 +797,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 97.unaryMinus().toByte(),
-                constraint = GreaterOrEqual<Byte>(-96)))
+                constraint = GreaterOrEqual<Byte>(-96)
+            )
+        )
     }
 
     @Test
@@ -815,7 +863,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.toByte(),
-                constraint = Between<Byte>(start = 11, end = 12)))
+                constraint = Between<Byte>(start = 11, end = 12)
+            )
+        )
     }
 
     @Test
@@ -830,7 +880,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 12.toByte(),
-                constraint = Between<Byte>(start = 10, end = 11)))
+                constraint = Between<Byte>(start = 10, end = 11)
+            )
+        )
     }
 
     @Test
@@ -845,7 +897,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.unaryMinus().toByte(),
-                constraint = Between<Byte>(start = -9, end = -8)))
+                constraint = Between<Byte>(start = -9, end = -8)
+            )
+        )
     }
 
     @Test
@@ -860,7 +914,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 12.unaryMinus().toByte(),
-                constraint = Between<Byte>(start = -14, end = -13)))
+                constraint = Between<Byte>(start = -14, end = -13)
+            )
+        )
     }
 
     @Test
@@ -910,7 +966,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
-                constraint = NotBetween<Byte>(start = 0, end = 1)))
+                constraint = NotBetween<Byte>(start = 0, end = 1)
+            )
+        )
     }
 
     @Test
@@ -925,7 +983,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toByte(),
-                constraint = NotBetween<Byte>(start = 0, end = 1)))
+                constraint = NotBetween<Byte>(start = 0, end = 1)
+            )
+        )
     }
 
     @Test
@@ -940,7 +1000,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 2.unaryMinus().toByte(),
-                constraint = NotBetween<Byte>(start = -2, end = -1)))
+                constraint = NotBetween<Byte>(start = -2, end = -1)
+            )
+        )
     }
 
     @Test
@@ -955,7 +1017,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.unaryMinus().toByte(),
-                constraint = NotBetween<Byte>(start = -2, end = -1)))
+                constraint = NotBetween<Byte>(start = -2, end = -1)
+            )
+        )
     }
 
     @Test
@@ -970,7 +1034,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 5.toByte(),
-                constraint = NotBetween<Byte>(start = 0, end = 10)))
+                constraint = NotBetween<Byte>(start = 0, end = 10)
+            )
+        )
     }
 
     @Test
@@ -985,7 +1051,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 15.unaryMinus().toByte(),
-                constraint = NotBetween<Byte>(start = -20, end = -10)))
+                constraint = NotBetween<Byte>(start = -20, end = -10)
+            )
+        )
     }
 
     @Test
@@ -1056,7 +1124,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.toByte(),
-                constraint = IntegerDigits(min = 3)))
+                constraint = IntegerDigits(min = 3)
+            )
+        )
     }
 
     @Test
@@ -1071,7 +1141,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.toByte(),
-                constraint = IntegerDigits(max = 1)))
+                constraint = IntegerDigits(max = 1)
+            )
+        )
     }
 
     @Test
@@ -1086,7 +1158,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.toByte(),
-                constraint = IntegerDigits(min = 3, max = 1)))
+                constraint = IntegerDigits(min = 3, max = 1)
+            )
+        )
     }
 
     @Test
@@ -1101,7 +1175,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.unaryMinus().toByte(),
-                constraint = IntegerDigits(min = 3)))
+                constraint = IntegerDigits(min = 3)
+            )
+        )
     }
 
     @Test
@@ -1116,7 +1192,9 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.unaryMinus().toByte(),
-                constraint = IntegerDigits(max = 1)))
+                constraint = IntegerDigits(max = 1)
+            )
+        )
     }
 
     @Test
@@ -1131,6 +1209,8 @@ class ByteFunctionsTest {
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.unaryMinus().toByte(),
-                constraint = IntegerDigits(min = 3, max = 1)))
+                constraint = IntegerDigits(min = 3, max = 1)
+            )
+        )
     }
 }

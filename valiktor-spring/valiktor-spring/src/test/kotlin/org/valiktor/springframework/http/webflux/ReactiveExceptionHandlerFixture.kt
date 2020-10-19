@@ -75,8 +75,12 @@ class ValiktorTestController {
                     validate(Employee::name).hasSize(min = 4)
                     validate(Employee::email).isEmail()
                     validate(Employee::salary).isBetween("999.99".toBigDecimal(), "9999.99".toBigDecimal())
-                    validate(Employee::dateOfBirth).isEqualTo(Date.from(LocalDate.of(2001, Month.JANUARY, 1)
-                        .atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                    validate(Employee::dateOfBirth).isEqualTo(
+                        Date.from(
+                            LocalDate.of(2001, Month.JANUARY, 1)
+                                .atStartOfDay(ZoneId.systemDefault()).toInstant()
+                        )
+                    )
                 }
             }
             .map { ResponseEntity.created(fromHttpRequest(req).path("/{id}").build(it.id)).build<Void>() }

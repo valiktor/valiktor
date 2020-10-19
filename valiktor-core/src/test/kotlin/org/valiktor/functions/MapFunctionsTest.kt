@@ -866,7 +866,8 @@ class MapFunctionsTest {
             DefaultConstraintViolation(
                 property = "metadata",
                 value = mapOf(createdAtMetadata, updatedAtMetadata),
-                constraint = NotContain("2020-02-20 10:05Z"))
+                constraint = NotContain("2020-02-20 10:05Z")
+            )
         )
     }
 
@@ -1009,8 +1010,12 @@ class MapFunctionsTest {
     fun `doesNotContainAnyValue iterable with one same property should be invalid`() {
         val exception = assertFailsWith<ConstraintViolationException> {
             validate(Employee(metadata = mapOf(createdAtMetadata, updatedAtMetadata))) {
-                validate(Employee::metadata).doesNotContainAnyValue(setOf("2020-02-20 10:05Z",
-                    "BackEnd Development II"))
+                validate(Employee::metadata).doesNotContainAnyValue(
+                    setOf(
+                        "2020-02-20 10:05Z",
+                        "BackEnd Development II"
+                    )
+                )
             }
         }
 

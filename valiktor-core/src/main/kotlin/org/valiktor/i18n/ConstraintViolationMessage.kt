@@ -60,9 +60,12 @@ fun ConstraintViolation.toMessage(baseName: String = constraint.messageBundle, l
                 baseName = baseName,
                 locale = locale,
                 fallbackBaseName = this.constraint.messageBundle,
-                fallbackLocale = Locale.getDefault()),
+                fallbackLocale = Locale.getDefault()
+            ),
             this.constraint.messageKey,
-            this.constraint.messageParams))
+            this.constraint.messageParams
+        )
+    )
 
 /**
  * Converts to List<[ConstraintViolationMessage]>

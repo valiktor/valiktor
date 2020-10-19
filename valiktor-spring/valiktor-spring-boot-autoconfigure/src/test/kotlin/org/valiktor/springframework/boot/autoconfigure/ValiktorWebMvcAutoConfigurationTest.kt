@@ -121,7 +121,8 @@ class ValiktorWebMvcAutoConfigurationTest {
                 assertThat(context).hasSingleBean(InvalidFormatExceptionHandler::class.java)
                 assertThat(context.getBean(InvalidFormatExceptionHandler::class.java)).isSameAs(
                     context.getBean(ValiktorWebMvcCustomConfiguration::class.java)
-                        .invalidFormatExceptionHandler(context.getBean(ConstraintViolationExceptionHandler::class.java)))
+                        .invalidFormatExceptionHandler(context.getBean(ConstraintViolationExceptionHandler::class.java))
+                )
             }
     }
 
@@ -143,7 +144,8 @@ class ValiktorWebMvcAutoConfigurationTest {
                 assertThat(context).hasSingleBean(MissingKotlinParameterExceptionHandler::class.java)
                 assertThat(context.getBean(MissingKotlinParameterExceptionHandler::class.java)).isSameAs(
                     context.getBean(ValiktorWebMvcCustomConfiguration::class.java)
-                        .missingKotlinParameterExceptionHandler(context.getBean(ConstraintViolationExceptionHandler::class.java)))
+                        .missingKotlinParameterExceptionHandler(context.getBean(ConstraintViolationExceptionHandler::class.java))
+                )
             }
     }
 }

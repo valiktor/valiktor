@@ -57,7 +57,8 @@ class MessageBundle(
 ) {
 
     private val messages: Map<String, String> = cachedMessages.getOrPut(
-        CacheKey(baseName, locale, fallbackBaseName, fallbackLocale)) {
+        CacheKey(baseName, locale, fallbackBaseName, fallbackLocale)
+    ) {
         val control = ResourceBundle.Control.getControl(FORMAT_PROPERTIES)
 
         if (locale == Locale(""))
@@ -83,12 +84,14 @@ class MessageBundle(
 
     private fun getMessages(baseName: String, locale: Locale): Sequence<Pair<String, String>> =
         try {
-            ResourceBundle.getBundle(baseName, locale,
+            ResourceBundle.getBundle(
+                baseName, locale,
                 object : ResourceBundle.Control() {
                     override fun getFormats(baseName: String?): List<String> = FORMAT_PROPERTIES
                     override fun getFallbackLocale(baseName: String?, locale: Locale?): Locale? = null
                     override fun getCandidateLocales(baseName: String, locale: Locale): List<Locale> = listOf(locale)
-                })
+                }
+            )
                 .let { bundle ->
                     bundle.keySet()
                         .asSequence()

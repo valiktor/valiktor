@@ -28,7 +28,9 @@ fun interpolate(messageBundle: MessageBundle, messageKey: String, messageParams:
     messageParams
         .asSequence()
         .fold(messageBundle.getMessage(messageKey)) { message, entry ->
-            message.replace("{${entry.key}}",
+            message.replace(
+                "{${entry.key}}",
                 entry.value?.let { Formatters[it.javaClass.kotlin].format(it, messageBundle) }
-                    ?: "")
+                    ?: ""
+            )
         }

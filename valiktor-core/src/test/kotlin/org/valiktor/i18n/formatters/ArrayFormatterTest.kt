@@ -39,7 +39,8 @@ class ArrayFormatterTest {
             entry(SupportedLocales.DEFAULT, "TestObject, TestObject"),
             entry(SupportedLocales.DE, "TestObject, TestObject"),
             entry(SupportedLocales.EN, "TestObject, TestObject"),
-            entry(SupportedLocales.PT_BR, "TestObject, TestObject"))
+            entry(SupportedLocales.PT_BR, "TestObject, TestObject")
+        )
     }
 
     @Test
@@ -48,7 +49,8 @@ class ArrayFormatterTest {
             entry(SupportedLocales.DEFAULT, "E1, E2"),
             entry(SupportedLocales.DE, "E1, E2"),
             entry(SupportedLocales.EN, "E1, E2"),
-            entry(SupportedLocales.PT_BR, "E1, E2"))
+            entry(SupportedLocales.PT_BR, "E1, E2")
+        )
     }
 
     @Test
@@ -57,7 +59,8 @@ class ArrayFormatterTest {
             entry(SupportedLocales.DEFAULT, "test1, test2"),
             entry(SupportedLocales.DE, "test1, test2"),
             entry(SupportedLocales.EN, "test1, test2"),
-            entry(SupportedLocales.PT_BR, "test1, test2"))
+            entry(SupportedLocales.PT_BR, "test1, test2")
+        )
     }
 
     @Test
@@ -66,7 +69,8 @@ class ArrayFormatterTest {
             entry(SupportedLocales.DEFAULT, "A, B"),
             entry(SupportedLocales.DE, "A, B"),
             entry(SupportedLocales.EN, "A, B"),
-            entry(SupportedLocales.PT_BR, "A, B"))
+            entry(SupportedLocales.PT_BR, "A, B")
+        )
     }
 
     @Test
@@ -75,7 +79,8 @@ class ArrayFormatterTest {
             entry(SupportedLocales.DEFAULT, "true, false"),
             entry(SupportedLocales.DE, "true, false"),
             entry(SupportedLocales.EN, "true, false"),
-            entry(SupportedLocales.PT_BR, "true, false"))
+            entry(SupportedLocales.PT_BR, "true, false")
+        )
     }
 
     @Test
@@ -84,7 +89,8 @@ class ArrayFormatterTest {
             entry(SupportedLocales.DEFAULT, "1, 50, -100"),
             entry(SupportedLocales.DE, "1, 50, -100"),
             entry(SupportedLocales.EN, "1, 50, -100"),
-            entry(SupportedLocales.PT_BR, "1, 50, -100"))
+            entry(SupportedLocales.PT_BR, "1, 50, -100")
+        )
     }
 
     @Test
@@ -93,7 +99,8 @@ class ArrayFormatterTest {
             entry(SupportedLocales.DEFAULT, "0, 123, -987, 1,234, -9,876"),
             entry(SupportedLocales.DE, "0, 123, -987, 1.234, -9.876"),
             entry(SupportedLocales.EN, "0, 123, -987, 1,234, -9,876"),
-            entry(SupportedLocales.PT_BR, "0, 123, -987, 1.234, -9.876"))
+            entry(SupportedLocales.PT_BR, "0, 123, -987, 1.234, -9.876")
+        )
     }
 
     @Test
@@ -102,7 +109,8 @@ class ArrayFormatterTest {
             entry(SupportedLocales.DEFAULT, "0, 123, -987, 1,234,567, -9,876,543"),
             entry(SupportedLocales.DE, "0, 123, -987, 1.234.567, -9.876.543"),
             entry(SupportedLocales.EN, "0, 123, -987, 1,234,567, -9,876,543"),
-            entry(SupportedLocales.PT_BR, "0, 123, -987, 1.234.567, -9.876.543"))
+            entry(SupportedLocales.PT_BR, "0, 123, -987, 1.234.567, -9.876.543")
+        )
     }
 
     @Test
@@ -111,17 +119,25 @@ class ArrayFormatterTest {
             entry(SupportedLocales.DEFAULT, "0, 123, -987, 1,234,567,891,235,987,587, -9,876,543,549,852,546"),
             entry(SupportedLocales.DE, "0, 123, -987, 1.234.567.891.235.987.587, -9.876.543.549.852.546"),
             entry(SupportedLocales.EN, "0, 123, -987, 1,234,567,891,235,987,587, -9,876,543,549,852,546"),
-            entry(SupportedLocales.PT_BR, "0, 123, -987, 1.234.567.891.235.987.587, -9.876.543.549.852.546"))
+            entry(SupportedLocales.PT_BR, "0, 123, -987, 1.234.567.891.235.987.587, -9.876.543.549.852.546")
+        )
     }
 
     @Test
     fun `should format Array of BigInteger`() {
-        assertThat(Formatters[Array<Any>::class].formatAllSupportedLocales(arrayOf(0.toBigInteger(), 123.toBigInteger(), 987.unaryMinus().toBigInteger(),
-            "987654321012345678910111231451659990".toBigInteger(), "-845765952346154579884659654872130".toBigInteger()))).contains(
+        assertThat(
+            Formatters[Array<Any>::class].formatAllSupportedLocales(
+                arrayOf(
+                    0.toBigInteger(), 123.toBigInteger(), 987.unaryMinus().toBigInteger(),
+                    "987654321012345678910111231451659990".toBigInteger(), "-845765952346154579884659654872130".toBigInteger()
+                )
+            )
+        ).contains(
             entry(SupportedLocales.DEFAULT, "0, 123, -987, 987,654,321,012,345,678,910,111,231,451,659,990, -845,765,952,346,154,579,884,659,654,872,130"),
             entry(SupportedLocales.DE, "0, 123, -987, 987.654.321.012.345.678.910.111.231.451.659.990, -845.765.952.346.154.579.884.659.654.872.130"),
             entry(SupportedLocales.EN, "0, 123, -987, 987,654,321,012,345,678,910,111,231,451,659,990, -845,765,952,346,154,579,884,659,654,872,130"),
-            entry(SupportedLocales.PT_BR, "0, 123, -987, 987.654.321.012.345.678.910.111.231.451.659.990, -845.765.952.346.154.579.884.659.654.872.130"))
+            entry(SupportedLocales.PT_BR, "0, 123, -987, 987.654.321.012.345.678.910.111.231.451.659.990, -845.765.952.346.154.579.884.659.654.872.130")
+        )
     }
 
     @Test
@@ -130,7 +146,8 @@ class ArrayFormatterTest {
             entry(SupportedLocales.DEFAULT, "0, 123, -987, 1,234.12, -9,876.789"),
             entry(SupportedLocales.DE, "0, 123, -987, 1.234,12, -9.876,789"),
             entry(SupportedLocales.EN, "0, 123, -987, 1,234.12, -9,876.789"),
-            entry(SupportedLocales.PT_BR, "0, 123, -987, 1.234,12, -9.876,789"))
+            entry(SupportedLocales.PT_BR, "0, 123, -987, 1.234,12, -9.876,789")
+        )
     }
 
     @Test
@@ -139,16 +156,24 @@ class ArrayFormatterTest {
             entry(SupportedLocales.DEFAULT, "0, 123, -987, 132,234.12345678, -129,876.789876"),
             entry(SupportedLocales.DE, "0, 123, -987, 132.234,12345678, -129.876,789876"),
             entry(SupportedLocales.EN, "0, 123, -987, 132,234.12345678, -129,876.789876"),
-            entry(SupportedLocales.PT_BR, "0, 123, -987, 132.234,12345678, -129.876,789876"))
+            entry(SupportedLocales.PT_BR, "0, 123, -987, 132.234,12345678, -129.876,789876")
+        )
     }
 
     @Test
     fun `should format Array of BigDecimal`() {
-        assertThat(Formatters[Array<Any>::class].formatAllSupportedLocales(arrayOf("0.00".toBigDecimal(), 123.toBigDecimal(), 987.unaryMinus().toBigDecimal(),
-            "7896541236548.78964843546840".toBigDecimal(), "-7895462489785454.258965899".toBigDecimal()))).contains(
+        assertThat(
+            Formatters[Array<Any>::class].formatAllSupportedLocales(
+                arrayOf(
+                    "0.00".toBigDecimal(), 123.toBigDecimal(), 987.unaryMinus().toBigDecimal(),
+                    "7896541236548.78964843546840".toBigDecimal(), "-7895462489785454.258965899".toBigDecimal()
+                )
+            )
+        ).contains(
             entry(SupportedLocales.DEFAULT, "0.00, 123, -987, 7,896,541,236,548.78964843546840, -7,895,462,489,785,454.258965899"),
             entry(SupportedLocales.DE, "0,00, 123, -987, 7.896.541.236.548,78964843546840, -7.895.462.489.785.454,258965899"),
             entry(SupportedLocales.EN, "0.00, 123, -987, 7,896,541,236,548.78964843546840, -7,895,462,489,785,454.258965899"),
-            entry(SupportedLocales.PT_BR, "0,00, 123, -987, 7.896.541.236.548,78964843546840, -7.895.462.489.785.454,258965899"))
+            entry(SupportedLocales.PT_BR, "0,00, 123, -987, 7.896.541.236.548,78964843546840, -7.895.462.489.785.454,258965899")
+        )
     }
 }

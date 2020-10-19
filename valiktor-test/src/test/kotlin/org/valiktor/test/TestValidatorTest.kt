@@ -217,7 +217,8 @@ class TestValidatorTest {
             }
         }
 
-        assertEquals(ex.message,
+        assertEquals(
+            ex.message,
             "Expected:${lineSeparator()}${lineSeparator()}" +
                 "id                              | 1    | Greater(value = 1)${lineSeparator()}" +
                 "name                            |      | NotEmpty${lineSeparator()}" +

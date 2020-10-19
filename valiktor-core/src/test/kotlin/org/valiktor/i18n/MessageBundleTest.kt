@@ -30,7 +30,8 @@ class MessageBundleTest {
             baseName = "testMessages",
             locale = Locale.US,
             fallbackBaseName = FALLBACK_BASENAME,
-            fallbackLocale = SupportedLocales.PT_BR)
+            fallbackLocale = SupportedLocales.PT_BR
+        )
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, Locale.US)
@@ -43,7 +44,8 @@ class MessageBundleTest {
             baseName = "testMessages",
             locale = SupportedLocales.PT_BR,
             fallbackBaseName = FALLBACK_BASENAME,
-            fallbackLocale = SupportedLocales.EN)
+            fallbackLocale = SupportedLocales.EN
+        )
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, SupportedLocales.PT_BR)
@@ -56,7 +58,8 @@ class MessageBundleTest {
             baseName = "testMessages",
             locale = Locale.US,
             fallbackBaseName = FALLBACK_BASENAME,
-            fallbackLocale = SupportedLocales.PT_BR)
+            fallbackLocale = SupportedLocales.PT_BR
+        )
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, Locale.US)
@@ -69,7 +72,8 @@ class MessageBundleTest {
             baseName = "testMessages",
             locale = Locale.US,
             fallbackBaseName = FALLBACK_BASENAME,
-            fallbackLocale = SupportedLocales.PT_BR)
+            fallbackLocale = SupportedLocales.PT_BR
+        )
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, Locale.US)
@@ -82,7 +86,8 @@ class MessageBundleTest {
             baseName = "testMessages",
             locale = INVALID_LOCALE,
             fallbackBaseName = FALLBACK_BASENAME,
-            fallbackLocale = SupportedLocales.PT_BR)
+            fallbackLocale = SupportedLocales.PT_BR
+        )
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)
@@ -95,7 +100,8 @@ class MessageBundleTest {
             baseName = "testMessages",
             locale = INVALID_LOCALE,
             fallbackBaseName = FALLBACK_BASENAME,
-            fallbackLocale = SupportedLocales.PT_BR)
+            fallbackLocale = SupportedLocales.PT_BR
+        )
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)
@@ -108,7 +114,8 @@ class MessageBundleTest {
             baseName = "testMessages",
             locale = INVALID_LOCALE,
             fallbackBaseName = FALLBACK_BASENAME,
-            fallbackLocale = Locale.US)
+            fallbackLocale = Locale.US
+        )
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)
@@ -121,7 +128,8 @@ class MessageBundleTest {
             baseName = "testMessages",
             locale = INVALID_LOCALE,
             fallbackBaseName = FALLBACK_BASENAME,
-            fallbackLocale = Locale.US)
+            fallbackLocale = Locale.US
+        )
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)
@@ -134,7 +142,8 @@ class MessageBundleTest {
             baseName = "testMessages",
             locale = INVALID_LOCALE,
             fallbackBaseName = FALLBACK_BASENAME,
-            fallbackLocale = INVALID_LOCALE)
+            fallbackLocale = INVALID_LOCALE
+        )
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)
@@ -147,7 +156,8 @@ class MessageBundleTest {
             baseName = "testMessages",
             locale = INVALID_LOCALE,
             fallbackBaseName = FALLBACK_BASENAME,
-            fallbackLocale = INVALID_LOCALE)
+            fallbackLocale = INVALID_LOCALE
+        )
 
         assertEquals(messageBundle.baseName, "testMessages")
         assertEquals(messageBundle.locale, INVALID_LOCALE)

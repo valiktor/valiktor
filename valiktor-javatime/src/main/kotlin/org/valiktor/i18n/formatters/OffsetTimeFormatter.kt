@@ -31,7 +31,9 @@ import java.time.format.FormatStyle
 object OffsetTimeFormatter : Formatter<OffsetTime> {
 
     override fun format(value: OffsetTime, messageBundle: MessageBundle): String =
-        value.format(DateTimeFormatter
-            .ofLocalizedTime(FormatStyle.MEDIUM)
-            .withLocale(messageBundle.locale))
+        value.format(
+            DateTimeFormatter
+                .ofLocalizedTime(FormatStyle.MEDIUM)
+                .withLocale(messageBundle.locale)
+        )
 }

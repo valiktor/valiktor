@@ -70,10 +70,13 @@ class ReactiveConstraintViolationExceptionHandler(
                     }
                     .bodyValue(body)
                     .flatMap {
-                        it.writeTo(exchange, object : ServerResponse.Context {
-                            override fun messageWriters() = codecConfigurer.writers
-                            override fun viewResolvers() = emptyList<ViewResolver>()
-                        })
+                        it.writeTo(
+                            exchange,
+                            object : ServerResponse.Context {
+                                override fun messageWriters() = codecConfigurer.writers
+                                override fun viewResolvers() = emptyList<ViewResolver>()
+                            }
+                        )
                     }
                     .flatMap {
                         Mono.empty<Void>()

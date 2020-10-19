@@ -33,10 +33,12 @@ import org.valiktor.springframework.http.ValiktorExceptionHandler
  * @since 0.11.0
  */
 @Configuration
-@ConditionalOnClass(name = [
-    "org.valiktor.springframework.http.ValiktorExceptionHandler",
-    "org.valiktor.springframework.http.DefaultValiktorExceptionHandler"
-])
+@ConditionalOnClass(
+    name = [
+        "org.valiktor.springframework.http.ValiktorExceptionHandler",
+        "org.valiktor.springframework.http.DefaultValiktorExceptionHandler"
+    ]
+)
 @ConditionalOnBean(type = ["org.valiktor.springframework.config.ValiktorConfiguration"])
 class ValiktorExceptionHandlerAutoConfiguration {
 
