@@ -1,10 +1,10 @@
 plugins {
-    kotlin("jvm") version "1.3.71"
+    kotlin("jvm") version "1.4.10"
     id("jacoco")
     id("signing")
     id("maven-publish")
     id("org.jetbrains.dokka") version "0.10.1"
-    id("org.jmailen.kotlinter") version "2.3.2"
+    id("org.jmailen.kotlinter") version "3.2.0"
     id("com.adarshr.test-logger") version "2.0.0"
 }
 
