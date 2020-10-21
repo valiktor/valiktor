@@ -1,5 +1,5 @@
-val moneyVersion = "1.0.3"
-val monetaVersion = "1.3"
+val moneyVersion = "1.1"
+val monetaVersion = "1.4.2"
 
 dependencies {
     compile(kotlin("stdlib"))
