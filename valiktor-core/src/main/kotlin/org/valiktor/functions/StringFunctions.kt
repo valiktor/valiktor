@@ -479,9 +479,7 @@ fun <E> Validator<E>.Property<String?>.doesNotEndWithIgnoringCase(suffix: String
 fun <E> Validator<E>.Property<String?>.isEmail(): Validator<E>.Property<String?> =
     this.validate(Email) {
         it == null || it.matches(
-            Regex(
-                "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
-            )
+            Regex("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
         )
     }
 
@@ -494,8 +492,6 @@ fun <E> Validator<E>.Property<String?>.isEmail(): Validator<E>.Property<String?>
 fun <E> Validator<E>.Property<String?>.isWebsite(): Validator<E>.Property<String?> =
     this.validate(Website) {
         it == null || it.matches(
-            Regex(
-                "^(https?:\\/\\/)?([a-zA-Z0-9]+(-?[a-zA-Z0-9])*\\.)+[\\w]{2,}(\\/\\S*)?\$"
-            )
+            Regex("^(https?:\\/\\/)?([a-zA-Z0-9]+(-?[a-zA-Z0-9])*\\.)+[\\w]{2,}(\\/\\S*)?\$")
         )
     }

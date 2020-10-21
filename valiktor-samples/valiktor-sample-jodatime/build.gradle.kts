@@ -1,4 +1,4 @@
-val jodaTimeVersion = "2.10.5"
+val jodaTimeVersion = "2.10.6"
 
 dependencies {
     compile(kotlin("stdlib"))
