@@ -5,7 +5,7 @@ plugins {
     id("maven-publish")
     id("org.jetbrains.dokka") version "0.10.1"
     id("org.jmailen.kotlinter") version "3.2.0"
-    id("com.adarshr.test-logger") version "2.0.0"
+    id("com.adarshr.test-logger") version "2.1.1"
 }
 
 repositories {
@@ -14,8 +14,8 @@ repositories {
 }
 
 subprojects {
-    val junitVersion = "5.5.2"
-    val assertjVersion = "3.15.0"
+    val junitVersion = "5.7.0"
+    val assertjVersion = "3.17.2"
 
     apply {
         plugin("kotlin")

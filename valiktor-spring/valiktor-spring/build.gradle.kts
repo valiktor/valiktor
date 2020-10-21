@@ -1,12 +1,12 @@
 plugins {
-    kotlin("plugin.spring") version "1.3.71"
+    kotlin("plugin.spring") version "1.4.10"
 }
 
-val springVersion = "5.2.5.RELEASE"
-val jacksonVersion = "2.10.3"
+val springVersion = "5.2.9.RELEASE"
+val jacksonVersion = "2.11.2"
 val servletVersion = "4.0.1"
 val jsonAssertVersion = "1.5.0"
-val xmlUnitVersion = "2.6.4"
+val xmlUnitVersion = "2.7.0"
 
 dependencies {
     compile(project(":valiktor-core"))

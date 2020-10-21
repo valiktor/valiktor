@@ -426,15 +426,15 @@ class AnyFunctionsTest {
         validate(
             Employee(
                 id = 1, company = Company(id = 1),
-                address =
-                    Address(
+                address = Address(
+                    id = 1,
+                    city = City(
                         id = 1,
-                        city = City(
-                            id = 1,
-                            state =
-                                State(id = 1, country = Country(id = 1))
+                        state = State(
+                            id = 1, country = Country(id = 1)
                         )
                     )
+                )
             )
         ) {
             validate(Employee::id).isNotNull()
@@ -462,13 +462,11 @@ class AnyFunctionsTest {
             validate(
                 Employee(
                     company = Company(),
-                    address =
-                        Address(
-                            city = City(
-                                state =
-                                    State(country = Country())
-                            )
+                    address = Address(
+                        city = City(
+                            state = State(country = Country())
                         )
+                    )
                 )
             ) {
                 validate(Employee::id).isNotNull()

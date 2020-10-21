@@ -1,17 +1,15 @@
 plugins {
-    kotlin("plugin.spring") version "1.3.71"
-    id("org.springframework.boot") version "2.2.6.RELEASE"
+    kotlin("plugin.spring") version "1.4.10"
+    id("org.springframework.boot") version "2.3.4.RELEASE"
 }
 
-apply {
-    plugin("io.spring.dependency-management")
-}
-
-val jacksonMoneyVersion = "1.1.1"
-val moneyVersion = "1.0.3"
-val monetaVersion = "1.3"
+val jacksonMoneyVersion = "1.2.0"
+val moneyVersion = "1.1"
+val monetaVersion = "1.4.2"
 
 dependencies {
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE"))
+
     compile(kotlin("stdlib"))
     compile(kotlin("reflect"))
     compile(project(":valiktor-javamoney"))
