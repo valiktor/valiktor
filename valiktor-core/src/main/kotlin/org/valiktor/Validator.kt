@@ -71,7 +71,7 @@ open class Validator<E>(private val obj: E) {
     /**
      * Returns a [Function] for this function
      *
-     * @receiver the function to be validated along with any arguments required to call the function
+     * @receiver the function to be validated
      * @return the function validator
      */
     @JvmName("validate")
@@ -89,7 +89,7 @@ open class Validator<E>(private val obj: E) {
     /**
      * Returns a [Function] for this iterable function
      *
-     * @receiver the function to be validated along with any arguments required to call the function
+     * @receiver the function to be validated
      * @return the function validator
      */
     @JvmName("validateIterable")
@@ -107,7 +107,7 @@ open class Validator<E>(private val obj: E) {
     /**
      * Returns a [Function] for this array function
      *
-     * @receiver the function to be validated along with any arguments required to call the function
+     * @receiver the function to be validated
      * @return the function validator
      */
     @JvmName("validateArray")
@@ -118,7 +118,8 @@ open class Validator<E>(private val obj: E) {
      *
      * @param obj specifies the object to be validated
      *
-     * @author Rodolpho S. Couto, Justin Sexton
+     * @author Rodolpho S. Couto
+     * @author Justin Sexton
      * @see Validator
      * @since 0.12.0
      */
@@ -217,7 +218,8 @@ open class Validator<E>(private val obj: E) {
      * @param obj specifies the object to be validated
      * @param property specifies the property to be validated
      *
-     * @author Rodolpho S. Couto, Justin Sexton
+     * @author Rodolpho S. Couto
+     * @author Justin Sexton
      * @see Validator
      * @see KProperty1
      * @since 0.12.0
@@ -234,7 +236,8 @@ open class Validator<E>(private val obj: E) {
      * @param obj specifies the object to be validated
      * @param function specifies the function return value to be validated
      *
-     * * @author Rodolpho S. Couto, Justin Sexton
+     * @author Rodolpho S. Couto
+     * @author Justin Sexton
      * @see Validator
      * @see KFunction
      * @since 0.12.0
