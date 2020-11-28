@@ -99,7 +99,7 @@ class IterableFunctionsTest {
 
     @Test
     fun `inner iterable properties should call suspending validation functions`() {
-        suspend fun Validator<Address>.Property<Int?>.isValidId() = this.coValidate(Valid) {
+        suspend fun Validator<Address>.ValueValidator<Int?>.isValidId() = this.coValidate(Valid) {
             delay(10L)
             it == null || it > 0
         }

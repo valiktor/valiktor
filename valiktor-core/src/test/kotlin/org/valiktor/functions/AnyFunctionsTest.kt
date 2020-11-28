@@ -368,7 +368,7 @@ class AnyFunctionsTest {
 
     @Test
     fun `should call suspending validation functions`() {
-        suspend fun Validator<Employee>.Property<Company?>.isValidCompany() = this.coValidate(Valid) {
+        suspend fun Validator<Employee>.ValueValidator<Company?>.isValidCompany() = this.coValidate(Valid) {
             delay(10L)
             it == null || (it.id ?: 0) > 0
         }
@@ -382,7 +382,7 @@ class AnyFunctionsTest {
 
     @Test
     fun `inner properties should call suspending validation functions`() {
-        suspend fun Validator<State>.Property<Country?>.isValidCountry() = this.coValidate(Valid) {
+        suspend fun Validator<State>.ValueValidator<Country?>.isValidCountry() = this.coValidate(Valid) {
             delay(10L)
             it == null || (it.id ?: 0) > 0
         }

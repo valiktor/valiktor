@@ -62,5 +62,5 @@ class EmployeeService {
 object Document : Constraint
 
 // custom validation function
-fun Validator<Employee>.Property<String?>.isDocumentNumber() =
+fun Validator<Employee>.ValueValidator<String?>.isDocumentNumber() =
     this.validate(Document) { it == null || it.matches(Regex("^\\d{3}.\\d{3}.\\d{3}-\\d{2}\$")) }

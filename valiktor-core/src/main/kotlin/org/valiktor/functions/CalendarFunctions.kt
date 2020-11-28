@@ -22,12 +22,12 @@ import org.valiktor.constraints.Today
 import java.util.Calendar
 
 /**
- * Validates if the [Calendar] property is today
+ * Validates if the [Calendar] value is today
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
-fun <E> Validator<E>.Property<Calendar?>.isToday(): Validator<E>.Property<Calendar?> {
+fun <E> Validator<E>.ValueValidator<Calendar?>.isToday(): Validator<E>.ValueValidator<Calendar?> {
     val start = Calendar.getInstance()
     start.set(Calendar.HOUR_OF_DAY, 0)
     start.set(Calendar.MINUTE, 0)
@@ -44,12 +44,12 @@ fun <E> Validator<E>.Property<Calendar?>.isToday(): Validator<E>.Property<Calend
 }
 
 /**
- * Validates if the [Calendar] property isn't today
+ * Validates if the [Calendar] value isn't today
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
-fun <E> Validator<E>.Property<Calendar?>.isNotToday(): Validator<E>.Property<Calendar?> {
+fun <E> Validator<E>.ValueValidator<Calendar?>.isNotToday(): Validator<E>.ValueValidator<Calendar?> {
     val start = Calendar.getInstance()
     start.set(Calendar.HOUR_OF_DAY, 0)
     start.set(Calendar.MINUTE, 0)

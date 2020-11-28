@@ -75,7 +75,7 @@ class ArrayFunctionsTest {
 
     @Test
     fun `inner array properties should call suspending validation functions`() {
-        suspend fun Validator<Dependent>.Property<Int?>.isValidId() = this.coValidate(Valid) {
+        suspend fun Validator<Dependent>.ValueValidator<Int?>.isValidId() = this.coValidate(Valid) {
             delay(10L)
             it == null || it > 0
         }

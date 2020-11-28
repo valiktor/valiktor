@@ -345,21 +345,21 @@ data class Between<T>(val start: T, val end: T) : Constraint
 
 #### 2. Create the extension function
 
-The validation logic must be within an extension function of `org.valiktor.Validator<E>.Property<T>`, where `E` represents the object and `T` represents the property to be validated.
+The validation logic must be within an extension function of `org.valiktor.Validator<E>.ValueValidator<T>`, where `E` represents the object and `T` represents the value to be validated.
 
 There is an auxiliary function named `validate` that expects a `Constraint` and a validation function as parameters.
 
 For example:
 
 ```kotlin
-fun <E> Validator<E>.Property<Int?>.isBetween(start: Int, end: Int) = 
+fun <E> Validator<E>.ValueValidator<Int?>.isBetween(start: Int, end: Int) = 
     this.validate(Between(start, end)) { it == null || it in start.rangeTo(end) }
 ```
 
 To support suspending functions, you must use `coValidate` instead of `validate`:
 
 ```kotlin
-suspend fun <E> Validator<E>.Property<Int?>.isBetween(start: Int, end: Int) = 
+suspend fun <E> Validator<E>.ValueValidator<Int?>.isBetween(start: Int, end: Int) = 
     this.coValidate(Between(start, end)) { it == null || it in start.rangeTo(end) }
 ```
 
