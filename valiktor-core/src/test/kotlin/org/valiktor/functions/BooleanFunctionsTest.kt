@@ -34,7 +34,9 @@ import kotlin.test.assertFailsWith
 
 private object BooleanFunctionsFixture {
 
-    data class Employee(val active: Boolean? = null)
+    data class Employee(val active: Boolean? = null) {
+        fun hasActiveStatus() = active != null
+    }
 }
 
 class BooleanFunctionsTest {
@@ -261,6 +263,30 @@ class BooleanFunctionsTest {
                 value = false,
                 constraint = True
             )
+        )
+    }
+
+    @Test
+    fun `isTrue with true function should be valid`() {
+        validate(Employee(active = false)) {
+            validate(Employee::hasActiveStatus).isTrue()
+        }
+    }
+
+    @Test
+    fun `isTrue with false function should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee()) {
+                validate(Employee::hasActiveStatus).isTrue()
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(
+                        property = "hasActiveStatus",
+                        value = false,
+                        constraint = True
+                )
         )
     }
 

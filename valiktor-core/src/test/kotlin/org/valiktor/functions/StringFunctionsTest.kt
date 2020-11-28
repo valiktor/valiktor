@@ -58,7 +58,9 @@ private object StringFunctionsFixture {
         val email: String? = null,
         val username: String? = null,
         val website: String? = null
-    )
+    ) {
+        fun contact() = "$name $email $website"
+    }
 }
 
 class StringFunctionsTest {
@@ -68,6 +70,19 @@ class StringFunctionsTest {
         validate(Employee()) {
             validate(Employee::name).isNull()
         }
+    }
+
+    @Test
+    fun `isNull with not null function should be invalid`() {
+        val exception = assertFailsWith<ConstraintViolationException> {
+            validate(Employee()) {
+                validate(Employee::contact).isNull()
+            }
+        }
+
+        assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "contact", value = "null null null", constraint = Null)
+        )
     }
 
     @Test
@@ -86,6 +101,13 @@ class StringFunctionsTest {
     fun `isNotNull with not null property should be valid`() {
         validate(Employee(name = "test")) {
             validate(Employee::name).isNotNull()
+        }
+    }
+
+    @Test
+    fun `isNotNull with not null function should be valid`() {
+        validate(Employee(name = "test")) {
+            validate(Employee::contact).isNotNull()
         }
     }
 
