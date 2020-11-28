@@ -81,7 +81,7 @@ class StringFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(property = "contact", value = "null null null", constraint = Null)
+            DefaultConstraintViolation(property = "contact", value = "null null null", constraint = Null)
         )
     }
 

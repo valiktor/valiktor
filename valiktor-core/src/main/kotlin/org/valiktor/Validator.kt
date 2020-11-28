@@ -149,9 +149,9 @@ open class Validator<E>(private val obj: E) {
             val value = value()
             if (!isValid(value)) {
                 this@Validator.constraintViolations += DefaultConstraintViolation(
-                        property = name(),
-                        value = value,
-                        constraint = constraint(value)
+                    property = name(),
+                    value = value,
+                    constraint = constraint(value)
                 )
             }
             return this
@@ -167,7 +167,7 @@ open class Validator<E>(private val obj: E) {
          * @return the property validator
          */
         fun validate(constraint: Constraint, isValid: (T?) -> Boolean): ValueValidator<T> =
-                validate({ constraint }, isValid)
+            validate({ constraint }, isValid)
 
         /**
          * Validates the property by passing the constraint and the suspending validation function
@@ -182,9 +182,9 @@ open class Validator<E>(private val obj: E) {
             val value = value()
             if (!isValid(value)) {
                 this@Validator.constraintViolations += DefaultConstraintViolation(
-                        property = name(),
-                        value = value,
-                        constraint = constraint(value)
+                    property = name(),
+                    value = value,
+                    constraint = constraint(value)
                 )
             }
             return this
@@ -200,7 +200,7 @@ open class Validator<E>(private val obj: E) {
          * @return the property validator
          */
         suspend fun coValidate(constraint: Constraint, isValid: suspend (T?) -> Boolean): ValueValidator<T> =
-                coValidate({ constraint }, isValid)
+            coValidate({ constraint }, isValid)
 
         /**
          * Adds the constraint violations to property

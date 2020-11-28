@@ -282,11 +282,11 @@ class BooleanFunctionsTest {
         }
 
         assertThat(exception.constraintViolations).containsExactly(
-                DefaultConstraintViolation(
-                        property = "hasActiveStatus",
-                        value = false,
-                        constraint = True
-                )
+            DefaultConstraintViolation(
+                property = "hasActiveStatus",
+                value = false,
+                constraint = True
+            )
         )
     }
 
