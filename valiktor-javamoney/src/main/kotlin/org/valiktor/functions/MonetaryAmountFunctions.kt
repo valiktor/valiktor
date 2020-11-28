@@ -45,7 +45,7 @@ import javax.money.MonetaryAmount
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isEqualTo(value: Number): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isEqualTo(value: Number): Validator<E>.ValueValidator<T?> =
     this.validate(
         { Equals(it?.factory?.setNumber(value)?.create()) },
         { it == null || it == it.factory.setNumber(value).create() }
@@ -58,7 +58,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isEqualTo(value: Number): 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotEqualTo(value: Number): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isNotEqualTo(value: Number): Validator<E>.ValueValidator<T?> =
     this.validate(
         { NotEquals(it?.factory?.setNumber(value)?.create()) },
         { it == null || it != it.factory.setNumber(value).create() }
@@ -71,7 +71,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotEqualTo(value: Number
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isIn(vararg values: Number): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isIn(vararg values: Number): Validator<E>.ValueValidator<T?> =
     this.validate(
         { In(values.map { value -> it?.factory?.setNumber(value)?.create() }.toSet()) },
         { it == null || values.map { value -> it.factory.setNumber(value).create() }.contains(it) }
@@ -84,7 +84,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isIn(vararg values: Number
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isIn(values: Iterable<Number>): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isIn(values: Iterable<Number>): Validator<E>.ValueValidator<T?> =
     this.validate(
         { In(values.map { value -> it?.factory?.setNumber(value)?.create() }) },
         { it == null || values.map { value -> it.factory.setNumber(value).create() }.contains(it) }
@@ -97,7 +97,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isIn(values: Iterable<Numb
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotIn(vararg values: Number): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isNotIn(vararg values: Number): Validator<E>.ValueValidator<T?> =
     this.validate(
         { NotIn(values.map { value -> it?.factory?.setNumber(value)?.create() }.toSet()) },
         { it == null || !values.map { value -> it.factory.setNumber(value).create() }.contains(it) }
@@ -110,7 +110,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotIn(vararg values: Num
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotIn(values: Iterable<Number>): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isNotIn(values: Iterable<Number>): Validator<E>.ValueValidator<T?> =
     this.validate(
         { NotIn(values.map { value -> it?.factory?.setNumber(value)?.create() }) },
         { it == null || !values.map { value -> it.factory.setNumber(value).create() }.contains(it) }
@@ -124,7 +124,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotIn(values: Iterable<N
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isLessThan(value: Number): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isLessThan(value: Number): Validator<E>.ValueValidator<T?> =
     this.validate(
         { Less(it?.factory?.setNumber(value)?.create()) },
         { it == null || it < it.factory.setNumber(value).create() }
@@ -138,7 +138,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isLessThan(value: Number):
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isLessThanOrEqualTo(value: Number): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isLessThanOrEqualTo(value: Number): Validator<E>.ValueValidator<T?> =
     this.validate(
         { LessOrEqual(it?.factory?.setNumber(value)?.create()) },
         { it == null || it <= it.factory.setNumber(value).create() }
@@ -152,7 +152,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isLessThanOrEqualTo(value:
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isGreaterThan(value: Number): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isGreaterThan(value: Number): Validator<E>.ValueValidator<T?> =
     this.validate(
         { Greater(it?.factory?.setNumber(value)?.create()) },
         { it == null || it > it.factory.setNumber(value).create() }
@@ -166,7 +166,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isGreaterThan(value: Numbe
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isGreaterThanOrEqualTo(value: Number): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isGreaterThanOrEqualTo(value: Number): Validator<E>.ValueValidator<T?> =
     this.validate(
         { GreaterOrEqual(it?.factory?.setNumber(value)?.create()) },
         { it == null || it >= it.factory.setNumber(value).create() }
@@ -181,7 +181,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isGreaterThanOrEqualTo(val
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isBetween(start: Number, end: Number): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isBetween(start: Number, end: Number): Validator<E>.ValueValidator<T?> =
     this.validate(
         { Between(it?.factory?.setNumber(start)?.create(), it?.factory?.setNumber(end)?.create()) },
         { it == null || it in it.factory.setNumber(start).create().rangeTo(it.factory.setNumber(end).create()) }
@@ -196,7 +196,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isBetween(start: Number, e
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotBetween(start: Number, end: Number): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isNotBetween(start: Number, end: Number): Validator<E>.ValueValidator<T?> =
     this.validate(
         { NotBetween(it?.factory?.setNumber(start)?.create(), it?.factory?.setNumber(end)?.create()) },
         { it == null || it !in it.factory.setNumber(start).create().rangeTo(it.factory.setNumber(end).create()) }
@@ -208,7 +208,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotBetween(start: Number
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isZero(): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isZero(): Validator<E>.ValueValidator<T?> =
     this.validate(
         { Equals(it?.factory?.setNumber(ZERO)?.create()) },
         { it == null || it.isZero }
@@ -220,7 +220,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isZero(): Validator<E>.Pro
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotZero(): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isNotZero(): Validator<E>.ValueValidator<T?> =
     this.validate(
         { NotEquals(it?.factory?.setNumber(ZERO)?.create()) },
         { it == null || !it.isZero }
@@ -232,7 +232,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotZero(): Validator<E>.
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isOne(): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isOne(): Validator<E>.ValueValidator<T?> =
     this.validate(
         { Equals(it?.factory?.setNumber(ONE)?.create()) },
         { it == null || it == it.factory.setNumber(ONE).create() }
@@ -244,7 +244,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isOne(): Validator<E>.Prop
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotOne(): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isNotOne(): Validator<E>.ValueValidator<T?> =
     this.validate(
         { NotEquals(it?.factory?.setNumber(ONE)?.create()) },
         { it == null || it != it.factory.setNumber(ONE).create() }
@@ -256,7 +256,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNotOne(): Validator<E>.P
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isPositive(): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isPositive(): Validator<E>.ValueValidator<T?> =
     this.validate(
         { Greater(it?.factory?.setNumber(ZERO)?.create()) },
         { it == null || it > it.factory.setNumber(ZERO).create() }
@@ -268,7 +268,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isPositive(): Validator<E>
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isPositiveOrZero(): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isPositiveOrZero(): Validator<E>.ValueValidator<T?> =
     this.validate(
         { GreaterOrEqual(it?.factory?.setNumber(ZERO)?.create()) },
         { it == null || it >= it.factory.setNumber(ZERO).create() }
@@ -280,7 +280,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isPositiveOrZero(): Valida
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNegative(): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isNegative(): Validator<E>.ValueValidator<T?> =
     this.validate(
         { Less(it?.factory?.setNumber(ZERO)?.create()) },
         { it == null || it < it.factory.setNumber(ZERO).create() }
@@ -292,7 +292,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNegative(): Validator<E>
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNegativeOrZero(): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.isNegativeOrZero(): Validator<E>.ValueValidator<T?> =
     this.validate(
         { LessOrEqual(it?.factory?.setNumber(ZERO)?.create()) },
         { it == null || it <= it.factory.setNumber(ZERO).create() }
@@ -307,7 +307,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.isNegativeOrZero(): Valida
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<T?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.number.precision - it.number.scale in min.rangeTo(max) }
 
 /**
@@ -319,7 +319,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasIntegerDigits(min: Int 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<T?> =
     this.validate(DecimalDigits(min, max)) { it == null || (if (it.number.scale < 0) 0 else it.number.scale) in min.rangeTo(max) }
 
 /**
@@ -329,7 +329,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasDecimalDigits(min: Int 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasCurrencyEqualTo(currency: CurrencyUnit): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.hasCurrencyEqualTo(currency: CurrencyUnit): Validator<E>.ValueValidator<T?> =
     this.validate(CurrencyEquals(currency)) { it == null || it.currency == currency }
 
 /**
@@ -339,7 +339,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasCurrencyEqualTo(currenc
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasCurrencyNotEqualTo(currency: CurrencyUnit): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.hasCurrencyNotEqualTo(currency: CurrencyUnit): Validator<E>.ValueValidator<T?> =
     this.validate(CurrencyNotEquals(currency)) { it == null || it.currency != currency }
 
 /**
@@ -349,7 +349,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasCurrencyNotEqualTo(curr
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasCurrencyIn(vararg currencies: CurrencyUnit): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.hasCurrencyIn(vararg currencies: CurrencyUnit): Validator<E>.ValueValidator<T?> =
     this.validate(CurrencyIn(currencies.toSet())) { it == null || currencies.contains(it.currency) }
 
 /**
@@ -359,7 +359,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasCurrencyIn(vararg curre
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasCurrencyIn(currencies: Iterable<CurrencyUnit>): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.hasCurrencyIn(currencies: Iterable<CurrencyUnit>): Validator<E>.ValueValidator<T?> =
     this.validate(CurrencyIn(currencies)) { it == null || currencies.contains(it.currency) }
 
 /**
@@ -369,7 +369,7 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasCurrencyIn(currencies: 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasCurrencyNotIn(vararg currencies: CurrencyUnit): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.hasCurrencyNotIn(vararg currencies: CurrencyUnit): Validator<E>.ValueValidator<T?> =
     this.validate(CurrencyNotIn(currencies.toSet())) { it == null || !currencies.contains(it.currency) }
 
 /**
@@ -379,5 +379,5 @@ fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasCurrencyNotIn(vararg cu
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T : MonetaryAmount> Validator<E>.Property<T?>.hasCurrencyNotIn(currencies: Iterable<CurrencyUnit>): Validator<E>.Property<T?> =
+fun <E, T : MonetaryAmount> Validator<E>.ValueValidator<T?>.hasCurrencyNotIn(currencies: Iterable<CurrencyUnit>): Validator<E>.ValueValidator<T?> =
     this.validate(CurrencyNotIn(currencies)) { it == null || !currencies.contains(it.currency) }

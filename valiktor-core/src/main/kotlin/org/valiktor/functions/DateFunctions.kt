@@ -28,7 +28,7 @@ import java.util.Date
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Date?>.isToday(): Validator<E>.Property<Date?> {
+fun <E> Validator<E>.ValueValidator<Date?>.isToday(): Validator<E>.ValueValidator<Date?> {
     val start = Calendar.getInstance()
     start.set(Calendar.HOUR_OF_DAY, 0)
     start.set(Calendar.MINUTE, 0)
@@ -50,7 +50,7 @@ fun <E> Validator<E>.Property<Date?>.isToday(): Validator<E>.Property<Date?> {
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Date?>.isNotToday(): Validator<E>.Property<Date?> {
+fun <E> Validator<E>.ValueValidator<Date?>.isNotToday(): Validator<E>.ValueValidator<Date?> {
     val start = Calendar.getInstance()
     start.set(Calendar.HOUR_OF_DAY, 0)
     start.set(Calendar.MINUTE, 0)

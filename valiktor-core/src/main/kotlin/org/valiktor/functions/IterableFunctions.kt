@@ -38,14 +38,14 @@ import org.valiktor.constraints.Size
  * @return the same receiver property
  */
 @JvmName("validateForEachIterable")
-inline fun <E, T> Validator<E>.Property<Iterable<T>?>.validateForEach(
+inline fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.validateForEach(
     block: Validator<T>.(T) -> Unit
-): Validator<E>.Property<Iterable<T>?> {
-    this.property.get(this.obj)?.forEachIndexed { index, value ->
+): Validator<E>.ValueValidator<Iterable<T>?> {
+    this.value()?.forEachIndexed { index, value ->
         this.addConstraintViolations(
             Validator(value).apply { block(value) }.constraintViolations.map {
                 DefaultConstraintViolation(
-                    property = "${this.property.name}[$index].${it.property}",
+                    property = "${this.name()}[$index].${it.property}",
                     value = it.value,
                     constraint = it.constraint
                 )
@@ -63,14 +63,14 @@ inline fun <E, T> Validator<E>.Property<Iterable<T>?>.validateForEach(
  * @return the same receiver property
  */
 @JvmName("validateForEachIndexedIterable")
-inline fun <E, T> Validator<E>.Property<Iterable<T>?>.validateForEachIndexed(
+inline fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.validateForEachIndexed(
     block: Validator<T>.(Int, T) -> Unit
-): Validator<E>.Property<Iterable<T>?> {
-    this.property.get(this.obj)?.forEachIndexed { index, value ->
+): Validator<E>.ValueValidator<Iterable<T>?> {
+    this.value()?.forEachIndexed { index, value ->
         this.addConstraintViolations(
             Validator(value).apply { block(index, value) }.constraintViolations.map {
                 DefaultConstraintViolation(
-                    property = "${this.property.name}[$index].${it.property}",
+                    property = "${this.name()}[$index].${it.property}",
                     value = it.value,
                     constraint = it.constraint
                 )
@@ -87,7 +87,7 @@ inline fun <E, T> Validator<E>.Property<Iterable<T>?>.validateForEachIndexed(
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.isIn(vararg values: Iterable<T>): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.isIn(vararg values: Iterable<T>): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(In(values.toSet())) { it == null || values.contains(it) }
 
 /**
@@ -97,7 +97,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.isIn(vararg values: Iterable<T>):
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.isIn(values: Iterable<Iterable<T>>): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.isIn(values: Iterable<Iterable<T>>): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(In(values)) { it == null || values.contains(it) }
 
 /**
@@ -107,7 +107,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.isIn(values: Iterable<Iterable<T>
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotIn(vararg values: Iterable<T>): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.isNotIn(vararg values: Iterable<T>): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(NotIn(values.toSet())) { it == null || !values.contains(it) }
 
 /**
@@ -117,7 +117,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotIn(vararg values: Iterable<T
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotIn(values: Iterable<Iterable<T>>): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.isNotIn(values: Iterable<Iterable<T>>): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(NotIn(values)) { it == null || !values.contains(it) }
 
 /**
@@ -126,7 +126,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotIn(values: Iterable<Iterable
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.isEmpty(): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.isEmpty(): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(Empty) { it == null || it.count() == 0 }
 
 /**
@@ -135,7 +135,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.isEmpty(): Validator<E>.Property<
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotEmpty(): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.isNotEmpty(): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(NotEmpty) { it == null || it.count() > 0 }
 
 /**
@@ -146,10 +146,10 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.isNotEmpty(): Validator<E>.Proper
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.hasSize(
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.hasSize(
     min: Int = Int.MIN_VALUE,
     max: Int = Int.MAX_VALUE
-): Validator<E>.Property<Iterable<T>?> = this.validate(Size(min, max)) { it == null || it.count() in min.rangeTo(max) }
+): Validator<E>.ValueValidator<Iterable<T>?> = this.validate(Size(min, max)) { it == null || it.count() in min.rangeTo(max) }
 
 /**
  * Validates if the [Iterable] property contains the value
@@ -158,7 +158,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.hasSize(
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.contains(value: T): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.contains(value: T): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(Contains(value)) { it == null || it.contains(value) }
 
 /**
@@ -168,7 +168,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.contains(value: T): Validator<E>.
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.containsAll(vararg values: T): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.containsAll(vararg values: T): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(ContainsAll(values.toSet())) { it == null || values.toSet().all { e -> it.contains(e) } }
 
 /**
@@ -178,7 +178,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.containsAll(vararg values: T): Va
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.containsAll(values: Iterable<T>): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.containsAll(values: Iterable<T>): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(ContainsAll(values)) { it == null || values.all { e -> it.contains(e) } }
 
 /**
@@ -188,7 +188,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.containsAll(values: Iterable<T>):
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.containsAny(vararg values: T): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.containsAny(vararg values: T): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(ContainsAny(values.toSet())) { it == null || values.toSet().any { e -> it.contains(e) } }
 
 /**
@@ -198,7 +198,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.containsAny(vararg values: T): Va
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.containsAny(values: Iterable<T>): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.containsAny(values: Iterable<T>): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(ContainsAny(values)) { it == null || values.any { e -> it.contains(e) } }
 
 /**
@@ -208,7 +208,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.containsAny(values: Iterable<T>):
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.doesNotContain(value: T): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.doesNotContain(value: T): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(NotContain(value)) { it == null || !it.contains(value) }
 
 /**
@@ -218,7 +218,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.doesNotContain(value: T): Validat
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.doesNotContainAll(vararg values: T): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.doesNotContainAll(vararg values: T): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(NotContainAll(values.toSet())) { it == null || !values.toSet().all { e -> it.contains(e) } }
 
 /**
@@ -228,7 +228,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.doesNotContainAll(vararg values: 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.doesNotContainAll(values: Iterable<T>): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.doesNotContainAll(values: Iterable<T>): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(NotContainAll(values)) { it == null || !values.all { e -> it.contains(e) } }
 
 /**
@@ -238,7 +238,7 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.doesNotContainAll(values: Iterabl
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.doesNotContainAny(vararg values: T): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.doesNotContainAny(vararg values: T): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(NotContainAny(values.toSet())) { it == null || !values.toSet().any { e -> it.contains(e) } }
 
 /**
@@ -248,5 +248,5 @@ fun <E, T> Validator<E>.Property<Iterable<T>?>.doesNotContainAny(vararg values: 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<Iterable<T>?>.doesNotContainAny(values: Iterable<T>): Validator<E>.Property<Iterable<T>?> =
+fun <E, T> Validator<E>.ValueValidator<Iterable<T>?>.doesNotContainAny(values: Iterable<T>): Validator<E>.ValueValidator<Iterable<T>?> =
     this.validate(NotContainAny(values)) { it == null || !values.any { e -> it.contains(e) } }

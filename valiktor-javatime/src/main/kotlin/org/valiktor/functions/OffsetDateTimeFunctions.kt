@@ -28,7 +28,7 @@ import java.time.OffsetDateTime
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<OffsetDateTime?>.isToday(): Validator<E>.Property<OffsetDateTime?> =
+fun <E> Validator<E>.ValueValidator<OffsetDateTime?>.isToday(): Validator<E>.ValueValidator<OffsetDateTime?> =
     this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.offset) }
 
 /**
@@ -37,5 +37,5 @@ fun <E> Validator<E>.Property<OffsetDateTime?>.isToday(): Validator<E>.Property<
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<OffsetDateTime?>.isNotToday(): Validator<E>.Property<OffsetDateTime?> =
+fun <E> Validator<E>.ValueValidator<OffsetDateTime?>.isNotToday(): Validator<E>.ValueValidator<OffsetDateTime?> =
     this.validate(NotToday) { it == null || it.toLocalDate() != LocalDate.now(it.offset) }

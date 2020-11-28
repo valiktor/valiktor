@@ -16,7 +16,7 @@ import org.valiktor.constraints.NotEmpty
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isEmpty(): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.isEmpty(): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(Empty) { it == null || it.isEmpty() }
 
 /**
@@ -25,7 +25,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isEmpty(): Validator<E>.Property
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isNotEmpty(): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.isNotEmpty(): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(NotEmpty) { it == null || it.isNotEmpty() }
 
 /**
@@ -35,7 +35,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.isNotEmpty(): Validator<E>.Prope
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsKey(key: K): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.containsKey(key: K): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(Contains(key)) { it == null || it.containsKey(key) }
 
 /**
@@ -45,7 +45,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsKey(key: K): Validator<E
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllKeys(vararg keys: K): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.containsAllKeys(vararg keys: K): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(ContainsAll(keys.toSet())) { it == null || keys.all { e -> it.containsKey(e) } }
 
 /**
@@ -55,7 +55,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllKeys(vararg keys: K):
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllKeys(keys: Iterable<K>): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.containsAllKeys(keys: Iterable<K>): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(ContainsAll(keys)) { it == null || keys.all { e -> it.containsKey(e) } }
 
 /**
@@ -65,7 +65,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllKeys(keys: Iterable<K
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyKey(vararg keys: K): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.containsAnyKey(vararg keys: K): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(ContainsAny(keys.toSet())) { it == null || keys.any { e -> it.containsKey(e) } }
 
 /**
@@ -75,7 +75,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyKey(vararg keys: K): 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyKey(keys: Iterable<K>): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.containsAnyKey(keys: Iterable<K>): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(ContainsAny(keys)) { it == null || keys.any { e -> it.containsKey(e) } }
 
 /**
@@ -85,7 +85,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyKey(keys: Iterable<K>
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainKey(key: K): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.doesNotContainKey(key: K): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(NotContain(key)) { it == null || !it.containsKey(key) }
 
 /**
@@ -95,7 +95,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainKey(key: K): Valid
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAllKeys(vararg keys: K): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.doesNotContainAllKeys(vararg keys: K): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(NotContainAll(keys.toSet())) { it == null || !keys.all { e -> it.containsKey(e) } }
 
 /**
@@ -105,7 +105,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAllKeys(vararg key
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAllKeys(keys: Iterable<K>): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.doesNotContainAllKeys(keys: Iterable<K>): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(NotContainAll(keys)) { it == null || !keys.all { e -> it.containsKey(e) } }
 
 /**
@@ -115,7 +115,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAllKeys(keys: Iter
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAnyKey(vararg keys: K): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.doesNotContainAnyKey(vararg keys: K): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(NotContainAny(keys.toSet())) { it == null || !keys.any { e -> it.containsKey(e) } }
 
 /**
@@ -125,7 +125,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAnyKey(vararg keys
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAnyKey(keys: Iterable<K>): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.doesNotContainAnyKey(keys: Iterable<K>): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(NotContainAny(keys)) { it == null || !keys.any { e -> it.containsKey(e) } }
 
 /**
@@ -135,7 +135,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAnyKey(keys: Itera
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsValue(value: V): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.containsValue(value: V): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(Contains(value)) { it == null || it.containsValue(value) }
 
 /**
@@ -145,7 +145,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsValue(value: V): Validat
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllValues(vararg values: V): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.containsAllValues(vararg values: V): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(ContainsAll(values.toSet())) { it == null || values.all { e -> it.containsValue(e) } }
 
 /**
@@ -155,7 +155,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllValues(vararg values:
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllValues(values: Iterable<V>): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.containsAllValues(values: Iterable<V>): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(ContainsAll(values)) { it == null || values.all { e -> it.containsValue(e) } }
 
 /**
@@ -165,7 +165,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAllValues(values: Iterab
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyValue(vararg values: V): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.containsAnyValue(vararg values: V): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(ContainsAny(values.toSet())) { it == null || values.any { e -> it.containsValue(e) } }
 
 /**
@@ -175,7 +175,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyValue(vararg values: 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyValue(values: Iterable<V>): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.containsAnyValue(values: Iterable<V>): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(ContainsAny(values)) { it == null || values.any { e -> it.containsValue(e) } }
 
 /**
@@ -185,7 +185,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.containsAnyValue(values: Iterabl
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainValue(value: V): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.doesNotContainValue(value: V): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(NotContain(value)) { it == null || !it.containsValue(value) }
 
 /**
@@ -195,7 +195,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainValue(value: V): V
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAllValues(vararg values: V): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.doesNotContainAllValues(vararg values: V): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(NotContainAll(values.toSet())) { it == null || !values.all { e -> it.containsValue(e) } }
 
 /**
@@ -205,7 +205,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAllValues(vararg v
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAllValues(values: Iterable<V>): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.doesNotContainAllValues(values: Iterable<V>): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(NotContainAll(values)) { it == null || !values.all { e -> it.containsValue(e) } }
 
 /**
@@ -215,7 +215,7 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAllValues(values: 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAnyValue(vararg values: V): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.doesNotContainAnyValue(vararg values: V): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(NotContainAny(values.toSet())) { it == null || !values.any { e -> it.containsValue(e) } }
 
 /**
@@ -225,5 +225,5 @@ fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAnyValue(vararg va
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, K, V> Validator<E>.Property<Map<K, V>?>.doesNotContainAnyValue(values: Iterable<V>): Validator<E>.Property<Map<K, V>?> =
+fun <E, K, V> Validator<E>.ValueValidator<Map<K, V>?>.doesNotContainAnyValue(values: Iterable<V>): Validator<E>.ValueValidator<Map<K, V>?> =
     this.validate(NotContainAny(values)) { it == null || !values.any { e -> it.containsValue(e) } }

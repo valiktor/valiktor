@@ -32,7 +32,7 @@ import org.valiktor.constraints.NotEquals
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.isZero(): Validator<E>.Property<Float?> =
+fun <E> Validator<E>.ValueValidator<Float?>.isZero(): Validator<E>.ValueValidator<Float?> =
     this.validate(Equals(0f)) { it == null || it == 0f }
 
 /**
@@ -41,7 +41,7 @@ fun <E> Validator<E>.Property<Float?>.isZero(): Validator<E>.Property<Float?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.isNotZero(): Validator<E>.Property<Float?> =
+fun <E> Validator<E>.ValueValidator<Float?>.isNotZero(): Validator<E>.ValueValidator<Float?> =
     this.validate(NotEquals(0f)) { it == null || it != 0f }
 
 /**
@@ -50,7 +50,7 @@ fun <E> Validator<E>.Property<Float?>.isNotZero(): Validator<E>.Property<Float?>
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.isOne(): Validator<E>.Property<Float?> =
+fun <E> Validator<E>.ValueValidator<Float?>.isOne(): Validator<E>.ValueValidator<Float?> =
     this.validate(Equals(1f)) { it == null || it == 1f }
 
 /**
@@ -59,7 +59,7 @@ fun <E> Validator<E>.Property<Float?>.isOne(): Validator<E>.Property<Float?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.isNotOne(): Validator<E>.Property<Float?> =
+fun <E> Validator<E>.ValueValidator<Float?>.isNotOne(): Validator<E>.ValueValidator<Float?> =
     this.validate(NotEquals(1f)) { it == null || it != 1f }
 
 /**
@@ -68,7 +68,7 @@ fun <E> Validator<E>.Property<Float?>.isNotOne(): Validator<E>.Property<Float?> 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.isPositive(): Validator<E>.Property<Float?> =
+fun <E> Validator<E>.ValueValidator<Float?>.isPositive(): Validator<E>.ValueValidator<Float?> =
     this.validate(Greater(0f)) { it == null || it > 0f }
 
 /**
@@ -77,7 +77,7 @@ fun <E> Validator<E>.Property<Float?>.isPositive(): Validator<E>.Property<Float?
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.isPositiveOrZero(): Validator<E>.Property<Float?> =
+fun <E> Validator<E>.ValueValidator<Float?>.isPositiveOrZero(): Validator<E>.ValueValidator<Float?> =
     this.validate(GreaterOrEqual(0f)) { it == null || it >= 0f }
 
 /**
@@ -86,7 +86,7 @@ fun <E> Validator<E>.Property<Float?>.isPositiveOrZero(): Validator<E>.Property<
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.isNegative(): Validator<E>.Property<Float?> =
+fun <E> Validator<E>.ValueValidator<Float?>.isNegative(): Validator<E>.ValueValidator<Float?> =
     this.validate(Less(0f)) { it == null || it < 0f }
 
 /**
@@ -95,7 +95,7 @@ fun <E> Validator<E>.Property<Float?>.isNegative(): Validator<E>.Property<Float?
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.isNegativeOrZero(): Validator<E>.Property<Float?> =
+fun <E> Validator<E>.ValueValidator<Float?>.isNegativeOrZero(): Validator<E>.ValueValidator<Float?> =
     this.validate(LessOrEqual(0f)) { it == null || it <= 0f }
 
 /**
@@ -107,7 +107,7 @@ fun <E> Validator<E>.Property<Float?>.isNegativeOrZero(): Validator<E>.Property<
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Float?> =
+fun <E> Validator<E>.ValueValidator<Float?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<Float?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").split(".")[0].length in min.rangeTo(max) }
 
 /**
@@ -119,5 +119,5 @@ fun <E> Validator<E>.Property<Float?>.hasIntegerDigits(min: Int = Int.MIN_VALUE,
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Float?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Float?> =
+fun <E> Validator<E>.ValueValidator<Float?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<Float?> =
     this.validate(DecimalDigits(min, max)) { it == null || it.toString().removePrefix("-").split(".")[1].length in min.rangeTo(max) }

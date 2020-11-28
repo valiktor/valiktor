@@ -31,7 +31,7 @@ import org.valiktor.constraints.NotEquals
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Long?>.isZero(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ValueValidator<Long?>.isZero(): Validator<E>.ValueValidator<Long?> =
     this.validate(Equals(0L)) { it == null || it == 0L }
 
 /**
@@ -40,7 +40,7 @@ fun <E> Validator<E>.Property<Long?>.isZero(): Validator<E>.Property<Long?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Long?>.isNotZero(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ValueValidator<Long?>.isNotZero(): Validator<E>.ValueValidator<Long?> =
     this.validate(NotEquals(0L)) { it == null || it != 0L }
 
 /**
@@ -49,7 +49,7 @@ fun <E> Validator<E>.Property<Long?>.isNotZero(): Validator<E>.Property<Long?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Long?>.isOne(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ValueValidator<Long?>.isOne(): Validator<E>.ValueValidator<Long?> =
     this.validate(Equals(1L)) { it == null || it == 1L }
 
 /**
@@ -58,7 +58,7 @@ fun <E> Validator<E>.Property<Long?>.isOne(): Validator<E>.Property<Long?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Long?>.isNotOne(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ValueValidator<Long?>.isNotOne(): Validator<E>.ValueValidator<Long?> =
     this.validate(NotEquals(1L)) { it == null || it != 1L }
 
 /**
@@ -67,7 +67,7 @@ fun <E> Validator<E>.Property<Long?>.isNotOne(): Validator<E>.Property<Long?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Long?>.isPositive(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ValueValidator<Long?>.isPositive(): Validator<E>.ValueValidator<Long?> =
     this.validate(Greater(0L)) { it == null || it > 0L }
 
 /**
@@ -76,7 +76,7 @@ fun <E> Validator<E>.Property<Long?>.isPositive(): Validator<E>.Property<Long?> 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Long?>.isPositiveOrZero(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ValueValidator<Long?>.isPositiveOrZero(): Validator<E>.ValueValidator<Long?> =
     this.validate(GreaterOrEqual(0L)) { it == null || it >= 0L }
 
 /**
@@ -85,7 +85,7 @@ fun <E> Validator<E>.Property<Long?>.isPositiveOrZero(): Validator<E>.Property<L
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Long?>.isNegative(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ValueValidator<Long?>.isNegative(): Validator<E>.ValueValidator<Long?> =
     this.validate(Less(0L)) { it == null || it < 0L }
 
 /**
@@ -94,7 +94,7 @@ fun <E> Validator<E>.Property<Long?>.isNegative(): Validator<E>.Property<Long?> 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Long?>.isNegativeOrZero(): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ValueValidator<Long?>.isNegativeOrZero(): Validator<E>.ValueValidator<Long?> =
     this.validate(LessOrEqual(0L)) { it == null || it <= 0L }
 
 /**
@@ -106,5 +106,5 @@ fun <E> Validator<E>.Property<Long?>.isNegativeOrZero(): Validator<E>.Property<L
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Long?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Long?> =
+fun <E> Validator<E>.ValueValidator<Long?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<Long?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) }

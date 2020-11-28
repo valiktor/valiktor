@@ -27,7 +27,7 @@ import java.time.LocalDate
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<LocalDate?>.isToday(): Validator<E>.Property<LocalDate?> =
+fun <E> Validator<E>.ValueValidator<LocalDate?>.isToday(): Validator<E>.ValueValidator<LocalDate?> =
     this.validate(Today) { it == null || it == LocalDate.now() }
 
 /**
@@ -36,5 +36,5 @@ fun <E> Validator<E>.Property<LocalDate?>.isToday(): Validator<E>.Property<Local
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<LocalDate?>.isNotToday(): Validator<E>.Property<LocalDate?> =
+fun <E> Validator<E>.ValueValidator<LocalDate?>.isNotToday(): Validator<E>.ValueValidator<LocalDate?> =
     this.validate(NotToday) { it == null || it != LocalDate.now() }

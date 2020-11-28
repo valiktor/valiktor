@@ -63,7 +63,7 @@ class EmployeeService {
 object Document : Constraint
 
 // custom suspending validation function
-suspend fun Validator<Employee>.Property<String?>.isDocumentNumber() = this.coValidate(Document) {
+suspend fun Validator<Employee>.ValueValidator<String?>.isDocumentNumber() = this.coValidate(Document) {
     delay(100L) // simulating I/O delay
     it == null || it.matches(Regex("^\\d{3}.\\d{3}.\\d{3}-\\d{2}\$"))
 }

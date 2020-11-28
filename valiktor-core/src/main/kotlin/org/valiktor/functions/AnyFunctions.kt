@@ -33,13 +33,13 @@ import org.valiktor.constraints.Valid
  * @receiver the property to be validated
  * @return the same receiver property
  */
-inline fun <E, T : Any> Validator<E>.Property<T?>.validate(block: Validator<T>.(T) -> Unit): Validator<E>.Property<T?> {
-    val value = this.property.get(this.obj)
+inline fun <E, T : Any> Validator<E>.ValueValidator<T?>.validate(block: Validator<T>.(T) -> Unit): Validator<E>.ValueValidator<T?> {
+    val value = this.value()
     if (value != null) {
         this.addConstraintViolations(
             Validator(value).apply { block(value) }.constraintViolations.map {
                 DefaultConstraintViolation(
-                    property = "${this.property.name}.${it.property}",
+                    property = "${this.name()}.${it.property}",
                     value = it.value,
                     constraint = it.constraint
                 )
@@ -55,7 +55,7 @@ inline fun <E, T : Any> Validator<E>.Property<T?>.validate(block: Validator<T>.(
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<T?>.isNull(): Validator<E>.Property<T?> =
+fun <E, T> Validator<E>.ValueValidator<T?>.isNull(): Validator<E>.ValueValidator<T?> =
     this.validate(Null) { it == null }
 
 /**
@@ -64,7 +64,7 @@ fun <E, T> Validator<E>.Property<T?>.isNull(): Validator<E>.Property<T?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<T?>.isNotNull(): Validator<E>.Property<T?> =
+fun <E, T> Validator<E>.ValueValidator<T?>.isNotNull(): Validator<E>.ValueValidator<T?> =
     this.validate(NotNull) { it != null }
 
 /**
@@ -74,7 +74,7 @@ fun <E, T> Validator<E>.Property<T?>.isNotNull(): Validator<E>.Property<T?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<T?>.isEqualTo(value: T): Validator<E>.Property<T?> =
+fun <E, T> Validator<E>.ValueValidator<T?>.isEqualTo(value: T): Validator<E>.ValueValidator<T?> =
     this.validate(Equals(value)) { it == null || it == value }
 
 /**
@@ -84,7 +84,7 @@ fun <E, T> Validator<E>.Property<T?>.isEqualTo(value: T): Validator<E>.Property<
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<T?>.isNotEqualTo(value: T): Validator<E>.Property<T?> =
+fun <E, T> Validator<E>.ValueValidator<T?>.isNotEqualTo(value: T): Validator<E>.ValueValidator<T?> =
     this.validate(NotEquals(value)) { it == null || it != value }
 
 /**
@@ -94,7 +94,7 @@ fun <E, T> Validator<E>.Property<T?>.isNotEqualTo(value: T): Validator<E>.Proper
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<T?>.isIn(vararg values: T): Validator<E>.Property<T?> =
+fun <E, T> Validator<E>.ValueValidator<T?>.isIn(vararg values: T): Validator<E>.ValueValidator<T?> =
     this.validate(In(values.toSet())) { it == null || values.contains(it) }
 
 /**
@@ -104,7 +104,7 @@ fun <E, T> Validator<E>.Property<T?>.isIn(vararg values: T): Validator<E>.Proper
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<T?>.isIn(values: Iterable<T>): Validator<E>.Property<T?> =
+fun <E, T> Validator<E>.ValueValidator<T?>.isIn(values: Iterable<T>): Validator<E>.ValueValidator<T?> =
     this.validate(In(values)) { it == null || values.contains(it) }
 
 /**
@@ -114,7 +114,7 @@ fun <E, T> Validator<E>.Property<T?>.isIn(values: Iterable<T>): Validator<E>.Pro
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<T?>.isNotIn(vararg values: T): Validator<E>.Property<T?> =
+fun <E, T> Validator<E>.ValueValidator<T?>.isNotIn(vararg values: T): Validator<E>.ValueValidator<T?> =
     this.validate(NotIn(values.toSet())) { it == null || !values.contains(it) }
 
 /**
@@ -124,7 +124,7 @@ fun <E, T> Validator<E>.Property<T?>.isNotIn(vararg values: T): Validator<E>.Pro
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<T?>.isNotIn(values: Iterable<T>): Validator<E>.Property<T?> =
+fun <E, T> Validator<E>.ValueValidator<T?>.isNotIn(values: Iterable<T>): Validator<E>.ValueValidator<T?> =
     this.validate(NotIn(values)) { it == null || !values.contains(it) }
 
 /**
@@ -134,7 +134,7 @@ fun <E, T> Validator<E>.Property<T?>.isNotIn(values: Iterable<T>): Validator<E>.
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E, T> Validator<E>.Property<T?>.isValid(validator: (T) -> Boolean): Validator<E>.Property<T?> =
+fun <E, T> Validator<E>.ValueValidator<T?>.isValid(validator: (T) -> Boolean): Validator<E>.ValueValidator<T?> =
     this.validate(Valid) { it == null || validator(it) }
 
 /**
@@ -144,5 +144,5 @@ fun <E, T> Validator<E>.Property<T?>.isValid(validator: (T) -> Boolean): Validat
  * @receiver the property to be validated
  * @return the same receiver property
  */
-suspend fun <E, T> Validator<E>.Property<T?>.isCoValid(validator: suspend (T) -> Boolean): Validator<E>.Property<T?> =
+suspend fun <E, T> Validator<E>.ValueValidator<T?>.isCoValid(validator: suspend (T) -> Boolean): Validator<E>.ValueValidator<T?> =
     this.coValidate(Valid) { it == null || validator(it) }

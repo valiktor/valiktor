@@ -31,7 +31,7 @@ import org.valiktor.constraints.NotEquals
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Short?>.isZero(): Validator<E>.Property<Short?> =
+fun <E> Validator<E>.ValueValidator<Short?>.isZero(): Validator<E>.ValueValidator<Short?> =
     this.validate(Equals<Short>(0)) { it == null || it == 0.toShort() }
 
 /**
@@ -40,7 +40,7 @@ fun <E> Validator<E>.Property<Short?>.isZero(): Validator<E>.Property<Short?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Short?>.isNotZero(): Validator<E>.Property<Short?> =
+fun <E> Validator<E>.ValueValidator<Short?>.isNotZero(): Validator<E>.ValueValidator<Short?> =
     this.validate(NotEquals<Short>(0)) { it == null || it != 0.toShort() }
 
 /**
@@ -49,7 +49,7 @@ fun <E> Validator<E>.Property<Short?>.isNotZero(): Validator<E>.Property<Short?>
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Short?>.isOne(): Validator<E>.Property<Short?> =
+fun <E> Validator<E>.ValueValidator<Short?>.isOne(): Validator<E>.ValueValidator<Short?> =
     this.validate(Equals<Short>(1)) { it == null || it == 1.toShort() }
 
 /**
@@ -58,7 +58,7 @@ fun <E> Validator<E>.Property<Short?>.isOne(): Validator<E>.Property<Short?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Short?>.isNotOne(): Validator<E>.Property<Short?> =
+fun <E> Validator<E>.ValueValidator<Short?>.isNotOne(): Validator<E>.ValueValidator<Short?> =
     this.validate(NotEquals<Short>(1)) { it == null || it != 1.toShort() }
 
 /**
@@ -67,7 +67,7 @@ fun <E> Validator<E>.Property<Short?>.isNotOne(): Validator<E>.Property<Short?> 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Short?>.isPositive(): Validator<E>.Property<Short?> =
+fun <E> Validator<E>.ValueValidator<Short?>.isPositive(): Validator<E>.ValueValidator<Short?> =
     this.validate(Greater<Short>(0)) { it == null || it > 0.toShort() }
 
 /**
@@ -76,7 +76,7 @@ fun <E> Validator<E>.Property<Short?>.isPositive(): Validator<E>.Property<Short?
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Short?>.isPositiveOrZero(): Validator<E>.Property<Short?> =
+fun <E> Validator<E>.ValueValidator<Short?>.isPositiveOrZero(): Validator<E>.ValueValidator<Short?> =
     this.validate(GreaterOrEqual<Short>(0)) { it == null || it >= 0.toShort() }
 
 /**
@@ -85,7 +85,7 @@ fun <E> Validator<E>.Property<Short?>.isPositiveOrZero(): Validator<E>.Property<
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Short?>.isNegative(): Validator<E>.Property<Short?> =
+fun <E> Validator<E>.ValueValidator<Short?>.isNegative(): Validator<E>.ValueValidator<Short?> =
     this.validate(Less<Short>(0)) { it == null || it < 0.toShort() }
 
 /**
@@ -94,7 +94,7 @@ fun <E> Validator<E>.Property<Short?>.isNegative(): Validator<E>.Property<Short?
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Short?>.isNegativeOrZero(): Validator<E>.Property<Short?> =
+fun <E> Validator<E>.ValueValidator<Short?>.isNegativeOrZero(): Validator<E>.ValueValidator<Short?> =
     this.validate(LessOrEqual<Short>(0)) { it == null || it <= 0.toShort() }
 
 /**
@@ -106,5 +106,5 @@ fun <E> Validator<E>.Property<Short?>.isNegativeOrZero(): Validator<E>.Property<
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Short?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Short?> =
+fun <E> Validator<E>.ValueValidator<Short?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<Short?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) }

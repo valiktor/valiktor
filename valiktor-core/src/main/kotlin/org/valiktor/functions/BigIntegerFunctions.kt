@@ -32,7 +32,7 @@ import java.math.BigInteger
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<BigInteger?>.isZero(): Validator<E>.Property<BigInteger?> =
+fun <E> Validator<E>.ValueValidator<BigInteger?>.isZero(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(Equals(BigInteger.ZERO)) { it == null || it == BigInteger.ZERO }
 
 /**
@@ -41,7 +41,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isZero(): Validator<E>.Property<BigIn
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<BigInteger?>.isNotZero(): Validator<E>.Property<BigInteger?> =
+fun <E> Validator<E>.ValueValidator<BigInteger?>.isNotZero(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(NotEquals(BigInteger.ZERO)) { it == null || it != BigInteger.ZERO }
 
 /**
@@ -50,7 +50,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isNotZero(): Validator<E>.Property<Bi
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<BigInteger?>.isOne(): Validator<E>.Property<BigInteger?> =
+fun <E> Validator<E>.ValueValidator<BigInteger?>.isOne(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(Equals(BigInteger.ONE)) { it == null || it == BigInteger.ONE }
 
 /**
@@ -59,7 +59,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isOne(): Validator<E>.Property<BigInt
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<BigInteger?>.isNotOne(): Validator<E>.Property<BigInteger?> =
+fun <E> Validator<E>.ValueValidator<BigInteger?>.isNotOne(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(NotEquals(BigInteger.ONE)) { it == null || it != BigInteger.ONE }
 
 /**
@@ -68,7 +68,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isNotOne(): Validator<E>.Property<Big
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<BigInteger?>.isPositive(): Validator<E>.Property<BigInteger?> =
+fun <E> Validator<E>.ValueValidator<BigInteger?>.isPositive(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(Greater(BigInteger.ZERO)) { it == null || it > BigInteger.ZERO }
 
 /**
@@ -77,7 +77,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isPositive(): Validator<E>.Property<B
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<BigInteger?>.isPositiveOrZero(): Validator<E>.Property<BigInteger?> =
+fun <E> Validator<E>.ValueValidator<BigInteger?>.isPositiveOrZero(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(GreaterOrEqual(BigInteger.ZERO)) { it == null || it >= BigInteger.ZERO }
 
 /**
@@ -86,7 +86,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isPositiveOrZero(): Validator<E>.Prop
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<BigInteger?>.isNegative(): Validator<E>.Property<BigInteger?> =
+fun <E> Validator<E>.ValueValidator<BigInteger?>.isNegative(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(Less(BigInteger.ZERO)) { it == null || it < BigInteger.ZERO }
 
 /**
@@ -95,7 +95,7 @@ fun <E> Validator<E>.Property<BigInteger?>.isNegative(): Validator<E>.Property<B
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<BigInteger?>.isNegativeOrZero(): Validator<E>.Property<BigInteger?> =
+fun <E> Validator<E>.ValueValidator<BigInteger?>.isNegativeOrZero(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(LessOrEqual(BigInteger.ZERO)) { it == null || it <= BigInteger.ZERO }
 
 /**
@@ -107,5 +107,5 @@ fun <E> Validator<E>.Property<BigInteger?>.isNegativeOrZero(): Validator<E>.Prop
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<BigInteger?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<BigInteger?> =
+fun <E> Validator<E>.ValueValidator<BigInteger?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) }

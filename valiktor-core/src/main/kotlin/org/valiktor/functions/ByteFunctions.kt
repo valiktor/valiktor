@@ -31,7 +31,7 @@ import org.valiktor.constraints.NotEquals
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Byte?>.isZero(): Validator<E>.Property<Byte?> =
+fun <E> Validator<E>.ValueValidator<Byte?>.isZero(): Validator<E>.ValueValidator<Byte?> =
     this.validate(Equals<Byte>(0)) { it == null || it == 0.toByte() }
 
 /**
@@ -40,7 +40,7 @@ fun <E> Validator<E>.Property<Byte?>.isZero(): Validator<E>.Property<Byte?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Byte?>.isNotZero(): Validator<E>.Property<Byte?> =
+fun <E> Validator<E>.ValueValidator<Byte?>.isNotZero(): Validator<E>.ValueValidator<Byte?> =
     this.validate(NotEquals<Byte>(0)) { it == null || it != 0.toByte() }
 
 /**
@@ -49,7 +49,7 @@ fun <E> Validator<E>.Property<Byte?>.isNotZero(): Validator<E>.Property<Byte?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Byte?>.isOne(): Validator<E>.Property<Byte?> =
+fun <E> Validator<E>.ValueValidator<Byte?>.isOne(): Validator<E>.ValueValidator<Byte?> =
     this.validate(Equals<Byte>(1)) { it == null || it == 1.toByte() }
 
 /**
@@ -58,7 +58,7 @@ fun <E> Validator<E>.Property<Byte?>.isOne(): Validator<E>.Property<Byte?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Byte?>.isNotOne(): Validator<E>.Property<Byte?> =
+fun <E> Validator<E>.ValueValidator<Byte?>.isNotOne(): Validator<E>.ValueValidator<Byte?> =
     this.validate(NotEquals<Byte>(1)) { it == null || it != 1.toByte() }
 
 /**
@@ -67,7 +67,7 @@ fun <E> Validator<E>.Property<Byte?>.isNotOne(): Validator<E>.Property<Byte?> =
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Byte?>.isPositive(): Validator<E>.Property<Byte?> =
+fun <E> Validator<E>.ValueValidator<Byte?>.isPositive(): Validator<E>.ValueValidator<Byte?> =
     this.validate(Greater<Byte>(0)) { it == null || it > 0.toByte() }
 
 /**
@@ -76,7 +76,7 @@ fun <E> Validator<E>.Property<Byte?>.isPositive(): Validator<E>.Property<Byte?> 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Byte?>.isPositiveOrZero(): Validator<E>.Property<Byte?> =
+fun <E> Validator<E>.ValueValidator<Byte?>.isPositiveOrZero(): Validator<E>.ValueValidator<Byte?> =
     this.validate(GreaterOrEqual<Byte>(0)) { it == null || it >= 0.toByte() }
 
 /**
@@ -85,7 +85,7 @@ fun <E> Validator<E>.Property<Byte?>.isPositiveOrZero(): Validator<E>.Property<B
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Byte?>.isNegative(): Validator<E>.Property<Byte?> =
+fun <E> Validator<E>.ValueValidator<Byte?>.isNegative(): Validator<E>.ValueValidator<Byte?> =
     this.validate(Less<Byte>(0)) { it == null || it < 0.toByte() }
 
 /**
@@ -94,7 +94,7 @@ fun <E> Validator<E>.Property<Byte?>.isNegative(): Validator<E>.Property<Byte?> 
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Byte?>.isNegativeOrZero(): Validator<E>.Property<Byte?> =
+fun <E> Validator<E>.ValueValidator<Byte?>.isNegativeOrZero(): Validator<E>.ValueValidator<Byte?> =
     this.validate(LessOrEqual<Byte>(0)) { it == null || it <= 0.toByte() }
 
 /**
@@ -106,5 +106,5 @@ fun <E> Validator<E>.Property<Byte?>.isNegativeOrZero(): Validator<E>.Property<B
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<Byte?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.Property<Byte?> =
+fun <E> Validator<E>.ValueValidator<Byte?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<Byte?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) }

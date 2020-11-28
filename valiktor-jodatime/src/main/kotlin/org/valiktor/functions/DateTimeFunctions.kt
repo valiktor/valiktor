@@ -28,7 +28,7 @@ import org.valiktor.constraints.Today
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<DateTime?>.isToday(): Validator<E>.Property<DateTime?> =
+fun <E> Validator<E>.ValueValidator<DateTime?>.isToday(): Validator<E>.ValueValidator<DateTime?> =
     this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.zone) }
 
 /**
@@ -37,5 +37,5 @@ fun <E> Validator<E>.Property<DateTime?>.isToday(): Validator<E>.Property<DateTi
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<DateTime?>.isNotToday(): Validator<E>.Property<DateTime?> =
+fun <E> Validator<E>.ValueValidator<DateTime?>.isNotToday(): Validator<E>.ValueValidator<DateTime?> =
     this.validate(NotToday) { it == null || it.toLocalDate() != LocalDate.now(it.zone) }

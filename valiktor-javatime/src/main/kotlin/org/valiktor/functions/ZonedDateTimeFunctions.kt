@@ -28,7 +28,7 @@ import java.time.ZonedDateTime
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<ZonedDateTime?>.isToday(): Validator<E>.Property<ZonedDateTime?> =
+fun <E> Validator<E>.ValueValidator<ZonedDateTime?>.isToday(): Validator<E>.ValueValidator<ZonedDateTime?> =
     this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now(it.zone) }
 
 /**
@@ -37,5 +37,5 @@ fun <E> Validator<E>.Property<ZonedDateTime?>.isToday(): Validator<E>.Property<Z
  * @receiver the property to be validated
  * @return the same receiver property
  */
-fun <E> Validator<E>.Property<ZonedDateTime?>.isNotToday(): Validator<E>.Property<ZonedDateTime?> =
+fun <E> Validator<E>.ValueValidator<ZonedDateTime?>.isNotToday(): Validator<E>.ValueValidator<ZonedDateTime?> =
     this.validate(NotToday) { it == null || it.toLocalDate() != LocalDate.now(it.zone) }
