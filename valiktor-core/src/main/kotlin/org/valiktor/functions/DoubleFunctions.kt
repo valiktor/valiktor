@@ -27,73 +27,73 @@ import org.valiktor.constraints.LessOrEqual
 import org.valiktor.constraints.NotEquals
 
 /**
- * Validates if the [Double] property is equal to zero
+ * Validates if the [Double] value is equal to zero
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Double?>.isZero(): Validator<E>.ValueValidator<Double?> =
     this.validate(Equals(0.0)) { it == null || it == 0.0 }
 
 /**
- * Validates if the [Double] property is not equal to zero
+ * Validates if the [Double] value is not equal to zero
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Double?>.isNotZero(): Validator<E>.ValueValidator<Double?> =
     this.validate(NotEquals(0.0)) { it == null || it != 0.0 }
 
 /**
- * Validates if the [Double] property is equal to one
+ * Validates if the [Double] value is equal to one
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Double?>.isOne(): Validator<E>.ValueValidator<Double?> =
     this.validate(Equals(1.0)) { it == null || it == 1.0 }
 
 /**
- * Validates if the [Double] property is not equal to one
+ * Validates if the [Double] value is not equal to one
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Double?>.isNotOne(): Validator<E>.ValueValidator<Double?> =
     this.validate(NotEquals(1.0)) { it == null || it != 1.0 }
 
 /**
- * Validates if the [Double] property is positive
+ * Validates if the [Double] value is positive
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Double?>.isPositive(): Validator<E>.ValueValidator<Double?> =
     this.validate(Greater(0.0)) { it == null || it > 0.0 }
 
 /**
- * Validates if the [Double] property isn't negative
+ * Validates if the [Double] value isn't negative
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Double?>.isPositiveOrZero(): Validator<E>.ValueValidator<Double?> =
     this.validate(GreaterOrEqual(0.0)) { it == null || it >= 0.0 }
 
 /**
- * Validates if the [Double] property is negative
+ * Validates if the [Double] value is negative
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Double?>.isNegative(): Validator<E>.ValueValidator<Double?> =
     this.validate(Less(0.0)) { it == null || it < 0.0 }
 
 /**
- * Validates if the [Double] property isn't positive
+ * Validates if the [Double] value isn't positive
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Double?>.isNegativeOrZero(): Validator<E>.ValueValidator<Double?> =
     this.validate(LessOrEqual(0.0)) { it == null || it <= 0.0 }
@@ -101,11 +101,11 @@ fun <E> Validator<E>.ValueValidator<Double?>.isNegativeOrZero(): Validator<E>.Va
 /**
  * Validates if the [Double] integer digits (before decimal separator) is within the limits (min and max)
  *
- * @property min specifies the minimum size
- * @property max specifies the maximum size
+ * @value min specifies the minimum size
+ * @value max specifies the maximum size
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Double?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<Double?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").split(".")[0].length in min.rangeTo(max) }
@@ -113,11 +113,11 @@ fun <E> Validator<E>.ValueValidator<Double?>.hasIntegerDigits(min: Int = Int.MIN
 /**
  * Validates if the [Double] decimal digits (after decimal separator) is within the limits (min and max)
  *
- * @property min specifies the minimum size
- * @property max specifies the maximum size
+ * @value min specifies the minimum size
+ * @value max specifies the maximum size
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Double?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<Double?> =
     this.validate(DecimalDigits(min, max)) { it == null || it.toString().removePrefix("-").split(".")[1].length in min.rangeTo(max) }

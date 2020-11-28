@@ -21,19 +21,19 @@ import org.valiktor.constraints.False
 import org.valiktor.constraints.True
 
 /**
- * Validates if the [Boolean] property is true
+ * Validates if the [Boolean] value is true
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Boolean?>.isTrue(): Validator<E>.ValueValidator<Boolean?> =
     this.validate(True) { it == null || it }
 
 /**
- * Validates if the [Boolean] property is false
+ * Validates if the [Boolean] value is false
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Boolean?>.isFalse(): Validator<E>.ValueValidator<Boolean?> =
     this.validate(False) { it == null || !it }

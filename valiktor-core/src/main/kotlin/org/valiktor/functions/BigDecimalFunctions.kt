@@ -30,133 +30,133 @@ import org.valiktor.constraints.NotIn
 import java.math.BigDecimal
 
 /**
- * Validates if the [BigDecimal] property value is equal to another value
+ * Validates if the [BigDecimal] value value is equal to another value
  *
  * @param value specifies the value that should be equal
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isEqualTo(value: BigDecimal): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(Equals(value)) { it == null || it.compareTo(value) == 0 }
 
 /**
- * Validates if the [BigDecimal] property value isn't equal to another value
+ * Validates if the [BigDecimal] value value isn't equal to another value
  *
  * @param value specifies the value that should not be equal
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isNotEqualTo(value: BigDecimal): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(NotEquals(value)) { it == null || it.compareTo(value) != 0 }
 
 /**
- * Validates if the [BigDecimal] property value is equal to one of the values
+ * Validates if the [BigDecimal] value value is equal to one of the values
  *
  * @param values specifies the array of values to be compared
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isIn(vararg values: BigDecimal): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(In(values.toSet())) { it == null || values.any { e -> it.compareTo(e) == 0 } }
 
 /**
- * Validates if the [BigDecimal] property value is equal to one of the values
+ * Validates if the [BigDecimal] value value is equal to one of the values
  *
  * @param values specifies the iterable of values to be compared
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isIn(values: Iterable<BigDecimal>): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(In(values)) { it == null || values.any { e -> it.compareTo(e) == 0 } }
 
 /**
- * Validates if the [BigDecimal] property value isn't equal to any value
+ * Validates if the [BigDecimal] value value isn't equal to any value
  *
  * @param values specifies the array of values to be compared
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isNotIn(vararg values: BigDecimal): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(NotIn(values.toSet())) { it == null || !values.any { e -> it.compareTo(e) == 0 } }
 
 /**
- * Validates if the [BigDecimal] property value isn't equal to any value
+ * Validates if the [BigDecimal] value value isn't equal to any value
  *
  * @param values specifies the iterable of values to be compared
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isNotIn(values: Iterable<BigDecimal>): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(NotIn(values)) { it == null || !values.any { e -> it.compareTo(e) == 0 } }
 
 /**
- * Validates if the [BigDecimal] property is equal to zero
+ * Validates if the [BigDecimal] value is equal to zero
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isZero(): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(Equals(BigDecimal.ZERO)) { it == null || it.compareTo(BigDecimal.ZERO) == 0 }
 
 /**
- * Validates if the [BigDecimal] property is not equal to zero
+ * Validates if the [BigDecimal] value is not equal to zero
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isNotZero(): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(NotEquals(BigDecimal.ZERO)) { it == null || it.compareTo(BigDecimal.ZERO) != 0 }
 
 /**
- * Validates if the [BigDecimal] property is equal to one
+ * Validates if the [BigDecimal] value is equal to one
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isOne(): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(Equals(BigDecimal.ONE)) { it == null || it.compareTo(BigDecimal.ONE) == 0 }
 
 /**
- * Validates if the [BigDecimal] property is not equal to one
+ * Validates if the [BigDecimal] value is not equal to one
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isNotOne(): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(NotEquals(BigDecimal.ONE)) { it == null || it.compareTo(BigDecimal.ONE) != 0 }
 
 /**
- * Validates if the [BigDecimal] property is positive
+ * Validates if the [BigDecimal] value is positive
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isPositive(): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(Greater(BigDecimal.ZERO)) { it == null || it > BigDecimal.ZERO }
 
 /**
- * Validates if the [BigDecimal] property isn't negative
+ * Validates if the [BigDecimal] value isn't negative
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isPositiveOrZero(): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(GreaterOrEqual(BigDecimal.ZERO)) { it == null || it >= BigDecimal.ZERO }
 
 /**
- * Validates if the [BigDecimal] property is negative
+ * Validates if the [BigDecimal] value is negative
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isNegative(): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(Less(BigDecimal.ZERO)) { it == null || it < BigDecimal.ZERO }
 
 /**
- * Validates if the [BigDecimal] property isn't positive
+ * Validates if the [BigDecimal] value isn't positive
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.isNegativeOrZero(): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(LessOrEqual(BigDecimal.ZERO)) { it == null || it <= BigDecimal.ZERO }
@@ -164,11 +164,11 @@ fun <E> Validator<E>.ValueValidator<BigDecimal?>.isNegativeOrZero(): Validator<E
 /**
  * Validates if the [BigDecimal] integer digits (before decimal separator) is within the limits (min and max)
  *
- * @property min specifies the minimum size
- * @property max specifies the maximum size
+ * @value min specifies the minimum size
+ * @value max specifies the maximum size
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.hasIntegerDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.precision() - it.scale() in min.rangeTo(max) }
@@ -176,11 +176,11 @@ fun <E> Validator<E>.ValueValidator<BigDecimal?>.hasIntegerDigits(min: Int = Int
 /**
  * Validates if the [BigDecimal] decimal digits (after decimal separator) is within the limits (min and max)
  *
- * @property min specifies the minimum size
- * @property max specifies the maximum size
+ * @value min specifies the minimum size
+ * @value max specifies the maximum size
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigDecimal?>.hasDecimalDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<BigDecimal?> =
     this.validate(DecimalDigits(min, max)) { it == null || (if (it.scale() < 0) 0 else it.scale()) in min.rangeTo(max) }

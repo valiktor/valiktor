@@ -26,85 +26,85 @@ import org.valiktor.constraints.LessOrEqual
 import org.valiktor.constraints.NotEquals
 
 /**
- * Validates if the [Int] property is equal to zero
+ * Validates if the [Int] value is equal to zero
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Int?>.isZero(): Validator<E>.ValueValidator<Int?> =
     this.validate(Equals(0)) { it == null || it == 0 }
 
 /**
- * Validates if the [Int] property is not equal to zero
+ * Validates if the [Int] value is not equal to zero
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Int?>.isNotZero(): Validator<E>.ValueValidator<Int?> =
     this.validate(NotEquals(0)) { it == null || it != 0 }
 
 /**
- * Validates if the [Int] property is equal to one
+ * Validates if the [Int] value is equal to one
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Int?>.isOne(): Validator<E>.ValueValidator<Int?> =
     this.validate(Equals(1)) { it == null || it == 1 }
 
 /**
- * Validates if the [Int] property is not equal to one
+ * Validates if the [Int] value is not equal to one
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Int?>.isNotOne(): Validator<E>.ValueValidator<Int?> =
     this.validate(NotEquals(1)) { it == null || it != 1 }
 
 /**
- * Validates if the [Int] property is positive
+ * Validates if the [Int] value is positive
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Int?>.isPositive(): Validator<E>.ValueValidator<Int?> =
     this.validate(Greater(0)) { it == null || it > 0 }
 
 /**
- * Validates if the [Int] property isn't negative
+ * Validates if the [Int] value isn't negative
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Int?>.isPositiveOrZero(): Validator<E>.ValueValidator<Int?> =
     this.validate(GreaterOrEqual(0)) { it == null || it >= 0 }
 
 /**
- * Validates if the [Int] property is negative
+ * Validates if the [Int] value is negative
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Int?>.isNegative(): Validator<E>.ValueValidator<Int?> =
     this.validate(Less(0)) { it == null || it < 0 }
 
 /**
- * Validates if the [Int] property isn't positive
+ * Validates if the [Int] value isn't positive
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Int?>.isNegativeOrZero(): Validator<E>.ValueValidator<Int?> =
     this.validate(LessOrEqual(0)) { it == null || it <= 0 }
 
 /**
- * Validates if the [Int] property digits is within the limits (min and max)
+ * Validates if the [Int] value digits is within the limits (min and max)
  *
- * @property min specifies the minimum size
- * @property max specifies the maximum size
+ * @value min specifies the minimum size
+ * @value max specifies the maximum size
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<Int?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<Int?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) }

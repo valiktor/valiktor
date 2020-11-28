@@ -25,69 +25,69 @@ import org.valiktor.constraints.LessOrEqual
 import org.valiktor.constraints.NotBetween
 
 /**
- * Validates if the [Comparable] property is less than another value
+ * Validates if the [Comparable] value is less than another value
  *
- * @property value specifies the value that should be validated
+ * @value value specifies the value that should be validated
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E, T : Comparable<T>> Validator<E>.ValueValidator<T?>.isLessThan(value: T): Validator<E>.ValueValidator<T?> =
     this.validate(Less(value)) { it == null || it < value }
 
 /**
- * Validates if the [Comparable] property is less than or equal to another value
+ * Validates if the [Comparable] value is less than or equal to another value
  *
- * @property value specifies the value that should be validated
+ * @value value specifies the value that should be validated
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E, T : Comparable<T>> Validator<E>.ValueValidator<T?>.isLessThanOrEqualTo(value: T): Validator<E>.ValueValidator<T?> =
     this.validate(LessOrEqual(value)) { it == null || it <= value }
 
 /**
- * Validates if the [Comparable] property is greater than another value
+ * Validates if the [Comparable] value is greater than another value
  *
- * @property value specifies the value that should be validated
+ * @value value specifies the value that should be validated
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E, T : Comparable<T>> Validator<E>.ValueValidator<T?>.isGreaterThan(value: T): Validator<E>.ValueValidator<T?> =
     this.validate(Greater(value)) { it == null || it > value }
 
 /**
- * Validates if the [Comparable] property is greater than or equal to another value
+ * Validates if the [Comparable] value is greater than or equal to another value
  *
- * @property value specifies the value that should be validated
+ * @value value specifies the value that should be validated
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E, T : Comparable<T>> Validator<E>.ValueValidator<T?>.isGreaterThanOrEqualTo(value: T): Validator<E>.ValueValidator<T?> =
     this.validate(GreaterOrEqual(value)) { it == null || it >= value }
 
 /**
- * Validates if the [Comparable] property is between two values
+ * Validates if the [Comparable] value is between two values
  *
- * @property start (inclusive) specifies value that should start
- * @property end (inclusive) specifies value that should end
+ * @value start (inclusive) specifies value that should start
+ * @value end (inclusive) specifies value that should end
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E, T : Comparable<T>> Validator<E>.ValueValidator<T?>.isBetween(start: T, end: T): Validator<E>.ValueValidator<T?> =
     this.validate(Between(start, end)) { it == null || it in start.rangeTo(end) }
 
 /**
- * Validates if the [Comparable] property isn't between two values
+ * Validates if the [Comparable] value isn't between two values
  *
- * @property start (inclusive) specifies value that shouldn't start
- * @property end (inclusive) specifies value that shouldn't end
+ * @value start (inclusive) specifies value that shouldn't start
+ * @value end (inclusive) specifies value that shouldn't end
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E, T : Comparable<T>> Validator<E>.ValueValidator<T?>.isNotBetween(start: T, end: T): Validator<E>.ValueValidator<T?> =
     this.validate(NotBetween(start, end)) { it == null || it !in start.rangeTo(end) }

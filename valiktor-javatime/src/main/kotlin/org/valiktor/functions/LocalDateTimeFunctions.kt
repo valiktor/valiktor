@@ -23,19 +23,19 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
- * Validates if the [LocalDateTime] property is today
+ * Validates if the [LocalDateTime] value is today
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<LocalDateTime?>.isToday(): Validator<E>.ValueValidator<LocalDateTime?> =
     this.validate(Today) { it == null || it.toLocalDate() == LocalDate.now() }
 
 /**
- * Validates if the [LocalDateTime] property isn't today
+ * Validates if the [LocalDateTime] value isn't today
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<LocalDateTime?>.isNotToday(): Validator<E>.ValueValidator<LocalDateTime?> =
     this.validate(NotToday) { it == null || it.toLocalDate() != LocalDate.now() }

@@ -27,85 +27,85 @@ import org.valiktor.constraints.NotEquals
 import java.math.BigInteger
 
 /**
- * Validates if the [BigInteger] property is equal to zero
+ * Validates if the [BigInteger] value is equal to zero
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigInteger?>.isZero(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(Equals(BigInteger.ZERO)) { it == null || it == BigInteger.ZERO }
 
 /**
- * Validates if the [BigInteger] property is not equal to zero
+ * Validates if the [BigInteger] value is not equal to zero
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigInteger?>.isNotZero(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(NotEquals(BigInteger.ZERO)) { it == null || it != BigInteger.ZERO }
 
 /**
- * Validates if the [BigInteger] property is equal to one
+ * Validates if the [BigInteger] value is equal to one
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigInteger?>.isOne(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(Equals(BigInteger.ONE)) { it == null || it == BigInteger.ONE }
 
 /**
- * Validates if the [BigInteger] property is not equal to one
+ * Validates if the [BigInteger] value is not equal to one
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigInteger?>.isNotOne(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(NotEquals(BigInteger.ONE)) { it == null || it != BigInteger.ONE }
 
 /**
- * Validates if the [BigInteger] property is positive
+ * Validates if the [BigInteger] value is positive
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigInteger?>.isPositive(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(Greater(BigInteger.ZERO)) { it == null || it > BigInteger.ZERO }
 
 /**
- * Validates if the [BigInteger] property isn't negative
+ * Validates if the [BigInteger] value isn't negative
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigInteger?>.isPositiveOrZero(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(GreaterOrEqual(BigInteger.ZERO)) { it == null || it >= BigInteger.ZERO }
 
 /**
- * Validates if the [BigInteger] property is negative
+ * Validates if the [BigInteger] value is negative
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigInteger?>.isNegative(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(Less(BigInteger.ZERO)) { it == null || it < BigInteger.ZERO }
 
 /**
- * Validates if the [BigInteger] property isn't positive
+ * Validates if the [BigInteger] value isn't positive
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigInteger?>.isNegativeOrZero(): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(LessOrEqual(BigInteger.ZERO)) { it == null || it <= BigInteger.ZERO }
 
 /**
- * Validates if the [BigInteger] property digits is within the limits (min and max)
+ * Validates if the [BigInteger] value digits is within the limits (min and max)
  *
- * @property min specifies the minimum size
- * @property max specifies the maximum size
+ * @value min specifies the minimum size
+ * @value max specifies the maximum size
  *
- * @receiver the property to be validated
- * @return the same receiver property
+ * @receiver the value to be validated
+ * @return the same receiver value
  */
 fun <E> Validator<E>.ValueValidator<BigInteger?>.hasDigits(min: Int = Int.MIN_VALUE, max: Int = Int.MAX_VALUE): Validator<E>.ValueValidator<BigInteger?> =
     this.validate(IntegerDigits(min, max)) { it == null || it.toString().removePrefix("-").length in min.rangeTo(max) }
