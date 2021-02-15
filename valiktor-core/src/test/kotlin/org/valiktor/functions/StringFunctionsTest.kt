@@ -1517,7 +1517,8 @@ class StringFunctionsTest {
             "test_test@test.com",
             "test-test@test.com",
             "test@test.com",
-            "test@test.test"
+            "test@test.test",
+            "test.test+test@gmail.com"
         ).forEach {
             validate(Employee(email = it)) {
                 validate(Employee::email).isEmail()
