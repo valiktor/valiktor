@@ -341,3 +341,19 @@ class WebsiteTest {
         )
     }
 }
+
+class UUIDTest {
+
+    @Test
+    fun `should validate messages`() {
+        assertThat(UUID.interpolatedMessages()).containsExactly(
+            entry(SupportedLocales.DEFAULT, "Must be a valid UUID"),
+            entry(SupportedLocales.CA, "Ha de ser un UUID vàlid"),
+            entry(SupportedLocales.DE, "Muss eine gültige UUID sein"),
+            entry(SupportedLocales.EN, "Must be a valid UUID"),
+            entry(SupportedLocales.ES, "Tiene que ser uno UUID válido"),
+            entry(SupportedLocales.JA, "有効なUUIDである必要があります"),
+            entry(SupportedLocales.PT_BR, "Deve ser um UUID válido")
+        )
+    }
+}
