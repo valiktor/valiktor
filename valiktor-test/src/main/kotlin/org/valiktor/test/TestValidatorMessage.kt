@@ -32,7 +32,7 @@ private fun Set<ConstraintViolation>.toTestString() =
     }
 
 private fun ConstraintViolation.toTestString(constraintViolations: Set<ConstraintViolation>, f: (ConstraintViolation) -> String) =
-    f(this) + (0 until (constraintViolations.maxBy { f(it).length }?.let(f) ?: "").length.minus(f(this).length))
+    f(this) + (0 until (constraintViolations.maxByOrNull { f(it).length }?.let(f) ?: "").length.minus(f(this).length))
         .joinToString(separator = "") { " " }
 
 private fun Constraint.toTestString() = this.name + if (this.messageParams.isEmpty()) "" else
