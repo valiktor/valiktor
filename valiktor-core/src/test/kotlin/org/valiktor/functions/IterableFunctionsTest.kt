@@ -140,7 +140,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "company.addresses[0].id", constraint = NotNull),
             DefaultConstraintViolation(property = "company.addresses[0].city.id", constraint = NotNull),
             DefaultConstraintViolation(property = "company.addresses[1].id", constraint = NotNull),
@@ -208,7 +208,7 @@ class IterableFunctionsTest {
                 validate(Company::addresses).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "addresses", value = emptyList<Address>(), constraint = Null)
         )
     }
@@ -227,7 +227,7 @@ class IterableFunctionsTest {
                 validate(Company::addresses).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "addresses", constraint = NotNull)
         )
     }
@@ -253,7 +253,7 @@ class IterableFunctionsTest {
                 validate(Company::addresses).isEqualTo(listOf(Address(id = 1)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2)),
@@ -283,7 +283,7 @@ class IterableFunctionsTest {
                 validate(Company::addresses).isNotEqualTo(listOf(Address(id = 1), Address(id = 2)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2)),
@@ -313,7 +313,7 @@ class IterableFunctionsTest {
                 validate(Company::addresses).isIn(listOf(Address(id = 1)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
@@ -343,7 +343,7 @@ class IterableFunctionsTest {
                 validate(Company::addresses).isIn(listOf(listOf(Address(id = 1))))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
@@ -373,7 +373,7 @@ class IterableFunctionsTest {
                 validate(Company::addresses).isNotIn(listOf(Address(id = 1)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1)),
@@ -403,7 +403,7 @@ class IterableFunctionsTest {
                 validate(Company::addresses).isNotIn(listOf(listOf(Address(id = 1))))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1)),
@@ -434,7 +434,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address()),
@@ -465,7 +465,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
@@ -517,7 +517,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(), Address()),
@@ -534,7 +534,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(), Address()),
@@ -551,7 +551,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(), Address()),
@@ -582,7 +582,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
@@ -613,7 +613,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
@@ -644,7 +644,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1)),
@@ -675,7 +675,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
@@ -706,7 +706,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = emptyList<Address>(),
@@ -737,7 +737,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1)),
@@ -768,7 +768,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
@@ -799,7 +799,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
@@ -830,7 +830,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),
@@ -861,7 +861,7 @@ class IterableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "addresses",
                 value = listOf(Address(id = 1), Address(id = 2), Address(id = 3)),

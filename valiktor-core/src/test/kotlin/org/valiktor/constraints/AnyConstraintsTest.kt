@@ -26,7 +26,7 @@ class NullTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Null.interpolatedMessages()).containsExactly(
+        assertThat(Null.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be null"),
             entry(SupportedLocales.CA, "Ha de ser nul"),
             entry(SupportedLocales.DE, "Muss vorhanden sein"),
@@ -42,7 +42,7 @@ class NotNullTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotNull.interpolatedMessages()).containsExactly(
+        assertThat(NotNull.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not be null"),
             entry(SupportedLocales.CA, "No pot ser nul"),
             entry(SupportedLocales.DE, "Darf nicht vorhanden sein"),
@@ -58,7 +58,7 @@ class EqualsTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Equals(1).interpolatedMessages()).containsExactly(
+        assertThat(Equals(1).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be equal to 1"),
             entry(SupportedLocales.CA, "Ha de ser igual a 1"),
             entry(SupportedLocales.DE, "Muss gleich 1 sein"),
@@ -74,7 +74,7 @@ class NotEqualsTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotEquals(1).interpolatedMessages()).containsExactly(
+        assertThat(NotEquals(1).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not be equal to 1"),
             entry(SupportedLocales.CA, "No pot ser igual a 1"),
             entry(SupportedLocales.DE, "Darf nicht gleich 1 sein"),
@@ -90,7 +90,7 @@ class InTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(In(setOf(1, 2, 3)).interpolatedMessages()).containsExactly(
+        assertThat(In(setOf(1, 2, 3)).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be in 1, 2, 3"),
             entry(SupportedLocales.CA, "Ha de ser un dels següents: 1, 2, 3"),
             entry(SupportedLocales.DE, "Muss in 1, 2, 3 sein"),
@@ -106,7 +106,7 @@ class NotInTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotIn(setOf(1, 2, 3)).interpolatedMessages()).containsExactly(
+        assertThat(NotIn(setOf(1, 2, 3)).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not be in 1, 2, 3"),
             entry(SupportedLocales.CA, "No pot ser un dels següents: 1, 2, 3"),
             entry(SupportedLocales.DE, "Darf nicht in 1, 2, 3 sein"),
@@ -122,7 +122,7 @@ class ValidTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Valid.interpolatedMessages()).containsExactly(
+        assertThat(Valid.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be valid"),
             entry(SupportedLocales.CA, "Ha de ser vàlid"),
             entry(SupportedLocales.DE, "Muss gültig sein"),

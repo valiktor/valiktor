@@ -63,7 +63,7 @@ class BigDecimalFunctionsTest {
                 validate(Employee::salary).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = ZERO, constraint = Null)
         )
     }
@@ -82,7 +82,7 @@ class BigDecimalFunctionsTest {
                 validate(Employee::salary).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", constraint = NotNull)
         )
     }
@@ -115,7 +115,7 @@ class BigDecimalFunctionsTest {
                 validate(Employee::salary).isEqualTo(ONE)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = ZERO, constraint = Equals(ONE))
         )
     }
@@ -141,7 +141,7 @@ class BigDecimalFunctionsTest {
                 validate(Employee::salary).isNotEqualTo(ONE)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotEquals(ONE))
         )
     }
@@ -153,7 +153,7 @@ class BigDecimalFunctionsTest {
                 validate(Employee::salary).isNotEqualTo(1.00.toBigDecimal())
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotEquals(1.00.toBigDecimal()))
         )
     }
@@ -186,7 +186,7 @@ class BigDecimalFunctionsTest {
                 validate(Employee::salary).isIn(ZERO, TEN)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = ONE, constraint = In(setOf(ZERO, TEN)))
         )
     }
@@ -219,7 +219,7 @@ class BigDecimalFunctionsTest {
                 validate(Employee::salary).isIn(listOf(ZERO, TEN))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = ONE, constraint = In(listOf(ZERO, TEN)))
         )
     }
@@ -245,7 +245,7 @@ class BigDecimalFunctionsTest {
                 validate(Employee::salary).isNotIn(ZERO, ONE, TEN)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(setOf(ZERO, ONE, TEN)))
         )
     }
@@ -257,7 +257,7 @@ class BigDecimalFunctionsTest {
                 validate(Employee::salary).isNotIn(ZERO, 1.00.toBigDecimal(), TEN)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(setOf(ZERO, 1.00.toBigDecimal(), TEN)))
         )
     }
@@ -283,7 +283,7 @@ class BigDecimalFunctionsTest {
                 validate(Employee::salary).isNotIn(listOf(ZERO, ONE, TEN))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(listOf(ZERO, ONE, TEN)))
         )
     }
@@ -295,7 +295,7 @@ class BigDecimalFunctionsTest {
                 validate(Employee::salary).isNotIn(listOf(ZERO, 1.00.toBigDecimal(), TEN))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = ONE, constraint = NotIn(listOf(ZERO, 1.00.toBigDecimal(), TEN)))
         )
     }
@@ -329,7 +329,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ONE,
@@ -360,7 +360,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
@@ -377,7 +377,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.00.toBigDecimal(),
@@ -415,7 +415,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
@@ -446,7 +446,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ONE,
@@ -463,7 +463,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.00.toBigDecimal(),
@@ -494,7 +494,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
@@ -511,7 +511,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 98765.432.unaryMinus().toBigDecimal(),
@@ -549,7 +549,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ONE,
@@ -580,7 +580,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
@@ -597,7 +597,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ONE,
@@ -635,7 +635,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 98765.432.unaryMinus().toBigDecimal(),
@@ -673,7 +673,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 50.0.toBigDecimal(),
@@ -690,7 +690,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 50.9.unaryMinus().toBigDecimal(),
@@ -707,7 +707,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
@@ -752,7 +752,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 56789.19.toBigDecimal(),
@@ -769,7 +769,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 96.0.unaryMinus().toBigDecimal(),
@@ -807,7 +807,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0.toBigDecimal(),
@@ -824,7 +824,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 189.20.unaryMinus().toBigDecimal(),
@@ -841,7 +841,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
@@ -886,7 +886,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 57.0.toBigDecimal(),
@@ -903,7 +903,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 97.0.unaryMinus().toBigDecimal(),
@@ -969,7 +969,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0.toBigDecimal(),
@@ -986,7 +986,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 12.0.toBigDecimal(),
@@ -1003,7 +1003,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0.unaryMinus().toBigDecimal(),
@@ -1020,7 +1020,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 12.0.unaryMinus().toBigDecimal(),
@@ -1072,7 +1072,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ZERO,
@@ -1089,7 +1089,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = ONE,
@@ -1106,7 +1106,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 2.0.unaryMinus().toBigDecimal(),
@@ -1123,7 +1123,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0.unaryMinus().toBigDecimal(),
@@ -1140,7 +1140,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.5.toBigDecimal(),
@@ -1157,7 +1157,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.5.unaryMinus().toBigDecimal(),
@@ -1230,7 +1230,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.toBigDecimal(),
@@ -1247,7 +1247,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.toBigDecimal(),
@@ -1264,7 +1264,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.toBigDecimal(),
@@ -1281,7 +1281,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.unaryMinus().toBigDecimal(),
@@ -1298,7 +1298,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.unaryMinus().toBigDecimal(),
@@ -1315,7 +1315,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78.unaryMinus().toBigDecimal(),
@@ -1388,7 +1388,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.toBigDecimal(),
@@ -1405,7 +1405,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.toBigDecimal(),
@@ -1422,7 +1422,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.toBigDecimal(),
@@ -1439,7 +1439,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.unaryMinus().toBigDecimal(),
@@ -1456,7 +1456,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.unaryMinus().toBigDecimal(),
@@ -1473,7 +1473,7 @@ class BigDecimalFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536.unaryMinus().toBigDecimal(),

@@ -67,7 +67,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = Null)
         )
     }
@@ -86,7 +86,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", constraint = NotNull)
         )
     }
@@ -112,7 +112,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isEqualTo('F')
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = Equals('F'))
         )
     }
@@ -124,7 +124,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isEqualTo('M')
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'm', constraint = Equals('M'))
         )
     }
@@ -157,7 +157,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isNotEqualTo('M')
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotEquals('M'))
         )
     }
@@ -183,7 +183,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isIn('F')
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(setOf('F')))
         )
     }
@@ -195,7 +195,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isIn('M', 'F')
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'm', constraint = In(setOf('M', 'F')))
         )
     }
@@ -221,7 +221,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isIn(listOf('F'))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(listOf('F')))
         )
     }
@@ -233,7 +233,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isIn(listOf('M', 'F'))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'm', constraint = In(listOf('M', 'F')))
         )
     }
@@ -266,7 +266,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isNotIn('M', 'F')
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(setOf('M', 'F')))
         )
     }
@@ -299,7 +299,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isNotIn(listOf('M', 'F'))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(listOf('M', 'F')))
         )
     }
@@ -326,7 +326,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = Blank)
         )
     }
@@ -353,7 +353,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = ' ', constraint = NotBlank)
         )
     }
@@ -380,7 +380,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = '9', constraint = Letter)
         )
     }
@@ -407,7 +407,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotLetter)
         )
     }
@@ -434,7 +434,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = Digit)
         )
     }
@@ -461,7 +461,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = '9', constraint = NotDigit)
         )
     }
@@ -495,7 +495,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = '~', constraint = LetterOrDigit)
         )
     }
@@ -522,7 +522,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotLetterOrDigit)
         )
     }
@@ -535,7 +535,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = '9', constraint = NotLetterOrDigit)
         )
     }
@@ -562,7 +562,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'm', constraint = UpperCase)
         )
     }
@@ -589,7 +589,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = LowerCase)
         )
     }
@@ -615,7 +615,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isEqualToIgnoringCase('F')
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = Equals('F'))
         )
     }
@@ -641,7 +641,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isNotEqualToIgnoringCase('m')
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotEquals('m'))
         )
     }
@@ -667,7 +667,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isInIgnoringCase('F')
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(setOf('F')))
         )
     }
@@ -693,7 +693,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isInIgnoringCase(listOf('F'))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = In(listOf('F')))
         )
     }
@@ -719,7 +719,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isNotInIgnoringCase('m', 'f')
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(setOf('m', 'f')))
         )
     }
@@ -745,7 +745,7 @@ class CharFunctionsTest {
                 validate(Employee::gender).isNotInIgnoringCase(listOf('m', 'f'))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = 'M', constraint = NotIn(listOf('m', 'f')))
         )
     }
@@ -772,7 +772,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "gender",
                 value = 'm',
@@ -789,7 +789,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "gender",
                 value = 'm',
@@ -827,7 +827,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "gender",
                 value = 'm',
@@ -858,7 +858,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "gender",
                 value = 'm',
@@ -875,7 +875,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "gender",
                 value = 'm',
@@ -913,7 +913,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "gender",
                 value = 'm',
@@ -958,7 +958,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "gender",
                 value = 'a',
@@ -975,7 +975,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "gender",
                 value = 'e',
@@ -1013,7 +1013,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "gender",
                 value = 'a',
@@ -1030,7 +1030,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "gender",
                 value = 'c',
@@ -1047,7 +1047,7 @@ class CharFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "gender",
                 value = 'b',

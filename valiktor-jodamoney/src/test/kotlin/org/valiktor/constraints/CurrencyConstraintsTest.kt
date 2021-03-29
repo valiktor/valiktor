@@ -30,7 +30,7 @@ class CurrencyEqualsTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(CurrencyEquals(BRL).interpolatedMessages()).containsExactly(
+        assertThat(CurrencyEquals(BRL).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Currency unit must be equal to BRL"),
             entry(SupportedLocales.CA, "La unitat monetària ha de ser igual a BRL"),
             entry(SupportedLocales.DE, "Die Währungseinheit muss gleich BRL sein"),
@@ -46,7 +46,7 @@ class CurrencyNotEqualsTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(CurrencyNotEquals(BRL).interpolatedMessages()).containsExactly(
+        assertThat(CurrencyNotEquals(BRL).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Currency unit must not be equal to BRL"),
             entry(SupportedLocales.CA, "La unitat monetària no pot ser igual a BRL"),
             entry(SupportedLocales.DE, "Die Währungseinheit darf nicht gleich BRL sein"),
@@ -62,7 +62,7 @@ class CurrencyInTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(CurrencyIn(setOf(BRL, USD)).interpolatedMessages()).containsExactly(
+        assertThat(CurrencyIn(setOf(BRL, USD)).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Currency unit must be in BRL, USD"),
             entry(SupportedLocales.CA, "La unitat monetària ha de ser una de les següents: BRL, USD"),
             entry(SupportedLocales.DE, "Die Währungseinheit muss in BRL, USD sein"),
@@ -78,7 +78,7 @@ class CurrencyNotInTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(CurrencyNotIn(setOf(BRL, USD)).interpolatedMessages()).containsExactly(
+        assertThat(CurrencyNotIn(setOf(BRL, USD)).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Currency unit must not be in BRL, USD"),
             entry(SupportedLocales.CA, "La unitat monetària no pot ser una de les següents: BRL, USD"),
             entry(SupportedLocales.DE, "Die Währungseinheit darf nicht in BRL, USD sein"),

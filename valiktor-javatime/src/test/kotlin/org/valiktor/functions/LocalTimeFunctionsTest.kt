@@ -60,7 +60,7 @@ class LocalTimeFunctionsTest {
                 validate(Employee::startTime).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = Null)
         )
     }
@@ -79,7 +79,7 @@ class LocalTimeFunctionsTest {
                 validate(Employee::startTime).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "startTime", constraint = NotNull)
         )
     }
@@ -105,7 +105,7 @@ class LocalTimeFunctionsTest {
                 validate(Employee::startTime).isEqualTo(dateTime.minusSeconds(1))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = Equals(dateTime.minusSeconds(1)))
         )
     }
@@ -131,7 +131,7 @@ class LocalTimeFunctionsTest {
                 validate(Employee::startTime).isNotEqualTo(dateTime)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = NotEquals(dateTime))
         )
     }
@@ -157,7 +157,7 @@ class LocalTimeFunctionsTest {
                 validate(Employee::startTime).isIn(dateTime.minusSeconds(1), dateTime.minusSeconds(2))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = In(setOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2))))
         )
     }
@@ -183,7 +183,7 @@ class LocalTimeFunctionsTest {
                 validate(Employee::startTime).isIn(listOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = In(listOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2))))
         )
     }
@@ -209,7 +209,7 @@ class LocalTimeFunctionsTest {
                 validate(Employee::startTime).isNotIn(dateTime, dateTime.plusSeconds(1))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = NotIn(setOf(dateTime, dateTime.plusSeconds(1))))
         )
     }
@@ -235,7 +235,7 @@ class LocalTimeFunctionsTest {
                 validate(Employee::startTime).isNotIn(listOf(dateTime, dateTime.plusSeconds(1)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "startTime", value = dateTime, constraint = NotIn(listOf(dateTime, dateTime.plusSeconds(1))))
         )
     }
@@ -262,7 +262,7 @@ class LocalTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "startTime",
                 value = dateTime,
@@ -279,7 +279,7 @@ class LocalTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "startTime",
                 value = dateTime,
@@ -317,7 +317,7 @@ class LocalTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "startTime",
                 value = dateTime,
@@ -348,7 +348,7 @@ class LocalTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "startTime",
                 value = dateTime,
@@ -365,7 +365,7 @@ class LocalTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "startTime",
                 value = dateTime,
@@ -403,7 +403,7 @@ class LocalTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "startTime",
                 value = dateTime,
@@ -448,7 +448,7 @@ class LocalTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "startTime",
                 value = dateTime,
@@ -465,7 +465,7 @@ class LocalTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "startTime",
                 value = dateTime.plusSeconds(4),
@@ -503,7 +503,7 @@ class LocalTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "startTime",
                 value = dateTime,
@@ -520,7 +520,7 @@ class LocalTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "startTime",
                 value = dateTime.plusSeconds(1),
@@ -537,7 +537,7 @@ class LocalTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "startTime",
                 value = dateTime.plusSeconds(1),

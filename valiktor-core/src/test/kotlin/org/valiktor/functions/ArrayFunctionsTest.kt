@@ -99,7 +99,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dependents[0].id", constraint = NotNull),
             DefaultConstraintViolation(property = "dependents[1].id", constraint = NotNull),
             DefaultConstraintViolation(property = "dependents[2].id", constraint = NotNull)
@@ -142,7 +142,7 @@ class ArrayFunctionsTest {
                 validate(Employee::dependents).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -165,7 +165,7 @@ class ArrayFunctionsTest {
                 validate(Employee::dependents).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 constraint = NotNull
@@ -197,7 +197,7 @@ class ArrayFunctionsTest {
                 validate(Employee::dependents).isEqualTo(constraintDependents)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -230,7 +230,7 @@ class ArrayFunctionsTest {
                 validate(Employee::dependents).isNotEqualTo(constraintDependents)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -266,7 +266,7 @@ class ArrayFunctionsTest {
                 validate(Employee::dependents).isIn(constraintDependents)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -304,7 +304,7 @@ class ArrayFunctionsTest {
                 validate(Employee::dependents).isIn(listOf(constraintDependents))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -337,7 +337,7 @@ class ArrayFunctionsTest {
                 validate(Employee::dependents).isNotIn(constraintDependents)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -370,7 +370,7 @@ class ArrayFunctionsTest {
                 validate(Employee::dependents).isNotIn(listOf(constraintDependents))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -403,7 +403,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -436,7 +436,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -490,7 +490,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -509,7 +509,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -528,7 +528,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -561,7 +561,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -594,7 +594,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -627,7 +627,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -660,7 +660,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -693,7 +693,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -726,7 +726,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -759,7 +759,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -792,7 +792,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -825,7 +825,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,
@@ -858,7 +858,7 @@ class ArrayFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dependents",
                 value = dependents,

@@ -66,7 +66,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = Null)
         )
     }
@@ -85,7 +85,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull)
         )
     }
@@ -111,7 +111,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isEqualTo(dateTime.minusSeconds(1))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = Equals(dateTime.minusSeconds(1)))
         )
     }
@@ -137,7 +137,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isNotEqualTo(dateTime)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = NotEquals(dateTime))
         )
     }
@@ -163,7 +163,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isIn(dateTime.minusSeconds(1), dateTime.minusSeconds(2))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = In(setOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2))))
         )
     }
@@ -189,7 +189,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isIn(listOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = In(listOf(dateTime.minusSeconds(1), dateTime.minusSeconds(2))))
         )
     }
@@ -215,7 +215,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isNotIn(dateTime, dateTime.plusSeconds(1))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = NotIn(setOf(dateTime, dateTime.plusSeconds(1))))
         )
     }
@@ -241,7 +241,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isNotIn(listOf(dateTime, dateTime.plusSeconds(1)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = dateTime, constraint = NotIn(listOf(dateTime, dateTime.plusSeconds(1))))
         )
     }
@@ -283,7 +283,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = dateTime.minusDays(1), constraint = Today)
         )
     }
@@ -297,7 +297,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = dateTime.plusDays(1), constraint = Today)
         )
     }
@@ -316,7 +316,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isNotToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(ZoneId.systemDefault()).atStartOfDay(ZoneId.systemDefault()), constraint = NotToday)
         )
     }
@@ -328,7 +328,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isNotToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(ZoneId.systemDefault()).atTime(23, 59, 59).atZone(ZoneId.systemDefault()), constraint = NotToday)
         )
     }
@@ -342,7 +342,7 @@ class ZonedDateTimeFunctionsTest {
                 validate(Employee::dateOfBirth).isNotToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = now, constraint = NotToday)
         )
     }
@@ -383,7 +383,7 @@ class ZonedDateTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
@@ -400,7 +400,7 @@ class ZonedDateTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
@@ -438,7 +438,7 @@ class ZonedDateTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
@@ -469,7 +469,7 @@ class ZonedDateTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
@@ -486,7 +486,7 @@ class ZonedDateTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
@@ -524,7 +524,7 @@ class ZonedDateTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
@@ -569,7 +569,7 @@ class ZonedDateTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
@@ -586,7 +586,7 @@ class ZonedDateTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime.plusSeconds(4),
@@ -624,7 +624,7 @@ class ZonedDateTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime,
@@ -641,7 +641,7 @@ class ZonedDateTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime.plusSeconds(1),
@@ -658,7 +658,7 @@ class ZonedDateTimeFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = dateTime.plusSeconds(1),

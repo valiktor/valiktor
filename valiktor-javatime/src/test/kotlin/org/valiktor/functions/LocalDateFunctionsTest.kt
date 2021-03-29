@@ -60,7 +60,7 @@ class LocalDateFunctionsTest {
                 validate(Employee::dateOfBirth).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = Null)
         )
     }
@@ -79,7 +79,7 @@ class LocalDateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull)
         )
     }
@@ -105,7 +105,7 @@ class LocalDateFunctionsTest {
                 validate(Employee::dateOfBirth).isEqualTo(LocalDate.now().minusDays(1))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = Equals(LocalDate.now().minusDays(1)))
         )
     }
@@ -131,7 +131,7 @@ class LocalDateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotEqualTo(LocalDate.now())
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotEquals(LocalDate.now()))
         )
     }
@@ -157,7 +157,7 @@ class LocalDateFunctionsTest {
                 validate(Employee::dateOfBirth).isIn(LocalDate.now().minusDays(1), LocalDate.now().minusDays(2))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = In(setOf(LocalDate.now().minusDays(1), LocalDate.now().minusDays(2))))
         )
     }
@@ -183,7 +183,7 @@ class LocalDateFunctionsTest {
                 validate(Employee::dateOfBirth).isIn(listOf(LocalDate.now().minusDays(1), LocalDate.now().minusDays(2)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = In(listOf(LocalDate.now().minusDays(1), LocalDate.now().minusDays(2))))
         )
     }
@@ -209,7 +209,7 @@ class LocalDateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotIn(LocalDate.now(), LocalDate.now().plusDays(1))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotIn(setOf(LocalDate.now(), LocalDate.now().plusDays(1))))
         )
     }
@@ -235,7 +235,7 @@ class LocalDateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotIn(listOf(LocalDate.now(), LocalDate.now().plusDays(1)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotIn(listOf(LocalDate.now(), LocalDate.now().plusDays(1))))
         )
     }
@@ -261,7 +261,7 @@ class LocalDateFunctionsTest {
                 validate(Employee::dateOfBirth).isToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now().minusDays(1), constraint = Today)
         )
     }
@@ -273,7 +273,7 @@ class LocalDateFunctionsTest {
                 validate(Employee::dateOfBirth).isToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now().plusDays(1), constraint = Today)
         )
     }
@@ -292,7 +292,7 @@ class LocalDateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = LocalDate.now(), constraint = NotToday)
         )
     }
@@ -333,7 +333,7 @@ class LocalDateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
@@ -350,7 +350,7 @@ class LocalDateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
@@ -388,7 +388,7 @@ class LocalDateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
@@ -419,7 +419,7 @@ class LocalDateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
@@ -436,7 +436,7 @@ class LocalDateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
@@ -474,7 +474,7 @@ class LocalDateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
@@ -519,7 +519,7 @@ class LocalDateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
@@ -536,7 +536,7 @@ class LocalDateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now().plusDays(4),
@@ -574,7 +574,7 @@ class LocalDateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now(),
@@ -591,7 +591,7 @@ class LocalDateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now().plusDays(1),
@@ -608,7 +608,7 @@ class LocalDateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = LocalDate.now().plusDays(1),

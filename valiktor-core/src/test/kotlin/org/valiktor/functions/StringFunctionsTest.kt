@@ -77,7 +77,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "test", constraint = Null)
         )
     }
@@ -96,7 +96,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", constraint = NotNull)
         )
     }
@@ -122,7 +122,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isEqualTo("test1")
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "test", constraint = Equals("test1"))
         )
     }
@@ -134,7 +134,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isEqualTo("TEST")
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "test", constraint = Equals("TEST"))
         )
     }
@@ -167,7 +167,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isNotEqualTo("test")
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "test", constraint = NotEquals("test"))
         )
     }
@@ -193,7 +193,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isIn("test0", "test2", "test3")
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "test1", constraint = In(setOf("test0", "test2", "test3")))
         )
     }
@@ -205,7 +205,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isIn("TEST1", "test2", "test3")
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "test1", constraint = In(setOf("TEST1", "test2", "test3")))
         )
     }
@@ -231,7 +231,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isIn(listOf("test0", "test2", "test3"))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "test1", constraint = In(listOf("test0", "test2", "test3")))
         )
     }
@@ -243,7 +243,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isIn(listOf("TEST1", "test2", "test3"))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "test1", constraint = In(listOf("TEST1", "test2", "test3")))
         )
     }
@@ -276,7 +276,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isNotIn("test1", "test2", "test3")
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "test1", constraint = NotIn(setOf("test1", "test2", "test3")))
         )
     }
@@ -309,7 +309,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isNotIn(listOf("test1", "test2", "test3"))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "test1", constraint = NotIn(listOf("test1", "test2", "test3")))
         )
     }
@@ -336,7 +336,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = " ", constraint = Empty)
         )
     }
@@ -363,7 +363,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "", constraint = NotEmpty)
         )
     }
@@ -397,7 +397,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "a", constraint = Blank)
         )
     }
@@ -425,7 +425,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "email", value = "", constraint = NotBlank),
             DefaultConstraintViolation(property = "username", value = " ", constraint = NotBlank)
         )
@@ -452,7 +452,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isEqualToIgnoringCase("b")
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "a", constraint = Equals("b"))
         )
     }
@@ -478,7 +478,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isNotEqualToIgnoringCase("A")
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "a", constraint = NotEquals("A"))
         )
     }
@@ -504,7 +504,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isInIgnoringCase("b", "c")
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "a", constraint = In(setOf("b", "c")))
         )
     }
@@ -530,7 +530,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isInIgnoringCase(listOf("b", "c"))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "a", constraint = In(listOf("b", "c")))
         )
     }
@@ -556,7 +556,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isNotInIgnoringCase("a", "b", "c")
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(setOf("a", "b", "c")))
         )
     }
@@ -582,7 +582,7 @@ class StringFunctionsTest {
                 validate(Employee::name).isNotInIgnoringCase(listOf("a", "b", "c"))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "A", constraint = NotIn(listOf("a", "b", "c")))
         )
     }
@@ -632,7 +632,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = Size(min = 5)),
             DefaultConstraintViolation(property = "email", value = "john@company.com", constraint = Size(max = 15)),
             DefaultConstraintViolation(property = "username", value = "john", constraint = Size(min = 5, max = 3))
@@ -661,7 +661,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = Contains("j"))
         )
     }
@@ -688,7 +688,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = Contains("g"))
         )
     }
@@ -715,7 +715,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n")))
         )
     }
@@ -742,7 +742,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n")))
         )
     }
@@ -769,7 +769,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(setOf("j", "o", "h", "n", "k")))
         )
     }
@@ -796,7 +796,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAll(listOf("j", "o", "h", "n", "k")))
         )
     }
@@ -823,7 +823,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("j", "w", "x", "e")))
         )
     }
@@ -850,7 +850,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("j", "w", "x", "e")))
         )
     }
@@ -877,7 +877,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(setOf("w", "x", "e")))
         )
     }
@@ -904,7 +904,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsAny(listOf("w", "x", "e")))
         )
     }
@@ -931,7 +931,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotContain("J"))
         )
     }
@@ -958,7 +958,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotContain("j"))
         )
     }
@@ -985,7 +985,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "o", "h", "n")))
         )
     }
@@ -1012,7 +1012,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "o", "h", "n")))
         )
     }
@@ -1039,7 +1039,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(setOf("J", "O", "H", "N")))
         )
     }
@@ -1066,7 +1066,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAll(listOf("J", "O", "H", "N")))
         )
     }
@@ -1093,7 +1093,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("J", "w", "x", "e")))
         )
     }
@@ -1120,7 +1120,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("J", "w", "x", "e")))
         )
     }
@@ -1147,7 +1147,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(setOf("j", "w", "x", "e")))
         )
     }
@@ -1174,7 +1174,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotContainAny(listOf("j", "w", "x", "e")))
         )
     }
@@ -1201,7 +1201,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = Matches(Regex("^[0-9]*\$")))
         )
     }
@@ -1228,7 +1228,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "0123456789", constraint = NotMatch(Regex("^[0-9]*\$")))
         )
     }
@@ -1255,7 +1255,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = ContainsRegex(Regex("a([bc]+)d?")))
         )
     }
@@ -1282,7 +1282,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "xJohny", constraint = NotContainRegex(Regex("J([oh]+)n?")))
         )
     }
@@ -1309,7 +1309,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = StartsWith("j"))
         )
     }
@@ -1336,7 +1336,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = StartsWith("g"))
         )
     }
@@ -1363,7 +1363,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotStartWith("J"))
         )
     }
@@ -1390,7 +1390,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotStartWith("j"))
         )
     }
@@ -1417,7 +1417,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = EndsWith("N"))
         )
     }
@@ -1444,7 +1444,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = EndsWith("o"))
         )
     }
@@ -1471,7 +1471,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotEndWith("n"))
         )
     }
@@ -1498,7 +1498,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "name", value = "John", constraint = NotEndWith("N"))
         )
     }
@@ -1533,7 +1533,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "email", value = "test.test", constraint = Email)
         )
     }
@@ -1567,7 +1567,7 @@ class StringFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "website", value = "test.c", constraint = Website)
         )
     }

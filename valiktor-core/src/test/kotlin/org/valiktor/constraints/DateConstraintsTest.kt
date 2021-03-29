@@ -26,7 +26,7 @@ class TodayTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Today.interpolatedMessages()).containsExactly(
+        assertThat(Today.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be today"),
             entry(SupportedLocales.CA, "Ha de ser avui"),
             entry(SupportedLocales.DE, "Muss heute sein"),
@@ -42,7 +42,7 @@ class NotTodayTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotToday.interpolatedMessages()).containsExactly(
+        assertThat(NotToday.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not be today"),
             entry(SupportedLocales.CA, "No pot ser avui"),
             entry(SupportedLocales.DE, "Darf nicht heute sein"),

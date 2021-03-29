@@ -16,6 +16,7 @@
 
 package org.valiktor.sample
 
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -72,7 +73,9 @@ class EmployeeControllerTest {
 
         assertEquals(response.statusCode, HttpStatus.UNPROCESSABLE_ENTITY)
         assertTrue(response.headers[HttpHeaders.CONTENT_TYPE]!![0].startsWith(APPLICATION_JSON_VALUE))
-        assertEquals(response.body, EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+        Assertions.assertThat(response.body.errors).containsExactlyInAnyOrderElementsOf(
+            EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH).errors
+        )
     }
 
     @Test
@@ -87,7 +90,9 @@ class EmployeeControllerTest {
 
         assertEquals(response.statusCode, HttpStatus.UNPROCESSABLE_ENTITY)
         assertTrue(response.headers[HttpHeaders.CONTENT_TYPE]!![0].startsWith(APPLICATION_JSON_VALUE))
-        assertEquals(response.body, EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+        Assertions.assertThat(response.body.errors).containsExactlyInAnyOrderElementsOf(
+            EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH).errors
+        )
     }
 
     @Test
@@ -102,6 +107,8 @@ class EmployeeControllerTest {
 
         assertEquals(response.statusCode, HttpStatus.UNPROCESSABLE_ENTITY)
         assertTrue(response.headers[HttpHeaders.CONTENT_TYPE]!![0].startsWith(APPLICATION_JSON_VALUE))
-        assertEquals(response.body, EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale("pt", "BR")))
+        Assertions.assertThat(response.body.errors).containsExactlyInAnyOrderElementsOf(
+            EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale("pt", "BR")).errors
+        )
     }
 }

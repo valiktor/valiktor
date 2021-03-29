@@ -16,6 +16,7 @@
 
 package org.valiktor.sample
 
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -65,7 +66,7 @@ class EmployeeControllerTest {
 
     @Test
     fun `should return 422 with default locale`() {
-        webClient
+        val actual = webClient
             .post()
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
@@ -76,12 +77,17 @@ class EmployeeControllerTest {
             .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
             .expectBody<UnprocessableEntity>()
-            .isEqualTo(EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+            .returnResult()
+            .responseBody
+            .errors
+        Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(
+            EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH).errors
+        )
     }
 
     @Test
     fun `should return 422 with locale en`() {
-        webClient
+        val actual = webClient
             .post()
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
@@ -93,12 +99,17 @@ class EmployeeControllerTest {
             .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
             .expectBody<UnprocessableEntity>()
-            .isEqualTo(EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH))
+            .returnResult()
+            .responseBody
+            .errors
+        Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(
+            EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale.ENGLISH).errors
+        )
     }
 
     @Test
     fun `should return 422 with locale pt_BR`() {
-        webClient
+        val actual = webClient
             .post()
             .uri("/employees")
             .contentType(MediaType.APPLICATION_JSON)
@@ -110,6 +121,11 @@ class EmployeeControllerTest {
             .isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY)
             .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
             .expectBody<UnprocessableEntity>()
-            .isEqualTo(EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale("pt", "BR")))
+            .returnResult()
+            .responseBody
+            .errors
+        Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(
+            EmployeeControllerTestFixture.unprocessableEntity.getValue(Locale("pt", "BR")).errors
+        )
     }
 }

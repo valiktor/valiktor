@@ -58,7 +58,7 @@ class ShortFunctionsTest {
                 validate(Employee::id).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toShort(), constraint = Null)
         )
     }
@@ -77,7 +77,7 @@ class ShortFunctionsTest {
                 validate(Employee::id).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", constraint = NotNull)
         )
     }
@@ -103,7 +103,7 @@ class ShortFunctionsTest {
                 validate(Employee::id).isEqualTo(1)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 2.toShort(), constraint = Equals<Short>(1))
         )
     }
@@ -129,7 +129,7 @@ class ShortFunctionsTest {
                 validate(Employee::id).isNotEqualTo(1)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toShort(), constraint = NotEquals<Short>(1))
         )
     }
@@ -155,7 +155,7 @@ class ShortFunctionsTest {
                 validate(Employee::id).isIn(0, 2, 3)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toShort(), constraint = In(setOf<Short>(0, 2, 3)))
         )
     }
@@ -181,7 +181,7 @@ class ShortFunctionsTest {
                 validate(Employee::id).isIn(listOf<Short>(0, 2, 3))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toShort(), constraint = In(listOf<Short>(0, 2, 3)))
         )
     }
@@ -207,7 +207,7 @@ class ShortFunctionsTest {
                 validate(Employee::id).isNotIn(1, 2, 3)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toShort(), constraint = NotIn(setOf<Short>(1, 2, 3)))
         )
     }
@@ -233,7 +233,7 @@ class ShortFunctionsTest {
                 validate(Employee::id).isNotIn(listOf<Short>(1, 2, 3))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toShort(), constraint = NotIn(listOf<Short>(1, 2, 3)))
         )
     }
@@ -260,7 +260,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toShort(),
@@ -291,7 +291,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toShort(),
@@ -322,7 +322,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toShort(),
@@ -353,7 +353,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toShort(),
@@ -384,7 +384,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toShort(),
@@ -401,7 +401,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 9876.unaryMinus().toShort(),
@@ -439,7 +439,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toShort(),
@@ -470,7 +470,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toShort(),
@@ -487,7 +487,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toShort(),
@@ -525,7 +525,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 9876.unaryMinus().toShort(),
@@ -563,7 +563,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 50.toShort(),
@@ -580,7 +580,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 50.unaryMinus().toShort(),
@@ -597,7 +597,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toShort(),
@@ -642,7 +642,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 5678.toShort(),
@@ -659,7 +659,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 96.unaryMinus().toShort(),
@@ -697,7 +697,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.toShort(),
@@ -714,7 +714,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 189.unaryMinus().toShort(),
@@ -731,7 +731,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toShort(),
@@ -776,7 +776,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 57.toShort(),
@@ -793,7 +793,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 97.unaryMinus().toShort(),
@@ -859,7 +859,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.toShort(),
@@ -876,7 +876,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 12.toShort(),
@@ -893,7 +893,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.unaryMinus().toShort(),
@@ -910,7 +910,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 12.unaryMinus().toShort(),
@@ -962,7 +962,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toShort(),
@@ -979,7 +979,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toShort(),
@@ -996,7 +996,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 2.unaryMinus().toShort(),
@@ -1013,7 +1013,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.unaryMinus().toShort(),
@@ -1030,7 +1030,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 5.toShort(),
@@ -1047,7 +1047,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 15.unaryMinus().toShort(),
@@ -1120,7 +1120,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 7485.toShort(),
@@ -1137,7 +1137,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 7485.toShort(),
@@ -1154,7 +1154,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 7485.toShort(),
@@ -1171,7 +1171,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 7485.unaryMinus().toShort(),
@@ -1188,7 +1188,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 7485.unaryMinus().toShort(),
@@ -1205,7 +1205,7 @@ class ShortFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 7485.unaryMinus().toShort(),

@@ -217,62 +217,73 @@ class TestValidatorTest {
             }
         }
 
+        val actual = ex.message!!.split("${lineSeparator()}but was:${lineSeparator()}${lineSeparator()}")
+        val expectedExp = "Expected:${lineSeparator()}${lineSeparator()}" +
+            "id                              | 1    | Greater(value = 1)${lineSeparator()}" +
+            "name                            |      | NotEmpty${lineSeparator()}" +
+            "email                           | john | Email${lineSeparator()}" +
+            "company.name                    | C    | Size(min = 2, max = 100)${lineSeparator()}" +
+            "address.street                  |      | NotBlank${lineSeparator()}" +
+            "address.number                  | foo  | Matches(pattern = ^[0-9]*\$)${lineSeparator()}" +
+            "address.neighborhood            |      | Size(min = 2, max = 50)${lineSeparator()}" +
+            "address.city.name               | C    | Size(min = 2, max = 60)${lineSeparator()}" +
+            "address.city.state.name         | SP   | Size(min = 3, max = 3)${lineSeparator()}" +
+            "address.city.state.country.name | BRA  | Size(min = 2, max = 2)${lineSeparator()}" +
+            "dependentsList[0].name          |      | NotEmpty${lineSeparator()}" +
+            "dependentsList[0].age           | -1   | Between(end = 15, start = 0)${lineSeparator()}" +
+            "dependentsList[1].name          |      | NotEmpty${lineSeparator()}" +
+            "dependentsList[1].age           | 16   | Between(end = 15, start = 0)${lineSeparator()}" +
+            "dependentsList[2].name          |      | NotEmpty${lineSeparator()}" +
+            "dependentsList[2].age           | 17   | Between(end = 15, start = 0)${lineSeparator()}" +
+            "dependentsList[3].name          |      | NotEmpty${lineSeparator()}" +
+            "dependentsList[3].age           | 18   | Between(end = 15, start = 0)${lineSeparator()}" +
+            "dependentsArray[0].name         |      | NotEmpty${lineSeparator()}" +
+            "dependentsArray[0].age          | -1   | Between(end = 17, start = 0)${lineSeparator()}" +
+            "dependentsArray[1].name         |      | NotEmpty${lineSeparator()}" +
+            "dependentsArray[1].age          | 18   | Between(end = 17, start = 0)${lineSeparator()}" +
+            "dependentsArray[2].name         |      | NotEmpty${lineSeparator()}" +
+            "dependentsArray[2].age          | 19   | Between(end = 17, start = 0)${lineSeparator()}" +
+            "dependentsArray[3].name         |      | NotEmpty${lineSeparator()}" +
+            "dependentsArray[3].age          | 20   | Between(end = 17, start = 0)${lineSeparator()}"
         assertEquals(
-            ex.message,
-            "Expected:${lineSeparator()}${lineSeparator()}" +
-                "id                              | 1    | Greater(value = 1)${lineSeparator()}" +
-                "name                            |      | NotEmpty${lineSeparator()}" +
-                "email                           | john | Email${lineSeparator()}" +
-                "company.name                    | C    | Size(min = 2, max = 100)${lineSeparator()}" +
-                "address.street                  |      | NotBlank${lineSeparator()}" +
-                "address.number                  | foo  | Matches(pattern = ^[0-9]*\$)${lineSeparator()}" +
-                "address.neighborhood            |      | Size(min = 2, max = 50)${lineSeparator()}" +
-                "address.city.name               | C    | Size(min = 2, max = 60)${lineSeparator()}" +
-                "address.city.state.name         | SP   | Size(min = 3, max = 3)${lineSeparator()}" +
-                "address.city.state.country.name | BRA  | Size(min = 2, max = 2)${lineSeparator()}" +
-                "dependentsList[0].name          |      | NotEmpty${lineSeparator()}" +
-                "dependentsList[0].age           | -1   | Between(end = 15, start = 0)${lineSeparator()}" +
-                "dependentsList[1].name          |      | NotEmpty${lineSeparator()}" +
-                "dependentsList[1].age           | 16   | Between(end = 15, start = 0)${lineSeparator()}" +
-                "dependentsList[2].name          |      | NotEmpty${lineSeparator()}" +
-                "dependentsList[2].age           | 17   | Between(end = 15, start = 0)${lineSeparator()}" +
-                "dependentsList[3].name          |      | NotEmpty${lineSeparator()}" +
-                "dependentsList[3].age           | 18   | Between(end = 15, start = 0)${lineSeparator()}" +
-                "dependentsArray[0].name         |      | NotEmpty${lineSeparator()}" +
-                "dependentsArray[0].age          | -1   | Between(end = 17, start = 0)${lineSeparator()}" +
-                "dependentsArray[1].name         |      | NotEmpty${lineSeparator()}" +
-                "dependentsArray[1].age          | 18   | Between(end = 17, start = 0)${lineSeparator()}" +
-                "dependentsArray[2].name         |      | NotEmpty${lineSeparator()}" +
-                "dependentsArray[2].age          | 19   | Between(end = 17, start = 0)${lineSeparator()}" +
-                "dependentsArray[3].name         |      | NotEmpty${lineSeparator()}" +
-                "dependentsArray[3].age          | 20   | Between(end = 17, start = 0)${lineSeparator()}" +
-                "${lineSeparator()}but was:${lineSeparator()}${lineSeparator()}" +
-                "id                              | 0    | Greater(value = 0)${lineSeparator()}" +
-                "name                            |      | NotBlank${lineSeparator()}" +
-                "email                           | john | Email${lineSeparator()}" +
-                "company.name                    | Co   | Size(min = 3, max = 50)${lineSeparator()}" +
-                "address.street                  |      | NotEmpty${lineSeparator()}" +
-                "address.number                  | abc  | Matches(pattern = ^[0-9]*\$)${lineSeparator()}" +
-                "address.neighborhood            |      | Size(min = 1, max = 40)${lineSeparator()}" +
-                "address.city.name               | Ci   | Size(min = 3, max = 30)${lineSeparator()}" +
-                "address.city.state.name         | S    | Size(min = 2, max = 2)${lineSeparator()}" +
-                "address.city.state.country.name | BR   | Size(min = 3, max = 3)${lineSeparator()}" +
-                "dependentsList[0].name          |      | NotBlank${lineSeparator()}" +
-                "dependentsList[0].age           | 0    | Between(end = 16, start = 1)${lineSeparator()}" +
-                "dependentsList[1].name          |      | NotBlank${lineSeparator()}" +
-                "dependentsList[1].age           | 17   | Between(end = 16, start = 1)${lineSeparator()}" +
-                "dependentsList[2].name          |      | NotBlank${lineSeparator()}" +
-                "dependentsList[2].age           | 18   | Between(end = 16, start = 1)${lineSeparator()}" +
-                "dependentsList[3].name          |      | NotBlank${lineSeparator()}" +
-                "dependentsList[3].age           | 19   | Between(end = 16, start = 1)${lineSeparator()}" +
-                "dependentsArray[0].name         |      | NotBlank${lineSeparator()}" +
-                "dependentsArray[0].age          | 0    | Between(end = 18, start = 1)${lineSeparator()}" +
-                "dependentsArray[1].name         |      | NotBlank${lineSeparator()}" +
-                "dependentsArray[1].age          | 19   | Between(end = 18, start = 1)${lineSeparator()}" +
-                "dependentsArray[2].name         |      | NotBlank${lineSeparator()}" +
-                "dependentsArray[2].age          | 20   | Between(end = 18, start = 1)${lineSeparator()}" +
-                "dependentsArray[3].name         |      | NotBlank${lineSeparator()}" +
-                "dependentsArray[3].age          | 21   | Between(end = 18, start = 1)${lineSeparator()}"
+            actual[0],
+            expectedExp
+        )
+
+        val expectedAct = "id                              | 0    | Greater(value = 0)${lineSeparator()}" +
+            "name                            |      | NotBlank${lineSeparator()}" +
+            "email                           | john | Email${lineSeparator()}" +
+            "company.name                    | Co   | Size(min = 3, max = 50)${lineSeparator()}" +
+            "address.street                  |      | NotEmpty${lineSeparator()}" +
+            "address.number                  | abc  | Matches(pattern = ^[0-9]*\$)${lineSeparator()}" +
+            "address.neighborhood            |      | Size(min = 1, max = 40)${lineSeparator()}" +
+            "address.city.name               | Ci   | Size(min = 3, max = 30)${lineSeparator()}" +
+            "address.city.state.name         | S    | Size(min = 2, max = 2)${lineSeparator()}" +
+            "address.city.state.country.name | BR   | Size(min = 3, max = 3)${lineSeparator()}" +
+            "dependentsList[0].name          |      | NotBlank${lineSeparator()}" +
+            "dependentsList[0].age           | 0    | Between(end = 16, start = 1)${lineSeparator()}" +
+            "dependentsList[1].name          |      | NotBlank${lineSeparator()}" +
+            "dependentsList[1].age           | 17   | Between(end = 16, start = 1)${lineSeparator()}" +
+            "dependentsList[2].name          |      | NotBlank${lineSeparator()}" +
+            "dependentsList[2].age           | 18   | Between(end = 16, start = 1)${lineSeparator()}" +
+            "dependentsList[3].name          |      | NotBlank${lineSeparator()}" +
+            "dependentsList[3].age           | 19   | Between(end = 16, start = 1)${lineSeparator()}" +
+            "dependentsArray[0].name         |      | NotBlank${lineSeparator()}" +
+            "dependentsArray[0].age          | 0    | Between(end = 18, start = 1)${lineSeparator()}" +
+            "dependentsArray[1].name         |      | NotBlank${lineSeparator()}" +
+            "dependentsArray[1].age          | 19   | Between(end = 18, start = 1)${lineSeparator()}" +
+            "dependentsArray[2].name         |      | NotBlank${lineSeparator()}" +
+            "dependentsArray[2].age          | 20   | Between(end = 18, start = 1)${lineSeparator()}" +
+            "dependentsArray[3].name         |      | NotBlank${lineSeparator()}" +
+            "dependentsArray[3].age          | 21   | Between(end = 18, start = 1)${lineSeparator()}"
+
+        actual[1].lines().forEach {
+            expectedAct.contains(it)
+        }
+
+        assertEquals(
+            expectedAct.lines().size + expectedExp.lines().size,
+            actual[0].lines().size + actual[1].lines().size
         )
     }
 }

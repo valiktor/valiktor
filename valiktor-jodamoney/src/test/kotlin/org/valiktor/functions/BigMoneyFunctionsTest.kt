@@ -84,7 +84,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, 1000), constraint = Null)
         )
     }
@@ -103,7 +103,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", constraint = NotNull)
         )
     }
@@ -143,7 +143,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isEqualTo(moneyOf(USD, ONE))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = Equals(moneyOf(USD, ONE)))
         )
     }
@@ -155,7 +155,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isEqualTo(moneyOf(BRL, ZERO))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = Equals(moneyOf(BRL, ZERO)))
         )
     }
@@ -201,7 +201,7 @@ class BigMoneyFunctionsTest {
                     validate(Employee::salary).isEqualTo(one)
                 }
             }
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(property = "salary", value = salary, constraint = Equals(moneyOf(USD, one)))
             )
         }
@@ -235,7 +235,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isNotEqualTo(moneyOf(BRL, ONE))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = NotEquals(moneyOf(BRL, ONE)))
         )
     }
@@ -247,7 +247,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isNotEqualTo(moneyOf(USD, 1.00.toBigDecimal()))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotEquals(moneyOf(USD, 1.00.toBigDecimal())))
         )
     }
@@ -259,7 +259,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isNotEqualTo(moneyOf(USD, 1))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotEquals(moneyOf(USD, 1)))
         )
     }
@@ -294,7 +294,7 @@ class BigMoneyFunctionsTest {
                     validate(Employee::salary).isNotEqualTo(one)
                 }
             }
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(moneyOf(BRL, one)))
             )
         }
@@ -310,7 +310,7 @@ class BigMoneyFunctionsTest {
                     validate(Employee::salary).isNotEqualTo(one)
                 }
             }
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(property = "salary", value = salary, constraint = NotEquals(moneyOf(USD, one)))
             )
         }
@@ -351,7 +351,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isIn(moneyOf(USD, ZERO), moneyOf(USD, TEN))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = In(setOf(moneyOf(USD, ZERO), moneyOf(USD, TEN))))
         )
     }
@@ -363,7 +363,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isIn(moneyOf(BRL, ONE), moneyOf(USD, TEN))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = In(setOf(moneyOf(BRL, ONE), moneyOf(USD, TEN))))
         )
     }
@@ -409,7 +409,7 @@ class BigMoneyFunctionsTest {
                     validate(Employee::salary).isIn(one, TEN)
                 }
             }
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary", value = salary,
                     constraint = In(
@@ -458,7 +458,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isIn(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, TEN)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = In(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, TEN))))
         )
     }
@@ -470,7 +470,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isIn(listOf(moneyOf(USD, ONE), moneyOf(BRL, TEN)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = In(listOf(moneyOf(USD, ONE), moneyOf(BRL, TEN))))
         )
     }
@@ -516,7 +516,7 @@ class BigMoneyFunctionsTest {
                     validate(Employee::salary).isIn(listOf(one, TEN))
                 }
             }
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary", value = salary,
                     constraint = In(
@@ -558,7 +558,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isNotIn(moneyOf(USD, ZERO), moneyOf(USD, ONE), moneyOf(USD, TEN))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, ZERO), moneyOf(USD, ONE), moneyOf(USD, TEN))))
         )
     }
@@ -570,7 +570,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isNotIn(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN))))
         )
     }
@@ -582,7 +582,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isNotIn(moneyOf(USD, 0L), moneyOf(USD, 1L), moneyOf(USD, 10L))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(setOf(moneyOf(USD, 0L), moneyOf(USD, 1L), moneyOf(USD, 10L))))
         )
     }
@@ -617,7 +617,7 @@ class BigMoneyFunctionsTest {
                     validate(Employee::salary).isNotIn(ZERO, one, TEN)
                 }
             }
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary", value = salary,
                     constraint = NotIn(
@@ -642,7 +642,7 @@ class BigMoneyFunctionsTest {
                     validate(Employee::salary).isNotIn(ZERO, one, TEN)
                 }
             }
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary", value = salary,
                     constraint = NotIn(
@@ -685,7 +685,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isNotIn(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, ONE), moneyOf(BRL, TEN)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = NotIn(listOf(moneyOf(BRL, ZERO), moneyOf(BRL, ONE), moneyOf(BRL, TEN))))
         )
     }
@@ -697,7 +697,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isNotIn(listOf(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(listOf(moneyOf(USD, ZERO), moneyOf(USD, 1.00.toBigDecimal()), moneyOf(USD, TEN))))
         )
     }
@@ -709,7 +709,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).isNotIn(listOf(moneyOf(USD, 0.0), moneyOf(USD, 1.00), moneyOf(USD, 10.00)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = NotIn(listOf(moneyOf(USD, 0.0), moneyOf(USD, 1.0), moneyOf(USD, 10.0))))
         )
     }
@@ -744,7 +744,7 @@ class BigMoneyFunctionsTest {
                     validate(Employee::salary).isNotIn(listOf(ZERO, one, TEN))
                 }
             }
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary", value = salary,
                     constraint = NotIn(
@@ -769,7 +769,7 @@ class BigMoneyFunctionsTest {
                     validate(Employee::salary).isNotIn(listOf(ZERO, one, TEN))
                 }
             }
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary", value = salary,
                     constraint = NotIn(
@@ -813,7 +813,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 50.0.toBigDecimal()),
@@ -830,7 +830,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 50.9.unaryMinus().toBigDecimal()),
@@ -847,7 +847,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ZERO),
@@ -898,7 +898,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -919,7 +919,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -940,7 +940,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -986,7 +986,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 56789.19.toBigDecimal()),
@@ -1003,7 +1003,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 96.0.unaryMinus().toBigDecimal()),
@@ -1065,7 +1065,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1086,7 +1086,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1125,7 +1125,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 10.0.toBigDecimal()),
@@ -1142,7 +1142,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 189.20.unaryMinus().toBigDecimal()),
@@ -1159,7 +1159,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ZERO),
@@ -1210,7 +1210,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1231,7 +1231,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1252,7 +1252,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1298,7 +1298,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 57.0.toBigDecimal()),
@@ -1315,7 +1315,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 97.0.unaryMinus().toBigDecimal()),
@@ -1377,7 +1377,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1398,7 +1398,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1465,7 +1465,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 10.0.toBigDecimal()),
@@ -1482,7 +1482,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 12.0.toBigDecimal()),
@@ -1499,7 +1499,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 10.0.unaryMinus().toBigDecimal()),
@@ -1516,7 +1516,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 12.0.unaryMinus().toBigDecimal()),
@@ -1611,7 +1611,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1632,7 +1632,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1653,7 +1653,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1674,7 +1674,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1727,7 +1727,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ZERO),
@@ -1744,7 +1744,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ONE),
@@ -1761,7 +1761,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 2.0.unaryMinus().toBigDecimal()),
@@ -1778,7 +1778,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 1.0.unaryMinus().toBigDecimal()),
@@ -1795,7 +1795,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 0.5.toBigDecimal()),
@@ -1812,7 +1812,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 1.5.unaryMinus().toBigDecimal()),
@@ -1885,7 +1885,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1906,7 +1906,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1927,7 +1927,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1948,7 +1948,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1969,7 +1969,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -1990,7 +1990,7 @@ class BigMoneyFunctionsTest {
                 }
             }
 
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "salary",
                     value = salary,
@@ -2021,7 +2021,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).hasCurrencyEqualTo(BRL)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ZERO), constraint = CurrencyEquals(BRL))
         )
     }
@@ -2047,7 +2047,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).hasCurrencyNotEqualTo(BRL)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyNotEquals(BRL))
         )
     }
@@ -2073,7 +2073,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).hasCurrencyIn(BRL)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = CurrencyIn(setOf(BRL)))
         )
     }
@@ -2099,7 +2099,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).hasCurrencyIn(listOf(USD))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyIn(listOf(USD)))
         )
     }
@@ -2125,7 +2125,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).hasCurrencyNotIn(USD, BRL)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(USD, ONE), constraint = CurrencyNotIn(setOf(USD, BRL)))
         )
     }
@@ -2151,7 +2151,7 @@ class BigMoneyFunctionsTest {
                 validate(Employee::salary).hasCurrencyNotIn(listOf(USD, BRL))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = moneyOf(BRL, ONE), constraint = CurrencyNotIn(listOf(USD, BRL)))
         )
     }
@@ -2185,7 +2185,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ONE),
@@ -2216,7 +2216,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ZERO),
@@ -2233,7 +2233,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 0.00.toBigDecimal()),
@@ -2271,7 +2271,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ZERO),
@@ -2302,7 +2302,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ONE),
@@ -2319,7 +2319,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 1.00.toBigDecimal()),
@@ -2350,7 +2350,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ZERO),
@@ -2367,7 +2367,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 98765.432.unaryMinus().toBigDecimal()),
@@ -2405,7 +2405,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ONE),
@@ -2436,7 +2436,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, ZERO),
@@ -2453,7 +2453,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, ONE),
@@ -2491,7 +2491,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 98765.432.unaryMinus().toBigDecimal()),
@@ -2564,7 +2564,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 748536.78.toBigDecimal()),
@@ -2581,7 +2581,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 748536.78.toBigDecimal()),
@@ -2598,7 +2598,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 748536.78.toBigDecimal()),
@@ -2615,7 +2615,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 748536.78.unaryMinus().toBigDecimal()),
@@ -2632,7 +2632,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 748536.78.unaryMinus().toBigDecimal()),
@@ -2649,7 +2649,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 748536.78.unaryMinus().toBigDecimal()),
@@ -2722,7 +2722,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 78.748536.toBigDecimal()),
@@ -2739,7 +2739,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 78.748536.toBigDecimal()),
@@ -2756,7 +2756,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 78.748536.toBigDecimal()),
@@ -2773,7 +2773,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 78.748536.unaryMinus().toBigDecimal()),
@@ -2790,7 +2790,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(USD, 78.748536.unaryMinus().toBigDecimal()),
@@ -2807,7 +2807,7 @@ class BigMoneyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = moneyOf(BRL, 78.748536.unaryMinus().toBigDecimal()),
