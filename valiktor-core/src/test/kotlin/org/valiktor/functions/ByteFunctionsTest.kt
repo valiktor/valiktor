@@ -58,7 +58,7 @@ class ByteFunctionsTest {
                 validate(Employee::id).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = Null)
         )
     }
@@ -77,7 +77,7 @@ class ByteFunctionsTest {
                 validate(Employee::id).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", constraint = NotNull)
         )
     }
@@ -103,7 +103,7 @@ class ByteFunctionsTest {
                 validate(Employee::id).isEqualTo(1)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 2.toByte(), constraint = Equals<Byte>(1))
         )
     }
@@ -129,7 +129,7 @@ class ByteFunctionsTest {
                 validate(Employee::id).isNotEqualTo(1)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = NotEquals<Byte>(1))
         )
     }
@@ -155,7 +155,7 @@ class ByteFunctionsTest {
                 validate(Employee::id).isIn(0, 2, 3)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = In(setOf<Byte>(0, 2, 3)))
         )
     }
@@ -181,7 +181,7 @@ class ByteFunctionsTest {
                 validate(Employee::id).isIn(listOf<Byte>(0, 2, 3))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = In(listOf<Byte>(0, 2, 3)))
         )
     }
@@ -207,7 +207,7 @@ class ByteFunctionsTest {
                 validate(Employee::id).isNotIn(1, 2, 3)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = NotIn(setOf<Byte>(1, 2, 3)))
         )
     }
@@ -233,7 +233,7 @@ class ByteFunctionsTest {
                 validate(Employee::id).isNotIn(listOf<Byte>(1, 2, 3))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toByte(), constraint = NotIn(listOf<Byte>(1, 2, 3)))
         )
     }
@@ -260,7 +260,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toByte(),
@@ -291,7 +291,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
@@ -322,7 +322,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
@@ -353,7 +353,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toByte(),
@@ -384,7 +384,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
@@ -401,7 +401,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 98.unaryMinus().toByte(),
@@ -439,7 +439,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toByte(),
@@ -470,7 +470,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
@@ -487,7 +487,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toByte(),
@@ -525,7 +525,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 98.unaryMinus().toByte(),
@@ -563,7 +563,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 50.toByte(),
@@ -580,7 +580,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 50.unaryMinus().toByte(),
@@ -597,7 +597,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
@@ -642,7 +642,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 58.toByte(),
@@ -659,7 +659,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 96.unaryMinus().toByte(),
@@ -697,7 +697,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.toByte(),
@@ -714,7 +714,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 19.unaryMinus().toByte(),
@@ -731,7 +731,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
@@ -776,7 +776,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 57.toByte(),
@@ -793,7 +793,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 97.unaryMinus().toByte(),
@@ -859,7 +859,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.toByte(),
@@ -876,7 +876,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 12.toByte(),
@@ -893,7 +893,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.unaryMinus().toByte(),
@@ -910,7 +910,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 12.unaryMinus().toByte(),
@@ -962,7 +962,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toByte(),
@@ -979,7 +979,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toByte(),
@@ -996,7 +996,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 2.unaryMinus().toByte(),
@@ -1013,7 +1013,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.unaryMinus().toByte(),
@@ -1030,7 +1030,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 5.toByte(),
@@ -1047,7 +1047,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 15.unaryMinus().toByte(),
@@ -1120,7 +1120,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.toByte(),
@@ -1137,7 +1137,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.toByte(),
@@ -1154,7 +1154,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.toByte(),
@@ -1171,7 +1171,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.unaryMinus().toByte(),
@@ -1188,7 +1188,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.unaryMinus().toByte(),
@@ -1205,7 +1205,7 @@ class ByteFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 74.unaryMinus().toByte(),

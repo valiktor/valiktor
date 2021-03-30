@@ -74,7 +74,7 @@ class AnyFunctionsTest {
                 validate(Employee::company).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
@@ -97,7 +97,7 @@ class AnyFunctionsTest {
                 validate(Employee::company).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 constraint = NotNull
@@ -126,7 +126,7 @@ class AnyFunctionsTest {
                 validate(Employee::company).isEqualTo(Company(id = 1))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 2),
@@ -156,7 +156,7 @@ class AnyFunctionsTest {
                 validate(Employee::company).isNotEqualTo(Company(id = 1))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
@@ -186,7 +186,7 @@ class AnyFunctionsTest {
                 validate(Employee::company).isIn(Company(id = 0), Company(id = 2), Company(id = 3))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
@@ -216,7 +216,7 @@ class AnyFunctionsTest {
                 validate(Employee::company).isIn(listOf(Company(id = 0), Company(id = 2), Company(id = 3)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
@@ -246,7 +246,7 @@ class AnyFunctionsTest {
                 validate(Employee::company).isNotIn(Company(id = 1), Company(id = 2), Company(id = 3))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
@@ -276,7 +276,7 @@ class AnyFunctionsTest {
                 validate(Employee::company).isNotIn(listOf(Company(id = 1), Company(id = 2), Company(id = 3)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
@@ -306,7 +306,7 @@ class AnyFunctionsTest {
                 validate(Employee::company).isValid { it == Company(id = 1) }
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 2),
@@ -356,7 +356,7 @@ class AnyFunctionsTest {
                     validate(Employee::company).isCoValid { isValidCompany(it) }
                 }
             }
-            assertThat(exception.constraintViolations).containsExactly(
+            assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "company",
                     value = Company(id = 2),
@@ -488,7 +488,7 @@ class AnyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", constraint = NotNull),
             DefaultConstraintViolation(property = "company.id", constraint = NotNull),
             DefaultConstraintViolation(property = "address.id", constraint = NotNull),
@@ -507,7 +507,7 @@ class AnyFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 0, constraint = Equals(1)),
             DefaultConstraintViolation(property = "id", value = 0, constraint = In(setOf(1, 2, 3))),
             DefaultConstraintViolation(property = "name", constraint = NotNull)

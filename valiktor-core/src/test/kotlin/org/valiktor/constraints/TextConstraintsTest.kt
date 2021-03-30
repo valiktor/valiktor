@@ -26,7 +26,7 @@ class BlankTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Blank.interpolatedMessages()).containsExactly(
+        assertThat(Blank.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be blank"),
             entry(SupportedLocales.CA, "Ha d'estar en blanc"),
             entry(SupportedLocales.DE, "Muss blank sein"),
@@ -42,7 +42,7 @@ class NotBlankTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotBlank.interpolatedMessages()).containsExactly(
+        assertThat(NotBlank.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not be blank"),
             entry(SupportedLocales.CA, "No pot estar en blanc"),
             entry(SupportedLocales.DE, "Darf nicht blank sein"),
@@ -58,7 +58,7 @@ class LetterTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Letter.interpolatedMessages()).containsExactly(
+        assertThat(Letter.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be letter"),
             entry(SupportedLocales.CA, "Ha de ser lletra"),
             entry(SupportedLocales.DE, "Muss ein Buchstabe sein"),
@@ -74,7 +74,7 @@ class NotLetterTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotLetter.interpolatedMessages()).containsExactly(
+        assertThat(NotLetter.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not be letter"),
             entry(SupportedLocales.CA, "No pot se lletra"),
             entry(SupportedLocales.DE, "Darf kein Buchstabe sein"),
@@ -90,7 +90,7 @@ class DigitTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Digit.interpolatedMessages()).containsExactly(
+        assertThat(Digit.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be digit"),
             entry(SupportedLocales.CA, "Ha de ser número"),
             entry(SupportedLocales.DE, "Muss eine Ziffer sein"),
@@ -106,7 +106,7 @@ class NotDigitTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotDigit.interpolatedMessages()).containsExactly(
+        assertThat(NotDigit.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not be digit"),
             entry(SupportedLocales.CA, "No pot ser número"),
             entry(SupportedLocales.DE, "Darf keine Ziffer sein"),
@@ -122,7 +122,7 @@ class LetterOrDigitTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(LetterOrDigit.interpolatedMessages()).containsExactly(
+        assertThat(LetterOrDigit.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be letter or digit"),
             entry(SupportedLocales.CA, "Ha de ser lletra o número"),
             entry(SupportedLocales.DE, "Muss Buchstabe oder Ziffer sein"),
@@ -138,7 +138,7 @@ class NotLetterOrDigitTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotLetterOrDigit.interpolatedMessages()).containsExactly(
+        assertThat(NotLetterOrDigit.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not be letter or digit"),
             entry(SupportedLocales.CA, "No pot ser lletra o número"),
             entry(SupportedLocales.DE, "Darf weder Buchstabe noch Ziffer sein"),
@@ -154,7 +154,7 @@ class UpperCaseTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(UpperCase.interpolatedMessages()).containsExactly(
+        assertThat(UpperCase.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be upper case"),
             entry(SupportedLocales.CA, "Ha de ser majúscula"),
             entry(SupportedLocales.DE, "Muss in Großbuchstaben sein"),
@@ -170,7 +170,7 @@ class LowerCaseTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(LowerCase.interpolatedMessages()).containsExactly(
+        assertThat(LowerCase.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be lower case"),
             entry(SupportedLocales.CA, "Ha de ser minúscula"),
             entry(SupportedLocales.DE, "Muss in Kleinbuchstaben sein"),
@@ -186,7 +186,7 @@ class MatchesTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Matches(Regex("^[0-9]*\$")).interpolatedMessages()).containsExactly(
+        assertThat(Matches(Regex("^[0-9]*\$")).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must match ^[0-9]*\$"),
             entry(SupportedLocales.CA, "Ha de correspondre a l'expressió regular ^[0-9]*\$"),
             entry(SupportedLocales.DE, "Muss mit ^[0-9]*\$ übereinstimmen"),
@@ -202,7 +202,7 @@ class NotMatchTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotMatch(Regex("^[0-9]*\$")).interpolatedMessages()).containsExactly(
+        assertThat(NotMatch(Regex("^[0-9]*\$")).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not match ^[0-9]*\$"),
             entry(SupportedLocales.CA, "No pot correspondre a l'expressió regular ^[0-9]*\$"),
             entry(SupportedLocales.DE, "Darf nicht mit ^[0-9]*\$ übereinstimmen"),
@@ -218,7 +218,7 @@ class ContainsRegexTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(ContainsRegex(Regex("^[0-9]*\$")).interpolatedMessages()).containsExactly(
+        assertThat(ContainsRegex(Regex("^[0-9]*\$")).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must contain the pattern ^[0-9]*\$"),
             entry(SupportedLocales.CA, "Ha de contenir l'expressió regular ^[0-9]*\$"),
             entry(SupportedLocales.DE, "Muss das Muster ^[0-9]*\$ enthalten"),
@@ -234,7 +234,7 @@ class NotContainRegexTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotContainRegex(Regex("^[0-9]*\$")).interpolatedMessages()).containsExactly(
+        assertThat(NotContainRegex(Regex("^[0-9]*\$")).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not contain the pattern ^[0-9]*\$"),
             entry(SupportedLocales.CA, "No pot contenir l'expressió regular ^[0-9]*\$"),
             entry(SupportedLocales.DE, "Darf das Muster ^[0-9]*\$ nicht enthalten"),
@@ -250,7 +250,7 @@ class StartsWithTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(StartsWith("test").interpolatedMessages()).containsExactly(
+        assertThat(StartsWith("test").interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must start with test"),
             entry(SupportedLocales.CA, "Ha de començar amb test"),
             entry(SupportedLocales.DE, "Muss mit test beginnen"),
@@ -266,7 +266,7 @@ class NotStartWithTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotStartWith("test").interpolatedMessages()).containsExactly(
+        assertThat(NotStartWith("test").interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not start with test"),
             entry(SupportedLocales.CA, "No pot començar amb test"),
             entry(SupportedLocales.DE, "Darf nicht mit test beginnen"),
@@ -282,7 +282,7 @@ class EndsWithTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(EndsWith("test").interpolatedMessages()).containsExactly(
+        assertThat(EndsWith("test").interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must end with test"),
             entry(SupportedLocales.CA, "Ha d'acabar amb test"),
             entry(SupportedLocales.DE, "Muss mit test enden"),
@@ -298,7 +298,7 @@ class NotEndWithTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotEndWith("test").interpolatedMessages()).containsExactly(
+        assertThat(NotEndWith("test").interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not end with test"),
             entry(SupportedLocales.CA, "No pot acabar amb test"),
             entry(SupportedLocales.DE, "Darf nicht mit test enden"),
@@ -314,7 +314,7 @@ class EmailTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Email.interpolatedMessages()).containsExactly(
+        assertThat(Email.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be a valid email address"),
             entry(SupportedLocales.CA, "Ha de ser una adreça d'e-mail vàlida"),
             entry(SupportedLocales.DE, "Muss eine gültige E-Mail-Adresse sein"),
@@ -330,7 +330,7 @@ class WebsiteTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Website.interpolatedMessages()).containsExactly(
+        assertThat(Website.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be a valid website"),
             entry(SupportedLocales.CA, "Ha de ser un lloc web vàlid"),
             entry(SupportedLocales.DE, "Muss eine gültige Website sein"),

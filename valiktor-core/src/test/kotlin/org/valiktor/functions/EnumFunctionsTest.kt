@@ -54,7 +54,7 @@ class EnumFunctionsTest {
                 validate(Employee::gender).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = MALE, constraint = Null)
         )
     }
@@ -73,7 +73,7 @@ class EnumFunctionsTest {
                 validate(Employee::gender).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", constraint = NotNull)
         )
     }
@@ -99,7 +99,7 @@ class EnumFunctionsTest {
                 validate(Employee::gender).isEqualTo(FEMALE)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = MALE, constraint = Equals(FEMALE))
         )
     }
@@ -125,7 +125,7 @@ class EnumFunctionsTest {
                 validate(Employee::gender).isNotEqualTo(MALE)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = MALE, constraint = NotEquals(MALE))
         )
     }
@@ -151,7 +151,7 @@ class EnumFunctionsTest {
                 validate(Employee::gender).isIn(FEMALE)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = MALE, constraint = In(setOf(FEMALE)))
         )
     }
@@ -177,7 +177,7 @@ class EnumFunctionsTest {
                 validate(Employee::gender).isIn(listOf(FEMALE))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = MALE, constraint = In(listOf(FEMALE)))
         )
     }
@@ -203,7 +203,7 @@ class EnumFunctionsTest {
                 validate(Employee::gender).isNotIn(MALE, FEMALE)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = MALE, constraint = NotIn(setOf(MALE, FEMALE)))
         )
     }
@@ -229,7 +229,7 @@ class EnumFunctionsTest {
                 validate(Employee::gender).isNotIn(listOf(MALE, FEMALE))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "gender", value = MALE, constraint = NotIn(listOf(MALE, FEMALE)))
         )
     }

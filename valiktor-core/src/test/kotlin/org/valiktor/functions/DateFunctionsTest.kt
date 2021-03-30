@@ -66,7 +66,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW), constraint = Null)
         )
     }
@@ -85,7 +85,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", constraint = NotNull)
         )
     }
@@ -111,7 +111,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isEqualTo(Date(NOW - 1))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW), constraint = Equals(Date(NOW - 1)))
         )
     }
@@ -137,7 +137,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotEqualTo(Date(NOW))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW), constraint = NotEquals(Date(NOW)))
         )
     }
@@ -163,7 +163,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isIn(Date(NOW - 1), Date(NOW - 2))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW), constraint = In(setOf(Date(NOW - 1), Date(NOW - 2))))
         )
     }
@@ -189,7 +189,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isIn(listOf(Date(NOW - 1), Date(NOW - 2)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW), constraint = In(listOf(Date(NOW - 1), Date(NOW - 2))))
         )
     }
@@ -215,7 +215,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotIn(Date(NOW), Date(NOW + 1))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW), constraint = NotIn(setOf(Date(NOW), Date(NOW + 1))))
         )
     }
@@ -241,7 +241,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotIn(listOf(Date(NOW), Date(NOW + 1)))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW), constraint = NotIn(listOf(Date(NOW), Date(NOW + 1))))
         )
     }
@@ -293,7 +293,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW - ONE_DAY), constraint = Today)
         )
     }
@@ -305,7 +305,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = Date(NOW + ONE_DAY), constraint = Today)
         )
     }
@@ -330,7 +330,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = today.time, constraint = NotToday)
         )
     }
@@ -348,7 +348,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = today.time, constraint = NotToday)
         )
     }
@@ -362,7 +362,7 @@ class DateFunctionsTest {
                 validate(Employee::dateOfBirth).isNotToday()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "dateOfBirth", value = now, constraint = NotToday)
         )
     }
@@ -403,7 +403,7 @@ class DateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = Date(NOW),
@@ -420,7 +420,7 @@ class DateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = Date(NOW),
@@ -458,7 +458,7 @@ class DateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = Date(NOW),
@@ -489,7 +489,7 @@ class DateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = Date(NOW),
@@ -506,7 +506,7 @@ class DateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = Date(NOW),
@@ -544,7 +544,7 @@ class DateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = Date(NOW),
@@ -589,7 +589,7 @@ class DateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = Date(NOW),
@@ -606,7 +606,7 @@ class DateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = Date(NOW + 4),
@@ -644,7 +644,7 @@ class DateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = Date(NOW),
@@ -661,7 +661,7 @@ class DateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = Date(NOW + 1),
@@ -678,7 +678,7 @@ class DateFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "dateOfBirth",
                 value = Date(NOW + 1),

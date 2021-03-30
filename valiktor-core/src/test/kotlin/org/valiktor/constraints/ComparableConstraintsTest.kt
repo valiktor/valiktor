@@ -26,7 +26,7 @@ class LessTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Less(1).interpolatedMessages()).containsExactly(
+        assertThat(Less(1).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be less than 1"),
             entry(SupportedLocales.CA, "Ha de ser més petit que 1"),
             entry(SupportedLocales.DE, "Muss kleiner 1 sein"),
@@ -42,7 +42,7 @@ class LessOrEqualTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(LessOrEqual(5).interpolatedMessages()).containsExactly(
+        assertThat(LessOrEqual(5).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be less than or equal to 5"),
             entry(SupportedLocales.CA, "Ha de ser més petit o igual a 5"),
             entry(SupportedLocales.DE, "Muss kleiner oder gleich 5 sein"),
@@ -58,7 +58,7 @@ class GreaterTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Greater(10).interpolatedMessages()).containsExactly(
+        assertThat(Greater(10).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be greater than 10"),
             entry(SupportedLocales.CA, "Ha de ser més gran que 10"),
             entry(SupportedLocales.DE, "Muss größer 10 sein"),
@@ -74,7 +74,7 @@ class GreaterOrEqualTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(GreaterOrEqual(15).interpolatedMessages()).containsExactly(
+        assertThat(GreaterOrEqual(15).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be greater than or equal to 15"),
             entry(SupportedLocales.CA, "Ha de ser més gran o igual a 15"),
             entry(SupportedLocales.DE, "Muss größer oder gleich 15 sein"),
@@ -90,7 +90,7 @@ class BetweenTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Between(start = 1, end = 10).interpolatedMessages()).containsExactly(
+        assertThat(Between(start = 1, end = 10).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be between 1 and 10"),
             entry(SupportedLocales.CA, "Ha d'estar entre 1 i 10"),
             entry(SupportedLocales.DE, "Muss zwischen 1 und 10 sein"),
@@ -106,7 +106,7 @@ class NotBetweenTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotBetween(start = 1, end = 10).interpolatedMessages()).containsExactly(
+        assertThat(NotBetween(start = 1, end = 10).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not be between 1 and 10"),
             entry(SupportedLocales.CA, "No pot estar entre 1 i 10"),
             entry(SupportedLocales.DE, "Darf nicht zwischen 1 und 10 sein"),

@@ -26,7 +26,7 @@ class EmptyTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Empty.interpolatedMessages()).containsExactly(
+        assertThat(Empty.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must be empty"),
             entry(SupportedLocales.CA, "Ha de ser vuit"),
             entry(SupportedLocales.DE, "Muss leer sein"),
@@ -42,7 +42,7 @@ class NotEmptyTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotEmpty.interpolatedMessages()).containsExactly(
+        assertThat(NotEmpty.interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not be empty"),
             entry(SupportedLocales.CA, "No pot estar vuit"),
             entry(SupportedLocales.DE, "Darf nicht leer sein"),
@@ -58,7 +58,7 @@ class ContainsTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(Contains("test").interpolatedMessages()).containsExactly(
+        assertThat(Contains("test").interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must contain test"),
             entry(SupportedLocales.CA, "Ha de contenir test"),
             entry(SupportedLocales.DE, "Muss test enthalten"),
@@ -74,7 +74,7 @@ class ContainsAllTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(ContainsAll(setOf(1, 2, 3)).interpolatedMessages()).containsExactly(
+        assertThat(ContainsAll(setOf(1, 2, 3)).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must contain 1, 2, 3"),
             entry(SupportedLocales.CA, "Ha de contenir 1, 2, 3"),
             entry(SupportedLocales.DE, "Muss alle Werte in 1, 2, 3 enthalten"),
@@ -90,7 +90,7 @@ class ContainsAnyTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(ContainsAny(setOf(1, 2, 3)).interpolatedMessages()).containsExactly(
+        assertThat(ContainsAny(setOf(1, 2, 3)).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must contain 1, 2, 3"),
             entry(SupportedLocales.CA, "Ha de contenir 1, 2, 3"),
             entry(SupportedLocales.DE, "Muss einen Wert in 1, 2, 3 enthalten"),
@@ -106,7 +106,7 @@ class NotContainTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotContain("test").interpolatedMessages()).containsExactly(
+        assertThat(NotContain("test").interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not contain test"),
             entry(SupportedLocales.CA, "No pot contenir test"),
             entry(SupportedLocales.DE, "Darf test nicht enthalten"),
@@ -122,7 +122,7 @@ class NotContainAllTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotContainAll(setOf(1, 2, 3)).interpolatedMessages()).containsExactly(
+        assertThat(NotContainAll(setOf(1, 2, 3)).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not contain 1, 2, 3"),
             entry(SupportedLocales.CA, "No pot contenir 1, 2, 3"),
             entry(SupportedLocales.DE, "Darf nicht alle Werte in 1, 2, 3 enthalten"),
@@ -138,7 +138,7 @@ class NotContainAnyTest {
 
     @Test
     fun `should validate messages`() {
-        assertThat(NotContainAny(setOf(1, 2, 3)).interpolatedMessages()).containsExactly(
+        assertThat(NotContainAny(setOf(1, 2, 3)).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Must not contain 1, 2, 3"),
             entry(SupportedLocales.CA, "No pot contenir 1, 2, 3"),
             entry(SupportedLocales.DE, "Darf keinen Wert in 1, 2, 3 enthalten"),
@@ -154,7 +154,7 @@ class SizeTest {
 
     @Test
     fun `should validate messages with min`() {
-        assertThat(Size(min = 5).interpolatedMessages()).containsExactly(
+        assertThat(Size(min = 5).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Size must be greater than or equal to 5"),
             entry(SupportedLocales.CA, "La mida ha de ser més gran o igual a 5"),
             entry(SupportedLocales.DE, "Größe muss größer oder gleich 5 sein"),
@@ -167,7 +167,7 @@ class SizeTest {
 
     @Test
     fun `should validate messages with max`() {
-        assertThat(Size(max = 10).interpolatedMessages()).containsExactly(
+        assertThat(Size(max = 10).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Size must be less than or equal to 10"),
             entry(SupportedLocales.CA, "La mida ha de ser més petita o igual a 10"),
             entry(SupportedLocales.DE, "Größe muss kleiner oder gleich 10 sein"),
@@ -180,7 +180,7 @@ class SizeTest {
 
     @Test
     fun `should validate messages with min and max`() {
-        assertThat(Size(min = 5, max = 10).interpolatedMessages()).containsExactly(
+        assertThat(Size(min = 5, max = 10).interpolatedMessages()).containsOnly(
             entry(SupportedLocales.DEFAULT, "Size must be between 5 and 10"),
             entry(SupportedLocales.CA, "La mida ha de ser entre 5 i 10"),
             entry(SupportedLocales.DE, "Größe muss zwischen 5 und 10 sein"),

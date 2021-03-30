@@ -59,7 +59,7 @@ class DoubleFunctionsTest {
                 validate(Employee::salary).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 0.0, constraint = Null)
         )
     }
@@ -78,7 +78,7 @@ class DoubleFunctionsTest {
                 validate(Employee::salary).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", constraint = NotNull)
         )
     }
@@ -111,7 +111,7 @@ class DoubleFunctionsTest {
                 validate(Employee::salary).isEqualTo(1.0)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 0.0, constraint = Equals(1.0))
         )
     }
@@ -137,7 +137,7 @@ class DoubleFunctionsTest {
                 validate(Employee::salary).isNotEqualTo(1.0)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1.0, constraint = NotEquals(1.0))
         )
     }
@@ -149,7 +149,7 @@ class DoubleFunctionsTest {
                 validate(Employee::salary).isNotEqualTo(1.00)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1.0, constraint = NotEquals(1.00))
         )
     }
@@ -182,7 +182,7 @@ class DoubleFunctionsTest {
                 validate(Employee::salary).isIn(0.0, 10.0)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1.0, constraint = In(setOf(0.0, 10.0)))
         )
     }
@@ -215,7 +215,7 @@ class DoubleFunctionsTest {
                 validate(Employee::salary).isIn(listOf(0.0, 10.0))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1.0, constraint = In(listOf(0.0, 10.0)))
         )
     }
@@ -241,7 +241,7 @@ class DoubleFunctionsTest {
                 validate(Employee::salary).isNotIn(0.0, 1.0, 10.0)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1.0, constraint = NotIn(setOf(0.0, 1.0, 10.0)))
         )
     }
@@ -253,7 +253,7 @@ class DoubleFunctionsTest {
                 validate(Employee::salary).isNotIn(0.0, 1.00, 10.0)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1.0, constraint = NotIn(setOf(0.0, 1.00, 10.0)))
         )
     }
@@ -279,7 +279,7 @@ class DoubleFunctionsTest {
                 validate(Employee::salary).isNotIn(listOf(0.0, 1.0, 10.0))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1.0, constraint = NotIn(listOf(0.0, 1.0, 10.0)))
         )
     }
@@ -291,7 +291,7 @@ class DoubleFunctionsTest {
                 validate(Employee::salary).isNotIn(listOf(0.0, 1.00, 10.0))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1.0, constraint = NotIn(listOf(0.0, 1.00, 10.0)))
         )
     }
@@ -325,7 +325,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0,
@@ -356,7 +356,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0,
@@ -373,7 +373,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.00,
@@ -411,7 +411,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0,
@@ -442,7 +442,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0,
@@ -459,7 +459,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.00,
@@ -490,7 +490,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0,
@@ -507,7 +507,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -98765.432,
@@ -545,7 +545,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0,
@@ -576,7 +576,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0,
@@ -593,7 +593,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0,
@@ -631,7 +631,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -98765.432,
@@ -669,7 +669,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 50.0,
@@ -686,7 +686,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -50.9,
@@ -703,7 +703,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0,
@@ -748,7 +748,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 56789.19,
@@ -765,7 +765,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -96.0,
@@ -803,7 +803,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0,
@@ -820,7 +820,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -189.20,
@@ -837,7 +837,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0,
@@ -882,7 +882,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 57.0,
@@ -899,7 +899,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -97.0,
@@ -965,7 +965,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0,
@@ -982,7 +982,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 12.0,
@@ -999,7 +999,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -10.0,
@@ -1016,7 +1016,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -12.0,
@@ -1068,7 +1068,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0,
@@ -1085,7 +1085,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0,
@@ -1102,7 +1102,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -2.0,
@@ -1119,7 +1119,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -1.0,
@@ -1136,7 +1136,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.5,
@@ -1153,7 +1153,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -1.5,
@@ -1226,7 +1226,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78,
@@ -1243,7 +1243,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78,
@@ -1260,7 +1260,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78,
@@ -1277,7 +1277,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -748536.78,
@@ -1294,7 +1294,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -748536.78,
@@ -1311,7 +1311,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -748536.78,
@@ -1384,7 +1384,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536,
@@ -1401,7 +1401,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536,
@@ -1418,7 +1418,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536,
@@ -1435,7 +1435,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -78.748536,
@@ -1452,7 +1452,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -78.748536,
@@ -1469,7 +1469,7 @@ class DoubleFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = -78.748536,

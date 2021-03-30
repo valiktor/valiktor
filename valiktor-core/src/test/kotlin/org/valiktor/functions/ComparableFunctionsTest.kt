@@ -71,7 +71,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 50),
@@ -88,7 +88,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -50),
@@ -105,7 +105,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 0),
@@ -150,7 +150,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 56789),
@@ -167,7 +167,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -96),
@@ -205,7 +205,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 10),
@@ -222,7 +222,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -189),
@@ -239,7 +239,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 0),
@@ -284,7 +284,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 57),
@@ -301,7 +301,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -97),
@@ -367,7 +367,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 10),
@@ -384,7 +384,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 12),
@@ -401,7 +401,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -10),
@@ -418,7 +418,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -12),
@@ -470,7 +470,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 0),
@@ -487,7 +487,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 1),
@@ -504,7 +504,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -2),
@@ -521,7 +521,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -1),
@@ -538,7 +538,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = 5),
@@ -555,7 +555,7 @@ class ComparableFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "company",
                 value = Company(id = -15),

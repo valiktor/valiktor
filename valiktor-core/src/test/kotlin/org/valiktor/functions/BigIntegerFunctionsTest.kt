@@ -59,7 +59,7 @@ class BigIntegerFunctionsTest {
                 validate(Employee::id).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = Null)
         )
     }
@@ -78,7 +78,7 @@ class BigIntegerFunctionsTest {
                 validate(Employee::id).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", constraint = NotNull)
         )
     }
@@ -104,7 +104,7 @@ class BigIntegerFunctionsTest {
                 validate(Employee::id).isEqualTo(1.toBigInteger())
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 2.toBigInteger(), constraint = Equals(1.toBigInteger()))
         )
     }
@@ -130,7 +130,7 @@ class BigIntegerFunctionsTest {
                 validate(Employee::id).isNotEqualTo(1.toBigInteger())
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = NotEquals(1.toBigInteger()))
         )
     }
@@ -156,7 +156,7 @@ class BigIntegerFunctionsTest {
                 validate(Employee::id).isIn(0.toBigInteger(), 2.toBigInteger(), 3.toBigInteger())
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = In(setOf(0.toBigInteger(), 2.toBigInteger(), 3.toBigInteger())))
         )
     }
@@ -182,7 +182,7 @@ class BigIntegerFunctionsTest {
                 validate(Employee::id).isIn(listOf(0.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = In(listOf(0.toBigInteger(), 2.toBigInteger(), 3.toBigInteger())))
         )
     }
@@ -208,7 +208,7 @@ class BigIntegerFunctionsTest {
                 validate(Employee::id).isNotIn(1.toBigInteger(), 2.toBigInteger(), 3.toBigInteger())
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = NotIn(setOf(1.toBigInteger(), 2.toBigInteger(), 3.toBigInteger())))
         )
     }
@@ -234,7 +234,7 @@ class BigIntegerFunctionsTest {
                 validate(Employee::id).isNotIn(listOf(1.toBigInteger(), 2.toBigInteger(), 3.toBigInteger()))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "id", value = 1.toBigInteger(), constraint = NotIn(listOf(1.toBigInteger(), 2.toBigInteger(), 3.toBigInteger())))
         )
     }
@@ -261,7 +261,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toBigInteger(),
@@ -292,7 +292,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toBigInteger(),
@@ -323,7 +323,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toBigInteger(),
@@ -354,7 +354,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toBigInteger(),
@@ -385,7 +385,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toBigInteger(),
@@ -402,7 +402,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 98765.unaryMinus().toBigInteger(),
@@ -440,7 +440,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toBigInteger(),
@@ -471,7 +471,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toBigInteger(),
@@ -488,7 +488,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toBigInteger(),
@@ -526,7 +526,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 98765.unaryMinus().toBigInteger(),
@@ -564,7 +564,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 50.toBigInteger(),
@@ -581,7 +581,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 50.unaryMinus().toBigInteger(),
@@ -598,7 +598,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toBigInteger(),
@@ -643,7 +643,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 56789.toBigInteger(),
@@ -660,7 +660,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 96.unaryMinus().toBigInteger(),
@@ -698,7 +698,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.toBigInteger(),
@@ -715,7 +715,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 189.unaryMinus().toBigInteger(),
@@ -732,7 +732,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toBigInteger(),
@@ -777,7 +777,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 57.toBigInteger(),
@@ -794,7 +794,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 97.unaryMinus().toBigInteger(),
@@ -860,7 +860,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.toBigInteger(),
@@ -877,7 +877,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 12.toBigInteger(),
@@ -894,7 +894,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 10.unaryMinus().toBigInteger(),
@@ -911,7 +911,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 12.unaryMinus().toBigInteger(),
@@ -963,7 +963,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 0.toBigInteger(),
@@ -980,7 +980,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.toBigInteger(),
@@ -997,7 +997,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 2.unaryMinus().toBigInteger(),
@@ -1014,7 +1014,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 1.unaryMinus().toBigInteger(),
@@ -1031,7 +1031,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 5.toBigInteger(),
@@ -1048,7 +1048,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 15.unaryMinus().toBigInteger(),
@@ -1121,7 +1121,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536.toBigInteger(),
@@ -1138,7 +1138,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536.toBigInteger(),
@@ -1155,7 +1155,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536.toBigInteger(),
@@ -1172,7 +1172,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536.unaryMinus().toBigInteger(),
@@ -1189,7 +1189,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536.unaryMinus().toBigInteger(),
@@ -1206,7 +1206,7 @@ class BigIntegerFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "id",
                 value = 748536.unaryMinus().toBigInteger(),

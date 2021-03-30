@@ -74,7 +74,7 @@ class ConstraintViolationExceptionTest {
         }
 
         assertThat(exception.constraintViolations)
-            .containsExactly(
+            .containsExactlyInAnyOrder(
                 DefaultConstraintViolation(
                     property = "name",
                     value = "Test",

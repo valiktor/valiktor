@@ -59,7 +59,7 @@ class FloatFunctionsTest {
                 validate(Employee::salary).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 0f, constraint = Null)
         )
     }
@@ -78,7 +78,7 @@ class FloatFunctionsTest {
                 validate(Employee::salary).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", constraint = NotNull)
         )
     }
@@ -111,7 +111,7 @@ class FloatFunctionsTest {
                 validate(Employee::salary).isEqualTo(1f)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 0f, constraint = Equals(1f))
         )
     }
@@ -137,7 +137,7 @@ class FloatFunctionsTest {
                 validate(Employee::salary).isNotEqualTo(1f)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotEquals(1f))
         )
     }
@@ -149,7 +149,7 @@ class FloatFunctionsTest {
                 validate(Employee::salary).isNotEqualTo(1.00f)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotEquals(1.00f))
         )
     }
@@ -182,7 +182,7 @@ class FloatFunctionsTest {
                 validate(Employee::salary).isIn(0f, 10f)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1f, constraint = In(setOf(0f, 10f)))
         )
     }
@@ -215,7 +215,7 @@ class FloatFunctionsTest {
                 validate(Employee::salary).isIn(listOf(0f, 10f))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1f, constraint = In(listOf(0f, 10f)))
         )
     }
@@ -241,7 +241,7 @@ class FloatFunctionsTest {
                 validate(Employee::salary).isNotIn(0f, 1f, 10f)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(setOf(0f, 1f, 10f)))
         )
     }
@@ -253,7 +253,7 @@ class FloatFunctionsTest {
                 validate(Employee::salary).isNotIn(0f, 1.00f, 10f)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(setOf(0f, 1.00f, 10f)))
         )
     }
@@ -279,7 +279,7 @@ class FloatFunctionsTest {
                 validate(Employee::salary).isNotIn(listOf(0f, 1f, 10f))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(listOf(0f, 1f, 10f)))
         )
     }
@@ -291,7 +291,7 @@ class FloatFunctionsTest {
                 validate(Employee::salary).isNotIn(listOf(0f, 1.00f, 10f))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "salary", value = 1f, constraint = NotIn(listOf(0f, 1.00f, 10f)))
         )
     }
@@ -325,7 +325,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1f,
@@ -356,7 +356,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0f,
@@ -373,7 +373,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.00f,
@@ -411,7 +411,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0f,
@@ -442,7 +442,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1f,
@@ -459,7 +459,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.00f,
@@ -490,7 +490,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0f,
@@ -507,7 +507,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 98765.432f.unaryMinus(),
@@ -545,7 +545,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0f,
@@ -576,7 +576,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0f,
@@ -593,7 +593,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0f,
@@ -631,7 +631,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 98765.432f.unaryMinus(),
@@ -669,7 +669,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 50.0f,
@@ -686,7 +686,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 50.9f.unaryMinus(),
@@ -703,7 +703,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0f,
@@ -748,7 +748,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 56789.19f,
@@ -765,7 +765,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 96.0f.unaryMinus(),
@@ -803,7 +803,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0f,
@@ -820,7 +820,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 189.20f.unaryMinus(),
@@ -837,7 +837,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0f,
@@ -882,7 +882,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 57.0f,
@@ -899,7 +899,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 97.0f.unaryMinus(),
@@ -965,7 +965,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0f,
@@ -982,7 +982,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 12.0f,
@@ -999,7 +999,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 10.0f.unaryMinus(),
@@ -1016,7 +1016,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 12.0f.unaryMinus(),
@@ -1068,7 +1068,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.0f,
@@ -1085,7 +1085,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0f,
@@ -1102,7 +1102,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 2.0f.unaryMinus(),
@@ -1119,7 +1119,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.0f.unaryMinus(),
@@ -1136,7 +1136,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 0.5f,
@@ -1153,7 +1153,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 1.5f.unaryMinus(),
@@ -1226,7 +1226,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f,
@@ -1243,7 +1243,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f,
@@ -1260,7 +1260,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f,
@@ -1277,7 +1277,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f.unaryMinus(),
@@ -1294,7 +1294,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f.unaryMinus(),
@@ -1311,7 +1311,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 748536.78f.unaryMinus(),
@@ -1384,7 +1384,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f,
@@ -1401,7 +1401,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f,
@@ -1418,7 +1418,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f,
@@ -1435,7 +1435,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f.unaryMinus(),
@@ -1452,7 +1452,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f.unaryMinus(),
@@ -1469,7 +1469,7 @@ class FloatFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "salary",
                 value = 78.748536f.unaryMinus(),

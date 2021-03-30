@@ -16,6 +16,7 @@
 
 package org.valiktor
 
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KProperty1
 
 /**
@@ -57,7 +58,7 @@ open class Validator<E>(private val obj: E) {
     /**
      * Specifies the violated constraints
      */
-    val constraintViolations = mutableSetOf<ConstraintViolation>()
+    val constraintViolations = ConcurrentHashMap.newKeySet<ConstraintViolation>()
 
     /**
      * Returns a [Property] for this property

@@ -131,7 +131,7 @@ class ConstraintViolationIterableFunctionsTest {
         val constraintViolationMessages = createConstraintViolations()
             .mapToMessage()
 
-        assertThat(constraintViolationMessages).containsExactly(
+        assertThat(constraintViolationMessages).containsExactlyInAnyOrder(
             DefaultConstraintViolationMessage(
                 property = "id",
                 value = 1,
@@ -158,7 +158,7 @@ class ConstraintViolationIterableFunctionsTest {
         val constraintViolationMessages = createConstraintViolations()
             .mapToMessage(locale = SupportedLocales.PT_BR)
 
-        assertThat(constraintViolationMessages).containsExactly(
+        assertThat(constraintViolationMessages).containsExactlyInAnyOrder(
             DefaultConstraintViolationMessage(
                 property = "id",
                 value = 1,
@@ -187,7 +187,7 @@ class ConstraintViolationIterableFunctionsTest {
         val constraintViolationMessages = createConstraintViolations()
             .mapToMessage(baseName = "testMessages")
 
-        assertThat(constraintViolationMessages).containsExactly(
+        assertThat(constraintViolationMessages).containsExactlyInAnyOrder(
             DefaultConstraintViolationMessage(
                 property = "id",
                 value = 1,
@@ -217,7 +217,7 @@ class ConstraintViolationIterableFunctionsTest {
                 baseName = "testMessages"
             )
 
-        assertThat(constraintViolationMessages).containsExactly(
+        assertThat(constraintViolationMessages).containsExactlyInAnyOrder(
             DefaultConstraintViolationMessage(
                 property = "id",
                 value = 1,
@@ -259,7 +259,7 @@ class ConstraintViolationSequenceFunctionsTest {
             .mapToMessage()
             .toSet()
 
-        assertThat(constraintViolationMessages).containsExactly(
+        assertThat(constraintViolationMessages).containsExactlyInAnyOrder(
             DefaultConstraintViolationMessage(
                 property = "id",
                 value = 1,
@@ -287,7 +287,7 @@ class ConstraintViolationSequenceFunctionsTest {
             .mapToMessage(locale = SupportedLocales.PT_BR)
             .toSet()
 
-        assertThat(constraintViolationMessages).containsExactly(
+        assertThat(constraintViolationMessages).containsExactlyInAnyOrder(
             DefaultConstraintViolationMessage(
                 property = "id",
                 value = 1,
@@ -317,7 +317,7 @@ class ConstraintViolationSequenceFunctionsTest {
             .mapToMessage(baseName = "testMessages")
             .toSet()
 
-        assertThat(constraintViolationMessages).containsExactly(
+        assertThat(constraintViolationMessages).containsExactlyInAnyOrder(
             DefaultConstraintViolationMessage(
                 property = "id",
                 value = 1,
@@ -348,7 +348,7 @@ class ConstraintViolationSequenceFunctionsTest {
             )
             .toSet()
 
-        assertThat(constraintViolationMessages).containsExactly(
+        assertThat(constraintViolationMessages).containsExactlyInAnyOrder(
             DefaultConstraintViolationMessage(
                 property = "id",
                 value = 1,

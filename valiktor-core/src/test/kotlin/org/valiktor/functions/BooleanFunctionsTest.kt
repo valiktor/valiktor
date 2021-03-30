@@ -53,7 +53,7 @@ class BooleanFunctionsTest {
                 validate(Employee::active).isNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "active", value = true, constraint = Null)
         )
     }
@@ -72,7 +72,7 @@ class BooleanFunctionsTest {
                 validate(Employee::active).isNotNull()
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "active", constraint = NotNull)
         )
     }
@@ -98,7 +98,7 @@ class BooleanFunctionsTest {
                 validate(Employee::active).isEqualTo(false)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "active", value = true, constraint = Equals(false))
         )
     }
@@ -124,7 +124,7 @@ class BooleanFunctionsTest {
                 validate(Employee::active).isNotEqualTo(false)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "active", value = false, constraint = NotEquals(false))
         )
     }
@@ -150,7 +150,7 @@ class BooleanFunctionsTest {
                 validate(Employee::active).isIn(false)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "active", value = true, constraint = In(setOf(false)))
         )
     }
@@ -176,7 +176,7 @@ class BooleanFunctionsTest {
                 validate(Employee::active).isIn(listOf(false))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "active", value = true, constraint = In(listOf(false)))
         )
     }
@@ -202,7 +202,7 @@ class BooleanFunctionsTest {
                 validate(Employee::active).isNotIn(true, false)
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(setOf(true, false)))
         )
     }
@@ -228,7 +228,7 @@ class BooleanFunctionsTest {
                 validate(Employee::active).isNotIn(listOf(true, false))
             }
         }
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(property = "active", value = false, constraint = NotIn(listOf(true, false)))
         )
     }
@@ -255,7 +255,7 @@ class BooleanFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "active",
                 value = false,
@@ -286,7 +286,7 @@ class BooleanFunctionsTest {
             }
         }
 
-        assertThat(exception.constraintViolations).containsExactly(
+        assertThat(exception.constraintViolations).containsExactlyInAnyOrder(
             DefaultConstraintViolation(
                 property = "active",
                 value = true,
