@@ -29,7 +29,7 @@ class NullTest {
         assertThat(Null.interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Must be null"),
             entry(SupportedLocales.CA, "Ha de ser nul"),
-            entry(SupportedLocales.DE, "Muss vorhanden sein"),
+            entry(SupportedLocales.DE, "Darf nicht vorhanden sein"),
             entry(SupportedLocales.EN, "Must be null"),
             entry(SupportedLocales.ES, "Tiene que ser nulo"),
             entry(SupportedLocales.JA, "null である必要があります"),
@@ -45,7 +45,7 @@ class NotNullTest {
         assertThat(NotNull.interpolatedMessages()).containsExactly(
             entry(SupportedLocales.DEFAULT, "Must not be null"),
             entry(SupportedLocales.CA, "No pot ser nul"),
-            entry(SupportedLocales.DE, "Darf nicht vorhanden sein"),
+            entry(SupportedLocales.DE, "Muss vorhanden sein"),
             entry(SupportedLocales.EN, "Must not be null"),
             entry(SupportedLocales.ES, "No puede ser nulo"),
             entry(SupportedLocales.JA, "null 以外である必要があります"),
