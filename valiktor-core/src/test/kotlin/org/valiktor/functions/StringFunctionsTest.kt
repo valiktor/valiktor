@@ -45,6 +45,7 @@ import org.valiktor.constraints.NotStartWith
 import org.valiktor.constraints.Null
 import org.valiktor.constraints.Size
 import org.valiktor.constraints.StartsWith
+import org.valiktor.constraints.UUID
 import org.valiktor.constraints.Website
 import org.valiktor.functions.StringFunctionsFixture.Employee
 import org.valiktor.validate
@@ -54,6 +55,7 @@ import kotlin.test.assertFailsWith
 private object StringFunctionsFixture {
 
     data class Employee(
+        val id: String? = null,
         val name: String? = null,
         val email: String? = null,
         val username: String? = null,
@@ -1570,5 +1572,37 @@ class StringFunctionsTest {
         assertThat(exception.constraintViolations).containsExactly(
             DefaultConstraintViolation(property = "website", value = "test.c", constraint = Website)
         )
+    }
+
+    @Test
+    fun `isUUID with valid value should be valid`() {
+        setOf(
+            java.util.UUID.randomUUID().toString(),
+            java.util.UUID.randomUUID().toString().toUpperCase(),
+            null
+        ).forEach {
+            validate(Employee(id = it)) {
+                validate(Employee::id).isUUID()
+            }
+        }
+    }
+
+    @Test
+    fun `isUUID with invalid value should be invalid`() {
+        setOf(
+            "c73bcdcc-2669-4bf6-81d3-e4an73fb11fd",
+            "c73bcdcc26694bf681d3e4ae73fb11fd",
+            "definitely-not-a-uuid",
+            ""
+        ).forEach {
+            val exception = assertFailsWith<ConstraintViolationException> {
+                validate(Employee(id = it)) {
+                    validate(Employee::id).isUUID()
+                }
+            }
+            assertThat(exception.constraintViolations).containsExactly(
+                DefaultConstraintViolation(property = "id", value = it, constraint = UUID)
+            )
+        }
     }
 }
