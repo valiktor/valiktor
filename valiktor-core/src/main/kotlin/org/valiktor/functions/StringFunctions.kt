@@ -41,6 +41,7 @@ import org.valiktor.constraints.NotMatch
 import org.valiktor.constraints.NotStartWith
 import org.valiktor.constraints.Size
 import org.valiktor.constraints.StartsWith
+import org.valiktor.constraints.UUID
 import org.valiktor.constraints.Website
 
 /**
@@ -493,5 +494,18 @@ fun <E> Validator<E>.Property<String?>.isWebsite(): Validator<E>.Property<String
     this.validate(Website) {
         it == null || it.matches(
             Regex("^(https?:\\/\\/)?([a-zA-Z0-9]+(-?[a-zA-Z0-9])*\\.)+[\\w]{2,}(\\/\\S*)?\$")
+        )
+    }
+
+/**
+ * Validates if the [String] property value is a valid uuid
+ *
+ * @receiver the property to be validated
+ * @return the same receiver property
+ */
+fun <E> Validator<E>.Property<String?>.isUUID(): Validator<E>.Property<String?> =
+    this.validate(UUID) {
+        it == null || it.matches(
+            Regex("^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}\$")
         )
     }

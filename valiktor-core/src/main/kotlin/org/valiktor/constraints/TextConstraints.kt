@@ -221,3 +221,12 @@ object Email : Constraint
  * @since 0.10.0
  */
 object Website : Constraint
+
+/**
+ * Represents a constraint that validate if the value is a valid UUID
+ *
+ * @author Renan Gigliotti
+ * @see Constraint
+ * @since 0.13.0
+ */
+object UUID : Constraint
