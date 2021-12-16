@@ -16,6 +16,8 @@
 
 package org.valiktor
 
+import kotlin.reflect.KProperty
+import kotlin.reflect.KProperty0
 import kotlin.reflect.KProperty1
 
 /**
@@ -62,11 +64,24 @@ open class Validator<E>(private val obj: E) {
     /**
      * Returns a [Property] for this property
      *
-     * @receiver the property to be validated
+     * @receiver the class property to be validated
      * @return the property validator
+     *
+     * @see KProperty1
      */
     @JvmName("validate")
-    fun <T> validate(property: KProperty1<E, T?>): Property<T?> = Property(obj, property)
+    fun <T> validate(property: KProperty1<E, T?>): Property<T?> = Property1(obj, property)
+
+    /**
+     * Returns a [Property] for this property
+     *
+     * @receiver the object property to be validated
+     * @return the property validator
+     *
+     * @see KProperty0
+     */
+    @JvmName("validate")
+    fun <T> validate(property: KProperty0<T?>): Property<T?> = Property0(property)
 
     /**
      * Returns a [Property] for this iterable property
@@ -75,7 +90,16 @@ open class Validator<E>(private val obj: E) {
      * @return the property validator
      */
     @JvmName("validateIterable")
-    fun <T> validate(property: KProperty1<E, Iterable<T>?>): Property<Iterable<T>?> = Property(obj, property)
+    fun <T> validate(property: KProperty1<E, Iterable<T>?>): Property<Iterable<T>?> = Property1(obj, property)
+
+    /**
+     * Returns a [Property] for this iterable property
+     *
+     * @receiver the property to be validated
+     * @return the property validator
+     */
+    @JvmName("validateIterable")
+    fun <T> validate(property: KProperty0<Iterable<T>?>): Property<Iterable<T>?> = Property0(property)
 
     /**
      * Returns a [Property] for this array property
@@ -84,20 +108,56 @@ open class Validator<E>(private val obj: E) {
      * @return the property validator
      */
     @JvmName("validateArray")
-    fun <T> validate(property: KProperty1<E, Array<T>?>): Property<Array<T>?> = Property(obj, property)
+    fun <T> validate(property: KProperty1<E, Array<T>?>): Property<Array<T>?> = Property1(obj, property)
+
+    /**
+     * Returns a [Property] for this array property
+     *
+     * @receiver the property to be validated
+     * @return the property validator
+     */
+    @JvmName("validateArray")
+    fun <T> validate(property: KProperty0<Array<T>?>): Property<Array<T>?> = Property0(property)
+
+    /**
+     * KProperty1 based implementation of a Property
+     *
+     * @param property KProperty1
+     *
+     * @author Gennadi Kudrjavtsev
+     * @since 0.13
+     * @see Property
+     * @see KProperty1
+     */
+    private inner class Property1<T, E>(obj: E, property: KProperty1<E, T?>) :
+        Property<T>(property, { property.get(obj) })
+
+    /**
+     * KProperty0 based implementation of a Property
+     *
+     * @param property KProperty0
+     *
+     * @author Gennadi Kudrjavtsev
+     * @since 0.13
+     * @see Property
+     * @see KProperty0
+     */
+    private inner class Property0<T>(property: KProperty0<T?>) :
+        Property<T>(property, property::get)
 
     /**
      * Represents a property validator that contains extended functions
      *
-     * @param obj specifies the object to be validated
      * @param property specifies the property to be validated
+     * @param getValue specifies the function to get value of a property
      *
      * @author Rodolpho S. Couto
+     * @author Gennadi Kudrjavtsev
      * @see Validator
      * @see KProperty1
      * @since 0.1.0
      */
-    open inner class Property<T>(val obj: E, val property: KProperty1<E, T?>) {
+    abstract inner class Property<T>(val property: KProperty<T?>, val getValue: () -> T?) {
 
         /**
          * Validates the property by passing the constraint and the validation function
@@ -109,7 +169,7 @@ open class Validator<E>(private val obj: E) {
          * @return the property validator
          */
         fun validate(constraint: (T?) -> Constraint, isValid: (T?) -> Boolean): Property<T> {
-            val value = this.property.get(this.obj)
+            val value = getValue()
             if (!isValid(value)) {
                 this@Validator.constraintViolations += DefaultConstraintViolation(
                     property = this.property.name,
@@ -142,7 +202,7 @@ open class Validator<E>(private val obj: E) {
          * @return the property validator
          */
         suspend fun coValidate(constraint: (T?) -> Constraint, isValid: suspend (T?) -> Boolean): Property<T> {
-            val value = this.property.get(this.obj)
+            val value = getValue()
             if (!isValid(value)) {
                 this@Validator.constraintViolations += DefaultConstraintViolation(
                     property = this.property.name,

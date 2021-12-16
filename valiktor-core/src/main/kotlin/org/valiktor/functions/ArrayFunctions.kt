@@ -43,7 +43,7 @@ import org.valiktor.constraints.Size
 inline fun <E, T> Validator<E>.Property<Array<T>?>.validateForEach(
     block: Validator<T>.(T) -> Unit
 ): Validator<E>.Property<Array<T>?> {
-    this.property.get(this.obj)?.forEachIndexed { index, value ->
+    getValue()?.forEachIndexed { index, value ->
         this.addConstraintViolations(
             Validator(value).apply { block(value) }.constraintViolations.map {
                 DefaultConstraintViolation(
@@ -68,7 +68,7 @@ inline fun <E, T> Validator<E>.Property<Array<T>?>.validateForEach(
 inline fun <E, T> Validator<E>.Property<Array<T>?>.validateForEachIndexed(
     block: Validator<T>.(Int, T) -> Unit
 ): Validator<E>.Property<Array<T>?> {
-    this.property.get(this.obj)?.forEachIndexed { index, value ->
+    getValue()?.forEachIndexed { index, value ->
         this.addConstraintViolations(
             Validator(value).apply { block(index, value) }.constraintViolations.map {
                 DefaultConstraintViolation(
