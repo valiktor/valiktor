@@ -61,6 +61,18 @@ private object AnyFunctionsFixture {
 class AnyFunctionsTest {
 
     @Test
+    fun `should validate by KProperty0`() {
+        validate(Employee(company = Company(1))) {
+            validate(it::company).isNotNull().validate { company ->
+                validate(company::id).isNotNull()
+            }
+            validate(it::id).isNull()
+            validate(it::address).isNull()
+            validate(it::name).isNull()
+        }
+    }
+
+    @Test
     fun `isNull with null property should be valid`() {
         validate(Employee()) {
             validate(Employee::company).isNull()
